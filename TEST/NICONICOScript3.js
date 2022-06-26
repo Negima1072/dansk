@@ -479,7 +479,7 @@ function myCSSCmd(a){
 		'height: 24px;' +
 		'padding:4px 8px;' +
 		'border-radius: 12px;' +
-		'text-align: center;' +
+		'text-align: left;' +
 		'font-size: 13px;' +
   		'border:none;' +
   		'margin:0;' +
@@ -1605,7 +1605,7 @@ $('myTrcAdd').onclick = function(){
 		t.addEventListener("focus" , myTxtSelect , false);
 		$('myTrcSel2').add( (new Option(m + " " + $('myTrcSel').value + " ●")) );
 		$('myTrcSel2')[m-1].style.color = "#" + parseInt($('myTxtR').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&") + parseInt($('myTxtG').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&") + parseInt($('myTxtB').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&");
-
+		$('myTrcSel2')[m-1].style.textShadow = "rgb(0 0 0 / 50%) 1px 1px 2px";
 	}
 	$('myTrcSel2')[m-1].selected= true;
 	t.focus();
@@ -4159,12 +4159,10 @@ $('myTrcTxtDisp').onclick = function(){
 	if ($('myTrcSel2').value === "") {return;}
 	var a = $("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 	if(a.style.display == 'none'){
-		//a.style.zIndex = "4";
 		a.style.display = '';
 		$('myTrcTxtDisp').value = "非表示";
 		$('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text = $('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text.replace(/○/g, "●")
 	}else{
-		//a.style.zIndex = "-10";
 		a.style.display = 'none';
 		$('myTrcTxtDisp').value = "表示";
 		$('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text = $('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text.replace(/●/g, "○")
@@ -4177,7 +4175,6 @@ $('myTrcTxtDispALL').onclick = function(){
 		$('myTrcTxtDispALL').value = "一括表示";
 		for(var i = 0; i < $('myTrcSel2').length; i++){
 			var a = $("myTxt" + (i+1));
-			//a.style.zIndex = "-10";
 			a.style.display = 'none';
 			$('myTrcSel2')[i].text = $('myTrcSel2')[i].text.replace(/●/g, "○")
 		}
@@ -4185,7 +4182,6 @@ $('myTrcTxtDispALL').onclick = function(){
 		$('myTrcTxtDispALL').value = "一括非表示";
 		for(var i = 0; i < $('myTrcSel2').length; i++){
 			var a = $("myTxt" + (i+1));
-			//a.style.zIndex = "4";
 			a.style.display = '';
 			$('myTrcSel2')[i].text = $('myTrcSel2')[i].text.replace(/○/g, "●")
 		}
@@ -4418,7 +4414,7 @@ function myDelCookie(key){
     };
 
     myLayerLoad.onclick = function () {
-        var result = window.confirm('復元してよろしいですか');
+        var result = window.confirm('復元してよろしいですか\n※レイヤーが存在している場合上書きとなります');
         if (!result) {
             return;
         }
