@@ -375,6 +375,8 @@ function myOnload(){
 			'<div style="display:flex; padding:2px 0;flex-direction: column;gap: 4px;margin-left:20px;width:150px;">' +
 				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSave" type="button" value="レイヤー保存" />' +
 				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoad" type="button" value="レイヤー復元" />' +
+				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSaveFile" type="button" value="レイヤーファイル保存" />' +
+				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoadFile" type="button" value="レイヤーファイル復元" />' +
 				//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myConvWindow" type="button" value="変換ウィンドウ" />' +
 				//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myBeGod" type="button" value="神になれる" />' +
 			'</div>' +
@@ -4411,11 +4413,8 @@ function myDelCookie(key){
 //----------------------------------------------------------------------------------------------------
 
 
-	myLayerSave.onclick = function () {
-        if (document.getElementById('myTrcSel2').childNodes.length == 0) {
-            return;
-        }
-        var saveElementsLayer = document.getElementById('myTrcSel2');
+	saveLayers = () => {
+		var saveElementsLayer = document.getElementById('myTrcSel2');
         var saveElements = document.getElementById('tempLayer');
         var jsonStr = [];
         var tmp = {};
@@ -4428,7 +4427,29 @@ function myDelCookie(key){
             jsonStr.push(tmp);
         }
         var saveElementsLayerNameList = document.getElementById('presetList');
-        $("myTxtIpt").value = (saveElementsLayer.innerHTML + "|--定義--|"+ saveElements.innerHTML + "|--定義--|" + JSON.stringify(jsonStr));
+        return (saveElementsLayer.innerHTML + "|--定義--|"+ saveElements.innerHTML + "|--定義--|" + JSON.stringify(jsonStr));
+	}
+
+	loadLayers = (data) => {
+		var loadElements = data.split("|--定義--|")[0];
+        document.getElementById('myTrcSel2').innerHTML = loadElements;
+        //loadElements = localStorage.getItem('saveTextarea_' + selectedItemValue);
+        document.getElementById('tempLayer').innerHTML = data.split("|--定義--|")[1];
+
+        // valueの復元
+        var restoreValueList = JSON.parse(data.split("|--定義--|")[2]);
+        for (var i = 0; i < document.getElementById('myTrcSel2').childNodes.length; i++) {
+            document.getElementById('tempLayer').childNodes[i].value = restoreValueList[i].value;
+            document.getElementById('tempLayer').childNodes[i].addEventListener("focus", myTxtSelect, false);
+            document.getElementById('myTrcSel2').childNodes[i].selected = restoreValueList[i].selected;
+        }
+	}
+
+	myLayerSave.onclick = function () {
+        if (document.getElementById('myTrcSel2').childNodes.length == 0) {
+            return;
+        }
+        $("myTxtIpt").value = saveLayers();
     };
 
     myLayerLoad.onclick = function () {
@@ -4436,19 +4457,56 @@ function myDelCookie(key){
         if (!result) {
             return;
         }
-        var loadElements = $("myTxtIpt").value.split("|--定義--|")[0];
-        document.getElementById('myTrcSel2').innerHTML = loadElements;
-        //loadElements = localStorage.getItem('saveTextarea_' + selectedItemValue);
-        document.getElementById('tempLayer').innerHTML = $("myTxtIpt").value.split("|--定義--|")[1];
-
-        // valueの復元
-        var restoreValueList = JSON.parse($("myTxtIpt").value.split("|--定義--|")[2]);
-        for (var i = 0; i < document.getElementById('myTrcSel2').childNodes.length; i++) {
-            document.getElementById('tempLayer').childNodes[i].value = restoreValueList[i].value;
-            document.getElementById('tempLayer').childNodes[i].addEventListener("focus", myTxtSelect, false);
-            document.getElementById('myTrcSel2').childNodes[i].selected = restoreValueList[i].selected;
-        }
+        loadLayers($("myTxtIpt").value);
     };
+
+	myLayerSaveFile.onclick = function (){
+		document.getElementById("myLayerSaveFile").href = "";
+		if (document.getElementById('myTrcSel2').childNodes.length == 0) {
+            return;
+        }
+        var save_content = saveLayers();
+
+		let address = prompt('ファイル名を指定してください', 'data.txt');
+
+		const a = document.createElement('a');
+		a.href = URL.createObjectURL(new Blob([save_content], {type: 'text/plain'}));
+		a.download = address;
+		a.style.display = 'none';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	}
+
+	myLayerLoadFile.onclick = function (){
+		if(document.getElementById("layerloadfileelement") != null){
+			document.getElementById("layerloadfileelement").click()
+		}else{
+			const a = document.createElement('input');
+			a.type = "file";
+			a.id = "layerloadfileelement";
+			a.style.display = 'none';
+			document.body.appendChild(a);
+			a.click();
+		}
+		document.getElementById("layerloadfileelement").addEventListener("change", ()=>{
+			let input = document.getElementById("layerloadfileelement");
+			let reader = new FileReader();
+			for(file of input.files){
+				reader.readAsText(file, 'UTF-8');
+				reader.onload = ()=> {
+					var result = window.confirm('復元してよろしいですか\n※レイヤーが存在している場合上書きとなります');
+					if (!result) {
+						return;
+					}
+					loadLayers(reader.result);
+					document.body.removeChild(input);
+				};
+			}
+		})
+	}
+
+	
 
 
 /*************************************************
