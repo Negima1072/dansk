@@ -40,7 +40,7 @@ textarea.help{
     height: 60px;
 }
 
-input#copy_a {
+input#copy_a, input#clear {
     margin-left: auto;
     margin-right: 20px;
 }
