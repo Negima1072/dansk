@@ -2060,7 +2060,7 @@ $('myTxtExpOne').onclick = function(Tmode){
 				nd[i] = '\uA001'
 			} else {
 				if(i == 0 ||(i%3) == 0){
-					nd[i] = '\uA001' + '\uA002'
+					nd[i] = /*'\uA001' +*/ '\uA002'
 				} else {
 					nd[i] = '\uA002'
 				}
@@ -2664,7 +2664,7 @@ $('myTxtExpALLT').onclick = function(){
 					nd[i] = '\uA001'
 				} else {
 					if(i == 0 ||(i%3) == 0){
-						nd[i] = '\uA001' + '\uA002'
+						nd[i] = /*'\uA001' +*/ '\uA002'
 					} else {
 						nd[i] = '\uA002'
 					}
@@ -3115,7 +3115,7 @@ $('myTxtExpTokomeOne').onclick = function(Tmode){
 				nd[i] = '\uA001'
 			} else {
 				if(i == 0 ||(i%3) == 0){
-					nd[i] = '\uA001' + '\uA002'
+					nd[i] = /*'\uA001' +*/ '\uA002'
 				} else {
 					nd[i] = '\uA002'
 				}
@@ -3711,7 +3711,7 @@ $('myTxtExpTokomeT').onclick = function(){
 					nd[i] = '\uA001'
 				} else {
 					if(i == 0 ||(i%3) == 0){
-						nd[i] = '\uA001' + '\uA002'
+						nd[i] = /*'\uA001' +*/ '\uA002'
 					} else {
 						nd[i] = '\uA002'
 					}
