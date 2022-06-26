@@ -1,4 +1,4 @@
-window.addEventListener("load", (ex) => {
+﻿window.addEventListener("load", (ex) => {
     getCookie = (name) => {
         var value = null;
         Array.from(document.cookie.split("; ")).forEach((v) => {
@@ -139,7 +139,7 @@ window.addEventListener("load", (ex) => {
         btext = JSON.parse(btext);
         var r = [];
         for(l=0;l<btext.length;l++){
-            r.push(("["+btext[l].command+"]"+btext[l].comment).replaceAll("\\n","<br>").replaceAll("\t","[tb]"));
+            r.push(("["+btext[l].command+"]"+btext[l].comment).replaceAll("\n","<br>").replaceAll("\t","[tb]"));
         }
         return r.join("\n");
     }
@@ -156,7 +156,7 @@ window.addEventListener("load", (ex) => {
                 comment: ""
             };
             if(btext[l] == "") continue;
-            btext[l] = btext[l].replaceAll("<br>","\\n")
+            btext[l] = btext[l].replaceAll("<br>","\n")
             r2.command = /\[.+?\]/.exec(btext[l])
             if(r2.command == null) {
                 r2.command = bcommand;
