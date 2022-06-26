@@ -15,6 +15,16 @@ window.addEventListener('message', function(event) {
   else if(event.data.type == "color_click"){
     document.activeElement.blur();
   }
+  else if(event.data.type == "time_seek_int") {
+    var d = event.data.int;
+    var c = window.__videoplayer.currentTime()*100;
+    var y = c + d;
+    if(y < 0) y = 0;
+    if(y > window.__videoplayer.duration()*100) y = window.__videoplayer.duration()*100;
+    window.__videoplayer.currentTime((Math.floor(y)+0.1)/100);
+    window.document.getElementsByClassName("CommentOnOffButton")[0].click();
+    window.document.getElementsByClassName("CommentOnOffButton")[0].click();
+  }
 });
 
 let p = !1;
