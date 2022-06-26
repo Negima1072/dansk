@@ -318,7 +318,7 @@ function myOnload(){
 			'<input id="myTrcRepMode" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="置換M" />' +
 		'</div>' +
 		'<div style="display:flex;flex-direction:row;">' +
-			'<select id="myTrcSel2" class="" size="2" style="height:200px; width:320px; padding:4px 8px; margin:2px 20px 2px 0; border:none; float:left;"></select>' +
+			'<select id="myTrcSel2" class="" size="2" style="height:140px; width:320px; padding:4px 8px; margin:2px 20px 2px 0; border:none; float:left;"></select>' +
 			'<div style="position: flex; flex-direction: column;">' +
 				'<details style="margin-top:5px;margin-bottom: 5px;">' +
 					'<summary>▼CSS詳細設定</summary>' +
