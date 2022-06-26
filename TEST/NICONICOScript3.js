@@ -255,6 +255,8 @@ function myOnload(){
 	//トレ中身
 	var f = document.createElement('div');
 	f.id = 'myEmtTraceSub';
+	f.style.display = "flex";
+	f.style.flexDirection = "column";
 	f.innerHTML = '' +
 		'<div style="padding:2px 0;">' +
 			'<input id="myTxtExpALL" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="全出力" />' +
@@ -315,70 +317,82 @@ function myOnload(){
 			'<div style="margin:10px; display: inline;"></div>' +
 			'<input id="myTrcRepMode" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="置換M" />' +
 		'</div>' +
-		'<select id="myTrcSel2" class="" size="2" style="height:200px; width:320px; padding:4px 8px; margin:2px 20px 2px 0; border:none; float:left;"></select>' +
-		'<div style="float:left;">' +
-			'<div style="position:relative; padding:2px 0;">' +
-				'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">FONT SIZE</label>' +
-				'<input id="myFontSize" class="myCmd" type="text" value="0" style="width: 50px;">' +
-				'<input id="myFontSizeU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
-				'<input id="myFontSizeD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
-				'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">LINE HEIGHT</label>' +
-				'<input id="myLineHeight" class="myCmd" type="text" value="0" style="width: 50px;">' +
-				'<input id="myLineHeightU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
-				'<input id="myLineHeightD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
-			'</div>' +
-			'<div style="position:relative; padding:2px 0;">' +
-				'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">TOP</label>' +		
-				'<input id="myTop" class="myCmd" type="text" value="0" style="width: 50px;">' +
-				'<input id="myTopU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
-				'<input id="myTopD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
-				'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">LEFT</label>' +
-				'<input id="myLeft" class="myCmd" type="text" value="0" style="width: 50px;">' +
-				'<input id="myLeftL" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="◀" />' +
-				'<input id="myLeftR" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▶" />' +
-			'</div>' +
-			'<div style="position:relative; padding:2px 0;">' +
-				'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">transform</label>' +		
-				'<input id="myTransY" class="myCmd" type="text" value="0" style="width: 50px;">' +
-				'<input id="myTransYU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
-				'<input id="myTransYD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
-				'<input id="myTransX" class="myCmd" type="text" value="0" style="width: 50px;">' +
-				'<input id="myTransXU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="◀" />' +
-				'<input id="myTransXD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▶" />' +
-			'</div>' +
-			'<div id="slider1" style="position:relative; width:255px; height:28px;">' +
-				'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
-				'<input id="slider2" class="myCmd" type="button" value="R" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
-				'<input id="myTxtR" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 50px;">' +
-			'</div>' +
-		
-			'<div id="slider3" style="position:relative; width:255px; height:28px;">' +
-				'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
-				'<input id="slider4" class="myCmd" type="button" value="G" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
-				'<input id="myTxtG" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 50px;">' +
-			'</div>' +
-		
-			'<div id="slider5" style="position:relative; width:255px; height:28px">' +
-				'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
-				'<input id="slider6" class="myCmd" type="button" value="B" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
-				'<input id="myTxtB" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 50px;">' +
-			'</div>' +
+		'<div style="display:flex;flex-direction:row;">' +
+			'<select id="myTrcSel2" class="" size="2" style="height:200px; width:320px; padding:4px 8px; margin:2px 20px 2px 0; border:none; float:left;"></select>' +
+			'<div style="position: flex; flex-direction: column;">' +
+				'<details style="margin-top:5px;margin-bottom: 5px;">' +
+					'<summary>▼CSS詳細設定</summary>' +
+					'<div style="position:relative; padding:2px 0;">' +
+						'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">FONT SIZE</label>' +
+						'<input id="myFontSize" class="myCmd" type="text" value="0" style="width: 50px;">' +
+						'<input id="myFontSizeU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
+						'<input id="myFontSizeD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
+						'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">LINE HEIGHT</label>' +
+						'<input id="myLineHeight" class="myCmd" type="text" value="0" style="width: 50px;">' +
+						'<input id="myLineHeightU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
+						'<input id="myLineHeightD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
+					'</div>' +
+					'<div style="position:relative; padding:2px 0;">' +
+						'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">TOP</label>' +		
+						'<input id="myTop" class="myCmd" type="text" value="0" style="width: 50px;">' +
+						'<input id="myTopU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
+						'<input id="myTopD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
+						'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">LEFT</label>' +
+						'<input id="myLeft" class="myCmd" type="text" value="0" style="width: 50px;">' +
+						'<input id="myLeftL" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="◀" />' +
+						'<input id="myLeftR" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▶" />' +
+					'</div>' +
+					'<div style="position:relative; padding:2px 0;">' +
+						'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">transform</label>' +		
+						'<input id="myTransY" class="myCmd" type="text" value="0" style="width: 50px;">' +
+						'<input id="myTransYU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▲" />' +
+						'<input id="myTransYD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▼" />' +
+						'<input id="myTransX" class="myCmd" type="text" value="0" style="width: 50px;">' +
+						'<input id="myTransXU" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="◀" />' +
+						'<input id="myTransXD" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="▶" />' +
+					'</div>' +
+				'</details>' +
 
-			'<div id="sliderbtm" style="position:relative; width:100%; height:28px">' +
-				'<input id="myCodeSelect" class="myCmd" type="color" value="#000000" placeholder="#000000" style="width: 70px; padding: 2px 8px !important;">' +
-				'<input id="myCodeBtn1" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="反映" />' +
-				'<input id="myTxtCode" class="myCmd" type="text" value="#000000" placeholder="#000000" style="width: 100px; margin-left: 10px !important;">' +
-				'<input id="myCodeBtn2" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="反映" />' +
-			'</div>' +
-		'</div>' +
-		'<div style="float:left;">' +
-			'<div style="display:flex; padding:2px 0;flex-direction: column;gap: 4px;margin-left:20px;width:150px;">' +
-				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSave" type="button" value="レイヤー保存" />' +
-				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoad" type="button" value="レイヤー復元" />' +
-				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSaveFile" type="button" value="レイヤーファイル保存" />' +
-				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoadFile" type="button" value="レイヤーファイル復元" />' +
-				//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myConvWindow" type="button" value="変換ウィンドウ" />' +
-				//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myBeGod" type="button" value="神になれる" />' +
+				"<div style='display:flex;flex-direction:row;'>" +
+					"<div>" +
+						'<div id="slider1" style="position:relative; width:255px; height:28px;">' +
+							'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
+							'<input id="slider2" class="myCmd" type="button" value="R" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
+							'<input id="myTxtR" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 25px; padding: 0!important;">' +
+						'</div>' +
+					
+						'<div id="slider3" style="position:relative; width:255px; height:28px;">' +
+							'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
+							'<input id="slider4" class="myCmd" type="button" value="G" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
+							'<input id="myTxtG" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 25px; padding: 0!important;">' +
+						'</div>' +
+					
+						'<div id="slider5" style="position:relative; width:255px; height:28px">' +
+							'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
+							'<input id="slider6" class="myCmd" type="button" value="B" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
+							'<input id="myTxtB" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 25px; padding: 0!important;">' +
+						'</div>' +
+					'</div>' +
+					'<div id="sliderbtm" style="display:flex;flex-direction:column;margin-left:60px;gap:5px;">' +
+						'<div>' +
+							'<input id="myCodeSelect" class="myCmd" type="color" value="#000000" placeholder="#000000" style="width: 75px; padding: 2px 8px !important;">' +
+							'<input id="myCodeBtn1" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="反映" />' +
+						'</div>' +
+						'<div>' +
+							'<input id="myTxtCode" class="myCmd" type="text" value="#000000" placeholder="#000000" maxlength="7" style="width: 75px;">' +
+							'<input id="myCodeBtn2" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="反映" />' +
+						'</div>' +
+					'</div>' +
+					'<div style="">' +
+						'<div style="display:flex; padding:2px 0;flex-direction: column;gap: 4px;margin-left:10px;width:150px;">' +
+							'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSave" type="button" value="レイヤー保存" />' +
+							'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoad" type="button" value="レイヤー復元" />' +
+							'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSaveFile" type="button" value="レイヤーファイル保存" />' +
+							'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoadFile" type="button" value="レイヤーファイル復元" />' +
+							//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myBeGod" type="button" value="神になれる" />' +
+						'</div>' +
+					'</div>' +
+				'</div>' +
 			'</div>' +
 		'</div>' +
 		'<div style = "clear:both;"></div>' +
