@@ -147,14 +147,28 @@
         return r.join("\n");
     }
 
+    covertTimeIntToString = (time) => {
+        var a = ("0"+Math.floor(time / 6000).toString()).slice(-2);
+        var b = ("0"+Math.floor((time % 6000)/100).toString()).slice(-2);
+        var d = ("0"+Math.floor((time % 6000)%100).toString()).slice(-2);
+        return a + ":" + b + "." + d;
+    }
+
     convertDanskToTokome = (btext) => {
         btext = btext.replaceAll("[tb]","\t").replaceAll("[03]","　").replaceAll("[0A]","");
         btext = btext.split("\n");
         var r = []
         var bcommand = "";
+        var basetimems = 0;
         for(l=0;l<btext.length;l++){
+            if(/\[.+?\]/.exec(btext[l]) != null){
+                if(/\[.+?\]/.exec(btext[l])[0].includes("tm")){
+                    basetimems += parseInt(/\[.+?\]/.exec(btext[l])[0].slice(3,-1));
+                    btext[l] = btext[l].replace(/\[.+?\]/.exec(btext[l])[0], "");
+                }
+            }
             var r2 = {
-                time: "00:00.00",
+                time: covertTimeIntToString(parseInt(basetimems / 10)),
                 command: "",
                 comment: ""
             };

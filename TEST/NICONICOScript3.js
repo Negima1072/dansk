@@ -573,7 +573,7 @@ function myCSSLvl(emt){
 function myTimeClick(a){
 	window.postMessage({
 		type: 'time_seek',
-    text: a
+    	text: a
 	},'*');
 }
 /*----------------------------------------------------------------------------------------------------
@@ -753,13 +753,12 @@ function myBoxIpt(a) {
 			var e = d.indexOf("]",0);
 			if (d.slice(1, 3)=='tm'){
 				var f = d.slice(3, e).match(/^[0-9]+$/);
-				if (f > 3001){ f = 3000;}
-				document.getElementsByClassName("PlayerPlayButton")[0].dispatchEvent(new MouseEvent("click",{"view":window,"bubbles":!0,"cancelable":!0}));
-				$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '再生中';
-				setTimeout(function(){
-					document.getElementsByClassName("PlayerPauseButton")[0].dispatchEvent(new MouseEvent("click",{"view":window,"bubbles":!0,"cancelable":!0}));
-					$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '停止中';
-				},f);
+				setTimeout(() => {
+					window.postMessage({
+						type: 'time_seek_int',
+						int: parseInt(f / 10)
+					},'*');
+				}, 20);
 				$('myTxtIpt').value = d.slice(e+1);
 			}
 		}
