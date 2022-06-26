@@ -358,19 +358,19 @@ function myOnload(){
 						'<div id="slider1" style="position:relative; width:255px; height:28px;">' +
 							'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
 							'<input id="slider2" class="myCmd" type="button" value="R" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
-							'<input id="myTxtR" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 25px; padding: 0!important;">' +
+							'<input id="myTxtR" disabled class="myCmd" type="text" value="0" style="text-align: center!important; position:absolute; left:280px; width: 25px; padding: 0!important;">' +
 						'</div>' +
 					
 						'<div id="slider3" style="position:relative; width:255px; height:28px;">' +
 							'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
 							'<input id="slider4" class="myCmd" type="button" value="G" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
-							'<input id="myTxtG" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 25px; padding: 0!important;">' +
+							'<input id="myTxtG" disabled class="myCmd" type="text" value="0" style="text-align: center!important; position:absolute; left:280px; width: 25px; padding: 0!important;">' +
 						'</div>' +
 					
 						'<div id="slider5" style="position:relative; width:255px; height:28px">' +
 							'<div style="background:#ddd; height:3px; border:1px inset #aaa; position:relative; top:16px; font-size:0px;"></div>' +
 							'<input id="slider6" class="myCmd" type="button" value="B" style="position:absolute; height:20px; display:block; border-radius: 12px; border:none; cursor:pointer;">' +
-							'<input id="myTxtB" disabled class="myCmd" type="text" value="0" style="position:absolute; left:280px; width: 25px; padding: 0!important;">' +
+							'<input id="myTxtB" disabled class="myCmd" type="text" value="0" style="text-align: center!important; position:absolute; left:280px; width: 25px; padding: 0!important;">' +
 						'</div>' +
 					'</div>' +
 					'<div id="sliderbtm" style="display:flex;flex-direction:column;margin-left:60px;gap:5px;">' +
