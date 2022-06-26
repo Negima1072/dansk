@@ -44,6 +44,9 @@
     document.getElementById("clear").onclick = (ev) => {
         document.getElementById("before").value = "";
         document.getElementById("after").value = "";
+
+        setCookie("dnsk_pp_before", document.getElementById("before").value.replaceAll("\n", "{break}"));
+        setCookie("dnsk_pp_after", document.getElementById("after").value.replaceAll("\n", "{break}"));
     };
 
     document.getElementById("replace").onclick = (ev) => {
