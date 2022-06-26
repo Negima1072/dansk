@@ -18,5 +18,15 @@
       "resources": ["embed.js"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "icons": {
+    "16": "icon/icon16.png",
+    "32": "icon/icon32.png",
+    "64": "icon/icon64.png"
+  },
+  "action":{
+    "default_icon": "icon/icon16.png",
+    "default_title":"だんスク",
+    "default_popup":"popup/popup.html"
+  }
 }
