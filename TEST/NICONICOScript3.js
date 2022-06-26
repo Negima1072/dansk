@@ -1221,7 +1221,7 @@ $('myTrcUSN').onclick = function(){
 		//	break;
 		}
 	}
-	a.style.top = Math.round(parseInt(a.style.top.match("([-0-9]+)px")[1]) * 1.334375).toFixed(0) + "px";
+	// a.style.top = Math.round(parseInt(a.style.top.match("([-0-9]+)px")[1]) * 1.334375).toFixed(0) + "px";
 }
 /*----------------------------------------------------------------------------------------------------
 [追加] なんとかせい
@@ -3593,7 +3593,7 @@ $('myTxtExpTokomeT').onclick = function(){
 			}
 		}
 		v = "[ca " + u + " " + v.slice(0,-1) + "]";
-		
+
 		for (var i = 0; i < b.length; i++) {
 			//文字を分解し幅を調べて行く
 			c = b[i].split("")
