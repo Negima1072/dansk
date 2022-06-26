@@ -1920,11 +1920,7 @@ $('myTxtExpOne').onclick = function(Tmode){
 			w = d[i].slice(1) * 12;
 			v += d[i] + " ";
 		} else if (d[i].slice(0, 1) == "L") {
-			if(!d[i].includes(":")) d[i] += (":"+d[i].slice(1));
-			for(var s=0; s<parseInt(d[i].slice(1).split(":")[1]); s++){
-				l2.push(d[i].slice(1).split(":")[0]);
-			}
-			l = l2[parseInt($('myTrcSel2').value.split(" ")[0])-1];
+			l = d[i].slice(1);
 			v += d[i] + " ";
 		} else if (d[i].slice(0, 1) == "C") {
 			v += d[i] + " ";
@@ -2376,11 +2372,7 @@ $('myTxtExpALLT').onclick = function(){
 			if (d[i].slice(0, 1) == "W") {
 				w = d[i].slice(1) * 12;
 			} else if (d[i].slice(0, 1) == "L") {
-				if(!d[i].includes(":")) d[i] += (":"+d[i].slice(1));
-				for(var s=0; s<parseInt(d[i].slice(1).split(":")[1]); s++){
-					l2.push(d[i].slice(1).split(":")[0]);
-				}
-				l = l2[parseInt($('myTrcSel2').value.split(" ")[0])-1];
+				l = d[i].slice(1);
 			} else if (d[i].slice(0, 1) == "C") {
 				//
 			}
@@ -2552,7 +2544,7 @@ $('myTxtExpALLT').onclick = function(){
 				w = nn[0]*12/(f*t)
 				v += d[i] + " ";
 			} else if (d[i].slice(0, 1) == "L") {
-				l = l2[parseInt($('myTrcSel2').value.split(" ")[0])-1];
+				l = d[i].slice(1);
 				v += d[i] + " ";
 			} else if (d[i].slice(0, 1) == "C") {
 				//
@@ -2974,11 +2966,7 @@ $('myTxtExpTokomeOne').onclick = function(Tmode){
 			w = d[i].slice(1) * 12;
 			v += d[i] + " ";
 		} else if (d[i].slice(0, 1) == "L") {
-			if(!d[i].includes(":")) d[i] += (":"+d[i].slice(1));
-			for(var s=0; s<parseInt(d[i].slice(1).split(":")[1]); s++){
-				l2.push(d[i].slice(1).split(":")[0]);
-			}
-			l = l2[parseInt($('myTrcSel2').value.split(" ")[0])-1];
+			l = d[i].slice(1);
 			v += d[i] + " ";
 		} else if (d[i].slice(0, 1) == "C") {
 			v += d[i] + " ";
@@ -3423,11 +3411,7 @@ $('myTxtExpTokomeT').onclick = function(){
 			if (d[i].slice(0, 1) == "W") {
 				w = d[i].slice(1) * 12;
 			} else if (d[i].slice(0, 1) == "L") {
-				if(!d[i].includes(":")) d[i] += (":"+d[i].slice(1));
-				for(var s=0; s<parseInt(d[i].slice(1).split(":")[1]); s++){
-					l2.push(d[i].slice(1).split(":")[0]);
-				}
-				l = l2[parseInt($('myTrcSel2').value.split(" ")[0])-1];
+				l = d[i].slice(1);
 			} else if (d[i].slice(0, 1) == "C") {
 				//
 			}
@@ -3599,7 +3583,7 @@ $('myTxtExpTokomeT').onclick = function(){
 				w = nn[0]*12/(f*t)
 				v += d[i] + " ";
 			} else if (d[i].slice(0, 1) == "L") {
-				l = l2[parseInt($('myTrcSel2').value.split(" ")[0])-1];
+				l = d[i].slice(1);
 				v += d[i] + " ";
 			} else if (d[i].slice(0, 1) == "C") {
 				//
