@@ -713,7 +713,7 @@ $('myTrcGM').onclick = function(){
 	if ($('myTrcGM').value == 'gothic'){
 		$('myTrcGM').value = 'mincho';
 		b.text = b.text.replace(/mincho/g,"gothic");
-		a.style.fontFamily = '"Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif';
+		a.style.fontFamily = '游ゴシック, SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif';
 	}else{
 		$('myTrcGM').value = 'gothic';
 		b.text = b.text.replace(/gothic/g,"mincho");
@@ -1250,7 +1250,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W17_L9":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' + //380
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 36.54px;' +
 				'line-height: 42px;' +
 				'top:3px;' +
@@ -1262,7 +1262,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_naka_ender_full_gothic_W17_L10_流":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' + //380
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 36.55px;' +
 				'line-height: 42px;' +
 				'top:-31px;' +
@@ -1274,7 +1274,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W18_L10_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 34px;' +
 				'line-height: 40px;' +
 				'top:3px;' +
@@ -1286,7 +1286,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W20_L11_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 30px;' +
 				'line-height: 36px;' +
 				'top:2px;' +
@@ -1298,7 +1298,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W22_L12_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 28px;' +
 				'line-height: 33px;' +
 				'top:2px;' +
@@ -1310,7 +1310,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W25_L13_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 25px;' +
 				'line-height: 30px;' +
 				'top:3px;' +
@@ -1322,7 +1322,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W29_L15_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 21px;' +
 				'line-height: 26px;' +
 				'top:1px;' +
@@ -1334,7 +1334,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_ender_full_gothic_W31_L16_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 20px;' +
 				'line-height: 24px;' +
 				'top:1px;' +
@@ -1346,7 +1346,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_ue_full_gothic_W34_L16":
 				myinnerTxt = myinnerTxt +
 				'height: 370px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 18.40px;' + //18.40 
 				'line-height: 23px;' + //23
 				'top:2px;' + //2
@@ -1358,7 +1358,7 @@ $('myTrcAdd').onclick = function(){
 			case "big_naka_full_gothic_W34_L17_流":
 				myinnerTxt = myinnerTxt +
 				'height: 370px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 18.40px;' + //18.40 
 				'line-height: 23px;' + //23
 				'top:-10px;' + //2
@@ -1370,7 +1370,7 @@ $('myTrcAdd').onclick = function(){
 			case "medium_ue_ender_full_gothic_W25_L14":
 				myinnerTxt = myinnerTxt +
 				'height: 380px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 25.30px;' +
 				'line-height: 27px;' +
 				'top:2px;' +
@@ -1382,7 +1382,7 @@ $('myTrcAdd').onclick = function(){
 			case "medium_naka_ender_full_gothic_W24_L15_流":
 				myinnerTxt = myinnerTxt +
 				'height: 380px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 25.30px;' +
 				'line-height: 27px;' +
 				'top:-22px;' +
@@ -1394,7 +1394,7 @@ $('myTrcAdd').onclick = function(){
 			case "medium_ue_ender_full_gothic_W34_L19_臨":
 				myinnerTxt = myinnerTxt +
 				'height: 420px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 17px;' +
 				'line-height: 20px;' +
 				'top:1px;' +
@@ -1406,7 +1406,7 @@ $('myTrcAdd').onclick = function(){
 			case "medium_ue_full_gothic_W40_L26":
 				myinnerTxt = myinnerTxt +
 				'height: 366px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 14px;' +
 				'line-height: 14px;' +
 				'top:1px;' +
@@ -1418,7 +1418,7 @@ $('myTrcAdd').onclick = function(){
 			case "medium_naka_full_gothic_W40_L27_流":
 				myinnerTxt = myinnerTxt +
 				'height: 366px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 14px;' +
 				'line-height: 14px;' +
 				'top:-10px;' +
@@ -1430,7 +1430,7 @@ $('myTrcAdd').onclick = function(){
 			case "small_ue_ender_full_gothic_W37_L21":
 				myinnerTxt = myinnerTxt +
 				'height: 338px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 16px;' +
 				'line-height: 16px;' +
 				'top:1px;' +
@@ -1442,7 +1442,7 @@ $('myTrcAdd').onclick = function(){
 			case "small_naka_ender_full_gothic_W37_L22_流":
 				myinnerTxt = myinnerTxt +
 				'height: 338px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 16px;' +
 				'line-height: 16px;' +
 				'top:-6px;' +
@@ -1454,7 +1454,7 @@ $('myTrcAdd').onclick = function(){
 			case "small_ue_gothic_W46_L38": //24
 				myinnerTxt = myinnerTxt +
 				'height: 382px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 10px;' + //これ以上は小さくならん模様
 				'line-height: 10px;' +
 				'top:1px;' +
@@ -1466,7 +1466,7 @@ $('myTrcAdd').onclick = function(){
 			case "small_naka_gothic_W46_L39_流": //24
 				myinnerTxt = myinnerTxt +
 				'height: 382px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 10px;' + //これ以上は小さくならん模様
 				'line-height: 10px;' +
 				'top:-4px;' +
@@ -1480,7 +1480,7 @@ $('myTrcAdd').onclick = function(){
 				else n = 345-(16.2 * (j));
 				myinnerTxt = myinnerTxt +
 				'height: 16px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 12.8px;' +
 				'line-height: 16px;' +
 				'top:'+ n + 'px;' +
@@ -1495,7 +1495,7 @@ $('myTrcAdd').onclick = function(){
 				else n = 2+(38.7 * (j));
 				myinnerTxt = myinnerTxt +
 				'height: 37px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 16px;' +
 				'line-height: 17px;' +
 				'top:'+ n + 'px;' +
@@ -1510,7 +1510,7 @@ $('myTrcAdd').onclick = function(){
 				else n = 324-(38.7 * (j));
 				myinnerTxt = myinnerTxt +
 				'height: 37px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 16px;' +
 				'line-height: 17px;' +
 				'top:'+ n + 'px;' +
@@ -1525,7 +1525,7 @@ $('myTrcAdd').onclick = function(){
 				else n = -1+(11.5 * (j));
 				myinnerTxt = myinnerTxt +
 				'height: 16px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 10.2px;' +
 				'line-height: 16px;' +
 				'top:'+ n + 'px;' +
@@ -1541,7 +1541,7 @@ $('myTrcAdd').onclick = function(){
 					else n = 325-(38.6 * (j));
 					myinnerTxt = myinnerTxt +
 					'height: 38px;' +
-					'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+					'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 					'font-size: 19px;' +
 					'line-height: 17px;' +
 					'top:'+ n + 'px;' +
@@ -1554,7 +1554,7 @@ $('myTrcAdd').onclick = function(){
 					else n = 325-231.6-(22.1 * (j-6));
 					myinnerTxt = myinnerTxt +
 					'height: 22px;' +
-					'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+					'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 					'font-size: 19px;' +
 					'line-height: 17px;' +
 					'top:'+ n + 'px;' +
@@ -1568,7 +1568,7 @@ $('myTrcAdd').onclick = function(){
 			case "Tokome_small_ue_full_gothic_W68_L38":
 				myinnerTxt = myinnerTxt +
 				'height: 382px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 10px;' +
 				'line-height: 10px;' +
 				'top:2px;' +
@@ -1580,7 +1580,7 @@ $('myTrcAdd').onclick = function(){
 			case "Tokome_small_naka_full_gothic_W68_L39_流":
 				myinnerTxt = myinnerTxt +
 				'height: 382px;' +
-				'font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;' +
+				'font-family: "游ゴシック", SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;' +
 				'font-size: 10px;' +
 				'line-height: 10px;' +
 				'top:-4px;' +
