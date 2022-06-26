@@ -1,4 +1,4 @@
-window.addEventListener("load", function(){
+﻿window.addEventListener("load", function(){
 //window.addEventListener('load', function(){
 
 
@@ -375,7 +375,7 @@ function myOnload(){
 			'<div style="display:flex; padding:2px 0;flex-direction: column;gap: 4px;margin-left:20px;width:150px;">' +
 				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerSave" type="button" value="レイヤー保存" />' +
 				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myLayerLoad" type="button" value="レイヤー復元" />' +
-				'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myConvWindow" type="button" value="変換ウィンドウ" />' +
+				//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myConvWindow" type="button" value="変換ウィンドウ" />' +
 				//'<input class="ActionButton TagEnterEditingButton TagContainer-editButton" id="myBeGod" type="button" value="神になれる" />' +
 			'</div>' +
 		'</div>' +
@@ -431,7 +431,7 @@ function myOnload(){
 	for(var i=0; i<x.length; ++i){
 		myCSSCmdChk(x[i]);
 	}
-
+	document.querySelector('.VideoSymbolContainer').insertAdjacentHTML('beforeend', '<div id="tempLayer"></div>');
 }
 //メニュー表示非表示
 function myEmtHeadClick(a){
@@ -1600,7 +1600,8 @@ $('myTrcAdd').onclick = function(){
 		}
 		t.style.color = "#" + parseInt($('myTxtR').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&") + parseInt($('myTxtG').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&") + parseInt($('myTxtB').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&");
 		//document.getElementsByClassName('CommentRenderer')[0].before(t);
-		document.getElementsByClassName('ControllerBoxContainer')[0].before(t);
+		//document.getElementsByClassName('ControllerBoxContainer')[0].before(t);
+		document.getElementById('tempLayer').appendChild(t);
 		t.addEventListener("focus" , myTxtSelect , false);
 		$('myTrcSel2').add( (new Option(m + " " + $('myTrcSel').value + " ●")) );
 		$('myTrcSel2')[m-1].style.color = "#" + parseInt($('myTxtR').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&") + parseInt($('myTxtG').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&") + parseInt($('myTxtB').value).toString(16).replace(/^[0-9A-Fa-f]$/, "0$&");
@@ -4157,12 +4158,14 @@ $('myCmdBoxIpt').onclick = function(){
 $('myTrcTxtDisp').onclick = function(){
 	if ($('myTrcSel2').value === "") {return;}
 	var a = $("myTxt" + $('myTrcSel2').value.split(" ")[0]);
-	if(a.style.zIndex == '0'){
-		a.style.zIndex = "4";
+	if(a.style.display == 'none'){
+		//a.style.zIndex = "4";
+		a.style.display = '';
 		$('myTrcTxtDisp').value = "非表示";
 		$('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text = $('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text.replace(/○/g, "●")
 	}else{
-		a.style.zIndex = "0";
+		//a.style.zIndex = "-10";
+		a.style.display = 'none';
 		$('myTrcTxtDisp').value = "表示";
 		$('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text = $('myTrcSel2')[$('myTrcSel2').value.split(" ")[0]-1].text.replace(/●/g, "○")
 	}
@@ -4174,14 +4177,16 @@ $('myTrcTxtDispALL').onclick = function(){
 		$('myTrcTxtDispALL').value = "一括表示";
 		for(var i = 0; i < $('myTrcSel2').length; i++){
 			var a = $("myTxt" + (i+1));
-			a.style.zIndex = "0";
+			//a.style.zIndex = "-10";
+			a.style.display = 'none';
 			$('myTrcSel2')[i].text = $('myTrcSel2')[i].text.replace(/●/g, "○")
 		}
 	}else{
 		$('myTrcTxtDispALL').value = "一括非表示";
 		for(var i = 0; i < $('myTrcSel2').length; i++){
 			var a = $("myTxt" + (i+1));
-			a.style.zIndex = "4";
+			//a.style.zIndex = "4";
+			a.style.display = '';
 			$('myTrcSel2')[i].text = $('myTrcSel2')[i].text.replace(/○/g, "●")
 		}
 	}
@@ -4392,9 +4397,44 @@ function myDelCookie(key){
 //----------------------------------------------------------------------------------------------------
 
 
+	myLayerSave.onclick = function () {
+        if (document.getElementById('myTrcSel2').childNodes.length == 0) {
+            return;
+        }
+        var saveElementsLayer = document.getElementById('myTrcSel2');
+        var saveElements = document.getElementById('tempLayer');
+        var jsonStr = [];
+        var tmp = {};
+        for (let i = 0; i < saveElements.childNodes.length; i++) {
+            tmp = {
+                id: saveElements.childNodes[i].id,
+                value: saveElements.childNodes[i].value,
+                selected: saveElementsLayer.childNodes[i].selected
+            }
+            jsonStr.push(tmp);
+        }
+        var saveElementsLayerNameList = document.getElementById('presetList');
+        $("myTxtIpt").value = (saveElementsLayer.innerHTML + "|--定義--|"+ saveElements.innerHTML + "|--定義--|" + JSON.stringify(jsonStr));
+    };
 
+    myLayerLoad.onclick = function () {
+        var result = window.confirm('復元してよろしいですか');
+        if (!result) {
+            return;
+        }
+        var loadElements = $("myTxtIpt").value.split("|--定義--|")[0];
+        document.getElementById('myTrcSel2').innerHTML = loadElements;
+        //loadElements = localStorage.getItem('saveTextarea_' + selectedItemValue);
+        document.getElementById('tempLayer').innerHTML = $("myTxtIpt").value.split("|--定義--|")[1];
 
-
+        // valueの復元
+        var restoreValueList = JSON.parse($("myTxtIpt").value.split("|--定義--|")[2]);
+        for (var i = 0; i < document.getElementById('myTrcSel2').childNodes.length; i++) {
+            document.getElementById('tempLayer').childNodes[i].value = restoreValueList[i].value;
+            document.getElementById('tempLayer').childNodes[i].addEventListener("focus", myTxtSelect, false);
+            document.getElementById('myTrcSel2').childNodes[i].selected = restoreValueList[i].selected;
+        }
+    };
 
 
 /*************************************************

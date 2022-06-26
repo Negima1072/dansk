@@ -1,13 +1,13 @@
-{
+﻿{
   "name": "DanSukuMizu",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 3,
-  "description": "DanSukuMizu modified by Negima1072",
+  "description": "DanSukuMizu modified by Negima1072 and @eneko0513",
   "content_scripts": [
     {
       "matches": ["https://www.nicovideo.jp/watch/*"],
       "js": ["NICONICOScript3.js"],
-      "run_at": "document_start"
+      "run_at": "document_end"
     }
   ],
   "permissions": [
