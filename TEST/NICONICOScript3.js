@@ -753,10 +753,12 @@ function myBoxIpt(a) {
 			var e = d.indexOf("]",0);
 			if (d.slice(1, 3)=='tm'){
 				var f = d.slice(3, e).match(/^[0-9]+$/);
-				window.postMessage({
-					type: 'time_seek_int',
-					int: parceInt(f / 10)
-				},'*');
+				setTimeout(() => {
+					window.postMessage({
+						type: 'time_seek_int',
+						int: parseInt(f / 10)
+					},'*');
+				}, 20);
 				$('myTxtIpt').value = d.slice(e+1);
 			}
 		}
