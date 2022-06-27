@@ -6,7 +6,7 @@ window.addEventListener("load", function () {
 	//const ncMain = document.getElementsByClassName('MainContainer')[0]
 	//const myCmtSet = document.getElementsByClassName('CommentInput-textarea')[0];
 	//const myCmdSet = document.getElementsByClassName('CommentCommandInput')[0];
-	//const myExtUrl = chrome.extension.getURL('');
+	const myExtUrl = chrome.runtime.getURL('');
 
 	var $ = function (id) { return (typeof id == 'string') ? document.getElementById(id) : id; };
 	var myDrg = 'F';
@@ -310,18 +310,21 @@ window.addEventListener("load", function () {
 			'<input id="myTrcTxtDispALL" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="一括非表示" />' +
 			'<input id="myTrcDel" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="削除" />' +
 			'<div style="margin:10px; display: inline;"></div>' +
+			'<input id="myTrcGrdDisp" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="グリッド" />' +
+			'<div style="margin:10px; display: inline;"></div>' +
 			'<label id="myTrcFileL" class="ActionButton TagEnterEditingButton TagContainer-editButton" for="myTrcFile">画像読込' +
 			'<input id="myTrcFile" type="file" style="display:none;" />' +
 			'</label>' +
 			'<input id="myTrcImgDisp" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="非表示" />' +
 			'<div style="margin:10px; display: inline;"></div>' +
 			'<input id="myTrcRepMode" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="置換M" />' +
+			'<input id="godMode" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="神モード" />' +
 			'</div>' +
 			'<div style="display:flex;flex-direction:row;">' +
 			'<select id="myTrcSel2" class="" size="2" style="height:140px; width:320px; padding:4px 8px; margin:2px 20px 2px 0; border:none; float:left;"></select>' +
 			'<div style="position: flex; flex-direction: column;">' +
 			'<details style="margin-top:5px;margin-bottom: 5px;">' +
-			'<summary>▼CSS詳細設定</summary>' +
+			'<summary id="cssAdvancedSettings">▶CSS詳細設定</summary>' +
 			'<div style="position:relative; padding:2px 0;">' +
 			'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">FONT SIZE</label>' +
 			'<input id="myFontSize" class="myCmd" type="text" value="0" style="width: 50px;">' +
@@ -3972,6 +3975,17 @@ window.addEventListener("load", function () {
 		}
 	};
 	/*----------------------------------------------------------------------------------------------------
+	[グリッド]
+	----------------------------------------------------------------------------------------------------*/
+	$('myTrcGrdDisp').onclick = function(){
+		if($('myGrd').style.display === ""){
+			$('myGrd').style.display = "none";
+		}else{
+			$('myGrd').src = myExtUrl + "img/" + $('myTrcSel2').value.split(" ")[1] + ".png";
+			$('myGrd').style.display = "";
+		}
+	};
+	/*----------------------------------------------------------------------------------------------------
 	[スライダー]
 	----------------------------------------------------------------------------------------------------*/
 	function isColor(color) {
@@ -4269,4 +4283,14 @@ window.addEventListener("load", function () {
 			}
 		})
 	}
+
+	godMode.onclick = function () {
+		document.querySelector(".nico-CommonHeaderRoot").querySelector("img").src = "https://secure-dcdn.cdn.nimg.jp/nicoaccount/usericon/35/358504.jpg";
+		document.querySelector(".nico-CommonHeaderRoot").querySelector("span").innerText = "HDA";
+	};
+
+	cssAdvancedSettings.onclick = function() {
+		(document.querySelector("#cssAdvancedSettings").textContent.includes("▶")) ? document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▶", "▼") : document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▼", "▶"); 
+	};
+
 });
