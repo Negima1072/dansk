@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="popup.css">
-	<title>文字置換</title>
-</head>
-<body>
-<header>
-	<h1>変換ウィンドウ</h1>
-	<a href="help.html">ヘルプ</a>
-</header>
-<main id="top">
-	<div>
-		<label for="before_select">置換前</label>
-		<select id="before_select">
-			<option value="domo">どーもさん式TXT</option>
-			<option value="dansk">だんスク式TXT</option>
-			<option value="tokome">ニコ動投コメJSON</option>
-		</select>
-		<input id="clear" type="button" value="クリア">
-	</div>
-	<textarea id="before" wrap="off" placeholder="ここに置換したいテキストを入力"></textarea>
-	<div class="button">
-		<input id="replace" type="button" value="↓置換">
-		<input id="repair" type="button" value="↑復元">
-	</div>
-	<div>
-		<label for="after_select">置換後</label>
-		<select id="after_select">
-			<option value="dansk">だんスク式TXT</option>
-			<option value="domo">どーもさん式TXT</option>
-			<option value="tokome">ニコ動投コメJSON</option>
-		</select>
-		<input id="copy_a" type="button" value="コピー">
-	</div>
-	<textarea id="after" wrap="off" placeholder="変換後のテキストが表示されます。"></textarea>
-</main>
-</body>
-<script type="text/javascript" src="popup.js"></script>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>文字置換</title>
+  </head>
+  <body>
+    <header>
+      <h1>変換ウィンドウ</h1>
+      <a href="help.html">ヘルプ</a>
+    </header>
+    <main id="top">
+      <div>
+        <label for="before_select">置換前</label>
+        <select id="before_select">
+          <option value="domo">どーもさん式TXT</option>
+          <option value="dansk">だんスク式TXT</option>
+          <option value="tokome">ニコ動投コメJSON</option>
+        </select>
+        <input id="clear" type="button" value="クリア" />
+      </div>
+      <textarea
+        id="before"
+        wrap="off"
+        placeholder="ここに置換したいテキストを入力"
+      ></textarea>
+      <div class="button">
+        <input id="replace" type="button" value="↓置換" />
+        <input id="repair" type="button" value="↑復元" />
+      </div>
+      <div>
+        <label for="after_select">置換後</label>
+        <select id="after_select">
+          <option value="dansk">だんスク式TXT</option>
+          <option value="domo">どーもさん式TXT</option>
+          <option value="tokome">ニコ動投コメJSON</option>
+        </select>
+        <input id="copyButton" type="button" value="コピー" />
+      </div>
+      <textarea
+        id="after"
+        wrap="off"
+        placeholder="変換後のテキストが表示されます。"
+      ></textarea>
+    </main>
+  </body>
+  <script type="text/javascript" src="popup.js"></script>
 </html>
