@@ -15,6 +15,10 @@
     {
       "resources": ["embed.js"],
       "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["img/*.png","img/etc/*.png"],
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {
