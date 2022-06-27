@@ -324,7 +324,7 @@
 			'<select id="myTrcSel2" class="" size="2" style="height:140px; width:320px; padding:4px 8px; margin:2px 20px 2px 0; border:none; float:left;"></select>' +
 			'<div style="position: flex; flex-direction: column;">' +
 			'<details style="margin-top:5px;margin-bottom: 5px;">' +
-			'<summary>▼CSS詳細設定</summary>' +
+			'<summary id="cssAdvancedSettings">▶CSS詳細設定</summary>' +
 			'<div style="position:relative; padding:2px 0;">' +
 			'<label class="VideoUploadDateMeta-title" style="color:#b5b5b5;">FONT SIZE</label>' +
 			'<input id="myFontSize" class="myCmd" type="text" value="0" style="width: 50px;">' +
@@ -4287,6 +4287,10 @@
 	godMode.onclick = function () {
 		document.querySelector(".nico-CommonHeaderRoot").querySelector("img").src = "https://secure-dcdn.cdn.nimg.jp/nicoaccount/usericon/35/358504.jpg";
 		document.querySelector(".nico-CommonHeaderRoot").querySelector("span").innerText = "HDA";
+	};
+
+	cssAdvancedSettings.onclick = function() {
+		(document.querySelector("#cssAdvancedSettings").textContent.includes("▶")) ? document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▶", "▼") : document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▼", "▶"); 
 	};
 
 });
