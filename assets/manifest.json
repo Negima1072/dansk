@@ -19,12 +19,15 @@
   ],
   "web_accessible_resources": [
 	{
+	  "resources": ["embed.js"],
+	  "matches": ["<all_urls>"]
+	},
+	{
 	  "resources": [
-		"embed.js"
+		"img/*.png",
+		"img/etc/*.png"
 	  ],
-	  "matches": [
-		"<all_urls>"
-	  ]
+	  "matches": ["<all_urls>"]
 	}
   ],
   "icons": {
