@@ -6,7 +6,7 @@
 	//const ncMain = document.getElementsByClassName('MainContainer')[0]
 	//const myCmtSet = document.getElementsByClassName('CommentInput-textarea')[0];
 	//const myCmdSet = document.getElementsByClassName('CommentCommandInput')[0];
-	//const myExtUrl = chrome.extension.getURL('');
+	const myExtUrl = chrome.runtime.getURL('');
 
 	var $ = function (id) { return (typeof id == 'string') ? document.getElementById(id) : id; };
 	var myDrg = 'F';
@@ -309,6 +309,8 @@
 			'<input id="myTrcTxtDisp" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="非表示" />' +
 			'<input id="myTrcTxtDispALL" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="一括非表示" />' +
 			'<input id="myTrcDel" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="削除" />' +
+			'<div style="margin:10px; display: inline;"></div>' +
+			'<input id="myTrcGrdDisp" class="ActionButton TagEnterEditingButton TagContainer-editButton" type="button" value="グリッド" />' +
 			'<div style="margin:10px; display: inline;"></div>' +
 			'<label id="myTrcFileL" class="ActionButton TagEnterEditingButton TagContainer-editButton" for="myTrcFile">画像読込' +
 			'<input id="myTrcFile" type="file" style="display:none;" />' +
@@ -3969,6 +3971,17 @@
 				a.style.display = '';
 				$('myTrcSel2')[i].text = $('myTrcSel2')[i].text.replace(/○/g, "●")
 			}
+		}
+	};
+	/*----------------------------------------------------------------------------------------------------
+	[グリッド]
+	----------------------------------------------------------------------------------------------------*/
+	$('myTrcGrdDisp').onclick = function(){
+		if($('myGrd').style.display === ""){
+			$('myGrd').style.display = "none";
+		}else{
+			$('myGrd').src = myExtUrl + "img/" + $('myTrcSel2').value.split(" ")[1] + ".png";
+			$('myGrd').style.display = "";
 		}
 	};
 	/*----------------------------------------------------------------------------------------------------
