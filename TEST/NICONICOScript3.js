@@ -708,8 +708,12 @@
 		//ActionButton ControllerButton PlayerPauseButton
 		var t = $('mySeekTime').value.match(/^[0-9]+$/);
 
-		document.getElementsByClassName("PlayerPlayButton")[0].dispatchEvent(new MouseEvent("click", { "view": window, "bubbles": !0, "cancelable": !0 }));
-		setTimeout(function () { document.getElementsByClassName("PlayerPauseButton")[0].dispatchEvent(new MouseEvent("click", { "view": window, "bubbles": !0, "cancelable": !0 })); }, t);
+		setTimeout(() => {
+			window.postMessage({
+				type: 'time_seek_int',
+				int: parseInt(t / 10)
+			}, '*');
+		}, 20);
 	};
 	/*----------------------------------------------------------------------------------------------------
 	[改行置換とA0]
@@ -752,14 +756,24 @@
 			if (d.indexOf("]", 0) != -1) {
 				var e = d.indexOf("]", 0);
 				if (d.slice(1, 3) == 'tm') {
-					var f = d.slice(3, e).match(/^[0-9]+$/);
-					setTimeout(() => {
-						window.postMessage({
-							type: 'time_seek_int',
-							int: parseInt(f / 10)
-						}, '*');
-					}, 20);
-					$('myTxtIpt').value = d.slice(e + 1);
+					if(d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/) != null){
+						var f = d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_pl',
+								pl: f
+							}, '*');
+						}, 50);
+					}else{
+						var f = d.slice(3, e).match(/^[0-9]+$/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_int',
+								int: parseInt(f / 10)
+							}, '*');
+						}, 50);
+						$('myTxtIpt').value = d.slice(e + 1);
+					}
 				}
 			}
 		}
@@ -798,15 +812,24 @@
 			if (a.indexOf("]", 0) != -1) {
 				var b = a.indexOf("]", 0);
 				if (a.slice(1, 3) == 'tm') {
-					var c = a.slice(3, b).match(/^[0-9]+$/);
-					if (c > 3001) { c = 3000; }
-					document.getElementsByClassName("PlayerPlayButton")[0].dispatchEvent(new MouseEvent("click", { "view": window, "bubbles": !0, "cancelable": !0 }));
-					$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '再生中';
-					setTimeout(function () {
-						document.getElementsByClassName("PlayerPauseButton")[0].dispatchEvent(new MouseEvent("click", { "view": window, "bubbles": !0, "cancelable": !0 }));
-						$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '停止中';
-					}, c);
-					$('myTxtIpt').value = a.slice(b + 1);
+					if(d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/) != null){
+						var f = d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_pl',
+								pl: f
+							}, '*');
+						}, 50);
+					}else{
+						var f = d.slice(3, e).match(/^[0-9]+$/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_int',
+								int: parseInt(f / 10)
+							}, '*');
+						}, 50);
+						$('myTxtIpt').value = d.slice(e + 1);
+					}
 				}
 			}
 		}

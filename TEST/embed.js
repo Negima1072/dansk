@@ -25,6 +25,16 @@ window.addEventListener('message', function(event) {
     window.document.getElementsByClassName("CommentOnOffButton")[0].click();
     window.document.getElementsByClassName("CommentOnOffButton")[0].click();
   }
+  else if(event.data.type == "time_seek_pl") {
+    var a = event.data.pl[0];
+    var y = Number.parseInt(a.substr(0, 2))*6000+Number.parseInt(a.substr(3, 2))*100+Number.parseInt(a.substr(6, 2));
+    if(y < 0) y = 0;
+    if(y > window.__videoplayer.duration()*100) y = window.__videoplayer.duration()*100;
+    window.__videoplayer.currentTime((Math.floor(y)+0.1)/100);
+    window.document.getElementsByClassName("CommentOnOffButton")[0].click();
+    window.document.getElementsByClassName("CommentOnOffButton")[0].click();
+    document.activeElement.blur();
+  }
 });
 
 let p = !1;
