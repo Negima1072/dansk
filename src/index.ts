@@ -2,14 +2,13 @@ window.addEventListener("load", function () {
 	//window.addEventListener('load', function(){
 
 
+
 	//const ncMain = document.getElementsByClassName('MainContainer')[0]
 	//const myCmtSet = document.getElementsByClassName('CommentInput-textarea')[0];
 	//const myCmdSet = document.getElementsByClassName('CommentCommandInput')[0];
 	//const myExtUrl = chrome.extension.getURL('');
 
-	var $ = function (id) {
-		return (typeof id == 'string') ? document.getElementById(id) : id;
-	};
+	var $ = function (id) { return (typeof id == 'string') ? document.getElementById(id) : id; };
 	var myDrg = 'F';
 	var mySldVal = '0';
 	var myRep = false;
@@ -48,9 +47,7 @@ window.addEventListener("load", function () {
 		var t = document.createElement('div');
 		t.id = 'myEmtTime';
 		t.innerHTML = '[ - ]Time';
-		t.addEventListener('click', function () {
-			myEmtHeadClick(t);
-		}, false);
+		t.addEventListener('click', function () { myEmtHeadClick(t); }, false);
 		p.after(t);
 		myCSSMain(t);
 		//時間移動スクリプト中身
@@ -77,9 +74,7 @@ window.addEventListener("load", function () {
 		myCSSSub(tb);
 		var x = document.getElementsByClassName('myTimeBtn');
 		for (var i = 0; i < x.length; ++i) {
-			x[i].addEventListener("click", function (e) {
-				myTimeClick(e.target.textContent);
-			}, false);
+			x[i].addEventListener("click", function (e) { myTimeClick(e.target.textContent); }, false);
 		}
 		if (myGetCookie('myTimeDisp') == "false") {
 			tb.style.display = "none";
@@ -95,9 +90,7 @@ window.addEventListener("load", function () {
 		var a = document.createElement('div');
 		a.id = 'myEmtMain';
 		a.innerHTML = '[ - ]Main';
-		a.addEventListener('click', function () {
-			myEmtHeadClick(a);
-		}, false);
+		a.addEventListener('click', function () { myEmtHeadClick(a); }, false);
 		n.after(a);
 		myCSSMain(a);
 		//メイン中身
@@ -168,114 +161,42 @@ window.addEventListener("load", function () {
 			'</div>';
 		a.after(b);
 		myCSSSub(b);
-		$("myCmdClear").addEventListener("click", function () {
-			myCmdClick(20, "");
-		}, false);
-		$("myCmdWhite").addEventListener("click", function () {
-			myCmdClick(0, "white");
-		}, false);
-		$("myCmdRed").addEventListener("click", function () {
-			myCmdClick(0, "red");
-		}, false);
-		$("myCmdPink").addEventListener("click", function () {
-			myCmdClick(0, "pink");
-		}, false);
-		$("myCmdOrange").addEventListener("click", function () {
-			myCmdClick(0, "orange");
-		}, false);
-		$("myCmdYellow").addEventListener("click", function () {
-			myCmdClick(0, "yellow");
-		}, false);
-		$("myCmdGreen").addEventListener("click", function () {
-			myCmdClick(0, "green");
-		}, false);
-		$("myCmdCyan").addEventListener("click", function () {
-			myCmdClick(0, "cyan");
-		}, false);
-		$("myCmdBlue").addEventListener("click", function () {
-			myCmdClick(0, "blue");
-		}, false);
-		$("myCmdPurple").addEventListener("click", function () {
-			myCmdClick(0, "purple");
-		}, false);
-		$("myCmdBlack").addEventListener("click", function () {
-			myCmdClick(0, "black");
-		}, false);
-		$("myCmdWhite2").addEventListener("click", function () {
-			myCmdClick(0, "white2");
-		}, false);
-		$("myCmdRed2").addEventListener("click", function () {
-			myCmdClick(0, "red2");
-		}, false);
-		$("myCmdPink2").addEventListener("click", function () {
-			myCmdClick(0, "pink2");
-		}, false);
-		$("myCmdOrange2").addEventListener("click", function () {
-			myCmdClick(0, "orange2");
-		}, false);
-		$("myCmdYellow2").addEventListener("click", function () {
-			myCmdClick(0, "yellow2");
-		}, false);
-		$("myCmdGreen2").addEventListener("click", function () {
-			myCmdClick(0, "green2");
-		}, false);
-		$("myCmdCyan2").addEventListener("click", function () {
-			myCmdClick(0, "cyan2");
-		}, false);
-		$("myCmdBlue2").addEventListener("click", function () {
-			myCmdClick(0, "blue2");
-		}, false);
-		$("myCmdPurple2").addEventListener("click", function () {
-			myCmdClick(0, "purple2");
-		}, false);
-		$("myCmdBlack2").addEventListener("click", function () {
-			myCmdClick(0, "black2");
-		}, false);
-		$("myCmdbig").addEventListener("click", function () {
-			myCmdClick(1, "big");
-		}, false);
-		$("myCmdmedium").addEventListener("click", function () {
-			myCmdClick(1, "medium");
-		}, false);
-		$("myCmdsmall").addEventListener("click", function () {
-			myCmdClick(1, "small");
-		}, false);
-		$("myCmdue").addEventListener("click", function () {
-			myCmdClick(2, "ue");
-		}, false);
-		$("myCmdNaka").addEventListener("click", function () {
-			myCmdClick(2, "naka");
-		}, false);
-		$("myCmdshita").addEventListener("click", function () {
-			myCmdClick(2, "shita");
-		}, false);
-		$("myCmdDefont").addEventListener("click", function () {
-			myCmdClick(3, "defont");
-		}, false);
-		$("myCmdgothic").addEventListener("click", function () {
-			myCmdClick(3, "gothic");
-		}, false);
-		$("myCmdmincho").addEventListener("click", function () {
-			myCmdClick(3, "mincho");
-		}, false);
-		$("myCmdender").addEventListener("click", function () {
-			myCmdClick(4, "ender");
-		}, false);
-		$("myCmdfull").addEventListener("click", function () {
-			myCmdClick(5, "full");
-		}, false);
-		$("myCmdPatissier").addEventListener("click", function () {
-			myCmdClick(6, "patissier");
-		}, false);
-		$("myCmdSage").addEventListener("click", function () {
-			myCmdClick(7, "sage");
-		}, false);
-		$("myCmdIyayo").addEventListener("click", function () {
-			myCmdClick(8, "184");
-		}, false);
-		$("myInvisible").addEventListener("click", function () {
-			myCmdClick(9, "invisible");
-		}, false);
+		$("myCmdClear").addEventListener("click", function () { myCmdClick(20, ""); }, false);
+		$("myCmdWhite").addEventListener("click", function () { myCmdClick(0, "white"); }, false);
+		$("myCmdRed").addEventListener("click", function () { myCmdClick(0, "red"); }, false);
+		$("myCmdPink").addEventListener("click", function () { myCmdClick(0, "pink"); }, false);
+		$("myCmdOrange").addEventListener("click", function () { myCmdClick(0, "orange"); }, false);
+		$("myCmdYellow").addEventListener("click", function () { myCmdClick(0, "yellow"); }, false);
+		$("myCmdGreen").addEventListener("click", function () { myCmdClick(0, "green"); }, false);
+		$("myCmdCyan").addEventListener("click", function () { myCmdClick(0, "cyan"); }, false);
+		$("myCmdBlue").addEventListener("click", function () { myCmdClick(0, "blue"); }, false);
+		$("myCmdPurple").addEventListener("click", function () { myCmdClick(0, "purple"); }, false);
+		$("myCmdBlack").addEventListener("click", function () { myCmdClick(0, "black"); }, false);
+		$("myCmdWhite2").addEventListener("click", function () { myCmdClick(0, "white2"); }, false);
+		$("myCmdRed2").addEventListener("click", function () { myCmdClick(0, "red2"); }, false);
+		$("myCmdPink2").addEventListener("click", function () { myCmdClick(0, "pink2"); }, false);
+		$("myCmdOrange2").addEventListener("click", function () { myCmdClick(0, "orange2"); }, false);
+		$("myCmdYellow2").addEventListener("click", function () { myCmdClick(0, "yellow2"); }, false);
+		$("myCmdGreen2").addEventListener("click", function () { myCmdClick(0, "green2"); }, false);
+		$("myCmdCyan2").addEventListener("click", function () { myCmdClick(0, "cyan2"); }, false);
+		$("myCmdBlue2").addEventListener("click", function () { myCmdClick(0, "blue2"); }, false);
+		$("myCmdPurple2").addEventListener("click", function () { myCmdClick(0, "purple2"); }, false);
+		$("myCmdBlack2").addEventListener("click", function () { myCmdClick(0, "black2"); }, false);
+		$("myCmdbig").addEventListener("click", function () { myCmdClick(1, "big"); }, false);
+		$("myCmdmedium").addEventListener("click", function () { myCmdClick(1, "medium"); }, false);
+		$("myCmdsmall").addEventListener("click", function () { myCmdClick(1, "small"); }, false);
+		$("myCmdue").addEventListener("click", function () { myCmdClick(2, "ue"); }, false);
+		$("myCmdNaka").addEventListener("click", function () { myCmdClick(2, "naka"); }, false);
+		$("myCmdshita").addEventListener("click", function () { myCmdClick(2, "shita"); }, false);
+		$("myCmdDefont").addEventListener("click", function () { myCmdClick(3, "defont"); }, false);
+		$("myCmdgothic").addEventListener("click", function () { myCmdClick(3, "gothic"); }, false);
+		$("myCmdmincho").addEventListener("click", function () { myCmdClick(3, "mincho"); }, false);
+		$("myCmdender").addEventListener("click", function () { myCmdClick(4, "ender"); }, false);
+		$("myCmdfull").addEventListener("click", function () { myCmdClick(5, "full"); }, false);
+		$("myCmdPatissier").addEventListener("click", function () { myCmdClick(6, "patissier"); }, false);
+		$("myCmdSage").addEventListener("click", function () { myCmdClick(7, "sage"); }, false);
+		$("myCmdIyayo").addEventListener("click", function () { myCmdClick(8, "184"); }, false);
+		$("myInvisible").addEventListener("click", function () { myCmdClick(9, "invisible"); }, false);
 		$("myCmtClear").addEventListener("click", myCmtClearClick, false);
 		if (myGetCookie('myMainDisp') == "false") {
 			b.style.display = "none";
@@ -286,9 +207,7 @@ window.addEventListener("load", function () {
 		var c = document.createElement('div');
 		c.id = 'myEmtBox';
 		c.innerHTML = '[ - ]Box';
-		c.addEventListener('click', function () {
-			myEmtHeadClick(c);
-		}, false);
+		c.addEventListener('click', function () { myEmtHeadClick(c); }, false);
 		b.after(c);
 		myCSSMain(c);
 		//ボックス中身
@@ -318,15 +237,9 @@ window.addEventListener("load", function () {
 			'';
 		c.after(d);
 		myCSSSub(d);
-		$("myCmdBoxA").addEventListener("click", function () {
-			myBoxIpt(0);
-		}, false);
-		$("myCmdBoxB").addEventListener("click", function () {
-			myBoxIpt(1);
-		}, false);
-		$("myCmdBoxC").addEventListener("click", function () {
-			$("myTxtIpt").value = "";
-		}, false);
+		$("myCmdBoxA").addEventListener("click", function () { myBoxIpt(0); }, false);
+		$("myCmdBoxB").addEventListener("click", function () { myBoxIpt(1); }, false);
+		$("myCmdBoxC").addEventListener("click", function () { $("myTxtIpt").value = ""; }, false);
 		if (myGetCookie('myBoxDisp') == "false") {
 			d.style.display = "none";
 			c.innerHTML = '[ + ]Box';
@@ -336,9 +249,7 @@ window.addEventListener("load", function () {
 		var e = document.createElement('div');
 		e.id = 'myEmtTrace';
 		e.innerHTML = '[ - ]Trace';
-		e.addEventListener('click', function () {
-			myEmtHeadClick(e);
-		}, false);
+		e.addEventListener('click', function () { myEmtHeadClick(e); }, false);
 		n.before(e);
 		myCSSMain(e);
 		//トレ中身
@@ -538,7 +449,6 @@ window.addEventListener("load", function () {
 		}
 		document.querySelector('.VideoSymbolContainer').insertAdjacentHTML('beforeend', '<div id="tempLayer"></div>');
 	}
-
 	//メニュー表示非表示
 	function myEmtHeadClick(a) {
 		var b = $(a.id + 'Sub');
@@ -553,7 +463,6 @@ window.addEventListener("load", function () {
 			mySetCookie('my' + c + 'Disp', 'false');
 		}
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[CSS設定]
 	----------------------------------------------------------------------------------------------------*/
@@ -569,7 +478,6 @@ window.addEventListener("load", function () {
 			'display: block;' +
 			'';
 	}
-
 	function myCSSSub(a) {
 		a.style.cssText = '' +
 			'font-size:13px;' +
@@ -581,7 +489,6 @@ window.addEventListener("load", function () {
 			//'border : solid 1px #FFFFFF;' +
 			'';
 	}
-
 	function myCSSCmd(a) {
 		var b = '' +
 			//'width: auto;' +
@@ -608,7 +515,6 @@ window.addEventListener("load", function () {
 		}
 		a.style.cssText = a.style.cssText + " " + b;
 	}
-
 	function myCSSCmdChk(a) {
 		//チェック用
 		var b = '' +
@@ -628,7 +534,6 @@ window.addEventListener("load", function () {
 			'';
 		a.style.cssText = a.style.cssText + ' ' + b;
 	}
-
 	function myCSSCmdC(a) {
 		//色な
 		var b = '' +
@@ -646,7 +551,6 @@ window.addEventListener("load", function () {
 			'';
 		a.style.cssText = a.style.cssText + ' ' + b;
 	}
-
 	function myCSSLvl(emt) {
 		emt.style.cssText = '' +
 			'width: auto;' +
@@ -663,7 +567,6 @@ window.addEventListener("load", function () {
 			'margin:0;' +
 			'';
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[時間移動スクリプト関連]
 	----------------------------------------------------------------------------------------------------*/
@@ -673,7 +576,6 @@ window.addEventListener("load", function () {
 			text: a
 		}, '*');
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[コマンドクリック関連]
 	----------------------------------------------------------------------------------------------------*/
@@ -681,9 +583,7 @@ window.addEventListener("load", function () {
 		//全角を半角へとかすればいいと思うね
 		var f = document.getElementsByClassName('CommentCommandInput')[0];
 		var c = f.value.toLowerCase().split(" ");
-		if (c[0] === undefined) {
-			return;
-		}
+		if (c[0] === undefined) { return; }
 
 		var d = ['', '', '', '', '', '', '', '', '', ''];
 		var e = '';
@@ -755,9 +655,7 @@ window.addEventListener("load", function () {
 					d[9] = c[i];
 					break;
 				default:
-					if (c[i].slice(0, 1) == '#') {
-						d[0] = c[i];
-					}
+					if (c[i].slice(0, 1) == '#') { d[0] = c[i]; }
 					//alert('無効なコマンド')
 					break;
 			}
@@ -777,11 +675,7 @@ window.addEventListener("load", function () {
 			case 7:
 			case 8:
 			case 9:
-				if (d[a] === '') {
-					d[a] = b;
-				} else {
-					d[a] = '';
-				}
+				if (d[a] === '') { d[a] = b; } else { d[a] = ''; }
 				break;
 			case 20:
 				d.length = 0;
@@ -795,19 +689,17 @@ window.addEventListener("load", function () {
 			}
 		}
 		f.value = e.slice(1);
-		f.dispatchEvent(new Event("input", {"bubbles": !0}));
+		f.dispatchEvent(new Event("input", { "bubbles": !0 }));
 		//mySetCmd(niIT, myCmtCmd);
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[コメントクリアクリック]
 	----------------------------------------------------------------------------------------------------*/
 	function myCmtClearClick() {
 		var a = document.getElementsByClassName('CommentInput-textarea')[0];
 		a.value = '';
-		a.dispatchEvent(new Event("input", {"bubbles": !0}));
+		a.dispatchEvent(new Event("input", { "bubbles": !0 }));
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[シークというかいまんとこタイマー]
 	----------------------------------------------------------------------------------------------------*/
@@ -816,18 +708,12 @@ window.addEventListener("load", function () {
 		//ActionButton ControllerButton PlayerPauseButton
 		var t = $('mySeekTime').value.match(/^[0-9]+$/);
 
-		document.getElementsByClassName("PlayerPlayButton")[0].dispatchEvent(new MouseEvent("click", {
-			"view": window,
-			"bubbles": !0,
-			"cancelable": !0
-		}));
-		setTimeout(function () {
-			document.getElementsByClassName("PlayerPauseButton")[0].dispatchEvent(new MouseEvent("click", {
-				"view": window,
-				"bubbles": !0,
-				"cancelable": !0
-			}));
-		}, t);
+		setTimeout(() => {
+			window.postMessage({
+				type: 'time_seek_int',
+				int: parseInt(t / 10)
+			}, '*');
+		}, 20);
 	};
 	/*----------------------------------------------------------------------------------------------------
 	[改行置換とA0]
@@ -841,9 +727,7 @@ window.addEventListener("load", function () {
 	[ゴシック明朝切り替え]
 	----------------------------------------------------------------------------------------------------*/
 	$('myTrcGM').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var a = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var b = $('myTrcSel2').getElementsByTagName('option')[$('myTrcSel2').value.split(" ")[0] - 1];
 		if ($('myTrcGM').value == 'gothic') {
@@ -856,14 +740,11 @@ window.addEventListener("load", function () {
 			a.style.fontFamily = '"游明朝体", "Yu Mincho", YuMincho, "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック", sans-serif';
 		}
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[入力]
 	----------------------------------------------------------------------------------------------------*/
 	function myBoxIpt(a) {
-		if ($("myTxtIpt").value === "") {
-			return;
-		}
+		if ($("myTxtIpt").value === "") { return; }
 		var c = $('myEmtBox');
 		c.innerHTML = c.innerHTML.slice(0, 8) + '　　　　　info---' + 'セット中...';
 		//メインルーチンを止めたい
@@ -875,14 +756,24 @@ window.addEventListener("load", function () {
 			if (d.indexOf("]", 0) != -1) {
 				var e = d.indexOf("]", 0);
 				if (d.slice(1, 3) == 'tm') {
-					var f = d.slice(3, e).match(/^[0-9]+$/);
-					setTimeout(() => {
-						window.postMessage({
-							type: 'time_seek_int',
-							int: parseInt(f / 10)
-						}, '*');
-					}, 20);
-					$('myTxtIpt').value = d.slice(e + 1);
+					if(d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/) != null){
+						var f = d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_pl',
+								pl: f
+							}, '*');
+						}, 50);
+					}else{
+						var f = d.slice(3, e).match(/^[0-9]+$/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_int',
+								int: parseInt(f / 10)
+							}, '*');
+						}, 50);
+						$('myTxtIpt').value = d.slice(e + 1);
+					}
 				}
 			}
 		}
@@ -907,19 +798,12 @@ window.addEventListener("load", function () {
 			clearInterval(myTimer);
 			if ((location.href).substr(-13) == "owner_comment") {
 				//投コメモード
-				myTimer = setInterval((function b() {
-					myBoxIptS(0, 250);
-					return b;
-				}()), 1000);//ここ変更した
+				myTimer = setInterval((function b() { myBoxIptS(0, 250); return b; }()), 1000);//ここ変更した
 			} else {
-				myTimer = setInterval((function b() {
-					myBoxIptS(0, 2000);
-					return b;
-				}()), 6000);
+				myTimer = setInterval((function b() { myBoxIptS(0, 2000); return b; }()), 6000);
 			}
 		}
 	}
-
 	//----------------------------------------------------------------------------------------------------
 	function mySeekTimer() {
 		var a = $('myTxtIpt').value;
@@ -928,25 +812,24 @@ window.addEventListener("load", function () {
 			if (a.indexOf("]", 0) != -1) {
 				var b = a.indexOf("]", 0);
 				if (a.slice(1, 3) == 'tm') {
-					var c = a.slice(3, b).match(/^[0-9]+$/);
-					if (c > 3001) {
-						c = 3000;
+					if(d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/) != null){
+						var f = d.slice(3, e).match(/[0-9]+:[0-9]+.[0-9]+/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_pl',
+								pl: f
+							}, '*');
+						}, 50);
+					}else{
+						var f = d.slice(3, e).match(/^[0-9]+$/);
+						setTimeout(() => {
+							window.postMessage({
+								type: 'time_seek_int',
+								int: parseInt(f / 10)
+							}, '*');
+						}, 50);
+						$('myTxtIpt').value = d.slice(e + 1);
 					}
-					document.getElementsByClassName("PlayerPlayButton")[0].dispatchEvent(new MouseEvent("click", {
-						"view": window,
-						"bubbles": !0,
-						"cancelable": !0
-					}));
-					$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '再生中';
-					setTimeout(function () {
-						document.getElementsByClassName("PlayerPauseButton")[0].dispatchEvent(new MouseEvent("click", {
-							"view": window,
-							"bubbles": !0,
-							"cancelable": !0
-						}));
-						$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '停止中';
-					}, c);
-					$('myTxtIpt').value = a.slice(b + 1);
 				}
 			}
 		}
@@ -996,7 +879,7 @@ window.addEventListener("load", function () {
 				var b = a.slice(1, j);
 				a = a.slice(j + 1);
 				e.value = b;
-				e.dispatchEvent(new Event("input", {"bubbles": !0}));
+				e.dispatchEvent(new Event("input", { "bubbles": !0 }));
 			}
 		}
 
@@ -1013,22 +896,16 @@ window.addEventListener("load", function () {
 			//b = b + Array(128).join('\u2003')
 			b = b + "　"
 			e.value = b;
-			e.dispatchEvent(new Event("input", {"bubbles": !0}));
+			e.dispatchEvent(new Event("input", { "bubbles": !0 }));
 		}
 
 
 		f.value = a;
-		f.dispatchEvent(new Event("input", {"bubbles": !0}));
+		f.dispatchEvent(new Event("input", { "bubbles": !0 }));
 
 		//投下
 		if (g === 0) {
-			setTimeout(function () {
-				document.getElementsByClassName("CommentPostButton")[0].dispatchEvent(new MouseEvent("click", {
-					"view": window,
-					"bubbles": !0,
-					"cancelable": !0
-				}));
-			}, p);
+			setTimeout(function () { document.getElementsByClassName("CommentPostButton")[0].dispatchEvent(new MouseEvent("click", { "view": window, "bubbles": !0, "cancelable": !0 })); }, p);
 		} else {
 			h.innerHTML = h.innerHTML.slice(0, 8) + '　　　　　info---' + '1行セット終了(' + a.length + ')';
 		}
@@ -1038,9 +915,7 @@ window.addEventListener("load", function () {
 			var c
 			$('myTxtIpt').value = "";
 			if (g === 0) {
-				setTimeout(function () {
-					$('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '全行投下完了(' + a.length + ')';
-				}, 2000);
+				setTimeout(function () { $('myEmtBox').innerHTML = $('myEmtBox').innerHTML.slice(0, 8) + '　　　　　info---' + '全行投下完了(' + a.length + ')'; }, 2000);
 				clearInterval(myTimer);
 			}
 			return;
@@ -1056,12 +931,9 @@ window.addEventListener("load", function () {
 		}
 		$('myTxtIpt').value = d;
 		if (g === 0) {
-			setTimeout(function () {
-				mySeekTimer();
-			}, 3000);
+			setTimeout(function () { mySeekTimer(); }, 3000);
 		}
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	[Color]
 	----------------------------------------------------------------------------------------------------*/
@@ -1140,23 +1012,15 @@ window.addEventListener("load", function () {
 	};
 	//[上]
 	$('myTrcUp').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
-		if ($('myTrcSel2').value.split(" ")[0] == 1) {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
+		if ($('myTrcSel2').value.split(" ")[0] == 1) { return; }
 		var b = parseInt($('myTrcSel2').value.split(" ")[0] - 1);
 		myTrcUD(b, "u");
 	};
 	//[下]
 	$('myTrcDw').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
-		if ($('myTrcSel2').value.split(" ")[0] == $('myTrcSel2').length) {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
+		if ($('myTrcSel2').value.split(" ")[0] == $('myTrcSel2').length) { return; }
 		var b = parseInt($('myTrcSel2').value.split(" ")[0]);
 		myTrcUD(b, "d");
 	};
@@ -1165,13 +1029,9 @@ window.addEventListener("load", function () {
 	----------------------------------------------------------------------------------------------------*/
 	$('myTrcDel').onclick = function () {
 		//
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var q = confirm("選択中レイヤを削除します。")
-		if (q === false) {
-			return;
-		}
+		if (q === false) { return; }
 
 		//選択中レイヤを削除し全部1つ前に詰める
 		var a = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
@@ -1194,9 +1054,7 @@ window.addEventListener("load", function () {
 	[上下中切り替え サイズにより切り替えめんどくせえ　どっか展開しといたほうがえええのか] W入ってる奴は除外？
 	----------------------------------------------------------------------------------------------------*/
 	$('myTrcUSN').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var a = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var b = $('myTrcSel2').getElementsByTagName('option')[$('myTrcSel2').value.split(" ")[0] - 1];
 		if ($('myTrcUSN').value == 'ue') {
@@ -1802,8 +1660,7 @@ window.addEventListener("load", function () {
 	window.addEventListener("resize", function () {
 		var v = document.getElementsByClassName('VideoPlayer')[0];
 		if (pls_w != (v.clientWidth / 640) || pls_h != (v.clientHeight / 360)) {
-			pls_w = v.clientWidth / 640;
-			pls_h = v.clientHeight / 360;
+			pls_w = v.clientWidth / 640; pls_h = v.clientHeight / 360;
 			//ここにウィンドウサイズが変わった際にレイヤーのサイズを変える処理
 		}
 	})
@@ -1811,21 +1668,15 @@ window.addEventListener("load", function () {
 	調整
 	----------------------------------------------------------------------------------------------------*/
 	$('myFontSizeU').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = (Math.round((parseFloat($('myFontSize').value) + 0.01) * 100) / 100).toFixed(2);
 		$('myFontSize').value = v;
 		t.style.fontSize = v + 'px';
 	};
 	$('myFontSizeD').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
-		if ($('myFontSize').value == '1') {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
+		if ($('myFontSize').value == '1') { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = (Math.round((parseFloat($('myFontSize').value) - 0.01) * 100) / 100).toFixed(2);
 		$('myFontSize').value = v;
@@ -1833,21 +1684,15 @@ window.addEventListener("load", function () {
 	};
 	$('myLineHeightU').onclick = function () {
 		//少数点効かない
-		if (!$('myLineHeight')) {
-			return;
-		}
+		if (!$('myLineHeight')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = parseInt($('myLineHeight').value) + 1;
 		$('myLineHeight').value = v;
 		t.style.lineHeight = v + 'px';
 	};
 	$('myLineHeightD').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
-		if ($('myLineHeight').value == '1') {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
+		if ($('myLineHeight').value == '1') { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = parseInt($('myLineHeight').value) - 1;
 		$('myLineHeight').value = v;
@@ -1855,36 +1700,28 @@ window.addEventListener("load", function () {
 	};
 	$('myTopU').onclick = function () {
 		//少数点効かない
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = parseInt($('myTop').value) + 1;
 		$('myTop').value = v;
 		t.style.top = v + 'px';
 	};
 	$('myTopD').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = parseInt($('myTop').value) - 1;
 		$('myTop').value = v;
 		t.style.top = v + 'px';
 	};
 	$('myLeftL').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = parseInt($('myLeft').value) - 1;
 		$('myLeft').value = v;
 		t.style.left = v + 'px';
 	};
 	$('myLeftR').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = parseInt($('myLeft').value) + 1;
 		$('myLeft').value = v;
@@ -1892,36 +1729,28 @@ window.addEventListener("load", function () {
 	};
 	//Trans
 	$('myTransYU').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = (Math.round((parseFloat($('myTransY').value) + 0.001) * 1000) / 1000).toFixed(3);
 		$('myTransY').value = v;
 		t.style.transform = 'scale(' + $('myTransX').value + ',' + v + ')';
 	};
 	$('myTransYD').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = (Math.round((parseFloat($('myTransY').value) - 0.001) * 1000) / 1000).toFixed(3);
 		$('myTransY').value = v;
 		t.style.transform = 'scale(' + $('myTransX').value + ',' + v + ')';
 	};
 	$('myTransXU').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = (Math.round((parseFloat($('myTransX').value) - 0.001) * 1000) / 1000).toFixed(3);
 		$('myTransX').value = v;
 		t.style.transform = 'scale(' + v + ',' + $('myTransY').value + ')';
 	};
 	$('myTransXD').onclick = function () {
-		if (!$('myTxt1')) {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
 		var t = document.getElementById("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		var v = (Math.round((parseFloat($('myTransX').value) + 0.001) * 1000) / 1000).toFixed(3);
 		$('myTransX').value = v;
@@ -1944,13 +1773,10 @@ window.addEventListener("load", function () {
 	[select2選択]
 	----------------------------------------------------------------------------------------------------*/
 	$('myTrcSel2').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var a = $("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		a.focus();
 	};
-
 	/*----------------------------------------------------------------------------------------------------
 	[text選択]
 	----------------------------------------------------------------------------------------------------*/
@@ -2003,7 +1829,6 @@ window.addEventListener("load", function () {
 		$('myTrcSel2')[a.id.slice(5) - 1].selected = true;
 		//ここ∞ループしとる
 	}
-
 	/*----------------------------------------------------------------------------------------------------
 	Tabモード
 	----------------------------------------------------------------------------------------------------*/
@@ -2043,9 +1868,7 @@ window.addEventListener("load", function () {
 		$('myTxtExpOne').onclick(true);
 	}
 	$('myTxtExpOne').onclick = function (Tmode) {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		//$('myTxtIpt').value = ''
 		//全体
 		var a = $("myTxt" + $('myTrcSel2').value.split(" ")[0]).value;
@@ -2158,8 +1981,7 @@ window.addEventListener("load", function () {
 		for (var i = 0; i < b.length; i++) {
 			//文字を分解し幅を調べて行く
 			c = b[i].split("")
-			p = 0;
-			q = 0; //g= ''
+			p = 0; q = 0; //g= ''
 			for (var m = 0; m < c.length; m++) {
 				switch (c[m]) {
 					case '\u2003':
@@ -2329,9 +2151,7 @@ window.addEventListener("load", function () {
 			if (p != 0) {
 				w -= p * 2;
 				for (var i = 0; i < n.length; i++) {
-					if (n[i] == undefined) {
-						break;
-					}
+					if (n[i] == undefined) { break; }
 					n[i].WIDTH -= p;
 					n[i].LEFTSPACE -= p;
 					for (var m = 0; m < p; m++) {
@@ -2516,9 +2336,7 @@ window.addEventListener("load", function () {
 	各テンプレのマックスを超えると実現不可能
 	----------------------------------------------------------------------------------------------------*/
 	$('myTxtExpALLT').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var nn = new Array();//長さ、左空白幅格納配列
 		for (var ii = 0; ii < $('myTrcSel2').length; ii++) {
 			$('myTrcSel2')[ii].selected = true;
@@ -2585,8 +2403,7 @@ window.addEventListener("load", function () {
 			for (var i = 0; i < b.length; i++) {
 				//文字を分解し幅を調べて行く
 				c = b[i].split("")
-				p = 0;
-				q = 0; //g= ''
+				p = 0; q = 0; //g= ''
 				for (var m = 0; m < c.length; m++) {
 					switch (c[m]) {
 						case '\u2003':
@@ -2763,8 +2580,7 @@ window.addEventListener("load", function () {
 			for (var i = 0; i < b.length; i++) {
 				//文字を分解し幅を調べて行く
 				c = b[i].split("")
-				p = 0;
-				q = 0; //g= ''
+				p = 0; q = 0; //g= ''
 				for (var m = 0; m < c.length; m++) {
 					switch (c[m]) {
 						case '\u2003':
@@ -2896,6 +2712,8 @@ window.addEventListener("load", function () {
 				//左空白削り確定値
 
 
+
+
 				p = ww
 
 
@@ -2908,9 +2726,7 @@ window.addEventListener("load", function () {
 				if (p != 0) {
 					//w -= p * 2;
 					for (var i = 0; i < n.length; i++) {
-						if (n[i] == undefined) {
-							break;
-						}
+						if (n[i] == undefined) { break; }
 						n[i].WIDTH -= p;
 						n[i].LEFTSPACE -= p;
 						for (var m = 0; m < p; m++) {
@@ -3098,9 +2914,7 @@ window.addEventListener("load", function () {
 	//	$('myTxtExpTokomeOne').onclick(true);
 	//}
 	$('myTxtExpTokomeOne').onclick = function (Tmode) {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		//$('myTxtIpt').value = ''
 		//全体
 		var a = $("myTxt" + $('myTrcSel2').value.split(" ")[0]).value;
@@ -3213,8 +3027,7 @@ window.addEventListener("load", function () {
 		for (var i = 0; i < b.length; i++) {
 			//文字を分解し幅を調べて行く
 			c = b[i].split("")
-			p = 0;
-			q = 0; //g= ''
+			p = 0; q = 0; //g= ''
 			for (var m = 0; m < c.length; m++) {
 				switch (c[m]) {
 					case '\u2003':
@@ -3385,9 +3198,7 @@ window.addEventListener("load", function () {
 			if (p != 0) {
 				w -= p * 2;
 				for (var i = 0; i < n.length; i++) {
-					if (n[i] == undefined) {
-						break;
-					}
+					if (n[i] == undefined) { break; }
 					n[i].WIDTH -= p;
 					n[i].LEFTSPACE -= p;
 					for (var m = 0; m < p; m++) {
@@ -3564,9 +3375,7 @@ window.addEventListener("load", function () {
 	[投コメ全行等幅]
 	----------------------------------------------------------------------------------------------------*/
 	$('myTxtExpTokomeT').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var nn = new Array();//長さ、左空白幅格納配列
 		for (var ii = 0; ii < $('myTrcSel2').length; ii++) {
 			$('myTrcSel2')[ii].selected = true;
@@ -3633,8 +3442,7 @@ window.addEventListener("load", function () {
 			for (var i = 0; i < b.length; i++) {
 				//文字を分解し幅を調べて行く
 				c = b[i].split("")
-				p = 0;
-				q = 0; //g= ''
+				p = 0; q = 0; //g= ''
 				for (var m = 0; m < c.length; m++) {
 					switch (c[m]) {
 						case '\u2003':
@@ -3811,8 +3619,7 @@ window.addEventListener("load", function () {
 			for (var i = 0; i < b.length; i++) {
 				//文字を分解し幅を調べて行く
 				c = b[i].split("")
-				p = 0;
-				q = 0; //g= ''
+				p = 0; q = 0; //g= ''
 				for (var m = 0; m < c.length; m++) {
 					switch (c[m]) {
 						case '\u2003':
@@ -3944,6 +3751,8 @@ window.addEventListener("load", function () {
 				//左空白削り確定値
 
 
+
+
 				p = ww
 
 
@@ -3956,9 +3765,7 @@ window.addEventListener("load", function () {
 				if (p != 0) {
 					//w -= p * 2;
 					for (var i = 0; i < n.length; i++) {
-						if (n[i] == undefined) {
-							break;
-						}
+						if (n[i] == undefined) { break; }
 						n[i].WIDTH -= p;
 						n[i].LEFTSPACE -= p;
 						for (var m = 0; m < p; m++) {
@@ -4133,9 +3940,7 @@ window.addEventListener("load", function () {
 	[テキスト表示非表示]
 	----------------------------------------------------------------------------------------------------*/
 	$('myTrcTxtDisp').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		var a = $("myTxt" + $('myTrcSel2').value.split(" ")[0]);
 		if (a.style.display == 'none') {
 			a.style.display = '';
@@ -4149,9 +3954,7 @@ window.addEventListener("load", function () {
 	};
 
 	$('myTrcTxtDispALL').onclick = function () {
-		if ($('myTrcSel2').value === "") {
-			return;
-		}
+		if ($('myTrcSel2').value === "") { return; }
 		if ($('myTrcTxtDispALL').value == "一括非表示") {
 			$('myTrcTxtDispALL').value = "一括表示";
 			for (var i = 0; i < $('myTrcSel2').length; i++) {
@@ -4168,14 +3971,12 @@ window.addEventListener("load", function () {
 			}
 		}
 	};
-
 	/*----------------------------------------------------------------------------------------------------
 	[スライダー]
 	----------------------------------------------------------------------------------------------------*/
 	function isColor(color) {
 		return color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/) !== null;
 	}
-
 	$('slider1').onclick = function (evt) {
 		myDrg = 'R';
 		document.onmousemove(evt);
@@ -4255,12 +4056,8 @@ window.addEventListener("load", function () {
 		myDrg = 'F';
 	};
 	document.onmousemove = function (evt) {
-		if (!$('myTxt1')) {
-			return;
-		}
-		if (myDrg == 'F') {
-			return;
-		}
+		if (!$('myTxt1')) { return; }
+		if (myDrg == 'F') { return; }
 		if (!evt) {
 			evt = window.event;
 		}
@@ -4320,12 +4117,8 @@ window.addEventListener("load", function () {
 	};
 
 	document.onkeyup = function (e) {
-		if (myRep === false) {
-			return;
-		}
-		if (myKey === false) {
-			return;
-		}
+		if (myRep === false) { return; }
+		if (myKey === false) { return; }
 		myKey = false;
 		if (!e) e = window.event; // レガシー
 		// 出力テスト
@@ -4337,32 +4130,15 @@ window.addEventListener("load", function () {
 			var k = e.key;
 			var s;
 			switch (k) {
-				case ' ':
-					s = '\u2005';
-					break;
-				case '0':
-					s = '\u2000';
-					break;
-				case '1':
-					s = '\u2001';
-					break;
-				case '2':
-					s = '\u2002';
-					break;
-				case '3':
-					s = '\u2003';
-					break;
-				case '4':
-					s = '\u2004';
-					break;
-				case '5':
-					s = '\u2005';
-					break;
-				case '6':
-					s = '\u2006';
-					break;
-				default:
-					return;
+				case ' ': s = '\u2005'; break;
+				case '0': s = '\u2000'; break;
+				case '1': s = '\u2001'; break;
+				case '2': s = '\u2002'; break;
+				case '3': s = '\u2003'; break;
+				case '4': s = '\u2004'; break;
+				case '5': s = '\u2005'; break;
+				case '6': s = '\u2006'; break;
+				default: return;
 			}
 			var t = $(e.target.id);
 			var i = t.selectionStart;
@@ -4370,7 +4146,6 @@ window.addEventListener("load", function () {
 			t.setSelectionRange(i, i);
 		}
 	};
-
 	/*----------------------------------------------------------------------------------------------------
 	[Cookie関連]
 	----------------------------------------------------------------------------------------------------*/
@@ -4379,7 +4154,6 @@ window.addEventListener("load", function () {
 		tmp += "expires=Fri, 31-Dec-2030 23:59:59;";
 		document.cookie = tmp;
 	}
-
 	//----------------------------------------------------------------------------------------------------
 	function myGetCookie(key) {
 		var tmp = document.cookie + ";";
@@ -4389,9 +4163,9 @@ window.addEventListener("load", function () {
 			var start = tmp.indexOf("=", 0);
 			var end = tmp.indexOf(";", start);
 			return (unescape(tmp.substring(start + 1, end)));
-		} else return ("");
+		}
+		else return ("");
 	}
-
 	//----------------------------------------------------------------------------------------------------
 	function myDelCookie(key) {
 		var expiredate = new Date();
@@ -4400,7 +4174,6 @@ window.addEventListener("load", function () {
 		tmp += "expires=" + expiredate.toGMTString();
 		document.cookie = tmp;
 	}
-
 	//----------------------------------------------------------------------------------------------------
 
 
@@ -4461,7 +4234,7 @@ window.addEventListener("load", function () {
 		let address = prompt('ファイル名を指定してください', 'data.txt');
 
 		const a = document.createElement('a');
-		a.href = URL.createObjectURL(new Blob([save_content], {type: 'text/plain'}));
+		a.href = URL.createObjectURL(new Blob([save_content], { type: 'text/plain' }));
 		a.download = address;
 		a.style.display = 'none';
 		document.body.appendChild(a);
