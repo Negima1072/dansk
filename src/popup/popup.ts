@@ -1,193 +1,259 @@
-﻿window.addEventListener("load", (ex) => {
-	getCookie = (name) => {
-		var value = null;
-		Array.from(document.cookie.split("; ")).forEach((v) => {
-			if (name == v.split("=")[0]) value = v.split("=")[1];
-		});
-		return value;
-	}
+﻿import localStorage from "@/libraries/localStorage";
+import typeGuard from "@/typeGuard";
 
-	setCookie = (name, value) => {
-		document.cookie = name + "=" + value;
-		return document.cookie;
-	}
+window.addEventListener("load", () => {
+  const beforeTextArea = document.getElementById("before") as HTMLInputElement,
+    beforeOptions = document.getElementById(
+      "before_select"
+    ) as HTMLSelectElement,
+    afterTextArea = document.getElementById("after") as HTMLInputElement,
+    afterOptions = document.getElementById("after_select") as HTMLSelectElement,
+    copyButton = document.getElementById("copyButton") as HTMLInputElement,
+    clearButton = document.getElementById("clear") as HTMLInputElement,
+    replaceButton = document.getElementById("replace") as HTMLInputElement,
+    repairButton = document.getElementById("repair") as HTMLInputElement;
 
-	if (getCookie("dnsk_pp_before") == null) {
-		setCookie("dnsk_pp_before", "");
-	} else {
-		document.getElementById("before").value = getCookie("dnsk_pp_before").replaceAll("{break}", "\n");
-	}
-	if (getCookie("dnsk_pp_after") == null) {
-		setCookie("dnsk_pp_after", "");
-	} else {
-		document.getElementById("after").value = getCookie("dnsk_pp_after").replaceAll("{break}", "\n");
-	}
-	if (getCookie("dnsk_pp_before_type") == null) {
-		setCookie("dnsk_pp_before_type", "domo");
-	} else {
-		document.getElementById("before_select").value = getCookie("dnsk_pp_before_type");
-	}
-	if (getCookie("dnsk_pp_after_type") == null) {
-		setCookie("dnsk_pp_after_type", "dansk");
-	} else {
-		document.getElementById("after_select").value = getCookie("dnsk_pp_after_type");
-	}
+  /**
+   * localstorageにデータを保管する
+   * -> cookieから移行
+   */
+  const save = () => {
+    localStorage.set("ppConvertBefore", beforeTextArea.value);
+    localStorage.set("ppConvertBeforeType", beforeOptions.value);
+    localStorage.set("ppConvertAfter", afterTextArea.value);
+    localStorage.set("ppConvertAfterType", afterOptions.value);
+  };
 
-	document.getElementById("copy_a").onclick = (ev) => {
-		navigator.clipboard.writeText(
-			document.getElementById("after").value
-		).then(() => {
-			alert('コピーしました。');
-		});
-	};
+  /**
+   * inputFormat型のinputをoutputFormat型に変換して返す
+   * @param inputFormat
+   * @param outputFormat
+   * @param input
+   */
+  const convertText = (
+    inputFormat: string,
+    outputFormat: string,
+    input: string
+  ) => {
+    if (inputFormat == outputFormat) return input;
+    let dansk = "";
+    switch (inputFormat) {
+      case "domo":
+        dansk = convertDomoToDansk(input);
+        break;
+      case "tokome":
+        dansk = convertTokomeToDansk(input);
+    }
+    switch (outputFormat) {
+      case "dansk":
+        return dansk;
+      case "domo":
+        return convertDanskToDomo(dansk);
+      case "tokome":
+        return convertDanskToTokome(dansk);
+    }
+    return "";
+  };
+  const convertDomoToDansk = (input: string): string => {
+    input = input
+      .replace(/\r\n|\r/g, "\n")
+      .replace(/\n/g, "\n<br>")
+      .replace(/\t/g, "[tb]");
+    const lines: string[] = input.split("\n"),
+      result: string[] = [];
+    let commandCount = 0;
+    for (let line of lines) {
+      if (line === undefined) continue;
+      if (commandCount == -1) {
+        line = line.replace("<br>", "");
+      }
+      commandCount = (
+        line.match(
+          /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier/
+        ) || []
+      ).length;
+      if (commandCount >= 2) {
+        result.push(`\n[${line.replace("<br>", "")}]`);
+        commandCount = -1;
+      } else result.push(line);
+    }
+    return result.join("").slice(1);
+  };
 
-	document.getElementById("clear").onclick = (ev) => {
-		document.getElementById("before").value = "";
-		document.getElementById("after").value = "";
+  /**
+   * Dansk -> Domo
+   * @param input {string} dansk
+   * @return {string} domo
+   */
+  const convertDanskToDomo = (input: string): string => {
+    input = input
+      .replace(/\[tb]/g, "\t")
+      .replace(/\[03]/g, "　")
+      .replace(/\[0A]/g, "");
+    const lines: string[] = input.split("\n"),
+      result: string[] = [];
+    let lastCommand = "";
+    for (const line of lines) {
+      let content = "",
+        command = "";
+      if (line === undefined || line === "") continue;
+      const match = line.match(/(?:\[(.*)])?(.*)/);
+      if (match === null || match[1] === undefined) {
+        command = lastCommand;
+        content = line;
+      } else {
+        if (match[1] === undefined || match[2] === undefined) continue;
+        content = match[2];
+        if (match[1].match(/^03|tb|0A$/)) {
+          command = line;
+        } else {
+          lastCommand = match[1];
+        }
+      }
+      result.push(`${command}\n${content.replace(/<br>/g, "\n")}`);
+    }
+    return result.join("\n");
+  };
 
-		setCookie("dnsk_pp_before", document.getElementById("before").value.replaceAll("\n", "{break}"));
-		setCookie("dnsk_pp_after", document.getElementById("after").value.replaceAll("\n", "{break}"));
-	};
+  /**
+   * Tokome -> Dansk
+   * @param input{string} tokome
+   * @return {string} dansk
+   */
+  const convertTokomeToDansk = (input: string): string => {
+    const data: ownerComment[] = JSON.parse(input) as ownerComment[];
+    if (!typeGuard.owner.comments(data)) return "";
+    const result = [];
+    for (const line of data) {
+      result.push(
+        `[${line.command}]${line.comment}`
+          .replace(/\n/g, "<br>")
+          .replace(/\t/g, "[tb]")
+      );
+    }
+    return result.join("\n");
+  };
 
-	document.getElementById("replace").onclick = (ev) => {
-		var b = document.getElementById("before").value;
-		var b_type = document.getElementById("before_select").value;
-		var a_type = document.getElementById("after_select").value;
+  /**
+   * timestamp -> date
+   * @param time{number} time
+   * @return {string} date
+   */
+  const covertTimeIntToString = (time: number): string => {
+    const a = ("0" + Math.floor(time / 6000).toString()).slice(-2);
+    const b = ("0" + Math.floor((time % 6000) / 100).toString()).slice(-2);
+    const d = ("0" + Math.floor((time % 6000) % 100).toString()).slice(-2);
+    return a + ":" + b + "." + d;
+  };
 
-		document.getElementById("after").value = convertText(b_type, a_type, b);
+  /**
+   * Dansk -> Tokome
+   * @param input {string} dansk
+   * @return {string} tokome
+   */
+  const convertDanskToTokome = (input: string): string => {
+    input = input
+      .replace(/\[tb]/g, "\t")
+      .replace(/\[03]/g, "　")
+      .replace(/\[0A]/, "");
+    const lines = input.split("\n"),
+      result = [];
+    let lastCommand = "";
+    let baseTimeMs = 0;
+    for (let line of lines) {
+      const match = line.match(/\[(.*)]/);
+      if (match !== null && match[0] !== undefined && match[1] !== undefined) {
+        const tmMatch = match[1].match(/tm(\d+)/);
+        if (tmMatch !== null && tmMatch[1] !== undefined) {
+          baseTimeMs += parseInt(tmMatch[1]);
+          line = line.replace(match[0], "");
+        }
+      }
+      const comment = {
+        time: covertTimeIntToString(baseTimeMs / 10),
+        command: "",
+        comment: "",
+      };
+      if (line == "") continue;
+      line = line.replace(/<br>/g, "\n");
+      if (match === null || match[0] === undefined || match[1] === undefined) {
+        comment.command = lastCommand;
+        comment.comment = line;
+      } else {
+        if (match[1].match(/^03|tb|0A$/)) {
+          comment.comment = line;
+        } else {
+          comment.comment = line.slice(match[0].length);
+          lastCommand = match[1];
+        }
+        comment.command = lastCommand;
+      }
+      result.push(comment);
+    }
+    return JSON.stringify(result, null, 2);
+  };
 
-		setCookie("dnsk_pp_before", document.getElementById("before").value.replaceAll("\n", "{break}"));
-		setCookie("dnsk_pp_after", document.getElementById("after").value.replaceAll("\n", "{break}"));
-		setCookie("dnsk_pp_before_type", document.getElementById("before_select").value);
-		setCookie("dnsk_pp_after_type", document.getElementById("after_select").value);
-	};
+  beforeTextArea.value =
+    getCookie("dnsk_pp_before") || localStorage.get("ppConvertBefore") || "";
+  beforeOptions.value =
+    getCookie("dnsk_pp_before_type") ||
+    localStorage.get("ppConvertBeforeType") ||
+    "domo";
+  afterTextArea.value =
+    getCookie("dnsk_pp_after") || localStorage.get("ppConvertAfter") || "";
+  afterOptions.value =
+    getCookie("dnsk_pp_after_type") ||
+    localStorage.get("ppConvertAfterType") ||
+    "dansk";
+  save();
 
-	document.getElementById("repair").onclick = (ev) => {
-		var a = document.getElementById("after").value;
-		var a_type = document.getElementById("after_select").value;
-		var b_type = document.getElementById("before_select").value;
+  copyButton.onclick = () => {
+    navigator.clipboard
+      .writeText(afterTextArea.value)
+      .then(() => {
+        alert("コピーしました。");
+      })
+      .catch(() => {
+        alert("コピーに失敗しました");
+      });
+  };
 
-		document.getElementById("before").value = convertText(a_type, b_type, a);
+  clearButton.onclick = () => {
+    beforeTextArea.value = "";
+    afterTextArea.value = "";
+    save();
+  };
 
-		setCookie("dnsk_pp_before", document.getElementById("before").value.replaceAll("\n", "{break}"));
-		setCookie("dnsk_pp_after", document.getElementById("after").value.replaceAll("\n", "{break}"));
-		setCookie("dnsk_pp_before_type", document.getElementById("before_select").value);
-		setCookie("dnsk_pp_after_type", document.getElementById("after_select").value);
-	};
+  replaceButton.onclick = () => {
+    afterTextArea.value = convertText(
+      beforeOptions.value,
+      afterOptions.value,
+      beforeTextArea.value
+    );
+    save();
+  };
 
-	convertText = (bt, at, btext) => {
-		if (bt == at) return btext;
-		var btt = "";
-		if (bt == "domo") btt = convertDomoToDansk(btext);
-		else if (bt == "dansk") btt = btext;
-		else if (bt == "tokome") btt = convertTokomeToDansk(btext);
-		else btt = "";
-		if (at == "dansk") return btt;
-		else if (at == "domo") return convertDanskToDomo(btt);
-		else if (at == "tokome") return convertDanskToTokome(btt);
-		else return "";
-	}
-
-	convertDomoToDansk = (btext) => {
-		btext = btext.replace(/\r\n|\r/g, "\n").replace(/\n/g, "\n<br>").replace(/\t/g, "[tb]");
-		btext = btext.split('\n');
-		var r = []
-		var compoint = 0;
-		for (l = 0; l < btext.length; l++) {
-			if (compoint == -1) {
-				btext[l] = btext[l].replace("<br>", "");
-			}
-			compoint = 0;
-			for (c in Array("ue", "shita", "gothic", "mincho", "big", "small", "defont", "medium", "ender", "full", "cs", "patissier")) {
-				if (btext[l].includes(c)) compoint++;
-			}
-			if (compoint >= 2) {
-				r.push("\n[" + btext[l].replace("<br>", "") + "]");
-				compoint = -1;
-			} else r.push(btext[l]);
-		}
-		return r.join('').slice(1);
-	}
-
-	convertDanskToDomo = (btext) => {
-		btext = btext.replaceAll("[tb]", "\t").replaceAll("[03]", "　").replaceAll("[0A]", "");
-		btext = btext.split("\n");
-		var r = []
-		var bcommand = "";
-		for (l = 0; l < btext.length; l++) {
-			var r2c = "";
-			var r2b = "";
-			if (btext[l] == "") continue;
-			r2c = /\[.+?\]/.exec(btext[l])
-			if (r2c == null) {
-				r2c = bcommand;
-				r2b = btext[l];
-			} else {
-				r2b = btext[l].slice(r2c[0].length);
-				r2c = r2c[0].slice(1, -1);
-				if (r2c == "03" || r2c == "tb" || r2c == "0A") {
-					r2c = bcommand;
-					r2b = btext[l];
-				}
-				bcommand = r2c;
-			}
-			r2b = r2b.replaceAll("<br>", "\n")
-			r.push(r2c + "\n" + r2b);
-		}
-		return r.join("\n");
-	}
-
-	convertTokomeToDansk = (btext) => {
-		btext = JSON.parse(btext);
-		var r = [];
-		for (l = 0; l < btext.length; l++) {
-			r.push(("[" + btext[l].command + "]" + btext[l].comment).replaceAll("\n", "<br>").replaceAll("\t", "[tb]"));
-		}
-		return r.join("\n");
-	}
-
-	covertTimeIntToString = (time) => {
-		var a = ("0" + Math.floor(time / 6000).toString()).slice(-2);
-		var b = ("0" + Math.floor((time % 6000) / 100).toString()).slice(-2);
-		var d = ("0" + Math.floor((time % 6000) % 100).toString()).slice(-2);
-		return a + ":" + b + "." + d;
-	}
-
-	convertDanskToTokome = (btext) => {
-		btext = btext.replaceAll("[tb]", "\t").replaceAll("[03]", "　").replaceAll("[0A]", "");
-		btext = btext.split("\n");
-		var r = []
-		var bcommand = "";
-		var basetimems = 0;
-		for (l = 0; l < btext.length; l++) {
-			if (/\[.+?\]/.exec(btext[l]) != null) {
-				if (/\[.+?\]/.exec(btext[l])[0].includes("tm")) {
-					basetimems += parseInt(/\[.+?\]/.exec(btext[l])[0].slice(3, -1));
-					btext[l] = btext[l].replace(/\[.+?\]/.exec(btext[l])[0], "");
-				}
-			}
-			var r2 = {
-				time: covertTimeIntToString(parseInt(basetimems / 10)),
-				command: "",
-				comment: ""
-			};
-			if (btext[l] == "") continue;
-			btext[l] = btext[l].replaceAll("<br>", "\n")
-			r2.command = /\[.+?\]/.exec(btext[l])
-			if (r2.command == null) {
-				r2.command = bcommand;
-				r2.comment = btext[l];
-			} else {
-				r2.comment = btext[l].slice(r2.command[0].length);
-				r2.command = r2.command[0].slice(1, -1);
-				if (r2.command == "03" || r2.command == "tb" || r2.command == "0A") {
-					r2.command = bcommand;
-					r2.comment = btext[l];
-				}
-				bcommand = r2.command;
-			}
-			r.push(r2);
-		}
-		return JSON.stringify(r, null, 2);
-	}
+  repairButton.onclick = () => {
+    beforeTextArea.value = convertText(
+      afterOptions.value,
+      beforeOptions.value,
+      afterTextArea.value
+    );
+    save();
+  };
 });
+
+/**
+ * localStorage移行用
+ * 値を読み取って該当cookieを削除
+ * @param name
+ */
+const getCookie = (name: string): null | string => {
+  let value = null;
+  Array.from(document.cookie.split("; ")).forEach((v) => {
+    if (name == v.split("=")[0])
+      value = v.split("=")[1]?.replace(/\{break}/g, "\n");
+  });
+  document.cookie = `${name}=; max-age=0`;
+  return value;
+};
