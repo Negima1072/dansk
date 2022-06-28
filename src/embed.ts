@@ -1,81 +1,71 @@
-window.addEventListener('message', function(event) {
-	if(event.data.type == "time_seek") {
-		var a = event.data.text;
-		var c = window.__videoplayer.currentTime()*100;
-		var p = (a.substr(0, 1) == '-');
-		var d = Number.parseInt(a.substr(1, 1))*100+Number.parseInt(a.substr(3, 2));
-		if(p) d=d*-1;
-		var y = c + d;
-		if(y < 0) y = 0;
-		if(y > window.__videoplayer.duration()*100) y = window.__videoplayer.duration()*100;
-		window.__videoplayer.currentTime((Math.floor(y)+0.1)/100);
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-	}
-	else if(event.data.type == "color_click"){
-		document.activeElement.blur();
-	}
-	else if(event.data.type == "time_seek_int") {
-		var d = event.data.int;
-		var c = window.__videoplayer.currentTime()*100;
-		var y = c + d;
-		if(y < 0) y = 0;
-		if(y > window.__videoplayer.duration()*100) y = window.__videoplayer.duration()*100;
-		window.__videoplayer.currentTime((Math.floor(y)+0.1)/100);
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-	}
-	else if(event.data.type == "time_seek_pl") {
-		var a = event.data.pl[0];
-		var y = Number.parseInt(a.substr(0, 2))*6000+Number.parseInt(a.substr(3, 2))*100+Number.parseInt(a.substr(6, 2));
-		if(y < 0) y = 0;
-		if(y > window.__videoplayer.duration()*100) y = window.__videoplayer.duration()*100;
-		window.__videoplayer.currentTime((Math.floor(y)+0.1)/100);
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-		document.activeElement.blur();
-	}
-});
+import tg from "@/typeGuard";
 
-let p = !1;
-document.getElementById("myTimeField").addEventListener("focus", function(ex){
-	p = !0;
+const videoElement = (
+  document.getElementById("MainVideoPlayer") as HTMLDivElement
+).getElementsByTagName("video")[0] as HTMLVideoElement;
+const seekToHeadButton = document.getElementsByClassName(
+  "SeekToHeadButton"
+)[0] as HTMLButtonElement;
+window.addEventListener("message", function (event) {
+  if (tg.messageEvent.timeSeek(event.data)) {
+    seek(videoElement.currentTime + Number(event.data.text));
+  } else if (tg.messageEvent.colorClick(event.data)) {
+    document.activeElement?.dispatchEvent(new Event("blur"));
+  } else if (tg.messageEvent.timeSeekInt(event.data)) {
+    seek(videoElement.currentTime + event.data.int / 100);
+  } else if (tg.messageEvent.timeSeekPl(event.data)) {
+    if (event.data.pl[0]) seek(str2time(event.data.pl[0]));
+    document.activeElement?.dispatchEvent(new Event("blur"));
+  }
 });
-document.getElementById("myTimeField").addEventListener("input", function(ex){
-	p = !0;
-});
-document.getElementById("myTimeField").addEventListener("blur", function(ex){
-	p = !1;
-});
-document.getElementById("myTimeField").addEventListener("change", function(ex){
-	p = !1;
-});
+const timeField = document.getElementById("myTimeField") as HTMLInputElement;
+let timeFieldFocus = false;
+timeField.onfocus = () => {
+  timeFieldFocus = true;
+};
+timeField.oninput = () => {
+  timeFieldFocus = true;
+};
+timeField.onblur = () => {
+  timeFieldFocus = false;
+};
+timeField.onchange = () => {
+  timeFieldFocus = false;
+};
+timeField.onkeydown = (e) => {
+  if (e.key === "Enter") {
+    seek(str2time(timeField.value));
+    document.activeElement?.dispatchEvent(new Event("blur"));
+  }
+};
 
-document.getElementById("myTimeField").addEventListener("keydown", function(ex){
-	if(ex.key == "Enter"){
-		var a = ex.target.value;
-		var y = Number.parseInt(a.substr(0, 2))*6000+Number.parseInt(a.substr(3, 2))*100+Number.parseInt(a.substr(6, 2));
-		if(y < 0) y = 0;
-		if(y > window.__videoplayer.duration()*100) y = window.__videoplayer.duration()*100;
-		window.__videoplayer.currentTime((Math.floor(y)+0.1)/100);
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-		window.document.getElementsByClassName("CommentOnOffButton")[0].click();
-		document.activeElement.blur();
-	}
-});
+const update = () => {
+  timeField.disabled = videoElement.seeking;
+  if (!timeFieldFocus) timeField.value = time2str(videoElement.currentTime);
+  requestAnimationFrame(update);
+};
+update();
 
-let o = () => {
-	var f = window.document.getElementById("myTimeField");
-	if (window.__videoplayer.seeking()){
-		f.disabled = true;
-	}else{
-		f.disabled = false;
-	}
-	var c = window.__videoplayer.currentTime()*100;
-	var a = ("0"+Math.floor(c / 6000).toString()).slice(-2);
-	var b = ("0"+Math.floor((c % 6000)/100).toString()).slice(-2);
-	var d = ("0"+Math.floor((c % 6000)%100).toString()).slice(-2);
-	var y = a + ":" + b + "." + d;
-	p || (f.value = y), requestAnimationFrame(o);
-}
-o();
+const str2time = (date: string): number => {
+  const match = date.match(/^(?:(\d+):)?(\d+)(?:\.(\d+))?$/);
+  let time = 0;
+  if (match) {
+    if (match[1] !== undefined) time += Number(match[1]) * 60;
+    if (match[2] !== undefined) time += Number(match[2]);
+    if (match[3] !== undefined)
+      time += Number(match[3]) / Math.pow(10, match[3].length);
+  }
+  return time;
+};
+
+const time2str = (time: number): string =>
+  `${("0" + Math.floor(time / 60).toString()).slice(-2)}:${(
+    "0" + Math.floor(time % 60).toString()
+  ).slice(-2)}.${("0" + Math.floor((time % 60) / 100).toString()).slice(-2)}`;
+
+const seek = (time: number) => {
+  if (time < 0) time = 0;
+  if (time > videoElement.duration) time = videoElement.duration;
+  seekToHeadButton.click();
+  videoElement.currentTime = time + 0.001;
+};
