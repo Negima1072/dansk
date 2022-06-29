@@ -1,0 +1,20 @@
+.wrapper{
+  font-size: 13px;
+  color: white;
+  text-align: left;
+  background-color: #333333;
+  margin: 0;
+  padding: 4px 5px;
+  cursor: pointer;
+  display: block;
+  user-select: none;
+}
+.wrapper::before{
+  content: "[ + ]";
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+.wrapper.open::before{
+  content: "[ - ]";
+}

@@ -7,14 +7,15 @@ import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 
 const plugins = [
-	image(),
 	typescript(),
+	image(),
 	postcss({
 		extensions: [".css"],
 		modules: true,
 	}),
 	nodeResolve({
 		extensions: [".js"],
+		browser:true
 	}),
 	replace({
 		preventAssignment: true,
@@ -23,12 +24,12 @@ const plugins = [
 	babel({
 		presets: ["@babel/preset-react"],
 	}),
-	commonjs()
+	commonjs(),
 ];
 
 export default [
 	{
-		input: 'src/index.ts',
+		input: 'src/index.tsx',
 		output: {
 			file: `dist/index.js`,
 			format: 'umd',

@@ -7,18 +7,18 @@ import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 
 const plugins = [
+	typescript({tsconfig:"./tsconfig.json"}),
 	image(),
-	typescript(),
 	postcss({
 		extensions: [".css"],
 		modules: true,
 	}),
 	nodeResolve({
-		extensions: [".js"],
+		extensions: [".ts",".tsx"],
 	}),
 	replace({
-		preventAssignment: true,
-		'process.env.NODE_ENV': JSON.stringify('development'),
+		preventAssignment:true,
+		'process.env.NODE_ENV': JSON.stringify( 'development' ),
 	}),
 	babel({
 		presets: ["@babel/preset-react"],
@@ -28,7 +28,7 @@ const plugins = [
 
 export default [
 	{
-		input: 'src/index.ts',
+		input: 'src/index.tsx',
 		output: {
 			file: `dist/index.js`,
 			format: 'umd',
