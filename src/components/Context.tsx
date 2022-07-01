@@ -6,10 +6,14 @@ const videoElement = (
   ).getElementsByTagName("video")[0] as HTMLVideoElement,
   seekToHeadButton = document.getElementsByClassName(
     "SeekToHeadButton"
-  )[0] as HTMLButtonElement;
+  )[0] as HTMLButtonElement,
+  CommentCommandInput = document.getElementsByClassName(
+    "CommentCommandInput"
+  )[0] as HTMLInputElement;
 const contextValue: contextType = {
   videoElement: videoElement,
   seekToHeadButton: seekToHeadButton,
+  CommentCommandInput: CommentCommandInput,
 };
 export const context = createContext<contextType>(contextValue);
 

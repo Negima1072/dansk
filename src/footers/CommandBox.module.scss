@@ -1,0 +1,13 @@
+.table{
+  display: flex;
+  flex-direction: column;
+  .row{
+    display: flex;
+    flex-direction: row;
+    .group{
+      display: flex;
+      flex-direction: row;
+      margin-right: 20px;
+    }
+  }
+}

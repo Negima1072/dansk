@@ -5,9 +5,11 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
+import json from '@rollup/plugin-json';
 
 const plugins = [
 	typescript(),
+	json(),
 	image(),
 	postcss({
 		extensions: [".css"],

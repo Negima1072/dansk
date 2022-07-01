@@ -23,6 +23,7 @@ type messageTimeSeekPlEvent = {
 type contextType = {
   videoElement: HTMLVideoElement;
   seekToHeadButton: HTMLButtonElement;
+  CommentCommandInput: HTMLInputElement;
 };
 type contextProps = {
   children: ReactNode;

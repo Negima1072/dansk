@@ -1,0 +1,26 @@
+.button{
+  cursor: pointer;
+  height: 24px;
+  line-height: 24px;
+  background-color: #bbbbbb;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  padding: 0 12px;
+  display: inline-block;
+  vertical-align: top;
+  border: none;
+  margin: 0;
+}
+.colorButton{
+  width: auto;
+  height: 24px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 13px;
+  border: 2px solid rgb(153, 153, 153);
+  cursor: pointer;
+  margin: 2px 0;
+}

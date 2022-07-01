@@ -1,0 +1,180 @@
+[
+  [
+    [
+      {
+        "text": "Del",
+        "value": "dansk:delete"
+      }
+    ],
+    [
+      {
+        "text": "#FFFFFF",
+        "value": "white"
+      },
+      {
+        "text": "#FF0000",
+        "value": "red"
+      },
+      {
+        "text": "#FF8080",
+        "value": "pink"
+      },
+      {
+        "text": "#FFC000",
+        "value": "orange"
+      },
+      {
+        "text": "#FFFF00",
+        "value": "yellow"
+      },
+      {
+        "text": "#00FF00",
+        "value": "green"
+      },
+      {
+        "text": "#00FFFF",
+        "value": "cyan"
+      },
+      {
+        "text": "#0000FF",
+        "value": "blue"
+      },
+      {
+        "text": "#C000FF",
+        "value": "purple"
+      },
+      {
+        "text": "#000000",
+        "value": "black"
+      }
+    ],
+    [
+      {
+        "text": "#CCCC99",
+        "value": "white2"
+      },
+      {
+        "text": "#CC0033",
+        "value": "red2"
+      },
+      {
+        "text": "#FF33CC",
+        "value": "pink2"
+      },
+      {
+        "text": "#FF6600",
+        "value": "orange2"
+      },
+      {
+        "text": "#999900",
+        "value": "yellow2"
+      },
+      {
+        "text": "#00CC66",
+        "value": "green2"
+      },
+      {
+        "text": "#00CCCC",
+        "value": "cyan2"
+      },
+      {
+        "text": "#3399FF",
+        "value": "blue2"
+      },
+      {
+        "text": "#6633CC",
+        "value": "purple2"
+      },
+      {
+        "text": "#666666",
+        "value": "black2"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "text": "B",
+        "value": "big"
+      },
+      {
+        "text": "M",
+        "value": "medium"
+      },
+      {
+        "text": "S",
+        "value": "small"
+      }
+    ],
+    [
+      {
+        "text": "U",
+        "value": "ue"
+      },
+      {
+        "text": "N",
+        "value": "naka"
+      },
+      {
+        "text": "S",
+        "value": "shita"
+      }
+    ],
+    [
+      {
+        "text": "D",
+        "value": "defont"
+      },
+      {
+        "text": "G",
+        "value": "gothic"
+      },
+      {
+        "text": "M",
+        "value": "mincho"
+      }
+    ],
+    [
+      {
+        "text": "end",
+        "value": "ender"
+      }
+    ],
+    [
+      {
+        "text": "full",
+        "value": "full"
+      }
+    ],
+    [
+      {
+        "text": "pts",
+        "value": "patissier"
+      }
+    ],
+    [
+      {
+        "text": "sage",
+        "value": "sage"
+      }
+    ],
+    [
+      {
+        "text": "184",
+        "value": "184"
+      }
+    ],
+    [
+      {
+        "text": "Inv",
+        "value": "invisible"
+      }
+    ],
+    [
+      {
+        "text": "Cdel",
+        "value": "dansk:commandDelete"
+      }
+    ]
+  ]
+]
