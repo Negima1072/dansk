@@ -1,6 +1,6 @@
 ﻿{
   "name": "DanSukuMizu",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "manifest_version": 3,
   "description": "DanSukuMizu modified by Negima1072 and @eneko0513",
   "content_scripts": [
