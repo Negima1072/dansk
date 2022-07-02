@@ -5,20 +5,22 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
+import json from '@rollup/plugin-json';
 
 const plugins = [
+	typescript({tsconfig:"./tsconfig.json"}),
+	json(),
 	image(),
-	typescript(),
 	postcss({
 		extensions: [".css"],
 		modules: true,
 	}),
 	nodeResolve({
-		extensions: [".js"],
+		extensions: [".ts",".tsx"],
 	}),
 	replace({
-		preventAssignment: true,
-		'process.env.NODE_ENV': JSON.stringify('development'),
+		preventAssignment:true,
+		'process.env.NODE_ENV': JSON.stringify( 'development' ),
 	}),
 	babel({
 		presets: ["@babel/preset-react"],
@@ -28,7 +30,7 @@ const plugins = [
 
 export default [
 	{
-		input: 'src/index.ts',
+		input: 'src/index.tsx',
 		output: {
 			file: `dist/index.js`,
 			format: 'umd',

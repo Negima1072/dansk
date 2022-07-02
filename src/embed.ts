@@ -1,5 +1,4 @@
-import tg from "@/typeGuard";
-
+import tg from "@/libraries/typeGuard";
 const videoElement = (
   document.getElementById("MainVideoPlayer") as HTMLDivElement
 ).getElementsByTagName("video")[0] as HTMLVideoElement;

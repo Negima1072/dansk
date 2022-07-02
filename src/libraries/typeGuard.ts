@@ -1,3 +1,11 @@
+import {
+  messageColorClickEvent,
+  messageTimeSeekEvent,
+  messageTimeSeekIntEvent,
+  messageTimeSeekPlEvent,
+  ownerComment,
+} from "@/@types/types";
+
 const typeGuard = {
   owner: {
     comment: (i: unknown): i is ownerComment =>

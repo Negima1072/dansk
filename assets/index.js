@@ -4290,7 +4290,7 @@ window.addEventListener("load", function () {
 	};
 
 	cssAdvancedSettings.onclick = function() {
-		(document.querySelector("#cssAdvancedSettings").textContent.includes("▶")) ? document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▶", "▼") : document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▼", "▶"); 
+		(document.querySelector("#cssAdvancedSettings").textContent.includes("▶")) ? document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▶", "▼") : document.querySelector("#cssAdvancedSettings").textContent = document.querySelector("#cssAdvancedSettings").textContent.replace("▼", "▶");
 	};
 
 });

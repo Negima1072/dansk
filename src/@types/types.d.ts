@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 type ownerComment = {
   time: string;
   command: string;
@@ -17,4 +19,12 @@ type messageTimeSeekIntEvent = {
 type messageTimeSeekPlEvent = {
   type: "time_seek_pl";
   pl: string[];
+};
+type contextType = {
+  videoElement: HTMLVideoElement;
+  seekToHeadButton: HTMLButtonElement;
+  CommentCommandInput: HTMLInputElement;
+};
+type contextProps = {
+  children: ReactNode;
 };
