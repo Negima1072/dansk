@@ -7,6 +7,7 @@ window.addEventListener("load", () => {
     let _target: HTMLLIElement;
     const ddBoxList = Array.from(document.getElementsByClassName("command-order-li") as HTMLCollectionOf<HTMLLIElement>);
     const saveBtn = document.getElementById("saveBtn") as HTMLInputElement;
+    const headMes = document.getElementById("headMessage") as HTMLParagraphElement;
     const util = {
         index(el: HTMLLIElement): number {
             const parent = el.parentElement as HTMLUListElement;
@@ -136,6 +137,7 @@ window.addEventListener("load", () => {
         const orgInputElm = document.getElementById("additional-command-original") as HTMLInputElement;
         localStorage.set("option_useOriginal", String(orgInputElm.checked));
         const orgTextInputElm = document.getElementById("additional-command-original-text") as HTMLInputElement;
+        if(orgTextInputElm.value == "" && orgInputElm.checked) throw new Error("独自テキストが空です");
         localStorage.set("option_originalText", orgTextInputElm.value);
         const mainSpanInputElm = document.getElementById("main-comment-span-ms") as HTMLInputElement;
         localStorage.set("option_timespanMain", mainSpanInputElm.value);
@@ -198,7 +200,12 @@ window.addEventListener("load", () => {
         window.postMessage({
             type: "updateOption"
         });
-        saveOption();
+        try {
+            saveOption();
+            headMes.innerText = "保存しました";
+        } catch (error) {
+            headMes.innerHTML = "<span style='color:red;'>" + String(error) + "</span>";
+        }
     }
 
     loadOption();

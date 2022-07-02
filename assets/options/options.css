@@ -12,6 +12,11 @@ body {
 header{
     display: flex;
 }
+#headMessage {
+    margin-left: auto;
+    font-size: 15px;
+    padding: 6px 15px;
+}
 .large-option {
     margin-left: 10px;
     margin-top: 10px;
@@ -30,10 +35,9 @@ header{
     width: 100px;
 }
 #main-comment-span-ms, #owner-comment-span-ms {
-    width: 70px;
+    width: 60px;
 }
 #saveBtn {
-    margin-left: auto;
     width: 90px;
     height: 35px;
     font-size: 20px;
