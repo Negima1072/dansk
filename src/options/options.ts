@@ -180,11 +180,11 @@ window.addEventListener("load", () => {
             dd.appendChild(n);
         });
         const caInputElm = document.getElementById("additional-command-ca") as HTMLInputElement;
-        caInputElm.checked = Boolean(localStorage.get("option_useCA") ?? true);
+        caInputElm.checked = (localStorage.get("option_useCA") ?? "true") == "true";
         const patInputElm = document.getElementById("additional-command-pat") as HTMLInputElement;
-        patInputElm.checked = Boolean(localStorage.get("option_usePat") ?? false);
+        patInputElm.checked = (localStorage.get("option_usePat") ?? "false") == "true";
         const orgInputElm = document.getElementById("additional-command-original") as HTMLInputElement;
-        orgInputElm.checked = Boolean(localStorage.get("option_useOriginal") ?? false);
+        orgInputElm.checked = (localStorage.get("option_useOriginal") ?? "false") == "true";
         const orgTextInputElm = document.getElementById("additional-command-original-text") as HTMLInputElement;
         orgTextInputElm.value = String(localStorage.get("option_originalText") ?? "");
         const mainSpanInputElm = document.getElementById("main-comment-span-ms") as HTMLInputElement;
