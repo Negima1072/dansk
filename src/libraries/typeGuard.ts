@@ -1,4 +1,5 @@
 import {
+  contextType,
   messageColorClickEvent,
   messageTimeSeekEvent,
   messageTimeSeekIntEvent,
@@ -35,6 +36,42 @@ const typeGuard = {
       typeof i === "object" &&
       i !== null &&
       (i as messageTimeSeekPlEvent).type === "time_seek_pl",
+  },
+  context: {
+    props: (i: unknown): i is contextType =>
+      !!(
+        i !== null &&
+        typeGuard.context.videoElement((i as contextType).videoElement) &&
+        typeGuard.context.seekToHeadButton(
+          (i as contextType).seekToHeadButton
+        ) &&
+        typeGuard.context.commentCommandInput(
+          (i as contextType).commentCommandInput
+        )
+      ),
+    videoElement: (i: unknown): i is HTMLVideoElement =>
+      typeof i === "object" &&
+      i !== null &&
+      (i as HTMLVideoElement).nodeName === "VIDEO",
+    seekToHeadButton: (i: unknown): i is HTMLButtonElement =>
+      typeof i === "object" &&
+      i !== null &&
+      (i as HTMLVideoElement).nodeName === "BUTTON" &&
+      (i as HTMLVideoElement).classList.contains("ActionButton") &&
+      (i as HTMLVideoElement).classList.contains("ControllerButton") &&
+      (i as HTMLVideoElement).classList.contains("SeekToHeadButton"),
+    commentOnOffButton: (i: unknown): i is HTMLButtonElement =>
+      typeof i === "object" &&
+      i !== null &&
+      (i as HTMLVideoElement).nodeName === "BUTTON" &&
+      (i as HTMLVideoElement).classList.contains("ActionButton") &&
+      (i as HTMLVideoElement).classList.contains("ControllerButton") &&
+      (i as HTMLVideoElement).classList.contains("CommentOnOffButton"),
+    commentCommandInput: (i: unknown): i is HTMLInputElement =>
+      typeof i === "object" &&
+      i !== null &&
+      (i as HTMLVideoElement).nodeName === "INPUT" &&
+      (i as HTMLVideoElement).classList.contains("CommentCommandInput"),
   },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {

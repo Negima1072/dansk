@@ -36,7 +36,8 @@ export default [
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
-		plugins: plugins
+		plugins: plugins,
+		inlineDynamicImports: true,
 	},
 	{
 		input: 'src/embed.ts',
@@ -45,7 +46,8 @@ export default [
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
-		plugins: plugins
+		plugins: plugins,
+		inlineDynamicImports: true,
 	},
 	{
 		input: 'src/popup/popup.ts',
@@ -54,6 +56,7 @@ export default [
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
-		plugins: plugins
+		plugins: plugins,
+		inlineDynamicImports: true,
 	}
 ]

@@ -1,23 +1,42 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./CommandBox.module.scss";
 import Button from "@/components/button/Button";
 import { context } from "@/components/Context";
 
 import Commands from "./CommandBox.json";
+import tg from "@/libraries/typeGuard";
 
 const CommandBox = () => {
-  const { CommentCommandInput } = useContext(context);
-  const update = useCallback((value: string) => {
-    if (value === "delete") {
-      CommentCommandInput.value = "";
-    } else {
-      if (!CommentCommandInput.value.match(/^.*\s$/))
-        CommentCommandInput.value += " ";
-      CommentCommandInput.value += `${value} `;
-    }
-    return;
-  }, []);
+  const { commentCommandInput } = useContext(context),
+    [commands, setCommands] = useState<string[]>([]);
+  const update = useCallback(
+    (value: string) => {
+      if (!tg.context.commentCommandInput(commentCommandInput)) return;
+      const command = value.match(/^dansk:(.*)$/);
+      let currentCommands = commands;
+      if (command) {
+        switch (command[1]) {
+          case "delete":
+            commentCommandInput.value = "";
+            setCommands([]);
+            break;
+          default:
+            break;
+        }
+      } else {
+        if (currentCommands.join(" ") !== commentCommandInput.value)
+          currentCommands = commentCommandInput.value.split(" ");
+        if (!commands.includes(value))
+          currentCommands = [...currentCommands, value];
+        commentCommandInput.value = currentCommands.join(" ");
+        setCommands(currentCommands);
+      }
+      return;
+    },
+    [commands, commentCommandInput]
+  );
+
   return (
     <Spoiler text={"Main"}>
       <div className={Styles.table}>

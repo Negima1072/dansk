@@ -10,11 +10,12 @@
   user-select: none;
 }
 .wrapper::before {
-  content: "[ + ]";
+  content: "[ ＋ ]";
   display: inline-block;
   width: 30px;
+  font-size: 11px;
   text-align: center;
 }
 .wrapper.open::before {
-  content: "[ - ]";
+  content: "[ － ]";
 }
