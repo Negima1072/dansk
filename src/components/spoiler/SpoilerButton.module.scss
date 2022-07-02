@@ -1,4 +1,4 @@
-.wrapper{
+.wrapper {
   font-size: 13px;
   color: white;
   text-align: left;
@@ -9,12 +9,12 @@
   display: block;
   user-select: none;
 }
-.wrapper::before{
+.wrapper::before {
   content: "[ + ]";
   display: inline-block;
   width: 30px;
   text-align: center;
 }
-.wrapper.open::before{
+.wrapper.open::before {
   content: "[ - ]";
 }
