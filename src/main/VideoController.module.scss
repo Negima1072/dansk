@@ -1,16 +1,16 @@
-.input{
+.input {
   background-color: white;
   font-size: 12px;
 }
-.table{
+.table {
   display: flex;
   flex-direction: row;
   width: 100%;
-  .column{
+  .column {
     display: flex;
     flex-direction: column;
     flex: 1;
-    .row{
+    .row {
       flex: 32px;
       line-height: 32px;
       text-align: center;

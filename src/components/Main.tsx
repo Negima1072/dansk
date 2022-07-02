@@ -1,9 +1,9 @@
+import VideoController from "@/main/VideoController";
 import React, { useEffect, useState } from "react";
 import Context from "@/components/Context";
-import CommandBox from "@/footers/CommandBox";
 import getElements from "@/libraries/getElements";
 
-const Footer = (): JSX.Element => {
+const Main = (): JSX.Element => {
   const [data, setData] = useState({});
   useEffect(() => {
     const init = async () => setData(await getElements());
@@ -11,8 +11,8 @@ const Footer = (): JSX.Element => {
   }, []);
   return (
     <Context value={data}>
-      <CommandBox />
+      <VideoController />
     </Context>
   );
 };
-export default Footer;
+export default Main;

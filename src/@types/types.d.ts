@@ -20,11 +20,19 @@ type messageTimeSeekPlEvent = {
   type: "time_seek_pl";
   pl: string[];
 };
+type contextTypeNullable = {
+  videoElement?: HTMLVideoElement;
+  seekToHeadButton?: HTMLButtonElement;
+  commentOnOffButton?: HTMLButtonElement;
+  commentCommandInput?: HTMLInputElement;
+};
 type contextType = {
   videoElement: HTMLVideoElement;
   seekToHeadButton: HTMLButtonElement;
-  CommentCommandInput: HTMLInputElement;
+  commentOnOffButton: HTMLButtonElement;
+  commentCommandInput: HTMLInputElement;
 };
 type contextProps = {
   children: ReactNode;
+  value?: contextTypeNullable;
 };
