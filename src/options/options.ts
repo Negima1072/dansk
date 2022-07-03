@@ -143,6 +143,10 @@ window.addEventListener("load", () => {
         localStorage.set("option_timespanMain", mainSpanInputElm.value);
         const ownerSpanInputElm = document.getElementById("owner-comment-span-ms") as HTMLInputElement;
         localStorage.set("option_timespanOwner", ownerSpanInputElm.value);
+        const tmtagElm = document.getElementById("tmtag-use-10ms-base") as HTMLInputElement;
+        localStorage.set("option_10msBase", String(tmtagElm.checked));
+        const rep01Elm = document.getElementById("rep-color-010101") as HTMLInputElement;
+        localStorage.set("option_repColor01", String(rep01Elm.checked));
     };
 
     const commJap = (value: string): string => {
@@ -193,6 +197,10 @@ window.addEventListener("load", () => {
         mainSpanInputElm.value = String(localStorage.get("option_timespanMain") ?? 6000);
         const ownerSpanInputElm = document.getElementById("owner-comment-span-ms") as HTMLInputElement;
         ownerSpanInputElm.value = String(localStorage.get("option_timespanOwner") ?? 1000);
+        const tmtagElm = document.getElementById("tmtag-use-10ms-base") as HTMLInputElement;
+        tmtagElm.checked = (localStorage.get("option_10msBase") ?? "false") == "true";
+        const rep01Elm = document.getElementById("rep-color-010101") as HTMLInputElement;
+        rep01Elm.checked = (localStorage.get("option_repColor01") ?? "false") == "true";
     }
 
     saveBtn.onclick = () => {
