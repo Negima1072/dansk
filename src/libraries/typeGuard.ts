@@ -72,6 +72,11 @@ const typeGuard = {
       i !== null &&
       (i as HTMLVideoElement).nodeName === "INPUT" &&
       (i as HTMLVideoElement).classList.contains("CommentCommandInput"),
+    commentInputTextarea: (i: unknown): i is HTMLTextAreaElement =>
+      typeof i === "object" &&
+      i !== null &&
+      (i as HTMLTextAreaElement).nodeName === "TEXTAREA" &&
+      (i as HTMLTextAreaElement).classList.contains("CommentInput-textarea"),
   },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {

@@ -1,4 +1,5 @@
 import tg from "@/libraries/typeGuard";
+import str2time from "@/libraries/str2time";
 const videoElement = (
   document.getElementById("MainVideoPlayer") as HTMLDivElement
 ).getElementsByTagName("video")[0] as HTMLVideoElement;
@@ -13,7 +14,7 @@ window.addEventListener("message", function (event) {
   } else if (tg.messageEvent.timeSeekInt(event.data)) {
     seek(videoElement.currentTime + event.data.int / 100);
   } else if (tg.messageEvent.timeSeekPl(event.data)) {
-    if (event.data.pl[0]) seek(str2time(event.data.pl[0]));
+    if (event.data.pl[0]) seek(str2time(event.data.pl[0]) || 0);
     document.activeElement?.dispatchEvent(new Event("blur"));
   }
 });
@@ -33,7 +34,7 @@ timeField.onchange = () => {
 };
 timeField.onkeydown = (e) => {
   if (e.key === "Enter") {
-    seek(str2time(timeField.value));
+    seek(str2time(timeField.value) || 0);
     document.activeElement?.dispatchEvent(new Event("blur"));
   }
 };
@@ -44,18 +45,6 @@ const update = () => {
   requestAnimationFrame(update);
 };
 update();
-
-const str2time = (date: string): number => {
-  const match = date.match(/^(?:(\d+):)?(\d+)(?:\.(\d+))?$/);
-  let time = 0;
-  if (match) {
-    if (match[1] !== undefined) time += Number(match[1]) * 60;
-    if (match[2] !== undefined) time += Number(match[2]);
-    if (match[3] !== undefined)
-      time += Number(match[3]) / Math.pow(10, match[3].length);
-  }
-  return time;
-};
 
 const time2str = (time: number): string =>
   `${("0" + Math.floor(time / 60).toString()).slice(-2)}:${(

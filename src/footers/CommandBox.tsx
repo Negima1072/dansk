@@ -8,18 +8,33 @@ import Commands from "./CommandBox.json";
 import tg from "@/libraries/typeGuard";
 
 const CommandBox = () => {
-  const { commentCommandInput } = useContext(context),
+  const { commentCommandInput, commentInputTextarea } = useContext(context),
     [commands, setCommands] = useState<string[]>([]);
   const update = useCallback(
     (value: string) => {
-      if (!tg.context.commentCommandInput(commentCommandInput)) return;
+      if (
+        !(
+          tg.context.commentCommandInput(commentCommandInput) &&
+          tg.context.commentInputTextarea(commentInputTextarea)
+        )
+      )
+        return;
       const command = value.match(/^dansk:(.*)$/);
       let currentCommands = commands;
       if (command) {
         switch (command[1]) {
-          case "delete":
+          case "deleteCommand":
             commentCommandInput.value = "";
+            commentCommandInput.dispatchEvent(
+              new Event("change", { bubbles: true })
+            );
             setCommands([]);
+            break;
+          case "deleteComment":
+            commentInputTextarea.value = "";
+            commentInputTextarea.dispatchEvent(
+              new Event("change", { bubbles: true })
+            );
             break;
           default:
             break;
@@ -27,9 +42,21 @@ const CommandBox = () => {
       } else {
         if (currentCommands.join(" ") !== commentCommandInput.value)
           currentCommands = commentCommandInput.value.split(" ");
-        if (!commands.includes(value))
+        if (commands.includes(value)) {
+          currentCommands = currentCommands.filter((item) => item !== value);
+        } else {
+          const group = getGroupFromItem(value);
+          if (!group) return;
+          const items = getItemsFromGroup(group);
+          currentCommands = currentCommands.filter(
+            (item) => !items.includes(item)
+          );
           currentCommands = [...currentCommands, value];
+        }
         commentCommandInput.value = currentCommands.join(" ");
+        commentCommandInput.dispatchEvent(
+          new Event("change", { bubbles: true })
+        );
         setCommands(currentCommands);
       }
       return;
@@ -55,6 +82,7 @@ const CommandBox = () => {
                           click={update}
                           text={itemData.text}
                           value={itemData.value}
+                          active={commands.includes(itemData.value)}
                           type={
                             itemData.text.match(/^#[0-9A-F]{6}$/)
                               ? "color"
@@ -73,5 +101,27 @@ const CommandBox = () => {
       </div>
     </Spoiler>
   );
+};
+
+const getGroupFromItem = (value: string): string | undefined => {
+  for (const row of Commands) {
+    for (const block of row) {
+      for (const item of block) {
+        if (item.value === value) return item.group;
+      }
+    }
+  }
+  return undefined;
+};
+const getItemsFromGroup = (group: string): string[] => {
+  const result: string[] = [];
+  for (const row of Commands) {
+    for (const block of row) {
+      for (const item of block) {
+        if (item.group === group) result.push(item.value);
+      }
+    }
+  }
+  return result;
 };
 export default CommandBox;

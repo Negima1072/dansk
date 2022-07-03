@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Context from "@/components/Context";
 import CommandBox from "@/footers/CommandBox";
-import getElements from "@/libraries/getElements";
+import React, { useContext } from "react";
+import { context } from "@/components/Context";
+import ReactDOM from "react-dom";
 
 const Footer = (): JSX.Element => {
-  const [data, setData] = useState({});
-  useEffect(() => {
-    const init = async () => setData(await getElements());
-    void init();
-  }, []);
-  return (
-    <Context value={data}>
+  const { FooterElement } = useContext(context);
+  if (!FooterElement) return <></>;
+  return ReactDOM.createPortal(
+    <>
       <CommandBox />
-    </Context>
+    </>,
+    FooterElement
   );
 };
 export default Footer;

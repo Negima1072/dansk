@@ -25,12 +25,20 @@ type contextTypeNullable = {
   seekToHeadButton?: HTMLButtonElement;
   commentOnOffButton?: HTMLButtonElement;
   commentCommandInput?: HTMLInputElement;
+  commentInputTextarea?: HTMLTextAreaElement;
+  HeaderElement?: HTMLDivElement;
+  MainElement?: HTMLDivElement;
+  FooterElement?: HTMLDivElement;
 };
 type contextType = {
   videoElement: HTMLVideoElement;
   seekToHeadButton: HTMLButtonElement;
   commentOnOffButton: HTMLButtonElement;
   commentCommandInput: HTMLInputElement;
+  commentInputTextarea: HTMLTextAreaElement;
+  HeaderElement: HTMLDivElement;
+  MainElement: HTMLDivElement;
+  FooterElement: HTMLDivElement;
 };
 type contextProps = {
   children: ReactNode;

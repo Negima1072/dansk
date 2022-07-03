@@ -7,6 +7,7 @@ type buttonProps = {
   text: string;
   type?: "string" | "color";
   value: string;
+  active?: boolean;
 };
 
 type colorButtonProps = {
@@ -24,7 +25,7 @@ const Button = (props: buttonProps) => {
     return (
       <ColorButton
         type={"button"}
-        className={Styles.colorButton}
+        className={`${Styles.colorButton} ${props.active ? Styles.active : ""}`}
         color={props.text}
         onClick={() => props.click(props.value)}
         value={" "}
@@ -34,7 +35,7 @@ const Button = (props: buttonProps) => {
   return (
     <input
       type={"button"}
-      className={Styles.button}
+      className={`${Styles.button} ${props.active ? Styles.active : ""}`}
       onClick={() => props.click(props.value)}
       value={props.text}
     />
