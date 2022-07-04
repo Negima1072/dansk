@@ -8,7 +8,7 @@ type propType = {
 };
 
 const Spoiler: React.FC<propType> = (props) => {
-  const [spoilerOpen, setSpoilerOpen] = useState<boolean>(false);
+  const [spoilerOpen, setSpoilerOpen] = useState<boolean>(true);
   return (
     <div className={Styles.wrapper}>
       <SpoilerButton

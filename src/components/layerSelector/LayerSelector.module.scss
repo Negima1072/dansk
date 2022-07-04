@@ -1,0 +1,34 @@
+.wrapper {
+  user-select: none;
+  width: 320px;
+  height: 100%;
+  overflow-y: scroll;
+  background-color: white;
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    .tr {
+      border: solid 1px black;
+      text-align: center;
+      &.invalid {
+        background-color: #ffcccc;
+      }
+      :not(:last-child) {
+        border-right: solid #bbbbbb 1px;
+      }
+      .visible,
+      .delete {
+        width: 17px;
+      }
+      .name {
+        text-align: left;
+      }
+      .pos {
+        width: 40px;
+      }
+      .font {
+        width: 64px;
+      }
+    }
+  }
+}

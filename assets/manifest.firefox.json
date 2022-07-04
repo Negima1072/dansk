@@ -1,0 +1,19 @@
+{
+  "name": "DanSukuMizu-react",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "DanSukuMizu modified by Negima1072 and @eneko0513",
+  "content_scripts": [
+	{
+	  "matches": ["https://www.nicovideo.jp/watch/*"],
+	  "js": ["index.js"],
+	  "run_at": "document_end"
+	}
+  ],
+  "permissions": ["tabs"],
+  "icons": {
+	"16": "icon/icon16.png",
+	"32": "icon/icon32.png",
+	"64": "icon/icon64.png"
+  }
+}

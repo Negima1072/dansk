@@ -3,91 +3,112 @@
     [
       {
         "text": "Del",
-        "value": "dansk:delete"
+        "value": "dansk:deleteCommand",
+        "group": "command"
       }
     ],
     [
       {
         "text": "#FFFFFF",
-        "value": "white"
+        "value": "white",
+        "group": "color"
       },
       {
         "text": "#FF0000",
-        "value": "red"
+        "value": "red",
+        "group": "color"
       },
       {
         "text": "#FF8080",
-        "value": "pink"
+        "value": "pink",
+        "group": "color"
       },
       {
         "text": "#FFC000",
-        "value": "orange"
+        "value": "orange",
+        "group": "color"
       },
       {
         "text": "#FFFF00",
-        "value": "yellow"
+        "value": "yellow",
+        "group": "color"
       },
       {
         "text": "#00FF00",
-        "value": "green"
+        "value": "green",
+        "group": "color"
       },
       {
         "text": "#00FFFF",
-        "value": "cyan"
+        "value": "cyan",
+        "group": "color"
       },
       {
         "text": "#0000FF",
-        "value": "blue"
+        "value": "blue",
+        "group": "color"
       },
       {
         "text": "#C000FF",
-        "value": "purple"
+        "value": "purple",
+        "group": "color"
       },
       {
         "text": "#000000",
-        "value": "black"
+        "value": "black",
+        "group": "color"
       }
     ],
     [
       {
         "text": "#CCCC99",
-        "value": "white2"
+        "value": "white2",
+        "group": "color"
       },
       {
         "text": "#CC0033",
-        "value": "red2"
+        "value": "red2",
+        "group": "color"
       },
       {
         "text": "#FF33CC",
-        "value": "pink2"
+        "value": "pink2",
+        "group": "color"
       },
       {
         "text": "#FF6600",
-        "value": "orange2"
+        "value": "orange2",
+        "group": "color"
       },
       {
         "text": "#999900",
-        "value": "yellow2"
+        "value": "yellow2",
+        "group": "color"
       },
       {
         "text": "#00CC66",
-        "value": "green2"
+        "value": "green2",
+        "group": "color"
       },
       {
         "text": "#00CCCC",
-        "value": "cyan2"
+        "value": "cyan2",
+        "group": "color"
       },
       {
         "text": "#3399FF",
-        "value": "blue2"
+        "value": "blue2",
+        "group": "color"
       },
       {
         "text": "#6633CC",
-        "value": "purple2"
+        "value": "purple2",
+        "group": "color"
       },
       {
         "text": "#666666",
-        "value": "black2"
+        "value": "black2",
+        "group": "color"
       }
     ]
   ],
@@ -95,85 +116,101 @@
     [
       {
         "text": "B",
-        "value": "big"
+        "value": "big",
+        "group": "size"
       },
       {
         "text": "M",
-        "value": "medium"
+        "value": "medium",
+        "group": "size"
       },
       {
         "text": "S",
-        "value": "small"
+        "value": "small",
+        "group": "size"
       }
     ],
     [
       {
         "text": "U",
-        "value": "ue"
+        "value": "ue",
+        "group": "pos"
       },
       {
         "text": "N",
-        "value": "naka"
+        "value": "naka",
+        "group": "pos"
       },
       {
         "text": "S",
-        "value": "shita"
+        "value": "shita",
+        "group": "pos"
       }
     ],
     [
       {
         "text": "D",
-        "value": "defont"
+        "value": "defont",
+        "group": "font"
       },
       {
         "text": "G",
-        "value": "gothic"
+        "value": "gothic",
+        "group": "font"
       },
       {
         "text": "M",
-        "value": "mincho"
+        "value": "mincho",
+        "group": "font"
       }
     ],
     [
       {
         "text": "end",
-        "value": "ender"
+        "value": "ender",
+        "group": "ender"
       }
     ],
     [
       {
         "text": "full",
-        "value": "full"
+        "value": "full",
+        "group": "full"
       }
     ],
     [
       {
         "text": "pts",
-        "value": "patissier"
+        "value": "patissier",
+        "group": "patissier"
       }
     ],
     [
       {
         "text": "sage",
-        "value": "sage"
+        "value": "sage",
+        "group": "sage"
       }
     ],
     [
       {
         "text": "184",
-        "value": "184"
+        "value": "184",
+        "group": "184"
       }
     ],
     [
       {
         "text": "Inv",
-        "value": "invisible"
+        "value": "invisible",
+        "group": "invisible"
       }
     ],
     [
       {
         "text": "Cdel",
-        "value": "dansk:commandDelete"
+        "value": "dansk:deleteComment",
+        "group": "command"
       }
     ]
   ]

@@ -12,6 +12,12 @@
   vertical-align: top;
   border: none;
   margin: 0;
+  &:hover {
+    background-color: #006699;
+  }
+  &.active {
+    background-color: #007cff;
+  }
 }
 .colorButton {
   width: auto;
@@ -23,4 +29,10 @@
   border: 2px solid rgb(153, 153, 153);
   cursor: pointer;
   margin: 2px 0;
+  &:hover {
+    border: 2px solid #006699;
+  }
+  &.active {
+    border: 2px solid #007cff;
+  }
 }

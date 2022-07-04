@@ -25,14 +25,57 @@ type contextTypeNullable = {
   seekToHeadButton?: HTMLButtonElement;
   commentOnOffButton?: HTMLButtonElement;
   commentCommandInput?: HTMLInputElement;
+  commentInputTextarea?: HTMLTextAreaElement;
+  HeaderElement?: HTMLDivElement;
+  MainElement?: HTMLDivElement;
+  FooterElement?: HTMLDivElement;
+  exportLayer?: layer[];
+  setExportLayer?: (layer: layer[]) => void;
 };
 type contextType = {
   videoElement: HTMLVideoElement;
   seekToHeadButton: HTMLButtonElement;
   commentOnOffButton: HTMLButtonElement;
   commentCommandInput: HTMLInputElement;
+  commentInputTextarea: HTMLTextAreaElement;
+  HeaderElement: HTMLDivElement;
+  MainElement: HTMLDivElement;
+  FooterElement: HTMLDivElement;
+  exportLayer: layer[];
+  setExportLayer: (layer: layer[]) => void;
 };
 type contextProps = {
   children: ReactNode;
   value?: contextTypeNullable;
+};
+type commentPos = "ue" | "naka" | "shita";
+type commentFont = "mincho" | "gothic";
+
+type layerTemplates = {
+  [key: string]: layerTemplate;
+};
+type layerTemplate = {
+  commands: string[];
+  pos: commentPos;
+  text: string;
+  value: string;
+  id: string;
+  width: number;
+  height: number;
+  critical: boolean;
+  nakaOnly: boolean;
+};
+type layer = {
+  type: string;
+  value: string;
+  commands: string[];
+  pos: commentPos;
+  text: string;
+  id: string;
+  width: number;
+  height: number;
+  critical: boolean;
+  nakaOnly: boolean;
+  font: commentFont;
+  visible: boolean;
 };

@@ -3,6 +3,7 @@ import Styles from "./VideoController.module.scss";
 import Spoiler from "@/components/spoiler/Spoiler";
 import { context } from "@/components/Context";
 import tg from "@/libraries/typeGuard";
+import str2time from "@/libraries/str2time";
 
 const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
 
@@ -60,15 +61,17 @@ const VideoController = (): JSX.Element => {
   );
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && !isNaN(Number(value))) {
-        void updateTime(Number(value), false);
+      const time = str2time(value);
+      if (e.key === "Enter" && time !== undefined) {
+        void updateTime(time, !!value.match(/^[+-]/));
       }
     },
     [value]
   );
   const onInputBlur = useCallback(() => {
-    if (!isNaN(Number(value))) {
-      void updateTime(Number(value), false);
+    const time = str2time(value);
+    if (time !== undefined) {
+      void updateTime(time, !!value.match(/^[+-]/));
     }
   }, [value]);
   if (tg.context.videoElement(videoElement)) {

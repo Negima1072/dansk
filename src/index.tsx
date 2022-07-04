@@ -9,11 +9,7 @@ window.onload = () => {
       mainContainerPlayer = mainContainer.getElementsByClassName(
         "MainContainer-player"
       )[0] as HTMLDivElement;
-    const Header = (await import("@/components/Header"))
-      .default as unknown as () => JSX.Element;
-    const Main = (await import("@/components/Main"))
-      .default as unknown as () => JSX.Element;
-    const Footer = (await import("@/components/Footer"))
+    const Root = (await import("@/Root"))
       .default as unknown as () => JSX.Element;
     const HeaderElement = document.createElement("div");
     mainContainer.before(HeaderElement);
@@ -21,13 +17,13 @@ window.onload = () => {
     mainContainerPlayer.appendChild(MainElement);
     const FooterElement = document.createElement("div");
     mainContainer.after(FooterElement);
-    console.log(Header, Main, Footer);
-    const HeaderRoot = createRoot(HeaderElement),
-      MainRoot = createRoot(MainElement),
-      FooterRoot = createRoot(FooterElement);
-    HeaderRoot.render(<Header />);
-    MainRoot.render(<Main />);
-    FooterRoot.render(<Footer />);
+    HeaderElement.id = "dansk:HeaderElement";
+    MainElement.id = "dansk:MainElement";
+    FooterElement.id = "dansk:FooterElement";
+    const ReactRootElement = document.createElement("div");
+    document.body.append(ReactRootElement);
+    const ReactRoot = createRoot(ReactRootElement);
+    ReactRoot.render(<Root />);
   };
   void init();
 };

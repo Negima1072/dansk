@@ -1,0 +1,15 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  .row {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+    &.layer {
+      height: 140px;
+    }
+    .block:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+}
