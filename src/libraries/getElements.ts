@@ -1,10 +1,10 @@
 import sleep from "@/libraries/sleep";
-import { contextType } from "@/@types/types";
+import { contextTypeNullable } from "@/@types/types";
 
-const getElements = async (): Promise<contextType> => {
+const getElements = async (): Promise<contextTypeNullable> => {
   const videoElement = (
       document.getElementById("MainVideoPlayer") as HTMLDivElement
-    ).getElementsByTagName("video")[0] as HTMLVideoElement,
+    )?.getElementsByTagName("video")[0] as HTMLVideoElement,
     seekToHeadButton = document.getElementsByClassName(
       "SeekToHeadButton"
     )[0] as HTMLButtonElement,

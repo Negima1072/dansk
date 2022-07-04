@@ -1,5 +1,6 @@
 import {
   contextType,
+  layerTemplate,
   messageColorClickEvent,
   messageTimeSeekEvent,
   messageTimeSeekIntEvent,
@@ -77,6 +78,20 @@ const typeGuard = {
       i !== null &&
       (i as HTMLTextAreaElement).nodeName === "TEXTAREA" &&
       (i as HTMLTextAreaElement).classList.contains("CommentInput-textarea"),
+  },
+  trace: {
+    template: (i: unknown): i is layerTemplate =>
+      typeVerify(i, [
+        "id",
+        "commands",
+        "pos",
+        "text",
+        "value",
+        "width",
+        "height",
+        "critical",
+        "nakaOnly",
+      ]),
   },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {

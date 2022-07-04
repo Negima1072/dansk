@@ -4,19 +4,16 @@ import Footer from "@/components/Footer";
 import getElements from "@/libraries/getElements";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
+import { layer } from "@/@types/types";
 
 const Root = (): JSX.Element => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({}),
+    [exportLayer, setExportLayer] = useState<layer[]>([]);
   useEffect(() => {
-    const init = async () => setData(await getElements());
+    const init = async () =>
+      setData({ ...(await getElements()), exportLayer, setExportLayer });
     void init();
   }, []);
-  console.log(data);
-  /*
-    return( <Context value={data}>
-        <CommandBox />
-      </Context>
-     );*/
   return (
     <Context value={data}>
       <Header />
