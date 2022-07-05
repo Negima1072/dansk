@@ -43,9 +43,6 @@ const typeGuard = {
       !!(
         i !== null &&
         typeGuard.context.videoElement((i as contextType).videoElement) &&
-        typeGuard.context.seekToHeadButton(
-          (i as contextType).seekToHeadButton
-        ) &&
         typeGuard.context.commentCommandInput(
           (i as contextType).commentCommandInput
         )
@@ -54,13 +51,6 @@ const typeGuard = {
       typeof i === "object" &&
       i !== null &&
       (i as HTMLVideoElement).nodeName === "VIDEO",
-    seekToHeadButton: (i: unknown): i is HTMLButtonElement =>
-      typeof i === "object" &&
-      i !== null &&
-      (i as HTMLVideoElement).nodeName === "BUTTON" &&
-      (i as HTMLVideoElement).classList.contains("ActionButton") &&
-      (i as HTMLVideoElement).classList.contains("ControllerButton") &&
-      (i as HTMLVideoElement).classList.contains("SeekToHeadButton"),
     commentOnOffButton: (i: unknown): i is HTMLButtonElement =>
       typeof i === "object" &&
       i !== null &&

@@ -1,4 +1,11 @@
-import React, { ChangeEvent, useCallback, useContext, useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Styles from "./VideoController.module.scss";
 import Spoiler from "@/components/spoiler/Spoiler";
 import { context } from "@/components/Context";
@@ -8,49 +15,38 @@ import str2time from "@/libraries/str2time";
 const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
 
 const VideoController = (): JSX.Element => {
-  const { videoElement, seekToHeadButton, commentOnOffButton } =
-      useContext(context),
+  const { videoElement } = useContext(context),
     [value, setValue] = useState<string>("0"),
-    [isSeeking, setIsSeeking] = useState<boolean>(false);
+    [isSeeking, setIsSeeking] = useState<boolean>(false),
+    timeInputElement = useRef<HTMLInputElement>(null);
 
   const onTimeUpdate = () => {
     if (
       !tg.context.videoElement(videoElement) &&
-      document.activeElement !== videoElement
+      document.activeElement !== timeInputElement.current
     )
       return;
-    setValue(videoElement.currentTime.toFixed(2));
+    setValue(window.__videoplayer.currentTime().toFixed(2));
   };
 
-  const updateTime = async (time: number, relative = true) => {
-    if (
-      !tg.context.videoElement(videoElement) ||
-      !tg.context.seekToHeadButton(seekToHeadButton) ||
-      !tg.context.commentOnOffButton(commentOnOffButton)
-    )
-      return;
+  const updateTime = (time: number, relative = true) => {
     setIsSeeking(true);
-    if (!videoElement.paused) videoElement.pause();
-    if (relative) time += videoElement.currentTime;
+    const commentOnOffButton = document.getElementsByClassName(
+      "CommentOnOffButton"
+    )[0] as HTMLButtonElement;
+    if (!window.__videoplayer.paused()) window.__videoplayer.pause();
+    console.log(relative, time, window.__videoplayer.currentTime());
+    if (relative) time += window.__videoplayer.currentTime();
     if (time < 0) time = 0;
-    if (time > videoElement.duration) time = videoElement.duration;
-    seekToHeadButton.click();
-    await new Promise<void>((resolve) => {
-      const i = setInterval(() => {
-        if (videoElement.currentTime === 0) {
-          clearInterval(i);
-          setTimeout(() => resolve(), 10);
-        }
-      }, 10);
-    });
-    videoElement.currentTime = Math.floor(time * 100) / 100 + 0.001;
+    if (time > window.__videoplayer.duration())
+      time = window.__videoplayer.duration();
+    window.__videoplayer.currentTime(Math.floor(time * 100) / 100 + 0.001);
     const pauseButton = document.getElementsByClassName("PlayerPauseButton");
     if (pauseButton && pauseButton[0]) {
       (pauseButton[0] as HTMLButtonElement).click();
     }
     commentOnOffButton.click();
     commentOnOffButton.click();
-    setValue(String((Math.floor(time * 100) / 100 + 0.001).toFixed(2)));
     setIsSeeking(false);
   };
   const onInputChange = useCallback(
@@ -63,7 +59,7 @@ const VideoController = (): JSX.Element => {
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       const time = str2time(value);
       if (e.key === "Enter" && time !== undefined) {
-        void updateTime(time, !!value.match(/^[+-]/));
+        (e.target as HTMLInputElement).blur();
       }
     },
     [value]
@@ -74,11 +70,19 @@ const VideoController = (): JSX.Element => {
       void updateTime(time, !!value.match(/^[+-]/));
     }
   }, [value]);
-  if (tg.context.videoElement(videoElement)) {
-    videoElement.ontimeupdate = onTimeUpdate;
-    videoElement.onpause = onTimeUpdate;
-    videoElement.onplay = onTimeUpdate;
-  }
+  useEffect(() => {
+    if (tg.context.videoElement(videoElement)) {
+      videoElement.addEventListener("timeupdate", onTimeUpdate);
+      videoElement.addEventListener("pause", onTimeUpdate);
+      videoElement.addEventListener("play", onTimeUpdate);
+      console.log(videoElement);
+    }
+    return () => {
+      videoElement?.removeEventListener("timeupdate", onTimeUpdate);
+      videoElement?.removeEventListener("pause", onTimeUpdate);
+      videoElement?.removeEventListener("play", onTimeUpdate);
+    };
+  }, [videoElement]);
 
   return (
     <Spoiler text={"Time"}>
@@ -90,6 +94,7 @@ const VideoController = (): JSX.Element => {
         onKeyDown={onInputKeyDown}
         onChange={onInputChange}
         disabled={isSeeking}
+        ref={timeInputElement}
       />
       <div className={Styles.table}>
         {buttons.map((data, key) => {

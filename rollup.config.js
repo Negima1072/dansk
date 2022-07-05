@@ -41,9 +41,9 @@ export default [
 		inlineDynamicImports: true,
 	},
 	{
-		input: 'src/embed.ts',
+		input: 'src/Root.tsx',
 		output: {
-			file: `dist/embed.js`,
+			file: `dist/main.js`,
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},

@@ -9,6 +9,7 @@ import { layer } from "@/@types/types";
 import LayerSelector from "@/components/layerSelector/LayerSelector";
 import layerUtil from "@/libraries/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
+import LayerPortal from "@/components/LayerPortal";
 
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
@@ -138,6 +139,7 @@ const Trace = () => {
           <LayerSelector layer={layerData} setLayer={setLayerData} />
         </div>
       </div>
+      <LayerPortal />
     </Spoiler>
   );
 };
