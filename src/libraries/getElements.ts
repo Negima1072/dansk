@@ -1,16 +1,10 @@
 import sleep from "@/libraries/sleep";
 import { contextTypeNullable } from "@/@types/types";
 
-const getElements = async (): Promise<contextTypeNullable> => {
+const getElements = async (count = 0): Promise<contextTypeNullable> => {
   const videoElement = (
       document.getElementById("MainVideoPlayer") as HTMLDivElement
     )?.getElementsByTagName("video")[0] as HTMLVideoElement,
-    seekToHeadButton = document.getElementsByClassName(
-      "SeekToHeadButton"
-    )[0] as HTMLButtonElement,
-    commentOnOffButton = document.getElementsByClassName(
-      "CommentOnOffButton"
-    )[0] as HTMLButtonElement,
     commentCommandInput = document.getElementsByClassName(
       "CommentCommandInput"
     )[0] as HTMLInputElement,
@@ -25,20 +19,25 @@ const getElements = async (): Promise<contextTypeNullable> => {
     ) as HTMLDivElement,
     FooterElement = document.getElementById(
       "dansk:FooterElement"
+    ) as HTMLDivElement,
+    LayerElement = document.getElementById(
+      "dansk:LayerElement"
     ) as HTMLDivElement;
-  if (!(videoElement && seekToHeadButton && commentCommandInput)) {
+  if (!(videoElement && commentCommandInput)) {
+    if (count > 30) {
+      throw new Error("fail to get mount point");
+    }
     await sleep(100);
-    return await getElements();
+    return await getElements(count + 1);
   }
   return {
-    videoElement: videoElement,
-    seekToHeadButton: seekToHeadButton,
-    commentOnOffButton: commentOnOffButton,
-    commentCommandInput: commentCommandInput,
-    commentInputTextarea: commentInputTextarea,
-    HeaderElement: HeaderElement,
-    MainElement: MainElement,
-    FooterElement: FooterElement,
+    videoElement,
+    commentCommandInput,
+    commentInputTextarea,
+    HeaderElement,
+    MainElement,
+    FooterElement,
+    LayerElement,
   };
 };
 export default getElements;
