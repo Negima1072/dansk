@@ -13,6 +13,9 @@
       &.invalid {
         background-color: #ffcccc;
       }
+      &.selected {
+        background: #ccccff;
+      }
       :not(:last-child) {
         border-right: solid #bbbbbb 1px;
       }

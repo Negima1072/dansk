@@ -29,6 +29,7 @@ const init = async () => {
   let mainContainer,
     mainContainerPlayer,
     videoSymbolContainerCanvas,
+    videoContainer,
     count = 0;
   while (count < 30) {
     mainContainer = document.getElementsByClassName(
@@ -40,10 +41,14 @@ const init = async () => {
     videoSymbolContainerCanvas = document.getElementsByClassName(
       "VideoSymbolContainer-canvas"
     )[0] as HTMLCanvasElement;
+    videoContainer = document.getElementsByClassName(
+      "InView VideoContainer"
+    )[0] as HTMLDivElement;
     count++;
     if (
       mainContainerPlayer === undefined ||
-      videoSymbolContainerCanvas === undefined
+      videoSymbolContainerCanvas === undefined ||
+      videoContainer === undefined
     ) {
       await sleep(100);
     } else {
@@ -53,10 +58,18 @@ const init = async () => {
   if (
     mainContainer === undefined ||
     mainContainerPlayer === undefined ||
-    videoSymbolContainerCanvas === undefined
+    videoSymbolContainerCanvas === undefined ||
+    videoContainer === undefined
   ) {
     throw new Error("fail to get required element");
   }
+  videoContainer.addEventListener(
+    "scroll",
+    (e) => {
+      (e.target as HTMLDivElement).scroll(0, 0);
+    },
+    { passive: false }
+  );
   const HeaderElement = document.createElement("div");
   mainContainer.before(HeaderElement);
   const MainElement = document.createElement("div");

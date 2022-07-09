@@ -1,4 +1,10 @@
-import { commentFont, commentPos, layer } from "@/@types/types";
+import {
+  commentFont,
+  commentPos,
+  layer,
+  layerLine,
+  layerTemplate,
+} from "@/@types/types";
 import { Templates } from "@/headers/Trace.templates";
 
 const layerUtil = {
@@ -21,15 +27,33 @@ const layerUtil = {
   togglePos: (value: commentPos): commentPos => {
     switch (value) {
       case "ue":
-        return "naka";
-      case "naka":
         return "shita";
-      case "shita":
+      case "naka":
         return "ue";
+      case "shita":
+        return "naka";
     }
   },
   toggleFont: (value: commentFont): commentFont => {
     return value === "mincho" ? "gothic" : "mincho";
+  },
+  generateLineFromTempate: (layer: layerTemplate): layerLine[] => {
+    const lines: layerLine[] = [];
+    for (const size of layer.size) {
+      for (let i = 0; i < (size.count || 1); i++) {
+        const line = [];
+        for (let j = 0; j < size.lineCount; j++) {
+          line.push("");
+        }
+        lines.push({
+          font: size.font,
+          line: size.line,
+          height: size.height,
+          content: line,
+        });
+      }
+    }
+    return lines;
   },
 };
 export default layerUtil;

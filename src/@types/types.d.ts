@@ -53,6 +53,20 @@ type commentFont = "mincho" | "gothic";
 type layerTemplates = {
   [key: string]: layerTemplate;
 };
+type layerSizeData = {
+  font: number;
+  line: number;
+  lineCount: number;
+  count?: number;
+  height?: number;
+  margin?: number;
+};
+type layerLine = {
+  font: number;
+  line: number;
+  height?: number;
+  content: string[];
+};
 type layerTemplate = {
   commands: string[];
   pos: commentPos;
@@ -63,20 +77,18 @@ type layerTemplate = {
   height: number;
   critical: boolean;
   nakaOnly: boolean;
+  top: { ue: number; naka: number; shita: number };
+  left: number;
+  scale: { x: number; y: number };
+  size: layerSizeData[];
 };
-type layer = {
+type layer = layerTemplate & {
   type: string;
-  value: string;
-  commands: string[];
-  pos: commentPos;
-  text: string;
-  id: string;
-  width: number;
-  height: number;
-  critical: boolean;
-  nakaOnly: boolean;
   font: commentFont;
   visible: boolean;
+  selected: boolean;
+  color: string;
+  content: layerLine[];
 };
 type crossOriginType = "anonymous" | "use-credentials";
 type nvPlayerApi = {

@@ -13,8 +13,9 @@
     .row {
       flex: 32px;
       line-height: 32px;
+      height: 32px;
+      padding: 0;
       text-align: center;
-      border: solid 1px;
       margin: 1px;
       user-select: none;
     }

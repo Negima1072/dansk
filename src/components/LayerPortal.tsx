@@ -6,11 +6,6 @@ import LayerContainer from "@/layer/LayerContainer";
 const LayerPortal = (): JSX.Element => {
   const { LayerElement } = useContext(context);
   if (!LayerElement) return <></>;
-  return ReactDOM.createPortal(
-    <>
-      <LayerContainer />
-    </>,
-    LayerElement
-  );
+  return ReactDOM.createPortal(<LayerContainer />, LayerElement);
 };
 export default LayerPortal;

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./CommandBox.module.scss";
 import Button from "@/components/button/Button";
@@ -10,6 +10,20 @@ import tg from "@/libraries/typeGuard";
 const CommandBox = () => {
   const { commentCommandInput, commentInputTextarea } = useContext(context),
     [commands, setCommands] = useState<string[]>([]);
+  const commandOnChange = () => {
+    if (commentCommandInput && commands.join(" ") !== commentCommandInput.value)
+      setCommands(
+        commentCommandInput.value.split(" ").filter((str) => str !== "")
+      );
+  };
+  useEffect(() => {
+    if (commentCommandInput) {
+      commentCommandInput.addEventListener("change", commandOnChange);
+    }
+    return () => {
+      commentCommandInput?.removeEventListener("change", commandOnChange);
+    };
+  }, [commentCommandInput, commands]);
   const update = useCallback(
     (value: string) => {
       if (
@@ -41,7 +55,9 @@ const CommandBox = () => {
         }
       } else {
         if (currentCommands.join(" ") !== commentCommandInput.value)
-          currentCommands = commentCommandInput.value.split(" ");
+          currentCommands = commentCommandInput.value
+            .split(" ")
+            .filter((str) => str !== "");
         if (commands.includes(value)) {
           currentCommands = currentCommands.filter((item) => item !== value);
         } else {
