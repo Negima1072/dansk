@@ -16,11 +16,7 @@ const Spoiler: React.FC<propType> = (props) => {
         text={props.text}
         click={() => setSpoilerOpen(!spoilerOpen)}
       />
-      {spoilerOpen ? (
-        <div className={Styles.container}>{props.children}</div>
-      ) : (
-        ""
-      )}
+      {spoilerOpen ? <div>{props.children}</div> : ""}
     </div>
   );
 };

@@ -10,6 +10,7 @@ import LayerSelector from "@/components/layerSelector/LayerSelector";
 import layerUtil from "@/libraries/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
 import LayerPortal from "@/components/LayerPortal";
+import LayerContext from "@/components/LayerContext";
 
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
@@ -47,7 +48,15 @@ const Trace = () => {
       if (!typeGuard.trace.template(template)) return;
       setLayerData([
         ...layerData,
-        { ...template, type: id, font: "mincho", visible: true },
+        {
+          ...template,
+          type: id,
+          font: "mincho",
+          visible: true,
+          content: layerUtil.generateLineFromTempate(template),
+          selected: layerData.length === 0,
+          color: "#FFFFFF",
+        },
       ]);
     }, [layerData, layerDropdownValue]),
     toggleVisible = useCallback(
@@ -61,86 +70,92 @@ const Trace = () => {
       [layerData]
     );
   return (
-    <Spoiler text={"Trace"}>
-      <div className={Styles.table}>
-        <div className={Styles.row}>
-          <Button click={exportHandler} text={"全出力"} value={"all"} />
-          <Button
-            click={exportHandler}
-            text={"等幅全出力"}
-            value={"monospacedAll"}
-          />
-          <Button
-            click={exportHandler}
-            text={"投コメ全出力"}
-            value={"ownerAll"}
-          />
-          <Button
-            click={exportHandler}
-            text={"投コメ等幅全出力"}
-            value={"ownerMonospacedAll"}
-          />
-          <Button
-            click={exportHandler}
-            text={"選択出力"}
-            value={"selectedAll"}
-          />
-          <Button
-            click={exportHandler}
-            text={"等幅選択出力"}
-            value={"selectedMonospacedAll"}
-          />
-          <Button
-            click={exportHandler}
-            text={"投コメ選択出力"}
-            value={"selectedOwnerAll"}
-          />
-          <Button
-            click={toggleTabMode}
-            text={"TabM"}
-            value={"convertSpaceToTab"}
-            active={tabMode}
-          />
-          <Button
-            click={toggleLineMode}
-            text={"線画M"}
-            value={"convertColorToBlack"}
-            active={lineMode}
-          />
-          <Button //todo:置換モードの実装
-            click={toggleLineMode}
-            text={"置換M"}
-            value={"convertColorToBlack"}
-            active={lineMode}
-          />
-        </div>
-        <div className={Styles.row}>
-          <div className={Styles.block}>
-            <Dropdown
-              change={layerDropdownOnChange}
-              selected={layerDropdownValue}
-              value={Object.values(Templates)}
-            />
-            <Button click={addLayer} text={"追加"} value={"add"} />
-          </div>
-          <div className={Styles.block}>
-            <Button click={toggleVisible} text={"一括表示"} value={"visible"} />
+    <LayerContext value={{ layerData, setLayerData }}>
+      <Spoiler text={"Trace"}>
+        <div className={Styles.table}>
+          <div className={Styles.row}>
+            <Button click={exportHandler} text={"全出力"} value={"all"} />
             <Button
-              click={toggleVisible}
-              text={"一括非表示"}
-              value={"invisible"}
+              click={exportHandler}
+              text={"等幅全出力"}
+              value={"monospacedAll"}
+            />
+            <Button
+              click={exportHandler}
+              text={"投コメ全出力"}
+              value={"ownerAll"}
+            />
+            <Button
+              click={exportHandler}
+              text={"投コメ等幅全出力"}
+              value={"ownerMonospacedAll"}
+            />
+            <Button
+              click={exportHandler}
+              text={"選択出力"}
+              value={"selectedAll"}
+            />
+            <Button
+              click={exportHandler}
+              text={"等幅選択出力"}
+              value={"selectedMonospacedAll"}
+            />
+            <Button
+              click={exportHandler}
+              text={"投コメ選択出力"}
+              value={"selectedOwnerAll"}
+            />
+            <Button
+              click={toggleTabMode}
+              text={"TabM"}
+              value={"convertSpaceToTab"}
+              active={tabMode}
+            />
+            <Button
+              click={toggleLineMode}
+              text={"線画M"}
+              value={"convertColorToBlack"}
+              active={lineMode}
+            />
+            <Button //todo:置換モードの実装
+              click={toggleLineMode}
+              text={"置換M"}
+              value={"convertColorToBlack"}
+              active={lineMode}
             />
           </div>
-          <div className={Styles.block}>
-            <Button click={toggleVisible} text={"背景"} value={""} />
+          <div className={Styles.row}>
+            <div className={Styles.block}>
+              <Dropdown
+                change={layerDropdownOnChange}
+                selected={layerDropdownValue}
+                value={Object.values(Templates)}
+              />
+              <Button click={addLayer} text={"追加"} value={"add"} />
+            </div>
+            <div className={Styles.block}>
+              <Button
+                click={toggleVisible}
+                text={"一括表示"}
+                value={"visible"}
+              />
+              <Button
+                click={toggleVisible}
+                text={"一括非表示"}
+                value={"invisible"}
+              />
+            </div>
+            <div className={Styles.block}>
+              <Button click={toggleVisible} text={"背景"} value={""} />
+            </div>
+          </div>
+          <div className={`${Styles.row} ${Styles.layer}`}>
+            <LayerSelector />
           </div>
         </div>
-        <div className={`${Styles.row} ${Styles.layer}`}>
-          <LayerSelector layer={layerData} setLayer={setLayerData} />
-        </div>
-      </div>
-      <LayerPortal />
-    </Spoiler>
+        <LayerPortal />
+      </Spoiler>
+    </LayerContext>
   );
 };
 export default Trace;

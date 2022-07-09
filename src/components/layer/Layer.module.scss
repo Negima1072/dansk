@@ -1,0 +1,38 @@
+.layer {
+  background: none;
+  position: absolute;
+  font-weight: 400;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 660px;
+  height: 420px;
+  text-shadow: rgb(0 0 0 / 20%) 1px 1px 0, rgb(0 0 0 / 20%) -1px 1px 0px,
+    rgb(0 0 0 / 20%) 1px -1px 0px, rgb(0 0 0 / 20%) -1px -1px 0px,
+    rgb(0 0 0 / 20%) 1px 0px 0px, rgb(0 0 0 / 20%) -1px 0px 0px,
+    rgb(0 0 0 / 20%) 0px 1px 0px, rgb(0 0 0 / 20%) 0px -1px 0px;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  &.active {
+    pointer-events: unset;
+    outline: #ffff00 solid medium;
+    .item {
+      outline: #00ffff solid 1px;
+    }
+  }
+  &.invisible {
+    opacity: 0;
+  }
+  &.gothic {
+    font-family: "游明朝体", "Yu Mincho", YuMincho, "Hiragino Kaku Gothic ProN",
+      "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック",
+      sans-serif;
+  }
+  &.mincho {
+    font-family: 游ゴシック, SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;
+  }
+  .item {
+    transform-origin: left;
+  }
+}
