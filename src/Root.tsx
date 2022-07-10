@@ -5,19 +5,18 @@ import Footer from "@/components/Footer";
 import getElements from "@/libraries/getElements";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
-import { layer } from "@/@types/types";
 import sleep from "@/libraries/sleep";
 
 const Root = (): JSX.Element => {
   const [data, setData] = useState({}),
-    [exportLayer, setExportLayer] = useState<layer[]>([]);
+    [exportLayer, setExportLayer] = useState<string[]>([]);
+  useEffect(() => console.log("root", exportLayer), [exportLayer]);
   useEffect(() => {
-    const init = async () =>
-      setData({ ...(await getElements()), exportLayer, setExportLayer });
+    const init = async () => setData({ ...(await getElements()) });
     void init();
   }, []);
   return (
-    <Context value={data}>
+    <Context value={{ ...data, exportLayer, setExportLayer }}>
       <Header />
       <Main />
       <Footer />

@@ -29,8 +29,8 @@ type contextTypeNullable = {
   MainElement?: HTMLDivElement;
   FooterElement?: HTMLDivElement;
   LayerElement?: HTMLDivElement;
-  exportLayer?: layer[];
-  setExportLayer?: (layer: layer[]) => void;
+  exportLayer?: string[];
+  setExportLayer?: (layerString: string[]) => void;
 };
 type contextType = {
   videoElement: HTMLVideoElement;

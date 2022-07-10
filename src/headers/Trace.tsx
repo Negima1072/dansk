@@ -15,21 +15,37 @@ import LayerContext from "@/components/LayerContext";
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
     [lineMode, setLineMode] = useState<boolean>(false),
+    [replaceMode, setReplaceMode] = useState<boolean>(false),
     [layerDropdownValue, setLayerDropdownValue] = useState<string>(
       "big_ue_ender_full_gothic_W17_L9"
     ),
     [layerData, setLayerData] = useState<layer[]>([]),
     { exportLayer, setExportLayer } = useContext(context);
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
+  console.log("trace", exportLayer);
+  console.log(setExportLayer);
   const exportHandler = useCallback(
       (value: string) => {
         //todo:Box作ったらContextにstate追加してこっちから書き込めるようにする
         console.log(value);
+        const layerString: string[] = [];
         switch (value) {
           case "all":
-            setExportLayer([...exportLayer, ...layerData]);
+            for (const layerItem of layerData) {
+              const string = layerUtil.toString(layerItem);
+              if (!string || !string.command || !string.content) return;
+              for (const line of string.content) {
+                if (string.command) {
+                  layerString.push(string.command + line);
+                  string.command = "";
+                } else {
+                  layerString.push(line);
+                }
+              }
+            }
             break;
         }
+        setExportLayer([...exportLayer, ...layerString]);
       },
       [exportLayer, layerData]
     ),
@@ -39,6 +55,9 @@ const Trace = () => {
     toggleLineMode = useCallback(() => {
       setLineMode(!lineMode);
     }, [lineMode]),
+    toggleReplaceMode = useCallback(() => {
+      setReplaceMode(!replaceMode);
+    }, [replaceMode]),
     layerDropdownOnChange = useCallback((value: string) => {
       setLayerDropdownValue(value);
     }, []),
@@ -55,7 +74,7 @@ const Trace = () => {
           visible: true,
           content: layerUtil.generateLineFromTempate(template),
           selected: layerData.length === 0,
-          color: "#FFFFFF",
+          color: "#000000",
         },
       ]);
     }, [layerData, layerDropdownValue]),
@@ -118,10 +137,10 @@ const Trace = () => {
               active={lineMode}
             />
             <Button //todo:置換モードの実装
-              click={toggleLineMode}
+              click={toggleReplaceMode}
               text={"置換M"}
               value={"convertColorToBlack"}
-              active={lineMode}
+              active={replaceMode}
             />
           </div>
           <div className={Styles.row}>
