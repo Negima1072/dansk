@@ -16,20 +16,20 @@
   pointer-events: none;
   &.active {
     pointer-events: unset;
-    outline: #ffff00 solid medium;
+    outline: #ffff00 solid 0.2px;
     .item {
-      outline: #00ffff solid 1px;
+      outline: #00ffff solid 0.1px;
     }
   }
   &.invisible {
     opacity: 0;
   }
-  &.gothic {
+  &.mincho {
     font-family: "游明朝体", "Yu Mincho", YuMincho, "Hiragino Kaku Gothic ProN",
       "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック",
       sans-serif;
   }
-  &.mincho {
+  &.gothic {
     font-family: 游ゴシック, SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;
   }
   .item {

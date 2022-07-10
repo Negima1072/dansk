@@ -1,18 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { context } from "@/components/Context";
-import layerUtil from "@/libraries/layerUtil";
 import React from "react";
 import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./OutputBox.module.scss";
 
 const Footer = (): JSX.Element => {
-  const { exportLayer, setExportLayer } = useContext(context),
+  const { exportLayer } = useContext(context),
     [textareaValue, setTextareaValue] = useState<string>("");
   useEffect(() => {
     if (exportLayer === undefined) return;
-    setTextareaValue(layerUtil.toString(exportLayer));
+    setTextareaValue(exportLayer.join("\n"));
   }, [exportLayer]);
-  if (exportLayer === undefined || setExportLayer === undefined) return <></>;
+  if (exportLayer === undefined) return <></>;
   return (
     <Spoiler text={"Box"}>
       <div className={Styles.table}>

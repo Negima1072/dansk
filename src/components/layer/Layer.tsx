@@ -11,10 +11,11 @@ type LayerProps = {
   active?: boolean;
 };
 
-type LayerBoxProps = { top: number; left: number };
+type LayerBoxProps = { top: number; left: number; textColor: string };
 const LayerBox = styled.div<LayerBoxProps>`
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
+  color: ${(props) => props.textColor};
 `;
 
 type LayerItemProps = {
@@ -75,6 +76,7 @@ const Layer = (props: LayerProps): JSX.Element => {
       } ${props.data.visible ? "" : Styles.invisible}`}
       left={props.data.left}
       top={props.data.top[props.data.pos]}
+      textColor={props.data.color}
     >
       {props.data.content.map((item, key) => {
         return (
