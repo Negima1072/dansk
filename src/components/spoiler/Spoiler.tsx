@@ -6,7 +6,11 @@ type propType = {
   text: string;
   children: React.ReactNode;
 };
-
+/**
+ * スポイラー
+ * @param props
+ * @constructor
+ */
 const Spoiler: React.FC<propType> = (props) => {
   const [spoilerOpen, setSpoilerOpen] = useState<boolean>(true);
   return (

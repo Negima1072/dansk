@@ -20,6 +20,11 @@ const ColorButton = styled.input.attrs((props: colorButtonProps) => ({
   },
 }))``;
 
+/**
+ * 色とかコマンド用のボタン
+ * @param props
+ * @constructor
+ */
 const Button = (props: buttonProps) => {
   if (props.type === "color") {
     return (

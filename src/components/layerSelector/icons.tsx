@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * アイコンのSVGは可読性が下がるのでオブジェクトに放り込む
+ */
 const icons = {
   eye: (
     <svg

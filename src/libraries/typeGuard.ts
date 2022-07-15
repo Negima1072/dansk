@@ -8,6 +8,11 @@ import {
   ownerComment,
 } from "@/@types/types";
 
+/**
+ * typeGuard
+ * TSで型を安全に確定させるための関数
+ * これはbool関数としてビルド後も残る
+ */
 const typeGuard = {
   owner: {
     comment: (i: unknown): i is ownerComment =>
@@ -75,12 +80,16 @@ const typeGuard = {
         "id",
         "commands",
         "pos",
+        "posList",
         "text",
         "value",
         "width",
         "height",
         "critical",
-        "nakaOnly",
+        "top",
+        "left",
+        "scale",
+        "size",
       ]),
   },
 };

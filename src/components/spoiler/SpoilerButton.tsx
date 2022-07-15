@@ -6,6 +6,11 @@ type propType = {
   text: string;
   click: () => void;
 };
+/**
+ * スポイラーの開閉バー
+ * @param props
+ * @constructor
+ */
 const SpoilerButton: React.FC<propType> = (props) => {
   return (
     <div

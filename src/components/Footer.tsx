@@ -4,6 +4,10 @@ import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
 import OutputBox from "@/footers/OutputBox";
 
+/**
+ * フッターブロック(プレイヤー下)
+ * @constructor
+ */
 const Footer = (): JSX.Element => {
   const { FooterElement } = useContext(context);
   if (!FooterElement) return <></>;

@@ -7,6 +7,11 @@ type dropdownPorps = {
   selected: string;
 };
 
+/**
+ * 新規作成レイヤーのテンプレ選択用
+ * @param props
+ * @constructor
+ */
 const Dropdown = (props: dropdownPorps) => {
   const [value, setValue] = useState<string>(props.selected);
   const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {

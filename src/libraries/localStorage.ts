@@ -1,4 +1,7 @@
 const STORAGE_PREFIX = "DanSc";
+/**
+ * LocalStorage読み書き用ラッパー
+ */
 const Storage = {
   get: (key: string): string | null => {
     return localStorage.getItem(`${STORAGE_PREFIX}_${key}`);

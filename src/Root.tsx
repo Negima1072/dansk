@@ -7,10 +7,13 @@ import Header from "@/components/Header";
 import Main from "@/components/Main";
 import sleep from "@/libraries/sleep";
 
+/**
+ * Reactのルート要素
+ * @constructor
+ */
 const Root = (): JSX.Element => {
   const [data, setData] = useState({}),
     [exportLayer, setExportLayer] = useState<string[]>([]);
-  useEffect(() => console.log("root", exportLayer), [exportLayer]);
   useEffect(() => {
     const init = async () => setData({ ...(await getElements()) });
     void init();
@@ -24,6 +27,10 @@ const Root = (): JSX.Element => {
   );
 };
 
+/**
+ * 初期化関数
+ * ニコ動の各要素が生えたら、だんすくの初期化をする
+ */
 const init = async () => {
   let mainContainer,
     mainContainerPlayer,

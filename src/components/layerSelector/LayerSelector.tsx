@@ -14,6 +14,10 @@ const ColorDisplay = styled.label<colorProps>`
   background-color: ${(props) => props.bgColor};
 `;
 
+/**
+ * レイヤー選択・並べ替え・色変更他
+ * @constructor
+ */
 const LayerSelector = () => {
   const { layerData, setLayerData } = useContext(layerContext),
     [editingLayer, setEditingLayer] = useState<number>(-1),
@@ -32,7 +36,7 @@ const LayerSelector = () => {
     },
     togglePos = (key: number) => {
       const layer = layerData;
-      layer[key]!.pos = layerUtil.togglePos(layer[key]!.pos);
+      layer[key]!.pos = layerUtil.togglePos(layer[key]!);
       setLayerData([...layer]);
     },
     toggleFont = (key: number) => {
@@ -50,6 +54,10 @@ const LayerSelector = () => {
         selected = layer[key]!.selected;
       if (e.ctrlKey || e.metaKey) {
         layer[key]!.selected = !layer[key]!.selected;
+        if (
+          layer.reduce((count, item) => count + Number(item.selected), 0) === 0
+        )
+          layer[key]!.selected = true;
       } else {
         for (let item of layer) {
           item.selected = false;
@@ -78,10 +86,7 @@ const LayerSelector = () => {
           {layerData.map((item, key) => (
             <tr
               className={`${Styles.tr} ${
-                (item.nakaOnly && item.pos !== "naka") ||
-                (item.critical && item.pos === "naka")
-                  ? Styles.invalid
-                  : ""
+                item.posList.includes(item.pos) ? "" : Styles.invalid
               } ${item.selected ? Styles.selected : ""}`}
               key={`${item.text}${key}`}
             >

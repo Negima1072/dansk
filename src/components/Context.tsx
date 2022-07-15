@@ -3,7 +3,12 @@ import { contextProps, contextTypeNullable } from "@/@types/types";
 
 export const context = createContext<contextTypeNullable>({});
 
-const Parent = (props: contextProps): JSX.Element => {
+/**
+ * 共通コンテクスト
+ * @param props
+ * @constructor
+ */
+const Context = (props: contextProps): JSX.Element => {
   return (
     <context.Provider value={props.value || {}}>
       {props.children}
@@ -11,4 +16,4 @@ const Parent = (props: contextProps): JSX.Element => {
   );
 };
 
-export default Parent;
+export default Context;
