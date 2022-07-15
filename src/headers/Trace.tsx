@@ -12,6 +12,10 @@ import typeGuard from "@/libraries/typeGuard";
 import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
 
+/**
+ * Traceブロック
+ * @constructor
+ */
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
     [lineMode, setLineMode] = useState<boolean>(false),
@@ -22,8 +26,6 @@ const Trace = () => {
     [layerData, setLayerData] = useState<layer[]>([]),
     { exportLayer, setExportLayer } = useContext(context);
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
-  console.log("trace", exportLayer);
-  console.log(setExportLayer);
   const exportHandler = useCallback(
       (value: string) => {
         //todo:Box作ったらContextにstate追加してこっちから書き込めるようにする
@@ -72,7 +74,7 @@ const Trace = () => {
           type: id,
           font: "mincho",
           visible: true,
-          content: layerUtil.generateLineFromTempate(template),
+          content: layerUtil.generateLineFromTemplate(template),
           selected: layerData.length === 0,
           color: "#000000",
         },

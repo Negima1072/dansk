@@ -7,7 +7,97 @@ import {
 } from "@/@types/types";
 import { Templates } from "@/headers/Trace.templates";
 
+/**
+ * layer関係の処理をする関数集
+ */
 const layerUtil = {
+  /**
+   * layerTemplateからlayerLine[]を生成する
+   * @param layer
+   */
+  generateLineFromTemplate: (layer: layerTemplate): layerLine[] => {
+    const lines: layerLine[] = [];
+    for (const size of layer.size) {
+      for (let i = 0; i < (size.count || 1); i++) {
+        const line = [];
+        for (let j = 0; j < size.lineCount; j++) {
+          line.push("");
+        }
+        lines.push({
+          font: size.font,
+          line: size.line,
+          height: size.height,
+          lineCount: size.lineCount,
+          content: line,
+        });
+      }
+    }
+    return lines;
+  },
+  /**
+   * layer識別用
+   * valueからidを取得
+   * @param value
+   */
+  getIdByValue: (value: string): string => {
+    for (const i in Templates) {
+      if (Templates[i]?.value === value) {
+        return i;
+      }
+    }
+    return "be9";
+  },
+  /**
+   * layer同士の比較
+   * @param a
+   * @param b
+   */
+  isEqual: (a: layer, b: layer): boolean => {
+    const aStr: string[] = [],
+      bStr: string[] = [];
+    for (const group of a.content) {
+      for (const item of group.content) {
+        aStr.push(item);
+      }
+    }
+    for (const group of b.content) {
+      for (const item of group.content) {
+        bStr.push(item);
+      }
+    }
+    return aStr.join("") === bStr.join("");
+  },
+  parse: (input: string): layer[] | undefined => {
+    console.log(input);
+    return [];
+  },
+  /**
+   * フォント切り替え
+   * @param value {commentFont} 現在のフォント
+   */
+  toggleFont: (value: commentFont): commentFont => {
+    return value === "mincho" ? "gothic" : "mincho";
+  },
+  /**
+   * コメント位置切り替え
+   * layerのposListを参照して切替可能な位置に切り替える
+   * posListを参照するためlayerごと受け取る
+   * @param layer {layer}
+   */
+  togglePos: (layer: layer): commentPos => {
+    const index = layer.posList.indexOf(layer.pos);
+    if (layer.posList.length > index + 1) {
+      return layer.posList[index + 1] || "ue";
+    } else {
+      return layer.posList[0] || "ue";
+    }
+  },
+  /**
+   * layerをだんすく形式の文字列に変換
+   * @param layer
+   * @param monospaced
+   * @param replaceTab
+   */
   toString: (
     layer: layer,
     monospaced = false,
@@ -30,49 +120,6 @@ const layerUtil = {
       ].join(" ")}]`,
       content: layerContent,
     };
-  },
-  parse: (input: string): layer[] | undefined => {
-    console.log(input);
-    return [];
-  },
-  getIdByValue: (value: string): string => {
-    for (const i in Templates) {
-      if (Templates[i]?.value === value) {
-        return i;
-      }
-    }
-    return "be9";
-  },
-  togglePos: (value: commentPos): commentPos => {
-    switch (value) {
-      case "ue":
-        return "shita";
-      case "naka":
-        return "ue";
-      case "shita":
-        return "naka";
-    }
-  },
-  toggleFont: (value: commentFont): commentFont => {
-    return value === "mincho" ? "gothic" : "mincho";
-  },
-  generateLineFromTempate: (layer: layerTemplate): layerLine[] => {
-    const lines: layerLine[] = [];
-    for (const size of layer.size) {
-      for (let i = 0; i < (size.count || 1); i++) {
-        const line = [];
-        for (let j = 0; j < size.lineCount; j++) {
-          line.push("");
-        }
-        lines.push({
-          font: size.font,
-          line: size.line,
-          height: size.height,
-          content: line,
-        });
-      }
-    }
-    return lines;
   },
 };
 

@@ -3,6 +3,10 @@ import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
 import LayerContainer from "@/layer/LayerContainer";
 
+/**
+ * レイヤーブロック(プレイヤー内)
+ * @constructor
+ */
 const LayerPortal = (): JSX.Element => {
   const { LayerElement } = useContext(context);
   if (!LayerElement) return <></>;

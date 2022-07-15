@@ -11,6 +11,11 @@ import { str2time, time2str } from "@/libraries/timeUtil";
 
 const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
 
+/**
+ * 動画コントローラー
+ * buttonsにある秒数(のそれぞれ+-)のボタンが生成される
+ * @constructor
+ */
 const VideoController = (): JSX.Element => {
   const [value, setValue] = useState<string>("0"),
     [isSeeking, setIsSeeking] = useState<boolean>(false),
@@ -21,16 +26,11 @@ const VideoController = (): JSX.Element => {
     const commentOnOffButton = document.getElementsByClassName(
       "CommentOnOffButton"
     )[0] as HTMLButtonElement;
-    if (!window.__videoplayer.paused()) window.__videoplayer.pause();
     if (relative) time += window.__videoplayer.currentTime();
     if (time < 0) time = 0;
     if (time > window.__videoplayer.duration())
       time = window.__videoplayer.duration();
     window.__videoplayer.currentTime(Math.floor(time * 100) / 100 + 0.001);
-    const pauseButton = document.getElementsByClassName("PlayerPauseButton");
-    if (pauseButton && pauseButton[0]) {
-      (pauseButton[0] as HTMLButtonElement).click();
-    }
     if (
       document.getElementsByClassName("CommentOnOffButton-iconHide").length > 0
     ) {
@@ -39,9 +39,6 @@ const VideoController = (): JSX.Element => {
     commentOnOffButton.click();
     setIsSeeking(false);
   };
-  const onInputFocus = useCallback(() => {
-    window.__videoplayer.pause();
-  }, []);
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       setValue(e.target.value);
@@ -77,7 +74,6 @@ const VideoController = (): JSX.Element => {
         type={"text"}
         className={Styles.input}
         value={value}
-        onFocus={onInputFocus}
         onBlur={onInputBlur}
         onKeyDown={onInputKeyDown}
         onChange={onInputChange}

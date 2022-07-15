@@ -65,18 +65,19 @@ type layerLine = {
   font: number;
   line: number;
   height?: number;
+  lineCount: number;
   content: string[];
 };
 type layerTemplate = {
   commands: string[];
   pos: commentPos;
+  posList: commentPos[];
   text: string;
   value: string;
   id: string;
   width: number;
   height: number;
   critical: boolean;
-  nakaOnly: boolean;
   top: { ue: number; naka: number; shita: number };
   left: number;
   scale: { x: number; y: number };

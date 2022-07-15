@@ -10,6 +10,10 @@ const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   left: 0;
 `;
 
+/**
+ * レイヤー全体を管理
+ * @constructor
+ */
 const LayerContainer = (): JSX.Element => {
   const { layerData } = useContext(layerContext);
   const observerCallback = () => {

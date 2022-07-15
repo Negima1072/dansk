@@ -7,6 +7,10 @@ import { context } from "@/components/Context";
 import Commands from "./CommandBox.json";
 import tg from "@/libraries/typeGuard";
 
+/**
+ * コマンドパレット
+ * @constructor
+ */
 const CommandBox = () => {
   const { commentCommandInput, commentInputTextarea } = useContext(context),
     [commands, setCommands] = useState<string[]>([]);

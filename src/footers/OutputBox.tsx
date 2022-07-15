@@ -4,7 +4,11 @@ import React from "react";
 import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./OutputBox.module.scss";
 
-const Footer = (): JSX.Element => {
+/**
+ * 入出力用のテキストエリア
+ * @constructor
+ */
+const OutputBox = (): JSX.Element => {
   const { exportLayer } = useContext(context),
     [textareaValue, setTextareaValue] = useState<string>("");
   useEffect(() => {
@@ -27,4 +31,4 @@ const Footer = (): JSX.Element => {
     </Spoiler>
   );
 };
-export default Footer;
+export default OutputBox;

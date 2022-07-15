@@ -13,7 +13,12 @@ type contextProps = {
 
 export const layerContext = createContext<layerContext>({});
 
-const Parent = (props: contextProps): JSX.Element => {
+/**
+ * レイヤー用コンテクスト
+ * @param props
+ * @constructor
+ */
+const LayerContext = (props: contextProps): JSX.Element => {
   return (
     <layerContext.Provider value={props.value || {}}>
       {props.children}
@@ -21,4 +26,4 @@ const Parent = (props: contextProps): JSX.Element => {
   );
 };
 
-export default Parent;
+export default LayerContext;
