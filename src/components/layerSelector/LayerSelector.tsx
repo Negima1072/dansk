@@ -50,8 +50,7 @@ const LayerSelector = () => {
       setLayerData([...layer]);
     },
     toggleSelected = (e: React.MouseEvent<HTMLDivElement>, key: number) => {
-      const layer = layerData,
-        selected = layer[key]!.selected;
+      const layer = layerData;
       if (e.ctrlKey || e.metaKey) {
         layer[key]!.selected = !layer[key]!.selected;
         if (
@@ -62,9 +61,7 @@ const LayerSelector = () => {
         for (let item of layer) {
           item.selected = false;
         }
-        if (!selected) {
-          layer[key]!.selected = true;
-        }
+        layer[key]!.selected = true;
       }
       setLayerData([...layer]);
     },
