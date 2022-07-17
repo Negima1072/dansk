@@ -44,8 +44,17 @@ const layerManager = (
         if (itemElement.innerHTML === "") {
           itemElement.innerHTML = "<br>";
         }
-        if (itemElement.innerText !== `${strings[index]}\n`) {
+        const ua = window.navigator.userAgent;
+        if (
+          itemElement.innerText !== `${strings[index]}\n` &&
+          ua.match(/Firefox/)
+        ) {
           itemElement.innerText = `${strings[index]}\n`;
+        } else if (
+          itemElement.innerText !== `${strings[index]}` &&
+          ua.match(/Chrome/)
+        ) {
+          itemElement.innerText = `${strings[index]}`;
         }
         if (item !== strings[index]) {
           group.content[itemIndex] = strings[index] as string;
@@ -56,6 +65,10 @@ const layerManager = (
     });
     if (isChanged) {
       onChange(data);
+    }
+    if (window.getSelection()?.anchorNode === targetElement) {
+      (targetElement.firstElementChild as HTMLDivElement).focus();
+      document.getSelection()?.collapse(targetElement.firstElementChild, 0);
     }
     return;
   };

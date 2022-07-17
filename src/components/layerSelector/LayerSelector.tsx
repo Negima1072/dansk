@@ -24,54 +24,67 @@ const LayerSelector = () => {
     [editingLayerName, setEditingLayerName] = useState<string>("");
   if (!layerData || !setLayerData) return <></>;
   const onColorChange = (event: ChangeEvent<HTMLInputElement>, key: number) => {
-      const layer = layerData;
-      layer[key]!.color = event.target.value;
-      setLayerData([...layer]);
+      const layer = layerData[key];
+      if (!layer) return;
+      layer.color = event.target.value;
+      setLayerData([...layerData]);
     },
     onLayerNameChange = (key: number) => {
-      const layer = layerData;
-      layer[key]!.text = editingLayerName;
-      setLayerData([...layer]);
+      const layer = layerData[key];
+      if (!layer) return;
+      layer.text = editingLayerName;
+      setLayerData([...layerData]);
       setEditingLayer(-1);
     },
     togglePos = (key: number) => {
-      const layer = layerData;
-      layer[key]!.pos = layerUtil.togglePos(layer[key]!);
-      setLayerData([...layer]);
+      const layer = layerData[key];
+      if (!layer) return;
+      layer.pos = layerUtil.togglePos(layer);
+      setLayerData([...layerData]);
     },
     toggleFont = (key: number) => {
-      const layer = layerData;
-      layer[key]!.font = layerUtil.toggleFont(layer[key]!.font);
-      setLayerData([...layer]);
+      const layer = layerData[key];
+      if (!layer) return;
+      layer.font = layerUtil.toggleFont(layer.font);
+      setLayerData([...layerData]);
     },
     toggleVisible = (key: number) => {
-      const layer = layerData;
-      layer[key]!.visible = !layer[key]!.visible;
-      setLayerData([...layer]);
+      const layer = layerData[key];
+      if (!layer) return;
+      layer.visible = !layer.visible;
+      setLayerData([...layerData]);
     },
     toggleSelected = (e: React.MouseEvent<HTMLDivElement>, key: number) => {
-      const layer = layerData,
-        selected = layer[key]!.selected;
+      const layer = layerData[key];
+      if (!layer) return;
       if (e.ctrlKey || e.metaKey) {
-        layer[key]!.selected = !layer[key]!.selected;
+        layer.selected = !layer.selected;
         if (
-          layer.reduce((count, item) => count + Number(item.selected), 0) === 0
+          layerData.reduce(
+            (count, item) => count + Number(item.selected),
+            0
+          ) === 0
         )
-          layer[key]!.selected = true;
+          layer.selected = true;
       } else {
-        for (let item of layer) {
+        for (const item of layerData) {
           item.selected = false;
         }
-        if (!selected) {
-          layer[key]!.selected = true;
-        }
+
+        layer.selected = true;
       }
-      setLayerData([...layer]);
+      setLayerData([...layerData]);
     },
     remove = (key: number) => {
       if (!confirm(`削除してよろしいですか？`)) return;
-      let layer = layerData;
+      const layer = layerData;
       layer.splice(key, 1);
+      if (
+        layer.length > 0 &&
+        layer.reduce((count, item) => count + Number(item.selected), 0) === 0 &&
+        layer[0]
+      )
+        layer[0].selected = true;
       setLayerData([...layer]);
     };
   return (

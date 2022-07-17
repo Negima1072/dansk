@@ -75,6 +75,7 @@ type layerTemplate = {
   text: string;
   value: string;
   id: string;
+  areaWidth: number;
   width: number;
   height: number;
   critical: boolean;

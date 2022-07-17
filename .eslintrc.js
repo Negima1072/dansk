@@ -20,7 +20,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 	],
 	rules: {
-		"@typescript-eslint/restrict-template-expressions":"off",
-		"no-control-regex": "off"
+		"@typescript-eslint/restrict-template-expressions": "off",
+		"no-control-regex": "off",
 	},
 };

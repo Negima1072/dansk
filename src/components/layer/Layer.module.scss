@@ -12,12 +12,10 @@
     rgb(0 0 0 / 20%) 1px 0px 0px, rgb(0 0 0 / 20%) -1px 0px 0px,
     rgb(0 0 0 / 20%) 0px 1px 0px, rgb(0 0 0 / 20%) 0px -1px 0px;
   pointer-events: none;
+  transform-origin: 0;
   &.active {
     pointer-events: unset;
     outline: #ffff00 solid 0.2px;
-    & > div {
-      outline: #00ffff solid 0.1px;
-    }
   }
   &.invisible {
     opacity: 0;
@@ -32,5 +30,15 @@
   }
   .item {
     transform-origin: left;
+  }
+}
+
+.outline {
+  position: absolute;
+  pointer-events: none;
+  transform-origin: 0;
+  & > div {
+    outline: #00ffff solid 0.1px;
+    width: 100%;
   }
 }
