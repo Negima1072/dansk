@@ -57,6 +57,10 @@ const layerManager = (
     if (isChanged) {
       onChange(data);
     }
+    if (window.getSelection()?.anchorNode === targetElement) {
+      (targetElement.firstElementChild as HTMLDivElement).focus();
+      document.getSelection()?.collapse(targetElement.firstElementChild, 0);
+    }
     return;
   };
   update(undefined);

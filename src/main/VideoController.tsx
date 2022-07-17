@@ -18,6 +18,7 @@ const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
  */
 const VideoController = (): JSX.Element => {
   const [value, setValue] = useState<string>("0"),
+    [isValueChanged, setValueChanged] = useState<boolean>(false),
     [isSeeking, setIsSeeking] = useState<boolean>(false),
     timeInputElement = useRef<HTMLInputElement>(null);
 
@@ -41,12 +42,14 @@ const VideoController = (): JSX.Element => {
   };
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      setValueChanged(true);
       setValue(e.target.value);
     },
     [value]
   );
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
+      setValueChanged(true);
       const time = str2time(value);
       if (e.key === "Enter" && time !== undefined) {
         (e.target as HTMLInputElement).blur();
@@ -55,14 +58,19 @@ const VideoController = (): JSX.Element => {
     [value]
   );
   const onInputBlur = useCallback(() => {
-    const time = str2time(value);
-    if (time !== undefined) {
-      void updateTime(time, !!value.match(/^[+-]/));
+    if (isValueChanged) {
+      const time = str2time(value);
+      if (time !== undefined) {
+        void updateTime(time, !!value.match(/^[+-]/));
+      }
     }
     requestAnimationFrame(updateCurrentTime);
   }, [value]);
   const updateCurrentTime = () => {
-    if (document.activeElement === timeInputElement.current) return;
+    if (document.activeElement === timeInputElement.current) {
+      setValueChanged(false);
+      return;
+    }
     setValue(time2str(window.__videoplayer.currentTime()));
     requestAnimationFrame(updateCurrentTime);
   };

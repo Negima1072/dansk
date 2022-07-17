@@ -97,32 +97,35 @@ const layerUtil = {
    * @param layer
    * @param monospaced
    * @param replaceTab
+   * @param ownerMode
    */
   toString: (
     layer: layer,
     monospaced = false,
-    replaceTab = false
+    replaceTab = false,
+    ownerMode = false
   ): { command: string; content: string[] } | undefined => {
-    const layerContent: string[] = [];
-    for (const line of layer.content) {
-      const string = comment2str(line, layer, monospaced, replaceTab);
-      if (!string) {
-        return;
-      }
-      layerContent.push(...string);
-    }
+    const string = comment2str(layer, monospaced, replaceTab, ownerMode);
+    if (!string) return;
+    if (layer.pos === "shita") string.reverse();
     return {
-      command: `[ca ${[
+      command: `[${[
         ...layer.commands,
         layer.color,
         layer.pos,
         layer.font,
+        "ca",
       ].join(" ")}]`,
-      content: layerContent,
+      content: string,
     };
   },
 };
 
+/**
+ * 空白を最適化するらしい
+ * @param input
+ * @param mode
+ */
 const replaceSpace = (input: string, mode = 0) => {
   if (mode > 1) {
     input = input
@@ -131,11 +134,11 @@ const replaceSpace = (input: string, mode = 0) => {
   }
   if (mode > 0) {
     input = input
-      .replace(/\u2003/g, Array(12 + 1).join("\u200A"))
-      .replace(/\u2002/g, Array(6 + 1).join("\u200A"))
-      .replace(/\u2004/g, Array(4 + 1).join("\u200A"))
-      .replace(/\u2005/g, Array(3 + 1).join("\u200A"))
-      .replace(/\u2006/g, Array(2 + 1).join("\u200A"));
+      .replace(/\u2003/g, "\u200A".repeat(12))
+      .replace(/\u2002/g, "\u200A".repeat(6))
+      .replace(/\u2004/g, "\u200A".repeat(4))
+      .replace(/\u2005/g, "\u200A".repeat(3))
+      .replace(/\u2006/g, "\u200A".repeat(2));
   }
   return input
     .replace(/\u200A{12}/g, "\u2003")
@@ -147,214 +150,242 @@ const replaceSpace = (input: string, mode = 0) => {
     .replace(/\u2002\u200A/g, "\u2004\u2005")
     .replace(/\u2004\u200A/g, "\u2005\u2006");
 };
-const space2tab = (input: string): string => {
-  input = input.replace(/\u2003{2}/g, "\u0009");
-  if (input.match(/\u0009$/)) {
-    input += "\u200B";
-  }
+/**
+ * TABモード時用? 全角空白2 -> TAB
+ * @param input
+ */
+const space2tab = (input: string[]): string[] => {
+  input = input.map((value) => {
+    value = value.replace(/\u2003{2}/g, "\u0009");
+    if (value.match(/\u0009$/)) value += "\u200b";
+    return value;
+  });
   return input;
+};
+/**
+ * コメントの横幅取得
+ * 全角前提なので半角文字が入ると崩れる
+ * @param input
+ */
+const getCommentWidth = (
+  input: string
+): { width: number; leftSpaceWidth: number } => {
+  let leftSpaceWidth = 0,
+    width = 0,
+    isLeftSpace = true;
+  for (const char of Array.from(input)) {
+    switch (char) {
+      case "\u2003":
+        width += 12;
+        if (isLeftSpace) {
+          leftSpaceWidth += 12;
+          //g += Array(12+1).join('\uA003');
+        }
+        break;
+      case "\u2002":
+        width += 6;
+        if (isLeftSpace) {
+          leftSpaceWidth += 6;
+          //g += Array(6+1).join('\uA003');
+        }
+        break;
+      case "\u2004":
+        width += 4;
+        if (isLeftSpace) {
+          leftSpaceWidth += 4;
+          //g += Array(4+1).join('\uA003');
+        }
+        break;
+      case "\u2005":
+        width += 3;
+        if (isLeftSpace) {
+          leftSpaceWidth += 3;
+          //g += Array(3+1).join('\uA003');
+        }
+        break;
+      case "\u2006":
+        width += 2;
+        if (isLeftSpace) {
+          leftSpaceWidth += 2;
+          //g += Array(2+1).join('\uA003');
+        }
+        break;
+      case "\u200A":
+        width += 1;
+        if (isLeftSpace) {
+          leftSpaceWidth += 1;
+          //g += Array(2+1).join('\uA003');
+        }
+        break;
+      case "\u005F":
+      case "\uFF70":
+      case "\u00AF":
+      case "\u2216":
+      case "\uFFE8":
+        width += 6;
+        isLeftSpace = false;
+        break;
+      case "\u2580":
+      case "\u2590":
+        width += 8.5;
+        isLeftSpace = false;
+        break;
+      case "\u2043":
+        width += 3.692307;
+        isLeftSpace = false;
+        break;
+      case "\u01C0":
+        width += 3.111111;
+        isLeftSpace = false;
+        break;
+      case "\u207B":
+      case "\u208B":
+        width += 3.466666;
+        isLeftSpace = false;
+        break;
+      case "\u002F":
+        width += 5.647058;
+        isLeftSpace = false;
+        break;
+      default:
+        //未登録文字を検討、塗り用として割り切るか
+        width += 12;
+        isLeftSpace = false;
+        break;
+    }
+  }
+  return { leftSpaceWidth, width };
+};
+/**
+ * 先頭の空白の長さ調節
+ * @param input
+ * @param width
+ */
+const removeLeadingSpace = (input: string, width: number) => {
+  for (let i = 0; i < width; i++) {
+    switch (input.slice(0, 1)) {
+      case "\u2003":
+        //12-11
+        //input = Array(12).join('\uA003') + input.slice(1);
+        input = "\u2002" + "\u2005" + "\u2006" + input.slice(1);
+        break;
+      case "\u2002":
+        //6-5
+        //input = Array(6).join('\uA003') + input.slice(1);
+        input = "\u2005" + "\u2006" + input.slice(1);
+        break;
+      case "\u2004":
+        //4-3
+        //input = Array(4).join('\uA003') + input.slice(1);
+        input = "\u2005" + input.slice(1);
+        break;
+      case "\u2005":
+        //3-2
+        //input = Array(3).join('\uA003') + input.slice(1);
+        input = "\u2006" + input.slice(1);
+        break;
+      case "\u2006":
+        //2-1
+        input = Array(2).join("\u200A") + input.slice(1);
+        break;
+      case "\u200A":
+        input = input.slice(1);
+        break;
+      default:
+        break;
+    }
+  }
+  return replaceSpace(input, 1);
+};
+
+const addTrailingSpace = (input: string, width: number) => {
+  input += "\u200A".repeat(width);
+  input = replaceSpace(input, 0);
+  return input;
+};
+/**
+ * 一番横幅が広い行を取得する
+ * @param input
+ */
+const getMaxWidthIndex = (
+  input: { width: number }[]
+): { index: number; value: number } => {
+  const widthArr = input.map((value) => value.width),
+    mavValue = Math.max(...widthArr);
+  return { index: widthArr.indexOf(mavValue), value: mavValue };
 };
 
 const comment2str = (
-  item: layerLine,
   layer: layer,
   monospaced: boolean,
-  replaceTab: boolean
+  replaceTab: boolean,
+  isOwnerMode: boolean
 ): string[] | undefined => {
-  let comment = item.content;
-  const stringArr = [],
-    result: string[] = [];
-  comment = comment.map((data) => replaceSpace(data));
-  let count = 0;
-  for (const line of comment) {
-    let width = 0,
-      leftWidth = 0,
-      isLeftSide = true;
-    for (const char of Array.from(line)) {
-      switch (char) {
-        case "\u2003":
-          width += 12;
-          if (isLeftSide) leftWidth += 12;
-          break;
-        case "\u2002":
-          width += 6;
-          if (isLeftSide) leftWidth += 6;
-          break;
-        case "\u2004":
-          width += 4;
-          if (isLeftSide) leftWidth += 4;
-          break;
-        case "\u2005":
-          width += 3;
-          if (isLeftSide) leftWidth += 3;
-          break;
-        case "\u2006":
-          width += 2;
-          if (isLeftSide) leftWidth += 2;
-          break;
-        case "\u200A":
-          width += 1;
-          if (isLeftSide) leftWidth += 1;
-          break;
-        default:
-          switch (char) {
-            case "\u005F":
-            case "\uFF70":
-            case "\u00AF":
-            case "\u2216":
-            case "\uFFE8":
-              width += 6;
-              break;
-            case "\u2580":
-            case "\u2590":
-              width += 8.5;
-              break;
-            case "\u2043":
-              width += 3.692307;
-              break;
-            case "\u01C0":
-              width += 3.111111;
-              break;
-            case "\u207B":
-            case "\u208B":
-              width += 3.466666;
-              break;
-            case "\u002F":
-              width += 5.647058;
-              break;
-            default:
-              width += 12;
-          }
-          isLeftSide = false;
-      }
-    }
-    if (!isLeftSide) {
-      if (width > layer.width) {
-        alert("テンプレート幅を超えています");
-        return;
-      }
-      stringArr.push({ width, leftWidth, content: line, id: count });
-    }
-    count++;
-  }
-  stringArr.sort((a, b) => {
-    if (a.width > b.width) return -1;
-    if (a.width < b.width) return 1;
-    return 0;
-  });
-  let mono = false;
-  while (stringArr.length > 0) {
-    const templateArr = [];
-    for (let i = 0; i < comment.length; i++) {
-      if (i === comment.length - 1) {
-        templateArr.push("\uA001");
-      } else {
-        templateArr.push("");
-      }
-    }
-    stringArr.sort((a, b) => {
-      if (a.leftWidth < b.leftWidth) return -1;
-      if (a.leftWidth > b.leftWidth) return 1;
-      return 0;
-    });
-    let leftSpace = Math.min(...stringArr.map((i) => i.leftWidth));
-    const rightSpace = Math.min(...stringArr.map((i) => layer.width - i.width));
-    if (leftSpace > rightSpace) {
-      leftSpace = rightSpace;
-    } else {
-      stringArr.sort((a, b) => {
-        if (a.leftWidth < b.leftWidth) return -1;
-        if (a.leftWidth > b.leftWidth) return 1;
-        return 0;
-      });
-    }
-    if (mono || layer.critical) leftSpace = 0;
-    if (leftSpace > 0) {
-      layer.width -= leftSpace * 2;
-      for (const string of stringArr) {
-        string.width -= leftSpace;
-        string.leftWidth -= leftSpace;
-        for (let i = 0; i < leftSpace; i++) {
-          switch (string.content.slice(0, 1)) {
-            case "\u2003":
-              string.content = string.content.replace(
-                /^\u2003/,
-                "\u2002\u2005\u2006"
-              );
-              break;
-            case "\u2002":
-              string.content = string.content.replace(
-                /^\u2002/,
-                "\u2005\u2006"
-              );
-              break;
-            case "\u2004":
-              string.content = string.content.replace(/^\u2004/, "\u2005");
-              break;
-            case "\u2005":
-              string.content = string.content.replace(/^\u2005/, "\u2006");
-              break;
-            case "\u2006":
-              string.content = string.content.replace(/^\u2006/, "\u200A");
-              break;
-            case "\u200A":
-              string.content = string.content.replace(/^\u200A/, "");
-              break;
-          }
-        }
-        string.content = replaceSpace(string.content, 2);
-      }
-    }
-    if (monospaced) mono = true;
-    const value = stringArr[0];
-    if (!value) return;
-    console.log(value);
-    leftSpace = layer.width - (value.width || 0);
-    if (leftSpace > 0) {
-      value.width += leftSpace;
-      value.content = replaceSpace(
-        value.content + Array(leftSpace + 1).join("\u200A"),
-        1
-      );
-    }
-    console.log(value.content);
-    if (replaceTab) value.content = space2tab(value.content);
-    templateArr[value.id] = value.content;
-    stringArr.splice(0, 1);
-    let length = templateArr.join("\n").length;
-    if (length > 75) {
-      alert(`コメント長が75を超えています\n長さ：${length}`);
-      return;
-    }
-    while (stringArr[0] !== undefined) {
-      stringArr.sort((a, b) => {
-        if (a.width < b.width) return -1;
-        if (a.width > b.width) return 1;
-        if (a.leftWidth < b.leftWidth) return -1;
-        if (a.leftWidth > b.leftWidth) return 1;
-        return 0;
-      });
-      if (replaceTab) stringArr[0].content = space2tab(stringArr[0].content);
-      if (length + stringArr[0].content.length > 75) {
-        if (replaceTab)
-          stringArr[0].content = stringArr[0].content.replace(
-            /\u0009/g,
-            "\u2003\u2003"
-          );
+  isOwnerMode;
+  const result: string[] = [];
+  let layerWidth = layer.width * 12;
+  if (layer.critical) {
+    switch (layerWidth) {
+      case 216:
+        layerWidth += 4;
         break;
-      } else {
-        templateArr[stringArr[0].id] = stringArr[0].content;
-        stringArr.splice(0, 1);
-        length = templateArr.join("\n").length;
-      }
+      case 240:
+        layerWidth += 8;
+        break;
+      case 264:
+        layerWidth += 8;
+        break;
+      case 408:
+        layerWidth += 8;
+        break;
     }
-    result.push(
-      templateArr
-        .join("<br>")
-        .replace(/\uA001/g, "[03]")
-        .replace(/\uA009/g, "[tb]")
+  }
+  let removableSpace = 0;
+  layer.content = layer.content.map((item) => {
+    item.content = item.content.map((data) => replaceSpace(data));
+    return item;
+  });
+  const commentWidth = layer.content.map((item) =>
+    item.content.map((data) => getCommentWidth(data))
+  );
+  if (monospaced) {
+    removableSpace = Math.min(
+      ...commentWidth.reduce(
+        (pv, comment) =>
+          pv.concat(
+            comment.map((line) =>
+              Math.min(line.leftSpaceWidth, layerWidth - line.width)
+            )
+          ),
+        [] as number[]
+      )
     );
   }
+  layer.content.forEach((group, index) => {
+    if (!monospaced) {
+      removableSpace = Math.min(
+        ...(commentWidth[index]?.map((line) =>
+          Math.min(line.leftSpaceWidth, layerWidth - line.width)
+        ) || [0])
+      );
+    }
+    const width = layerWidth - removableSpace * 2;
+    let comment = group.content.map((value) =>
+      removeLeadingSpace(value, removableSpace)
+    );
+    const maxWidth = getMaxWidthIndex(commentWidth[index] || []);
+    comment[maxWidth.index] = addTrailingSpace(
+      comment[maxWidth.index] || "",
+      width - maxWidth.value
+    );
+    if (replaceTab) comment = space2tab(comment);
+    const length = comment.join("").length;
+    if (length > 75) {
+      alert(`突破しちゃいます。\n長さ：${length}`);
+      return;
+    }
+    result.push(comment.join("<br>"));
+  });
   return result;
 };
 export default layerUtil;

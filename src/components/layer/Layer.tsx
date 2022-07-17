@@ -10,11 +10,23 @@ type LayerProps = {
   id: number;
   data: layer;
 };
-type LayerBoxProps = { top: number; left: number; textColor: string };
+type LayerBoxProps = {
+  top: number;
+  left: number;
+  textColor: string;
+  width: number;
+  scale: { x: number; y: number };
+};
 const LayerBox = styled.div<LayerBoxProps>`
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
   color: ${(props) => props.textColor};
+  width: ${(props) => props.width}px;
+  transform: scale(${(p) => p.scale.x}, ${(p) => p.scale.y});
+`;
+type LayerGroupProps = { height: number | undefined };
+const LayerGroup = styled.div<LayerGroupProps>`
+  height: ${(props) => (props.height ? `${props.height}px` : "unset")};
 `;
 
 /**
@@ -30,7 +42,6 @@ const Layer = (props: LayerProps): JSX.Element => {
     if (!layerData || !setLayerData) return;
     layerData[props.id] = layer;
     currentLayer.current = layer;
-    console.log(layer.content);
     setLayerData([...layerData]);
   };
   useEffect(() => {
@@ -40,7 +51,6 @@ const Layer = (props: LayerProps): JSX.Element => {
         layerUtil.isEqual(currentLayer.current, props.data))
     )
       return;
-    console.log(props.data.content);
     layerManager(props.data, onchange, layerElement.current);
   }, [layerElement, props.data]);
   /*const onLayerChange = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -172,19 +182,44 @@ const Layer = (props: LayerProps): JSX.Element => {
     }
   };*/
   return (
-    <LayerBox
-      className={`${Styles.layer} ${Styles[props.data.font]} ${
-        props.data.selected ? Styles.active : ""
-      } ${props.data.visible ? "" : Styles.invisible}`}
-      top={props.data.top[props.data.pos]}
-      left={props.data.left}
-      textColor={props.data.color}
-      contentEditable={props.data.selected ? "true" : "false"}
-      ref={layerElement}
-      /*onKeyDown={onLayerKeyDown}
-      onPaste={onLayerPaste}*/
-      spellCheck={"false"}
-    />
+    <>
+      <LayerBox
+        className={`${Styles.layer} ${Styles[props.data.font]} ${
+          props.data.selected ? Styles.active : ""
+        } ${props.data.visible ? "" : Styles.invisible}`}
+        top={props.data.top[props.data.pos]}
+        left={props.data.left}
+        textColor={props.data.color}
+        width={props.data.areaWidth}
+        scale={props.data.scale}
+        contentEditable={props.data.selected ? "true" : "false"}
+        ref={layerElement}
+        /*onKeyDown={onLayerKeyDown}
+        onPaste={onLayerPaste}*/
+        spellCheck={"false"}
+      />
+      {props.data.selected ? (
+        <LayerBox
+          className={Styles.outline}
+          top={props.data.top[props.data.pos]}
+          left={props.data.left}
+          textColor={props.data.color}
+          width={props.data.areaWidth}
+          scale={props.data.scale}
+        >
+          {props.data.content.map((value, index) => {
+            return (
+              <LayerGroup
+                height={value.height || value.line * value.lineCount}
+                key={`layer${props.id}-group${index}`}
+              />
+            );
+          })}
+        </LayerBox>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 export default Layer;
