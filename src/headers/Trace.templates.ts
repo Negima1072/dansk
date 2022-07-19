@@ -294,7 +294,7 @@ const Templates: layerTemplates = {
     commands: ["small"],
     pos: "naka",
     posList: ["naka"],
-    text: "small 39",
+    text: "small 39 流",
     value: "small_naka_gothic_W46_L39_流",
     areaWidth: 480,
     width: 46,
