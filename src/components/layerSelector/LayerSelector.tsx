@@ -77,14 +77,20 @@ const LayerSelector = () => {
     },
     remove = (key: number) => {
       if (!confirm(`削除してよろしいですか？`)) return;
-      const layer = layerData;
-      layer.splice(key, 1);
+      const layer = layerData,
+        deletedLayer = layer.splice(key, 1),
+        beforeLayer = layer[key - 1];
       if (
         layer.length > 0 &&
-        layer.reduce((count, item) => count + Number(item.selected), 0) === 0 &&
-        layer[0]
-      )
-        layer[0].selected = true;
+        deletedLayer[0]?.selected === true &&
+        layer.reduce((count, item) => count + Number(item.selected), 0) === 0
+      ) {
+        if (beforeLayer) {
+          beforeLayer.selected = true;
+        } else {
+          if (layer[0]) layer[0].selected = true;
+        }
+      }
       setLayerData([...layer]);
     };
   return (

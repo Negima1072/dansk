@@ -15,9 +15,8 @@ const layerManager = (
   /**
    * 変更の際に勝手に生えたdivを消したり消えたdivを生やしたり
    * 変更があった際はコールバック(onChange)を呼ぶ
-   * @param _ {Event} onInputEvent
    */
-  const update = (_?: Event): void => {
+  const update = (): void => {
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
@@ -56,9 +55,14 @@ const layerManager = (
         ) {
           itemElement.innerText = `${strings[index]}`;
         }
-        if (item !== strings[index]) {
-          group.content[itemIndex] = strings[index] as string;
-          isChanged = true;
+        if (strings[index]?.match(/[\u00A0\u0020]/)) {
+          itemElement.style.background = "rgba(255,0,0,0.3)";
+        } else {
+          if (item !== strings[index]) {
+            group.content[itemIndex] = strings[index] as string;
+            isChanged = true;
+          }
+          itemElement.style.background = "none";
         }
         index++;
       });
@@ -72,8 +76,13 @@ const layerManager = (
     }
     return;
   };
-  update(undefined);
+  update();
   targetElement.oninput = update;
+  targetElement.oncopy = (e) => {
+    const copied = window.getSelection()?.toString() || "";
+    e.clipboardData?.setData("text/plain", copied);
+    e.preventDefault();
+  };
 };
 
 /**

@@ -28,24 +28,31 @@ const Trace = () => {
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
   const exportHandler = useCallback(
       (value: string) => {
-        //todo:Box作ったらContextにstate追加してこっちから書き込めるようにする
-        console.log(value);
-        const layerString: string[] = [];
-        switch (value) {
-          case "all":
-            for (const layerItem of layerData) {
-              const string = layerUtil.toString(layerItem);
-              if (!string || !string.command || !string.content) return;
-              for (const line of string.content) {
-                if (string.command) {
-                  layerString.push(string.command + line);
-                  string.command = "";
-                } else {
-                  layerString.push(line);
-                }
-              }
+        const layerString: string[] = [],
+          isMonospaced = !!value.match(/Monospaced/),
+          isOwner = !!value.match(/Owner/),
+          isSelectedOnly = !!value.match(/Selected/);
+        const targetData: layer[] = [];
+        for (const layer of layerData) {
+          if (isSelectedOnly && !layer.selected) continue;
+          targetData.push(layer);
+        }
+        const strings = layerUtil.toString(
+          targetData,
+          isMonospaced,
+          tabMode,
+          isOwner
+        );
+        if (!strings) return;
+        for (const string of strings) {
+          for (const line of string.content) {
+            if (string.command) {
+              layerString.push(string.command + line);
+              string.command = "";
+            } else {
+              layerString.push(line);
             }
-            break;
+          }
         }
         setExportLayer([...exportLayer, ...layerString]);
       },
@@ -67,15 +74,19 @@ const Trace = () => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
       if (!typeGuard.trace.template(template)) return;
+      const _layerData = layerData.map((value) => {
+        value.selected = false;
+        return value;
+      });
       setLayerData([
-        ...layerData,
+        ..._layerData,
         {
           ...template,
           type: id,
           font: "mincho",
           visible: true,
           content: layerUtil.generateLineFromTemplate(template),
-          selected: layerData.length === 0,
+          selected: true,
           color: "#000000",
         },
       ]);
@@ -99,32 +110,32 @@ const Trace = () => {
             <Button
               click={exportHandler}
               text={"等幅全出力"}
-              value={"monospacedAll"}
+              value={"MonospacedAll"}
             />
             <Button
               click={exportHandler}
               text={"投コメ全出力"}
-              value={"ownerAll"}
+              value={"OwnerAll"}
             />
             <Button
               click={exportHandler}
               text={"投コメ等幅全出力"}
-              value={"ownerMonospacedAll"}
+              value={"OwnerMonospacedAll"}
             />
             <Button
               click={exportHandler}
               text={"選択出力"}
-              value={"selectedAll"}
+              value={"SelectedAll"}
             />
             <Button
               click={exportHandler}
               text={"等幅選択出力"}
-              value={"selectedMonospacedAll"}
+              value={"SelectedMonospacedAll"}
             />
             <Button
               click={exportHandler}
               text={"投コメ選択出力"}
-              value={"selectedOwnerAll"}
+              value={"SelectedOwnerAll"}
             />
             <Button
               click={toggleTabMode}

@@ -6,6 +6,7 @@ import getElements from "@/libraries/getElements";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
 import sleep from "@/libraries/sleep";
+import Styles from "./Root.scss";
 
 /**
  * Reactのルート要素
@@ -34,7 +35,7 @@ const Root = (): JSX.Element => {
 const init = async () => {
   let mainContainer,
     mainContainerPlayer,
-    videoSymbolContainerCanvas,
+    videoSymbolContainerCanvas: HTMLCanvasElement | undefined,
     videoContainer,
     count = 0;
   while (count < 30) {
@@ -88,6 +89,11 @@ const init = async () => {
   MainElement.id = "dansk:MainElement";
   FooterElement.id = "dansk:FooterElement";
   LayerElement.id = "dansk:LayerElement";
+  LayerElement.onclick = (e) => e.stopImmediatePropagation();
+  LayerElement.oncontextmenu = (e) => e.stopImmediatePropagation();
+  videoSymbolContainerCanvas?.parentElement?.classList.add(
+    Styles.VideoSymbolContainer || ""
+  );
   const ReactRootElement = document.createElement("div");
   document.body.append(ReactRootElement);
   const ReactRoot = createRoot(ReactRootElement);
