@@ -19,6 +19,7 @@
   }
   &.invisible {
     opacity: 0;
+    pointer-events: none;
   }
   &.mincho {
     font-family: "游明朝体", "Yu Mincho", YuMincho, "Hiragino Kaku Gothic ProN",
