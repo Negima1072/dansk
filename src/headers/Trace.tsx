@@ -83,7 +83,7 @@ const Trace = () => {
         {
           ...template,
           type: id,
-          font: "mincho",
+          font: "gothic",
           visible: true,
           content: layerUtil.generateLineFromTemplate(template),
           selected: true,
