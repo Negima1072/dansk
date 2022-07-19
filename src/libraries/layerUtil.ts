@@ -6,6 +6,7 @@ import {
   layerTemplate,
 } from "@/@types/types";
 import { Templates } from "@/headers/Trace.templates";
+import _charList from "./layerUtil.charList.json";
 
 /**
  * layer関係の処理をする関数集
@@ -231,85 +232,28 @@ const getCommentWidth = (
     width = 0,
     /** 空白ではない文字を見つけたらfalse */
     isLeftSpace = true;
+  /** 文字幅リスト */
+  const charList = _charList as unknown as {
+    [key: string]: { width: number; isSpace: boolean };
+  };
   for (const char of Array.from(input)) {
-    switch (char) {
-      case "\u2003":
-        width += 12;
-        if (isLeftSpace) {
-          leftSpaceWidth += 12;
-          //g += Array(12+1).join('\uA003');
+    const value = charList[char];
+    if (value !== undefined) {
+      width += value.width;
+      if (isLeftSpace) {
+        if (value.isSpace) {
+          leftSpaceWidth += value.width;
+        } else {
+          isLeftSpace = false;
         }
-        break;
-      case "\u2002":
-        width += 6;
-        if (isLeftSpace) {
-          leftSpaceWidth += 6;
-          //g += Array(6+1).join('\uA003');
-        }
-        break;
-      case "\u2004":
-        width += 4;
-        if (isLeftSpace) {
-          leftSpaceWidth += 4;
-          //g += Array(4+1).join('\uA003');
-        }
-        break;
-      case "\u2005":
-        width += 3;
-        if (isLeftSpace) {
-          leftSpaceWidth += 3;
-          //g += Array(3+1).join('\uA003');
-        }
-        break;
-      case "\u2006":
-        width += 2;
-        if (isLeftSpace) {
-          leftSpaceWidth += 2;
-          //g += Array(2+1).join('\uA003');
-        }
-        break;
-      case "\u200A":
-        width += 1;
-        if (isLeftSpace) {
-          leftSpaceWidth += 1;
-          //g += Array(2+1).join('\uA003');
-        }
-        break;
-      case "\u005F":
-      case "\uFF70":
-      case "\u00AF":
-      case "\u2216":
-      case "\uFFE8":
-        width += 6;
+      }
+    } else {
+      width += charList.default?.width || 0;
+      if (charList.default?.isSpace) {
+        leftSpaceWidth += charList.default.width;
+      } else {
         isLeftSpace = false;
-        break;
-      case "\u2580":
-      case "\u2590":
-        width += 8.5;
-        isLeftSpace = false;
-        break;
-      case "\u2043":
-        width += 3.692307;
-        isLeftSpace = false;
-        break;
-      case "\u01C0":
-        width += 3.111111;
-        isLeftSpace = false;
-        break;
-      case "\u207B":
-      case "\u208B":
-        width += 3.466666;
-        isLeftSpace = false;
-        break;
-      case "\u002F":
-        width += 5.647058;
-        isLeftSpace = false;
-        break;
-      default:
-        //未登録文字を検討、塗り用として割り切るか
-        width += 12;
-        isLeftSpace = false;
-        break;
+      }
     }
   }
   return { leftSpaceWidth, width };
