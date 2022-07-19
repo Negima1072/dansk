@@ -15,14 +15,14 @@ type LayerBoxProps = {
   left: number;
   textColor: string;
   width: number;
-  scale: { x: number; y: number };
+  _scale: { x: number; y: number };
 };
 const LayerBox = styled.div<LayerBoxProps>`
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
   color: ${(props) => props.textColor};
   width: ${(props) => props.width}px;
-  transform: scale(${(p) => p.scale.x}, ${(p) => p.scale.y});
+  transform: scale(${(p) => p._scale.x}, ${(p) => p._scale.y});
 `;
 type LayerGroupProps = { height: number | undefined };
 const LayerGroup = styled.div<LayerGroupProps>`
@@ -52,7 +52,7 @@ const Layer = (props: LayerProps): JSX.Element => {
     )
       return;
     layerManager(props.data, onchange, layerElement.current);
-  }, [layerElement, props.data]);
+  }, [layerElement, layerData, props.data]);
   /*const onLayerChange = (event: React.KeyboardEvent<HTMLDivElement>) => {
     console.log(event)
     if (!layerData || !setLayerData) return;
@@ -191,7 +191,7 @@ const Layer = (props: LayerProps): JSX.Element => {
         left={props.data.left}
         textColor={props.data.color}
         width={props.data.areaWidth}
-        scale={props.data.scale}
+        _scale={props.data.scale}
         contentEditable={props.data.selected ? "true" : "false"}
         ref={layerElement}
         /*onKeyDown={onLayerKeyDown}
@@ -205,7 +205,7 @@ const Layer = (props: LayerProps): JSX.Element => {
           left={props.data.left}
           textColor={props.data.color}
           width={props.data.areaWidth}
-          scale={props.data.scale}
+          _scale={props.data.scale}
         >
           {props.data.content.map((value, index) => {
             return (
