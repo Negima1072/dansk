@@ -17,6 +17,12 @@ const layerManager = (
    * 変更があった際はコールバック(onChange)を呼ぶ
    */
   const update = (): void => {
+    for (const element of Array.from(targetElement.children)) {
+      if (element.children.length === 0) continue;
+      if (element.children[0]?.tagName === "BR") {
+        element.children[0].remove();
+      }
+    }
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
