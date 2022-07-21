@@ -31,7 +31,7 @@ const getElements = async (count = 0): Promise<contextTypeNullable> => {
     if (count > 30) {
       throw new Error("fail to get mount point");
     }
-    await sleep(100);
+    await sleep(500);
     return await getElements(count + 1);
   }
   return {

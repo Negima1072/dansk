@@ -6,16 +6,26 @@
   margin: 0;
   padding: 4px 5px;
   cursor: pointer;
-  display: block;
   user-select: none;
-}
-.wrapper::before {
-  content: "[ ＋ ]";
-  display: inline-block;
-  width: 30px;
-  font-size: 11px;
-  text-align: center;
-}
-.wrapper.open::before {
-  content: "[ － ]";
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: 23px;
+  line-height: 15px;
+  &::before {
+    content: "[ ＋ ]";
+    display: inline-block;
+    width: 30px;
+    font-size: 11px;
+    text-align: center;
+  }
+  &.open::before {
+    content: "[ － ]";
+  }
+  .title {
+    width: 150px;
+  }
+  .message {
+    flex: 1;
+  }
 }

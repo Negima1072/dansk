@@ -4,6 +4,7 @@ import SpoilerButton from "@/components/spoiler/SpoilerButton";
 
 type propType = {
   text: string;
+  message?: string;
   children: React.ReactNode;
 };
 /**
@@ -18,6 +19,7 @@ const Spoiler: React.FC<propType> = (props) => {
       <SpoilerButton
         open={spoilerOpen}
         text={props.text}
+        message={props.message}
         click={() => setSpoilerOpen(!spoilerOpen)}
       />
       {spoilerOpen ? <div>{props.children}</div> : ""}

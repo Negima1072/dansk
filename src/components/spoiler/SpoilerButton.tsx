@@ -4,6 +4,7 @@ import Styles from "./SpoilerButton.module.scss";
 type propType = {
   open: boolean;
   text: string;
+  message?: string;
   click: () => void;
 };
 /**
@@ -19,7 +20,8 @@ const SpoilerButton: React.FC<propType> = (props) => {
       }`}
       onClick={props.click}
     >
-      {props.text}
+      <span className={Styles.title}>{props.text}</span>
+      <span className={Styles.message}>{props.message}</span>
     </div>
   );
 };
