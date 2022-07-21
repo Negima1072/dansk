@@ -21,6 +21,7 @@ module.exports = {
 	],
 	rules: {
 		"@typescript-eslint/restrict-template-expressions": "off",
+		"@typescript-eslint/unbound-method": "off",
 		"no-control-regex": "off",
 	},
 };
