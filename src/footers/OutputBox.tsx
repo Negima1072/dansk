@@ -161,7 +161,7 @@ const OutputBox = (): JSX.Element => {
             } else {
               textareaValue.shift();
             }
-            await sleep(250);
+            await sleep(isOwnerMode ? 250 : 2000);
             commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {
                 key: "Enter",
@@ -176,7 +176,7 @@ const OutputBox = (): JSX.Element => {
           } else {
             setSpoilerMessage(`セットに失敗しました(${i + 1}/${length})`);
           }
-          await sleep(isOwnerMode ? 250 : 2000);
+          await sleep(isOwnerMode ? 1000 : 6000);
         }
         setIsPosting(false);
       };
