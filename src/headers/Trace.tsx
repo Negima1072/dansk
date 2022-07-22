@@ -3,7 +3,7 @@ import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./Trace.module.scss";
 import Button from "@/components/button/Button";
 import Dropdown from "@/components/dropdown/Dropdown";
-import { Templates } from "@/headers/Trace.templates";
+import Templates from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
 import { layer } from "@/@types/types";
 import LayerSelector from "@/components/layerSelector/LayerSelector";
