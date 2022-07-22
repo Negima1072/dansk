@@ -47,8 +47,33 @@ type contextProps = {
   children: ReactNode;
   value?: contextTypeNullable;
 };
+
 type commentPos = "ue" | "naka" | "shita";
 type commentFont = "mincho" | "gothic";
+
+type command = {
+  text: string;
+  value: string;
+  group: string;
+};
+type commandList = command[][][];
+
+type MonoChar = {
+  width: number;
+  isSpace: boolean;
+};
+type ProChar = {
+  width: {
+    mincho: number;
+    gothic: number;
+  };
+  isSpace: boolean;
+};
+
+type CharList = {
+  [key: string]: MonoChar | ProChar;
+  default: MonoChar | ProChar;
+};
 
 type layerTemplates = {
   [key: string]: layerTemplate;

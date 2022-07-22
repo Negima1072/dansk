@@ -1,11 +1,9 @@
 import {
   contextType,
   layerTemplate,
-  messageColorClickEvent,
-  messageTimeSeekEvent,
-  messageTimeSeekIntEvent,
-  messageTimeSeekPlEvent,
+  MonoChar,
   ownerComment,
+  ProChar,
 } from "@/@types/types";
 
 /**
@@ -25,24 +23,6 @@ const typeGuard = {
       return true;
     },
   },
-  messageEvent: {
-    colorClick: (i: unknown): i is messageColorClickEvent =>
-      typeof i === "object" &&
-      i !== null &&
-      (i as messageColorClickEvent).type === "color_click",
-    timeSeek: (i: unknown): i is messageTimeSeekEvent =>
-      typeof i === "object" &&
-      i !== null &&
-      (i as messageTimeSeekEvent).type === "time_seek",
-    timeSeekInt: (i: unknown): i is messageTimeSeekIntEvent =>
-      typeof i === "object" &&
-      i !== null &&
-      (i as messageTimeSeekIntEvent).type === "time_seek_int",
-    timeSeekPl: (i: unknown): i is messageTimeSeekPlEvent =>
-      typeof i === "object" &&
-      i !== null &&
-      (i as messageTimeSeekPlEvent).type === "time_seek_pl",
-  },
   context: {
     props: (i: unknown): i is contextType =>
       !!(
@@ -56,13 +36,6 @@ const typeGuard = {
       typeof i === "object" &&
       i !== null &&
       (i as HTMLVideoElement).nodeName === "VIDEO",
-    commentOnOffButton: (i: unknown): i is HTMLButtonElement =>
-      typeof i === "object" &&
-      i !== null &&
-      (i as HTMLVideoElement).nodeName === "BUTTON" &&
-      (i as HTMLVideoElement).classList.contains("ActionButton") &&
-      (i as HTMLVideoElement).classList.contains("ControllerButton") &&
-      (i as HTMLVideoElement).classList.contains("CommentOnOffButton"),
     commentCommandInput: (i: unknown): i is HTMLInputElement =>
       typeof i === "object" &&
       i !== null &&
@@ -91,6 +64,14 @@ const typeGuard = {
         "scale",
         "size",
       ]),
+  },
+  layer: {
+    isMonoChar: (i: unknown): i is MonoChar =>
+      typeVerify(i, ["width", "isSpace"]) &&
+      typeof (i as MonoChar | ProChar).width === "number",
+    isProChar: (i: unknown): i is ProChar =>
+      typeVerify(i, ["width", "isSpace"]) &&
+      typeVerify((i as MonoChar | ProChar).width, ["mincho", "gothic"]),
   },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {
