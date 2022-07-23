@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { layerContext } from "@/components/LayerContext";
 import Layer from "@/components/layer/Layer";
+import Styles from "./LayerContainer.module.scss";
+import { objectFitArgs } from "@/@types/types";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -10,12 +12,16 @@ const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   left: 0;
 `;
 
+const BackgroundImage = styled.img<{ mode: objectFitArgs }>`
+  object-fit: ${(props) => props.mode};
+`;
+
 /**
  * レイヤー全体を管理
  * @constructor
  */
 const LayerContainer = (): JSX.Element => {
-  const { layerData } = useContext(layerContext);
+  const { layerData, backgroundData } = useContext(layerContext);
   const observerCallback = () => {
     if (
       !targetNode.current ||
@@ -46,11 +52,28 @@ const LayerContainer = (): JSX.Element => {
   }, [targetNode]);
   useEffect(() => observerCallback(), [document.body.classList]);
   return (
-    <LayerScale ref={targetNode} scaleX={scale.x} scaleY={scale.y}>
-      {layerData?.map((data, key) => {
-        return <Layer key={key} id={key} data={data} />;
-      })}
-    </LayerScale>
+    <>
+      {backgroundData && backgroundData?.active > -1 ? (
+        <BackgroundImage
+          className={`${Styles.backgroundImage}`}
+          src={backgroundData.images[backgroundData.active]}
+          alt={"backgroundImage"}
+          mode={backgroundData.mode}
+        />
+      ) : (
+        ""
+      )}
+      <LayerScale
+        ref={targetNode}
+        scaleX={scale.x}
+        scaleY={scale.y}
+        className={Styles.scaleWrapper}
+      >
+        {layerData?.map((data, key) => {
+          return <Layer key={key} id={key} data={data} />;
+        })}
+      </LayerScale>
+    </>
   );
 };
 export default LayerContainer;

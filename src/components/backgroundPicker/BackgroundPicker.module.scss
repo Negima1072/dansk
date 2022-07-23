@@ -1,0 +1,13 @@
+.tips {
+  width: 350px;
+  border-collapse: collapse;
+  th,
+  td {
+    border: solid 1px black;
+  }
+}
+.urlInput {
+  &:invalid {
+    border: solid 1px red;
+  }
+}

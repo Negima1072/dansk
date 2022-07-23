@@ -5,22 +5,6 @@ type ownerComment = {
   command: string;
   comment: string;
 };
-type messageColorClickEvent = {
-  type: "color_click";
-};
-type messageTimeSeekEvent = {
-  type: "time_seek";
-  time: number;
-  relative: boolean;
-};
-type messageTimeSeekIntEvent = {
-  type: "time_seek_int";
-  int: number;
-};
-type messageTimeSeekPlEvent = {
-  type: "time_seek_pl";
-  pl: string[];
-};
 type contextTypeNullable = {
   videoElement?: HTMLVideoElement;
   commentCommandInput?: HTMLInputElement;
@@ -31,6 +15,8 @@ type contextTypeNullable = {
   LayerElement?: HTMLDivElement;
   exportLayer?: string[];
   setExportLayer?: (layerString: string[]) => void;
+  popup?: ReactNode;
+  setPopup?: (node: ReactNode) => void;
 };
 type contextType = {
   videoElement: HTMLVideoElement;
@@ -47,8 +33,33 @@ type contextProps = {
   children: ReactNode;
   value?: contextTypeNullable;
 };
+
 type commentPos = "ue" | "naka" | "shita";
 type commentFont = "mincho" | "gothic";
+
+type command = {
+  text: string;
+  value: string;
+  group: string;
+};
+type commandList = command[][][];
+
+type MonoChar = {
+  width: number;
+  isSpace: boolean;
+};
+type ProChar = {
+  width: {
+    mincho: number;
+    gothic: number;
+  };
+  isSpace: boolean;
+};
+
+type CharList = {
+  [key: string]: MonoChar | ProChar;
+  default: MonoChar | ProChar;
+};
 
 type layerTemplates = {
   [key: string]: layerTemplate;
@@ -92,6 +103,15 @@ type layer = layerTemplate & {
   color: string;
   content: layerLine[];
 };
+
+type backgroundDataType = {
+  active: number;
+  images: string[];
+  editing: boolean;
+  mode: objectFitArgs;
+};
+
+type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";
 type crossOriginType = "anonymous" | "use-credentials";
 type nvPlayerApi = {
   autoplay: () => boolean;

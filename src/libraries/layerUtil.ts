@@ -4,9 +4,11 @@ import {
   layer,
   layerLine,
   layerTemplate,
+  MonoChar,
 } from "@/@types/types";
-import { Templates } from "@/headers/Trace.templates";
-import _charList from "./layerUtil.charList.json";
+import Templates from "@/headers/Trace.templates";
+import CharList from "./layerUtil.charList";
+import typeGuard from "@/libraries/typeGuard";
 
 /**
  * layer関係の処理をする関数集
@@ -129,8 +131,10 @@ const layerUtil = {
                     (pv, layerLine) =>
                       pv.concat(
                         layerLine.content.map((value) => {
-                          const { width, leftSpaceWidth } =
-                            getCommentWidth(value);
+                          const { width, leftSpaceWidth } = getCommentWidth(
+                            value,
+                            layer.font
+                          );
                           if (width === leftSpaceWidth) return 0;
                           return (
                             ((width -
@@ -222,9 +226,11 @@ const space2tab = (input: string[]): string[] => {
  * コメントの横幅取得
  * 全角前提なので半角文字が入ると崩れる
  * @param input {string} 調査対象の文字列
+ * @param font
  */
 const getCommentWidth = (
-  input: string
+  input: string,
+  font: commentFont
 ): { width: number; leftSpaceWidth: number } => {
   /** 左の空白幅 */
   let leftSpaceWidth = 0,
@@ -233,30 +239,23 @@ const getCommentWidth = (
     /** 空白ではない文字を見つけたらfalse */
     isLeftSpace = true;
   /** 文字幅リスト */
-  const charList = _charList as unknown as {
-    [key: string]: { width: number; isSpace: boolean };
-  };
   for (const char of Array.from(input)) {
-    const value = charList[char];
-    if (value !== undefined) {
-      width += value.width;
-      if (isLeftSpace) {
-        if (value.isSpace) {
-          leftSpaceWidth += value.width;
-        } else {
-          isLeftSpace = false;
-        }
-      }
-    } else {
-      width += charList.default?.width || 0;
-      if (charList.default?.isSpace) {
-        leftSpaceWidth += charList.default.width;
+    const value = getCharWidth(char, font);
+    width += value.width;
+    if (isLeftSpace) {
+      if (value.isSpace) {
+        leftSpaceWidth += value.width;
       } else {
         isLeftSpace = false;
       }
     }
   }
   return { leftSpaceWidth, width };
+};
+const getCharWidth = (char: string, font: commentFont): MonoChar => {
+  const charItem = CharList[char] || CharList.default;
+  if (typeGuard.layer.isMonoChar(charItem)) return charItem;
+  return { ...charItem, width: charItem.width[font] };
 };
 /**
  * 先頭の空白の長さ調節
@@ -366,7 +365,7 @@ const comment2str = (
     const group: { width: number; leftSpaceWidth: number; index: number }[] =
       [];
     item.content.forEach((data, index) => {
-      const { width, leftSpaceWidth } = getCommentWidth(data);
+      const { width, leftSpaceWidth } = getCommentWidth(data, layer.font);
       if (width === leftSpaceWidth) return;
       group.push({ width, leftSpaceWidth, index });
     });
@@ -411,7 +410,7 @@ const comment2str = (
     //空白を消したので更新
     commentWidth = [];
     comment.forEach((data, index) => {
-      const { width, leftSpaceWidth } = getCommentWidth(data);
+      const { width, leftSpaceWidth } = getCommentWidth(data, layer.font);
       if (width === leftSpaceWidth || !commentWidth) return;
       commentWidth.push({ width, leftSpaceWidth, index });
     });
@@ -458,7 +457,7 @@ const comment2str = (
       //どのコメントにも足せなかった場合
       commentLine = addTrailingSpace(
         commentLine,
-        width - getCommentWidth(commentLine).width
+        width - getCommentWidth(commentLine, layer.font).width
       );
       const template: string[] = comment.map((_, index, array) =>
         index === array.length - 1 ? "\uA001" : ""
