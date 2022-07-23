@@ -105,7 +105,7 @@ const BackgroundPicker = () => {
                 <tr>
                   <td>scale-down</td>
                   <td>
-                    元画像が動画より小さければそのまま、そうでなければcontainと同様に縮小します
+                    元画像が動画より小さければそのまま、そうでなければcontainと同様に縮小して表示します
                   </td>
                 </tr>
               </tbody>
