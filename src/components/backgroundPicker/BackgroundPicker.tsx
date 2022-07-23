@@ -9,10 +9,10 @@ import Tips from "@/components/tips/Tips";
 import Styles from "./BackgroundPicker.module.scss";
 
 const BackgroundPicker = () => {
-  const { backgroundData, setBackgroundData } = useContext(layerContext);
+  const { overlayData, setOverlayData } = useContext(layerContext);
   const [urlInputActive, setUrlInputActive] = useState<boolean>(false),
     [urlInputValue, setUrlInputValue] = useState<string>("");
-  if (!backgroundData || !setBackgroundData) return <></>;
+  if (!overlayData || !setOverlayData) return <></>;
   const loadFromFile = () => {
       const input = document.createElement("input");
       input.type = "file";
@@ -21,8 +21,8 @@ const BackgroundPicker = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
           if (typeof e.target?.result === "string") {
-            backgroundData.images.push(e.target.result);
-            setBackgroundData({ ...backgroundData });
+            overlayData.images.push(e.target.result);
+            setOverlayData({ ...overlayData });
           }
         };
         reader.readAsDataURL(input.files[0]);
@@ -33,24 +33,24 @@ const BackgroundPicker = () => {
       if (
         urlInputValue.match(/^https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$/)
       ) {
-        backgroundData.images.push(urlInputValue);
-        setBackgroundData({ ...backgroundData });
+        overlayData.images.push(urlInputValue);
+        setOverlayData({ ...overlayData });
         setUrlInputValue("");
         setUrlInputActive(false);
       }
     };
   const drawModeOnChange = useCallback(
     (value: string) => {
-      backgroundData.mode = value as objectFitArgs;
-      setBackgroundData({ ...backgroundData });
+      overlayData.mode = value as objectFitArgs;
+      setOverlayData({ ...overlayData });
     },
-    [backgroundData]
+    [overlayData]
   );
   return (
     <>
       <Popup
         title={"背景"}
-        close={() => setBackgroundData({ ...backgroundData, editing: false })}
+        close={() => setOverlayData({ ...overlayData, editing: false })}
       >
         <BackgroundImageDisplay />
         <div>
@@ -71,7 +71,7 @@ const BackgroundPicker = () => {
               { text: "none", value: "none" },
               { text: "scale-down", value: "scale-down" },
             ]}
-            selected={backgroundData.mode}
+            selected={overlayData.mode}
           />
           <Tips>
             <table className={Styles.tips}>

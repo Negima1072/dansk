@@ -21,7 +21,7 @@ const BackgroundImage = styled.img<{ mode: objectFitArgs }>`
  * @constructor
  */
 const LayerContainer = (): JSX.Element => {
-  const { layerData, backgroundData } = useContext(layerContext);
+  const { layerData, overlayData } = useContext(layerContext);
   const observerCallback = () => {
     if (
       !targetNode.current ||
@@ -53,12 +53,12 @@ const LayerContainer = (): JSX.Element => {
   useEffect(() => observerCallback(), [document.body.classList]);
   return (
     <>
-      {backgroundData && backgroundData?.active > -1 ? (
+      {overlayData && overlayData?.active > -1 ? (
         <BackgroundImage
           className={`${Styles.backgroundImage}`}
-          src={backgroundData.images[backgroundData.active]}
+          src={overlayData.images[overlayData.active]}
           alt={"backgroundImage"}
-          mode={backgroundData.mode}
+          mode={overlayData.mode}
         />
       ) : (
         ""

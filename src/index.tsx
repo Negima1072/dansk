@@ -4,6 +4,8 @@
  */
 window.onload = () => {
   const embedScript = document.createElement("script");
-  embedScript.src = (chrome || browser).runtime.getURL("main.js");
+  embedScript.src = (
+    typeof chrome !== "undefined" ? chrome : browser
+  ).runtime.getURL("main.js");
   document.body.append(embedScript);
 };

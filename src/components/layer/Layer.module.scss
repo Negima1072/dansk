@@ -16,6 +16,11 @@
   &.active {
     pointer-events: unset;
     outline: #ffff00 solid 0.2px;
+    &.grid {
+      & > div {
+        outline: #ff00ff solid 0.2px;
+      }
+    }
   }
   &.invisible {
     opacity: 0;
@@ -38,6 +43,7 @@
   position: absolute;
   pointer-events: none;
   transform-origin: 0;
+
   & > div {
     outline: #00ffff solid 0.1px;
     width: 100%;

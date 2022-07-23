@@ -5,7 +5,7 @@ import Button from "@/components/button/Button";
 import Dropdown from "@/components/dropdown/Dropdown";
 import Templates from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
-import { backgroundDataType, layer } from "@/@types/types";
+import { layer, overlayDataType } from "@/@types/types";
 import LayerSelector from "@/components/layerSelector/LayerSelector";
 import layerUtil from "@/libraries/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
@@ -24,11 +24,12 @@ const Trace = () => {
       "big_ue_ender_full_gothic_W17_L9"
     ),
     [layerData, setLayerData] = useState<layer[]>([]),
-    [backgroundData, setBackgroundData] = useState<backgroundDataType>({
+    [overlayData, setOverlayData] = useState<overlayDataType>({
       active: -1,
       images: [],
       editing: false,
       mode: "fill",
+      grid: false,
     }),
     { exportLayer, setExportLayer } = useContext(context);
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
@@ -64,18 +65,23 @@ const Trace = () => {
       },
       [exportLayer, layerData]
     ),
-    toggleTabMode = useCallback(() => {
-      setTabMode(!tabMode);
-    }, [tabMode]),
-    toggleReplaceMode = useCallback(() => {
-      setReplaceMode(!replaceMode);
-    }, [replaceMode]),
-    layerDropdownOnChange = useCallback((value: string) => {
-      setLayerDropdownValue(value);
-    }, []),
-    openBackgroundMenu = useCallback(() => {
-      setBackgroundData({ ...backgroundData, editing: true });
-    }, [backgroundData]),
+    toggleTabMode = useCallback(() => setTabMode(!tabMode), [tabMode]),
+    toggleReplaceMode = useCallback(
+      () => setReplaceMode(!replaceMode),
+      [replaceMode]
+    ),
+    toggleGridMode = useCallback(
+      () => setOverlayData({ ...overlayData, grid: !overlayData.grid }),
+      [overlayData]
+    ),
+    layerDropdownOnChange = useCallback(
+      (value: string) => setLayerDropdownValue(value),
+      []
+    ),
+    openBackgroundMenu = useCallback(
+      () => setOverlayData({ ...overlayData, editing: true }),
+      [overlayData]
+    ),
     addLayer = useCallback(() => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
@@ -109,7 +115,7 @@ const Trace = () => {
     );
   return (
     <LayerContext
-      value={{ layerData, setLayerData, backgroundData, setBackgroundData }}
+      value={{ layerData, setLayerData, overlayData, setOverlayData }}
     >
       <Spoiler text={"Trace"}>
         <div className={Styles.table}>
@@ -181,6 +187,12 @@ const Trace = () => {
             </div>
             <div className={Styles.block}>
               <Button click={openBackgroundMenu} text={"背景"} value={""} />
+              <Button
+                click={toggleGridMode}
+                text={"グリッド"}
+                value={""}
+                active={overlayData.grid}
+              />
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>
@@ -189,7 +201,7 @@ const Trace = () => {
         </div>
         <LayerPortal />
       </Spoiler>
-      {backgroundData.editing && <BackgroundPicker />}
+      {overlayData.editing && <BackgroundPicker />}
     </LayerContext>
   );
 };

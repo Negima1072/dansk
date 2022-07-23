@@ -104,11 +104,12 @@ type layer = layerTemplate & {
   content: layerLine[];
 };
 
-type backgroundDataType = {
+type overlayDataType = {
   active: number;
   images: string[];
   editing: boolean;
   mode: objectFitArgs;
+  grid: boolean;
 };
 
 type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";

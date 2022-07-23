@@ -4,31 +4,31 @@ import { layerContext } from "@/components/LayerContext";
 import icons from "@/assets/icons";
 
 const BackgroundPicker = () => {
-  const { backgroundData, setBackgroundData } = useContext(layerContext);
-  if (!backgroundData || !setBackgroundData) return <></>;
+  const { overlayData, setOverlayData } = useContext(layerContext);
+  if (!overlayData || !setOverlayData) return <></>;
   const deleteImage = (key: number) => {
-    backgroundData.images.splice(key, 1);
-    if (backgroundData.active >= backgroundData.images.length) {
-      backgroundData.active = -1;
+    overlayData.images.splice(key, 1);
+    if (overlayData.active >= overlayData.images.length) {
+      overlayData.active = -1;
     }
-    setBackgroundData({ ...backgroundData });
+    setOverlayData({ ...overlayData });
   };
   const changeActiveImage = (key: number) => {
-    if (backgroundData.active === key) {
-      backgroundData.active = -1;
+    if (overlayData.active === key) {
+      overlayData.active = -1;
     } else {
-      backgroundData.active = key;
+      overlayData.active = key;
     }
-    setBackgroundData({ ...backgroundData });
+    setOverlayData({ ...overlayData });
   };
   return (
     <div className={Styles.container}>
-      {backgroundData.images.map((blob, key) => {
+      {overlayData.images.map((blob, key) => {
         return (
           <div
             key={`backgroundImageDisplay${key}`}
             className={`${Styles.item} ${
-              key === backgroundData.active ? Styles.active : ""
+              key === overlayData.active ? Styles.active : ""
             }`}
           >
             <img
