@@ -21,7 +21,7 @@ const BackgroundPicker = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
           if (typeof e.target?.result === "string") {
-            optionData.images.push(e.target.result);
+            optionData.bgImages.push(e.target.result);
             setOptionData({ ...optionData });
           }
         };
@@ -33,7 +33,7 @@ const BackgroundPicker = () => {
       if (
         urlInputValue.match(/^https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$/)
       ) {
-        optionData.images.push(urlInputValue);
+        optionData.bgImages.push(urlInputValue);
         setOptionData({ ...optionData });
         setUrlInputValue("");
         setUrlInputActive(false);
@@ -41,7 +41,7 @@ const BackgroundPicker = () => {
     };
   const drawModeOnChange = useCallback(
     (value: string) => {
-      optionData.mode = value as objectFitArgs;
+      optionData.bgMode = value as objectFitArgs;
       setOptionData({ ...optionData });
     },
     [optionData]
@@ -50,7 +50,7 @@ const BackgroundPicker = () => {
     <>
       <Popup
         title={"背景"}
-        close={() => setOptionData({ ...optionData, editing: false })}
+        close={() => setOptionData({ ...optionData, bgEditing: false })}
       >
         <BackgroundImageDisplay />
         <div>
@@ -71,7 +71,7 @@ const BackgroundPicker = () => {
               { text: "none", value: "none" },
               { text: "scale-down", value: "scale-down" },
             ]}
-            selected={optionData.mode}
+            selected={optionData.bgMode}
           />
           <Tips>
             <table className={Styles.tips}>

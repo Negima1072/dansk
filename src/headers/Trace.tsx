@@ -24,10 +24,11 @@ const Trace = () => {
     ),
     [layerData, setLayerData] = useState<layer[]>([]),
     [optionData, setOptionData] = useState<optionDataType>({
-      active: -1,
-      images: [],
-      editing: false,
-      mode: "fill",
+      bgActive: -1,
+      bgImages: [],
+      bgEditing: false,
+      bgMode: "fill",
+      bgVisible: true,
       grid: false,
       replace: false,
     }),
@@ -79,7 +80,11 @@ const Trace = () => {
       []
     ),
     openBackgroundMenu = useCallback(
-      () => setOptionData({ ...optionData, editing: true }),
+      () => setOptionData({ ...optionData, bgEditing: true }),
+      [optionData]
+    ),
+    toggleBackgroundVisible = useCallback(
+      () => setOptionData({ ...optionData, bgVisible: !optionData.bgVisible }),
       [optionData]
     ),
     addLayer = useCallback(() => {
@@ -186,22 +191,34 @@ const Trace = () => {
               />
             </div>
             <div className={Styles.block}>
-              <Button click={openBackgroundMenu} text={"背景"} value={""} />
               <Button
                 click={toggleGridMode}
                 text={"グリッド"}
                 value={""}
                 active={optionData.grid}
               />
+              <Button click={openBackgroundMenu} text={"背景設定"} value={""} />
+              {optionData?.bgActive > -1 && (
+                <Button
+                  click={toggleBackgroundVisible}
+                  text={optionData.bgVisible ? "画像非表示" : "画像表示"}
+                  value={""}
+                ></Button>
+              )}
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>
-            <LayerSelector />
+            <div className={Styles.block}>
+              <LayerSelector />
+            </div>
+            <div className={Styles.block}>
+              <div className={Styles.row}></div>
+            </div>
           </div>
         </div>
         <LayerPortal />
       </Spoiler>
-      {optionData.editing && <BackgroundPicker />}
+      {optionData.bgEditing && <BackgroundPicker />}
     </LayerContext>
   );
 };

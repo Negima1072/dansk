@@ -53,12 +53,12 @@ const LayerContainer = (): JSX.Element => {
   useEffect(() => observerCallback(), [document.body.classList]);
   return (
     <>
-      {optionData && optionData?.active > -1 ? (
+      {optionData && optionData?.bgActive > -1 && optionData.bgVisible ? (
         <BackgroundImage
           className={`${Styles.backgroundImage}`}
-          src={optionData.images[optionData.active]}
+          src={optionData.bgImages[optionData.bgActive]}
           alt={"backgroundImage"}
-          mode={optionData.mode}
+          mode={optionData.bgMode}
         />
       ) : (
         ""

@@ -105,10 +105,11 @@ type layer = layerTemplate & {
 };
 
 type optionDataType = {
-  active: number;
-  images: string[];
-  editing: boolean;
-  mode: objectFitArgs;
+  bgActive: number;
+  bgImages: string[];
+  bgEditing: boolean;
+  bgMode: objectFitArgs;
+  bgVisible: boolean;
   grid: boolean;
   replace: boolean;
 };

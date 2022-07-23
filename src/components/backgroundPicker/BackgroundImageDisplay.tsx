@@ -7,28 +7,29 @@ const BackgroundPicker = () => {
   const { optionData, setOptionData } = useContext(layerContext);
   if (!optionData || !setOptionData) return <></>;
   const deleteImage = (key: number) => {
-    optionData.images.splice(key, 1);
-    if (optionData.active >= optionData.images.length) {
-      optionData.active = -1;
+    optionData.bgImages.splice(key, 1);
+    if (optionData.bgActive >= optionData.bgImages.length) {
+      optionData.bgActive = -1;
     }
     setOptionData({ ...optionData });
   };
   const changeActiveImage = (key: number) => {
-    if (optionData.active === key) {
-      optionData.active = -1;
+    if (optionData.bgActive === key) {
+      optionData.bgActive = -1;
     } else {
-      optionData.active = key;
+      optionData.bgActive = key;
+      optionData.bgVisible = true;
     }
     setOptionData({ ...optionData });
   };
   return (
     <div className={Styles.container}>
-      {optionData.images.map((blob, key) => {
+      {optionData.bgImages.map((blob, key) => {
         return (
           <div
             key={`backgroundImageDisplay${key}`}
             className={`${Styles.item} ${
-              key === optionData.active ? Styles.active : ""
+              key === optionData.bgActive ? Styles.active : ""
             }`}
           >
             <img
