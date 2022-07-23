@@ -19,7 +19,6 @@ import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
  */
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
-    [lineMode, setLineMode] = useState<boolean>(false),
     [replaceMode, setReplaceMode] = useState<boolean>(false),
     [layerDropdownValue, setLayerDropdownValue] = useState<string>(
       "big_ue_ender_full_gothic_W17_L9"
@@ -68,9 +67,6 @@ const Trace = () => {
     toggleTabMode = useCallback(() => {
       setTabMode(!tabMode);
     }, [tabMode]),
-    toggleLineMode = useCallback(() => {
-      setLineMode(!lineMode);
-    }, [lineMode]),
     toggleReplaceMode = useCallback(() => {
       setReplaceMode(!replaceMode);
     }, [replaceMode]),
@@ -154,12 +150,6 @@ const Trace = () => {
               text={"TabM"}
               value={"convertSpaceToTab"}
               active={tabMode}
-            />
-            <Button
-              click={toggleLineMode}
-              text={"線画M"}
-              value={"convertColorToBlack"}
-              active={lineMode}
             />
             <Button //todo:置換モードの実装
               click={toggleReplaceMode}
