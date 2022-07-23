@@ -27,13 +27,9 @@ function beforeUnload(e: BeforeUnloadEvent) {
  */
 const LayerContainer = (): JSX.Element => {
   const { layerData, backgroundData } = useContext(layerContext);
-  const tabMoveCheck = () => {
-    useEffect(() => {
-      (layerData && layerData.length > 0) ? window.onbeforeunload = beforeUnload : window.onbeforeunload = null;
-    }, [layerData]);
-    return;
-  }
-  tabMoveCheck();
+  useEffect(() => {
+    window.onbeforeunload = (layerData && layerData.length > 0) ? beforeUnload : null;
+  }, [layerData]);
   const observerCallback = () => {
     if (
       !targetNode.current ||
