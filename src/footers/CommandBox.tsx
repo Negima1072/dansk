@@ -4,7 +4,7 @@ import Styles from "./CommandBox.module.scss";
 import Button from "@/components/button/Button";
 import { context } from "@/components/Context";
 
-import Commands from "./CommandBox.json";
+import Commands from "./CommandBox.Commands";
 import tg from "@/libraries/typeGuard";
 
 /**

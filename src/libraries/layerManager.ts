@@ -17,10 +17,15 @@ const layerManager = (
    * 変更があった際はコールバック(onChange)を呼ぶ
    */
   const update = (): void => {
-    for (const element of Array.from(targetElement.children)) {
-      if (element.children.length === 0) continue;
-      if (element.children[0]?.tagName === "BR") {
-        element.children[0].remove();
+    const ua = window.navigator.userAgent,
+      isChromium = ua.match(/Chrome/),
+      isFirefox = ua.match(/Firefox/);
+    if (isChromium) {
+      for (const element of Array.from(targetElement.children)) {
+        if (element.children.length === 0) continue;
+        if (element.children[0]?.tagName === "BR") {
+          element.children[0].remove();
+        }
       }
     }
     const strings = getInnerText(targetElement, data.height);
@@ -49,15 +54,11 @@ const layerManager = (
         if (itemElement.innerHTML === "") {
           itemElement.innerHTML = "<br>";
         }
-        const ua = window.navigator.userAgent;
-        if (
-          itemElement.innerText !== `${strings[index]}\n` &&
-          ua.match(/Firefox/)
-        ) {
+        if (itemElement.innerText !== `${strings[index]}\n` && isFirefox) {
           itemElement.innerText = `${strings[index]}\n`;
         } else if (
           itemElement.innerText !== `${strings[index]}` &&
-          ua.match(/Chrome/)
+          isChromium
         ) {
           itemElement.innerText = `${strings[index]}`;
         }

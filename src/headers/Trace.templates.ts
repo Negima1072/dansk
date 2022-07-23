@@ -1,5 +1,28 @@
 import { layerTemplates } from "@/@types/types";
 
+/**
+ * レイヤーのテンプレート
+ * id: 識別名
+ * commands: 適用するコマンド
+ * pos: 初期位置
+ * posList: テンプレが対応している位置
+ * text: テンプレート名
+ * value: 旧識別名
+ * areaWidth: 横幅(px)
+ * width: 横幅(全角文字数)
+ * height: 行数
+ * critical: 臨界幅
+ * top: 各位置ごとのtop(px)
+ * left: left(px)
+ * scale: x/yそれぞれ
+ * size: [{
+ *   font: font-size(px)
+ *   line: line-height(px)
+ *   lineCount: 行数
+ *   height: height(px)
+ *   count: 何回繰り返すか
+ * }]
+ */
 const Templates: layerTemplates = {
   be9: {
     id: "be9",
@@ -405,4 +428,4 @@ const Templates: layerTemplates = {
     ],
   },
 };
-export { Templates };
+export default Templates;
