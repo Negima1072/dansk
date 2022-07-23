@@ -2,7 +2,7 @@ import React, { ChangeEvent, useContext, useState } from "react";
 import Styles from "./LayerSelector.module.scss";
 import { ReactSortable } from "react-sortablejs";
 import layerUtil from "@/libraries/layerUtil";
-import icons from "@/components/layerSelector/icons";
+import icons from "@/assets/icons";
 import { layerContext } from "@/components/LayerContext";
 import styled from "styled-components";
 

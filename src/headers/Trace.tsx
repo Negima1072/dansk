@@ -5,12 +5,13 @@ import Button from "@/components/button/Button";
 import Dropdown from "@/components/dropdown/Dropdown";
 import Templates from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
-import { layer } from "@/@types/types";
+import { backgroundDataType, layer } from "@/@types/types";
 import LayerSelector from "@/components/layerSelector/LayerSelector";
 import layerUtil from "@/libraries/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
 import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
+import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 
 /**
  * Traceブロック
@@ -24,6 +25,12 @@ const Trace = () => {
       "big_ue_ender_full_gothic_W17_L9"
     ),
     [layerData, setLayerData] = useState<layer[]>([]),
+    [backgroundData, setBackgroundData] = useState<backgroundDataType>({
+      active: -1,
+      images: [],
+      editing: false,
+      mode: "fill",
+    }),
     { exportLayer, setExportLayer } = useContext(context);
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
   const exportHandler = useCallback(
@@ -70,6 +77,9 @@ const Trace = () => {
     layerDropdownOnChange = useCallback((value: string) => {
       setLayerDropdownValue(value);
     }, []),
+    openBackgroundMenu = useCallback(() => {
+      setBackgroundData({ ...backgroundData, editing: true });
+    }, [backgroundData]),
     addLayer = useCallback(() => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
@@ -102,7 +112,9 @@ const Trace = () => {
       [layerData]
     );
   return (
-    <LayerContext value={{ layerData, setLayerData }}>
+    <LayerContext
+      value={{ layerData, setLayerData, backgroundData, setBackgroundData }}
+    >
       <Spoiler text={"Trace"}>
         <div className={Styles.table}>
           <div className={Styles.row}>
@@ -178,7 +190,7 @@ const Trace = () => {
               />
             </div>
             <div className={Styles.block}>
-              <Button click={toggleVisible} text={"背景"} value={""} />
+              <Button click={openBackgroundMenu} text={"背景"} value={""} />
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>
@@ -187,6 +199,7 @@ const Trace = () => {
         </div>
         <LayerPortal />
       </Spoiler>
+      {backgroundData.editing && <BackgroundPicker />}
     </LayerContext>
   );
 };

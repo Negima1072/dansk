@@ -1,12 +1,13 @@
-.scale {
+.backgroundImage {
   position: absolute;
   top: 0;
   left: 0;
-  .wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 660px;
-    height: 420px;
-  }
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.scaleWrapper {
+  position: relative;
+  z-index: 1;
 }

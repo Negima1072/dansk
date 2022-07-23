@@ -1,9 +1,11 @@
 import React, { createContext, ReactNode } from "react";
-import { layer } from "@/@types/types";
+import { backgroundDataType, layer } from "@/@types/types";
 
 type layerContext = {
   setLayerData?: (layer: layer[]) => void;
   layerData?: layer[];
+  setBackgroundData?: (data: backgroundDataType) => void;
+  backgroundData?: backgroundDataType;
 };
 
 type contextProps = {
