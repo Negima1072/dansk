@@ -15,14 +15,14 @@ type LayerBoxProps = {
   top: number;
   left: number;
   textColor: string;
-  width: number;
+  _width: number;
   _scale: { x: number; y: number };
 };
 const LayerBox = styled.div<LayerBoxProps>`
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
   color: ${(props) => props.textColor};
-  width: ${(props) => props.width}px;
+  width: ${(props) => props._width}px;
   transform: scale(${(p) => p._scale.x}, ${(p) => p._scale.y});
 `;
 type LayerGroupProps = { height: number | undefined };
@@ -36,7 +36,7 @@ const LayerGroup = styled.div<LayerGroupProps>`
  * @constructor
  */
 const Layer = (props: LayerProps): JSX.Element => {
-  const { layerData, setLayerData, overlayData } = useContext(layerContext),
+  const { layerData, setLayerData, optionData } = useContext(layerContext),
     layerElement = useRef<HTMLDivElement>(null),
     currentLayer = useRef<layer>();
   const onchange = (layer: layer) => {
@@ -49,26 +49,32 @@ const Layer = (props: LayerProps): JSX.Element => {
     if (
       !layerElement.current ||
       (currentLayer.current !== undefined &&
-        layerUtil.isEqual(currentLayer.current, props.data))
+        layerUtil.isEqual(currentLayer.current, props.data)) ||
+      !optionData
     )
       return;
-    layerManager(props.data, onchange, layerElement.current);
-  }, [layerElement, layerData, props.data]);
+    layerManager(
+      props.data,
+      onchange,
+      layerElement.current,
+      optionData.replace
+    );
+  }, [layerElement, layerData, props.data, optionData?.replace]);
   return (
     <>
-      {overlayData?.grid && props.data.selected && grids[props.data.value] && (
+      {optionData?.grid && props.data.selected && grids[props.data.value] && (
         <img src={grids[props.data.value]} alt={""} />
       )}
       <LayerBox
         className={`${Styles.layer} ${Styles[props.data.font]} ${
           props.data.selected ? Styles.active : ""
         } ${props.data.visible ? "" : Styles.invisible} ${
-          overlayData?.grid && grids[props.data.value] ? Styles.grid : ""
+          optionData?.grid && grids[props.data.value] ? Styles.grid : ""
         }`}
         top={props.data.top[props.data.pos]}
         left={props.data.left}
         textColor={props.data.color}
-        width={props.data.areaWidth}
+        _width={props.data.areaWidth}
         _scale={props.data.scale}
         contentEditable={props.data.selected ? "true" : "false"}
         ref={layerElement}
@@ -80,7 +86,7 @@ const Layer = (props: LayerProps): JSX.Element => {
           top={props.data.top[props.data.pos]}
           left={props.data.left}
           textColor={props.data.color}
-          width={props.data.areaWidth}
+          _width={props.data.areaWidth}
           _scale={props.data.scale}
         >
           {props.data.content.map((value, index) => {

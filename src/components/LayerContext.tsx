@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode } from "react";
-import { overlayDataType, layer } from "@/@types/types";
+import { optionDataType, layer } from "@/@types/types";
 
 type layerContext = {
   setLayerData?: (layer: layer[]) => void;
   layerData?: layer[];
-  setOverlayData?: (data: overlayDataType) => void;
-  overlayData?: overlayDataType;
+  setOptionData?: (data: optionDataType) => void;
+  optionData?: optionDataType;
 };
 
 type contextProps = {

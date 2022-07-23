@@ -1,16 +1,20 @@
 import { layer } from "@/@types/types";
 import Styles from "./layerManager.module.scss";
-
+import replaceCharList from "@/libraries/layerManager.replaceCharList";
+import caretUtil from "@/libraries/caretUtil";
+import typeGuard from "@/libraries/typeGuard";
 /**
  * レイヤーとイベントハンドラの管理
  * @param data
  * @param onChange
  * @param targetElement
+ * @param replaceMode
  */
 const layerManager = (
   data: layer,
   onChange: (layer: layer) => void,
-  targetElement: HTMLDivElement
+  targetElement: HTMLDivElement,
+  replaceMode: boolean
 ) => {
   /**
    * 変更の際に勝手に生えたdivを消したり消えたdivを生やしたり
@@ -28,7 +32,7 @@ const layerManager = (
         }
       }
     }
-    const strings = getInnerText(targetElement, data.height);
+    const { strings, empty } = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
       targetElement.children
@@ -56,11 +60,13 @@ const layerManager = (
         }
         if (itemElement.innerText !== `${strings[index]}\n` && isFirefox) {
           itemElement.innerText = `${strings[index]}\n`;
+          if (empty) caretUtil.set(itemElement, strings[index]?.length || 0);
         } else if (
           itemElement.innerText !== `${strings[index]}` &&
           isChromium
         ) {
           itemElement.innerText = `${strings[index]}`;
+          if (empty) caretUtil.set(itemElement, strings[index]?.length || 0);
         }
         if (strings[index]?.match(/[\u00A0\u0020]/)) {
           itemElement.style.background = "rgba(255,0,0,0.3)";
@@ -71,6 +77,7 @@ const layerManager = (
           }
           itemElement.style.background = "none";
         }
+
         index++;
       });
     });
@@ -89,6 +96,34 @@ const layerManager = (
     const copied = window.getSelection()?.toString() || "";
     e.clipboardData?.setData("text/plain", copied);
     e.preventDefault();
+  };
+  targetElement.onkeydown = (e) => {
+    if (
+      !replaceMode ||
+      e.isComposing ||
+      !replaceCharList[e.key] ||
+      e.altKey ||
+      e.ctrlKey ||
+      e.metaKey
+    )
+      return;
+    const focusedNode = caretUtil.getFocusedNode();
+    let focusedElement = typeGuard.dom.isDivElement(focusedNode)
+      ? focusedNode
+      : focusedNode?.parentElement;
+    if (focusedElement?.contentEditable === "true") {
+      adjustChildren(targetElement, data.height);
+      focusedElement = targetElement.firstElementChild as HTMLElement;
+      focusedElement.focus();
+    }
+    if (!typeGuard.dom.isDivElement(focusedElement)) return;
+    const caretPos = caretUtil.get(focusedElement);
+    if (caretPos === undefined) return;
+    e.preventDefault();
+    focusedElement.innerText = `${focusedElement.innerText.slice(0, caretPos)}${
+      replaceCharList[e.key]
+    }${focusedElement.innerText.slice(caretPos)}`;
+    caretUtil.set(focusedElement, caretPos + 1);
   };
 };
 
@@ -121,14 +156,22 @@ const adjustChildren = (targetElement: HTMLDivElement, length: number) => {
 const getInnerText = (
   targetElement: HTMLDivElement,
   length: number
-): string[] => {
+): { strings: string[]; empty: boolean } => {
   const strings: string[] = [];
-  for (const itemElement of Array.from(
-    targetElement.children
-  ) as HTMLDivElement[]) {
+  let empty = false;
+  if (targetElement.children.length === 0) {
     strings.push(
-      ...itemElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
+      ...targetElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
     );
+    empty = true;
+  } else {
+    for (const itemElement of Array.from(
+      targetElement.children
+    ) as HTMLDivElement[]) {
+      strings.push(
+        ...itemElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
+      );
+    }
   }
   while (strings.length < length) {
     strings.push("");
@@ -137,6 +180,6 @@ const getInnerText = (
     strings[length - 1] = strings.slice(length - 1).join("");
     strings.splice(length);
   }
-  return strings;
+  return { strings, empty };
 };
 export default layerManager;
