@@ -1,7 +1,19 @@
+import typeGuard from "@/libraries/typeGuard";
+
 const caretUtil = {
-  getFocusedNode: (): Node | undefined =>
-    document.getSelection()?.getRangeAt(0).endContainer,
+  getFocusedNode: (): Node | undefined => {
+    if ((document.getSelection()?.rangeCount || 0) === 0) return;
+    return document.getSelection()?.getRangeAt(0).endContainer;
+  },
+  getFocusedElement: (): HTMLElement | null | undefined => {
+    if ((document.getSelection()?.rangeCount || 0) === 0) return;
+    const focusedNode = document.getSelection()?.getRangeAt(0).endContainer;
+    return typeGuard.dom.isDivElement(focusedNode)
+      ? focusedNode
+      : focusedNode?.parentElement;
+  },
   get: (targetElement: Node): number | undefined => {
+    if (document.getSelection()?.rangeCount === 0) return undefined;
     const originalRange = document.getSelection()?.getRangeAt(0);
     if (!originalRange) return;
     const range = originalRange.cloneRange();

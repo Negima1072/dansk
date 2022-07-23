@@ -16,14 +16,14 @@ const layerManager = (
   targetElement: HTMLDivElement,
   replaceMode: boolean
 ) => {
+  const ua = window.navigator.userAgent,
+    isChromium = ua.match(/Chrome/),
+    isFirefox = ua.match(/Firefox/);
   /**
    * 変更の際に勝手に生えたdivを消したり消えたdivを生やしたり
    * 変更があった際はコールバック(onChange)を呼ぶ
    */
   const update = (): void => {
-    const ua = window.navigator.userAgent,
-      isChromium = ua.match(/Chrome/),
-      isFirefox = ua.match(/Firefox/);
     if (isChromium) {
       for (const element of Array.from(targetElement.children)) {
         if (element.children.length === 0) continue;
@@ -32,6 +32,9 @@ const layerManager = (
         }
       }
     }
+    const focusedNoe = caretUtil.getFocusedNode(),
+      focusedText = focusedNoe?.textContent,
+      caretPos = focusedNoe ? caretUtil.get(focusedNoe) : undefined;
     const { strings, empty } = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
@@ -39,14 +42,18 @@ const layerManager = (
     ) as HTMLDivElement[];
     let isChanged = false,
       index = 0;
-    data.content.forEach((group) => {
+    data.content.forEach((group, groupIndex) => {
       group.content.forEach((item, itemIndex) => {
         const itemElement = groupElements[index];
         if (!itemElement) return;
-        itemElement.classList.add(Styles.danskLayerItem || "_");
+        itemElement.classList.add(
+          Styles.danskLayerItem || "_",
+          `dansk:layerGroup${groupIndex}Item${itemIndex}`
+        );
         itemElement.style.lineHeight = `${group.line}px`;
         itemElement.style.height = `${group.line}px`;
         itemElement.style.fontSize = `${group.font}px`;
+        itemElement.style.whiteSpace = "pre";
 
         if (group.lineCount - 1 === itemIndex && group.height) {
           itemElement.style.marginBottom = `${
@@ -78,6 +85,13 @@ const layerManager = (
           itemElement.style.background = "none";
         }
 
+        if (
+          itemElement.innerText === `${focusedText}${isFirefox ? "\n" : ""}` &&
+          caretPos
+        ) {
+          caretUtil.set(itemElement, caretPos);
+        }
+
         index++;
       });
     });
@@ -98,19 +112,17 @@ const layerManager = (
     e.preventDefault();
   };
   targetElement.onkeydown = (e) => {
+    const char = replaceCharList[e.key];
     if (
       !replaceMode ||
       e.isComposing ||
-      !replaceCharList[e.key] ||
+      !char ||
       e.altKey ||
       e.ctrlKey ||
       e.metaKey
     )
       return;
-    const focusedNode = caretUtil.getFocusedNode();
-    let focusedElement = typeGuard.dom.isDivElement(focusedNode)
-      ? focusedNode
-      : focusedNode?.parentElement;
+    let focusedElement = caretUtil.getFocusedElement();
     if (focusedElement?.contentEditable === "true") {
       adjustChildren(targetElement, data.height);
       focusedElement = targetElement.firstElementChild as HTMLElement;
@@ -120,9 +132,10 @@ const layerManager = (
     const caretPos = caretUtil.get(focusedElement);
     if (caretPos === undefined) return;
     e.preventDefault();
-    focusedElement.innerText = `${focusedElement.innerText.slice(0, caretPos)}${
-      replaceCharList[e.key]
-    }${focusedElement.innerText.slice(caretPos)}`;
+    focusedElement.innerText = `${focusedElement.innerText.slice(
+      0,
+      caretPos
+    )}${char}${focusedElement.innerText.slice(caretPos)}`;
     caretUtil.set(focusedElement, caretPos + 1);
   };
 };
@@ -142,8 +155,21 @@ const adjustChildren = (targetElement: HTMLDivElement, length: number) => {
   while (targetElement.children.length < length) {
     targetElement.appendChild(document.createElement("div"));
   }
+  let isFocusLost = false;
   while (targetElement.children.length > length) {
+    if (
+      targetElement.lastElementChild &&
+      caretUtil.getFocusedElement()?.isEqualNode(targetElement.lastElementChild)
+    ) {
+      isFocusLost = true;
+    }
     targetElement.lastElementChild?.remove();
+  }
+  if (isFocusLost && targetElement.lastElementChild) {
+    caretUtil.set(
+      targetElement.lastElementChild as HTMLDivElement,
+      (targetElement.lastElementChild as HTMLDivElement).innerText.length - 1
+    );
   }
 };
 
