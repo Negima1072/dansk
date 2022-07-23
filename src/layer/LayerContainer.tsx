@@ -28,7 +28,8 @@ function beforeUnload(e: BeforeUnloadEvent) {
 const LayerContainer = (): JSX.Element => {
   const { layerData, optionData } = useContext(layerContext);
   useEffect(() => {
-    window.onbeforeunload = (layerData && layerData.length > 0) ? beforeUnload : null;
+    window.onbeforeunload =
+      layerData && layerData.length > 0 ? beforeUnload : null;
   }, [layerData]);
   const observerCallback = () => {
     if (
