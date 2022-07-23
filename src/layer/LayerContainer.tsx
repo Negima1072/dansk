@@ -16,12 +16,20 @@ const BackgroundImage = styled.img<{ mode: objectFitArgs }>`
   object-fit: ${(props) => props.mode};
 `;
 
+function beforeUnload(e: BeforeUnloadEvent) {
+  e.preventDefault();
+  e.returnValue = true;
+}
+
 /**
  * レイヤー全体を管理
  * @constructor
  */
 const LayerContainer = (): JSX.Element => {
   const { layerData, backgroundData } = useContext(layerContext);
+  useEffect(() => {
+    window.onbeforeunload = (layerData && layerData.length > 0) ? beforeUnload : null;
+  }, [layerData]);
   const observerCallback = () => {
     if (
       !targetNode.current ||
