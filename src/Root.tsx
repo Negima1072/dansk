@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Main from "@/components/Main";
 import sleep from "@/libraries/sleep";
 import Styles from "./Root.scss";
+import localStorage from "./libraries/localStorage";
 
 /**
  * Reactのルート要素
@@ -98,5 +99,19 @@ const init = async () => {
   document.body.append(ReactRootElement);
   const ReactRoot = createRoot(ReactRootElement);
   ReactRoot.render(<Root />);
+  if (localStorage.get("option_commandOrder") == null) {
+    localStorage.set(
+      "option_commandOrder",
+      "ca|patissier|size|position|color|font|ender|full|original"
+    );
+    localStorage.set("option_useCA", "true");
+    localStorage.set("option_usePat", "false");
+    localStorage.set("option_useOriginal", "false");
+    localStorage.set("option_originalText", "");
+    localStorage.set("option_timespanMain", "6000");
+    localStorage.set("option_timespanOwner", "1000");
+    localStorage.set("option_10msBase", "false");
+    localStorage.set("option_repColor01", "false");
+  }
 };
 void init();

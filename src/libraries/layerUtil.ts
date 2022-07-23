@@ -7,6 +7,7 @@ import {
 } from "@/@types/types";
 import { Templates } from "@/headers/Trace.templates";
 import _charList from "./layerUtil.charList.json";
+import localStorage from "./localStorage";
 
 /**
  * layer関係の処理をする関数集
@@ -163,18 +164,82 @@ const layerUtil = {
       if (!string) return;
       if (layer.pos === "shita") string.reverse();
       result.push({
-        command: `[${[
-          ...layer.commands,
+        command: command2str(
+          layer.commands,
           layer.color,
           layer.pos,
-          layer.font,
-          "ca",
-        ].join(" ")}]`,
+          layer.font
+        ),
         content: string,
       });
     }
     return result;
   },
+};
+
+/**
+ * コマンドの作成
+ * @param commands
+ * @param color
+ * @param pos
+ * @param font
+ */
+const command2str = (
+  commands: string[],
+  color: string,
+  pos: string,
+  font: string
+) => {
+  const resCommand: string[] = new Array<string>();
+  const commandOrder = (
+    localStorage.get("option_commandOrder") ??
+    "ca|patissier|size|position|color|font|ender|full|original"
+  ).split("|");
+  console.log(commandOrder);
+  commandOrder.forEach((ct) => {
+    switch (ct) {
+      case "size":
+        if (commands.includes("big")) resCommand.push("big");
+        else if (commands.includes("medium")) resCommand.push("medium");
+        else if (commands.includes("small")) resCommand.push("small");
+        break;
+      case "position":
+        resCommand.push(pos);
+        break;
+      case "color":
+        if (
+          color == "#000000" &&
+          (localStorage.get("option_repColor01") == "true" ?? false)
+        ) {
+          color = "#010101";
+        }
+        resCommand.push(color);
+        break;
+      case "font":
+        resCommand.push(font);
+        break;
+      case "ender":
+        if (commands.includes("ender")) resCommand.push("ender");
+        break;
+      case "full":
+        if (commands.includes("fill")) resCommand.push("fill");
+        break;
+      case "ca":
+        if (localStorage.get("option_useCA") == "true" ?? false)
+          resCommand.push("ca");
+        break;
+      case "patissier":
+        if (localStorage.get("option_usePat") == "true" ?? false)
+          resCommand.push("patissier");
+        break;
+      case "original":
+        if (localStorage.get("option_useOriginal") == "true" ?? false)
+          resCommand.push(localStorage.get("option_originalText") ?? "");
+        break;
+    }
+  });
+  console.log(resCommand);
+  return `[${resCommand.join(" ")}]`;
 };
 
 /**
