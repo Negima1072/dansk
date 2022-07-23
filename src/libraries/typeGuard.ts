@@ -1,4 +1,6 @@
 import {
+  commentFont,
+  commentPos,
   contextType,
   layerTemplate,
   MonoChar,
@@ -64,6 +66,10 @@ const typeGuard = {
         "scale",
         "size",
       ]),
+    commentPos: (i: unknown): i is commentPos =>
+      typeof i === "string" && !!i.match(/^ue|naka|shita$/),
+    commentFont: (i: unknown): i is commentFont =>
+      typeof i === "string" && !!i.match(/^mincho|gothic$/),
   },
   layer: {
     isMonoChar: (i: unknown): i is MonoChar =>
