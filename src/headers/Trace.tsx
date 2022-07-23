@@ -12,6 +12,7 @@ import typeGuard from "@/libraries/typeGuard";
 import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
 import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
+import LayerEditor from "@/components/layerEditor/LayerEditor";
 
 /**
  * Traceブロック
@@ -197,6 +198,8 @@ const Trace = () => {
                 value={""}
                 active={optionData.grid}
               />
+            </div>
+            <div className={Styles.block}>
               <Button click={openBackgroundMenu} text={"背景設定"} value={""} />
               {optionData?.bgActive > -1 && (
                 <Button
@@ -212,7 +215,7 @@ const Trace = () => {
               <LayerSelector />
             </div>
             <div className={Styles.block}>
-              <div className={Styles.row}></div>
+              <LayerEditor />
             </div>
           </div>
         </div>
