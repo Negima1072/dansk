@@ -5,7 +5,7 @@ import caretUtil from "@/libraries/caretUtil";
 import typeGuard from "@/libraries/typeGuard";
 /**
  * レイヤーとイベントハンドラの管理
- * @param data
+ * @param data {layer}
  * @param onChange
  * @param targetElement
  * @param replaceMode

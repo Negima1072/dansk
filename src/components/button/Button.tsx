@@ -23,6 +23,12 @@ const ColorButton = styled.input.attrs((props: colorButtonProps) => ({
 
 /**
  * 色とかコマンド用のボタン
+ * click: onClickイベントハンドラ
+ * text: ボタンの表示テキスト
+ * type: stringかcolor
+ * value: クリックされた時にイベントハンドラに渡される値
+ * active: 有効だということを示す
+ * disabled: 無効だと言うことを示す・イベントハンドラ無効化
  * @param props
  * @constructor
  */

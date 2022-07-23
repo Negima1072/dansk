@@ -3,6 +3,11 @@ import Styles from "./BackgroundImageDisplay.module.scss";
 import { layerContext } from "@/components/LayerContext";
 import icons from "@/assets/icons";
 
+/**
+ * 背景の選択画面
+ * 有効無効の切り替えとか画像の削除とかも
+ * @constructor
+ */
 const BackgroundPicker = () => {
   const { optionData, setOptionData } = useContext(layerContext);
   if (!optionData || !setOptionData) return <></>;

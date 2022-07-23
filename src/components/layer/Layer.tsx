@@ -32,6 +32,8 @@ const LayerGroup = styled.div<LayerGroupProps>`
 
 /**
  * レイヤー
+ * id: layerDataのインデックス
+ * data: レイヤーデータ
  * @param props
  * @constructor
  */

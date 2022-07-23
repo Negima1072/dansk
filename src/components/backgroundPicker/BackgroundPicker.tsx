@@ -8,6 +8,10 @@ import { objectFitArgs } from "@/@types/types";
 import Tips from "@/components/tips/Tips";
 import Styles from "./BackgroundPicker.module.scss";
 
+/**
+ * 背景の追加、選択、描画モード選択
+ * @constructor
+ */
 const BackgroundPicker = () => {
   const { optionData, setOptionData } = useContext(layerContext);
   const [urlInputActive, setUrlInputActive] = useState<boolean>(false),

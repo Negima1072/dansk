@@ -9,6 +9,12 @@ type dropdownPorps = {
 
 /**
  * 新規作成レイヤーのテンプレ選択用
+ * change: onChangeイベントハンドラ
+ * value: {
+ *   text: 表示用文字列
+ *   value: イベントハンドラに渡される値
+ * }
+ * selected: 選択済み要素
  * @param props
  * @constructor
  */

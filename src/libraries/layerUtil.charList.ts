@@ -1,5 +1,11 @@
 import { CharList } from "@/@types/types";
 
+/**
+ * 横幅情報を格納するObject
+ * minchoとgothicの幅が同じならMonoChar型、
+ * 異なるならProChar型を使用する
+ * ここにどちらかの型で指定すれば反映される
+ */
 const CharList: CharList = {
   "\u2003": {
     width: 12,

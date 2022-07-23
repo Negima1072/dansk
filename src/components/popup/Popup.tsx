@@ -8,6 +8,13 @@ type PopupProps = {
   close: () => void;
 };
 
+/**
+ * 画面上にポップアップを表示する用
+ * title: ポップアップ上部に表示するタイトル
+ * close: 閉じる用イベントハンドラ
+ * @param props
+ * @constructor
+ */
 const Popup = (props: PopupProps) => {
   return (
     <div className={Styles.background} onClick={props.close}>

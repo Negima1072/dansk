@@ -1,10 +1,16 @@
 import typeGuard from "@/libraries/typeGuard";
 
 const caretUtil = {
+  /**
+   * フォーカスされているNodeを返す
+   */
   getFocusedNode: (): Node | undefined => {
     if ((document.getSelection()?.rangeCount || 0) === 0) return;
     return document.getSelection()?.getRangeAt(0).endContainer;
   },
+  /**
+   * フォーカスされてる要素を返す
+   */
   getFocusedElement: (): HTMLElement | null | undefined => {
     if ((document.getSelection()?.rangeCount || 0) === 0) return;
     const focusedNode = document.getSelection()?.getRangeAt(0).endContainer;
@@ -12,6 +18,10 @@ const caretUtil = {
       ? focusedNode
       : focusedNode?.parentElement;
   },
+  /**
+   * カーソル位置を返す
+   * @param targetElement
+   */
   get: (targetElement: Node): number | undefined => {
     if (document.getSelection()?.rangeCount === 0) return undefined;
     const originalRange = document.getSelection()?.getRangeAt(0);
@@ -21,6 +31,11 @@ const caretUtil = {
     range.setEnd(originalRange.endContainer, originalRange.endOffset);
     return range.toString().length;
   },
+  /**
+   * カーソル位置を設定する
+   * @param targetElement
+   * @param offset
+   */
   set: (targetElement: HTMLElement, offset: number) => {
     const targetNode = targetElement.childNodes[0];
     const range = document.createRange();

@@ -28,7 +28,8 @@ const getElements = async (count = 0): Promise<contextTypeNullable> => {
       "dansk:LayerElement"
     ) as HTMLDivElement;
   if (!(videoElement && commentCommandInput)) {
-    if (count > 30) {
+    //1分超えたらfail
+    if (count > 120) {
       throw new Error("fail to get mount point");
     }
     await sleep(500);
