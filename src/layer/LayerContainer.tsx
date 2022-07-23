@@ -26,7 +26,7 @@ function beforeUnload(e: BeforeUnloadEvent) {
  * @constructor
  */
 const LayerContainer = (): JSX.Element => {
-  const { layerData, backgroundData } = useContext(layerContext);
+  const { layerData, optionData } = useContext(layerContext);
   useEffect(() => {
     window.onbeforeunload = (layerData && layerData.length > 0) ? beforeUnload : null;
   }, [layerData]);
@@ -61,12 +61,12 @@ const LayerContainer = (): JSX.Element => {
   useEffect(() => observerCallback(), [document.body.classList]);
   return (
     <>
-      {backgroundData && backgroundData?.active > -1 ? (
+      {optionData && optionData?.bgActive > -1 && optionData.bgVisible ? (
         <BackgroundImage
           className={`${Styles.backgroundImage}`}
-          src={backgroundData.images[backgroundData.active]}
+          src={optionData.bgImages[optionData.bgActive]}
           alt={"backgroundImage"}
-          mode={backgroundData.mode}
+          mode={optionData.bgMode}
         />
       ) : (
         ""

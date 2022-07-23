@@ -9,6 +9,8 @@ type propType = {
 };
 /**
  * スポイラー
+ * text: ブロックのタイトル
+ * message: タイトルの右に表示されるテキスト
  * @param props
  * @constructor
  */

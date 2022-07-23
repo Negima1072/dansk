@@ -8,11 +8,15 @@ import { objectFitArgs } from "@/@types/types";
 import Tips from "@/components/tips/Tips";
 import Styles from "./BackgroundPicker.module.scss";
 
+/**
+ * 背景の追加、選択、描画モード選択
+ * @constructor
+ */
 const BackgroundPicker = () => {
-  const { backgroundData, setBackgroundData } = useContext(layerContext);
+  const { optionData, setOptionData } = useContext(layerContext);
   const [urlInputActive, setUrlInputActive] = useState<boolean>(false),
     [urlInputValue, setUrlInputValue] = useState<string>("");
-  if (!backgroundData || !setBackgroundData) return <></>;
+  if (!optionData || !setOptionData) return <></>;
   const loadFromFile = () => {
       const input = document.createElement("input");
       input.type = "file";
@@ -21,8 +25,8 @@ const BackgroundPicker = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
           if (typeof e.target?.result === "string") {
-            backgroundData.images.push(e.target.result);
-            setBackgroundData({ ...backgroundData });
+            optionData.bgImages.push(e.target.result);
+            setOptionData({ ...optionData });
           }
         };
         reader.readAsDataURL(input.files[0]);
@@ -33,24 +37,24 @@ const BackgroundPicker = () => {
       if (
         urlInputValue.match(/^https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$/)
       ) {
-        backgroundData.images.push(urlInputValue);
-        setBackgroundData({ ...backgroundData });
+        optionData.bgImages.push(urlInputValue);
+        setOptionData({ ...optionData });
         setUrlInputValue("");
         setUrlInputActive(false);
       }
     };
   const drawModeOnChange = useCallback(
     (value: string) => {
-      backgroundData.mode = value as objectFitArgs;
-      setBackgroundData({ ...backgroundData });
+      optionData.bgMode = value as objectFitArgs;
+      setOptionData({ ...optionData });
     },
-    [backgroundData]
+    [optionData]
   );
   return (
     <>
       <Popup
         title={"背景"}
-        close={() => setBackgroundData({ ...backgroundData, editing: false })}
+        close={() => setOptionData({ ...optionData, bgEditing: false })}
       >
         <BackgroundImageDisplay />
         <div>
@@ -71,7 +75,7 @@ const BackgroundPicker = () => {
               { text: "none", value: "none" },
               { text: "scale-down", value: "scale-down" },
             ]}
-            selected={backgroundData.mode}
+            selected={optionData.bgMode}
           />
           <Tips>
             <table className={Styles.tips}>
@@ -105,7 +109,7 @@ const BackgroundPicker = () => {
                 <tr>
                   <td>scale-down</td>
                   <td>
-                    元画像が動画より小さければそのまま、そうでなければcontainと同様に縮小します
+                    元画像が動画より小さければそのまま、そうでなければcontainと同様に縮小して表示します
                   </td>
                 </tr>
               </tbody>

@@ -1,11 +1,11 @@
 import React, { createContext, ReactNode } from "react";
-import { backgroundDataType, layer } from "@/@types/types";
+import { optionDataType, layer } from "@/@types/types";
 
 type layerContext = {
   setLayerData?: (layer: layer[]) => void;
   layerData?: layer[];
-  setBackgroundData?: (data: backgroundDataType) => void;
-  backgroundData?: backgroundDataType;
+  setOptionData?: (data: optionDataType) => void;
+  optionData?: optionDataType;
 };
 
 type contextProps = {

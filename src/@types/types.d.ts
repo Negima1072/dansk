@@ -104,11 +104,14 @@ type layer = layerTemplate & {
   content: layerLine[];
 };
 
-type backgroundDataType = {
-  active: number;
-  images: string[];
-  editing: boolean;
-  mode: objectFitArgs;
+type optionDataType = {
+  bgActive: number;
+  bgImages: string[];
+  bgEditing: boolean;
+  bgMode: objectFitArgs;
+  bgVisible: boolean;
+  grid: boolean;
+  replace: boolean;
 };
 
 type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";

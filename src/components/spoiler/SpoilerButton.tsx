@@ -9,6 +9,10 @@ type propType = {
 };
 /**
  * スポイラーの開閉バー
+ * open: 開いているか
+ * text: ブロックのタイトル
+ * message: タイトルの右に表示されるテキスト
+ * click: onClickイベントハンドラ
  * @param props
  * @constructor
  */

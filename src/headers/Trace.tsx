@@ -5,7 +5,7 @@ import Button from "@/components/button/Button";
 import Dropdown from "@/components/dropdown/Dropdown";
 import Templates from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
-import { backgroundDataType, layer } from "@/@types/types";
+import { layer, optionDataType } from "@/@types/types";
 import LayerSelector from "@/components/layerSelector/LayerSelector";
 import layerUtil from "@/libraries/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
@@ -19,17 +19,18 @@ import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
  */
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
-    [lineMode, setLineMode] = useState<boolean>(false),
-    [replaceMode, setReplaceMode] = useState<boolean>(false),
     [layerDropdownValue, setLayerDropdownValue] = useState<string>(
       "big_ue_ender_full_gothic_W17_L9"
     ),
     [layerData, setLayerData] = useState<layer[]>([]),
-    [backgroundData, setBackgroundData] = useState<backgroundDataType>({
-      active: -1,
-      images: [],
-      editing: false,
-      mode: "fill",
+    [optionData, setOptionData] = useState<optionDataType>({
+      bgActive: -1,
+      bgImages: [],
+      bgEditing: false,
+      bgMode: "fill",
+      bgVisible: true,
+      grid: false,
+      replace: false,
     }),
     { exportLayer, setExportLayer } = useContext(context);
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
@@ -65,21 +66,27 @@ const Trace = () => {
       },
       [exportLayer, layerData]
     ),
-    toggleTabMode = useCallback(() => {
-      setTabMode(!tabMode);
-    }, [tabMode]),
-    toggleLineMode = useCallback(() => {
-      setLineMode(!lineMode);
-    }, [lineMode]),
-    toggleReplaceMode = useCallback(() => {
-      setReplaceMode(!replaceMode);
-    }, [replaceMode]),
-    layerDropdownOnChange = useCallback((value: string) => {
-      setLayerDropdownValue(value);
-    }, []),
-    openBackgroundMenu = useCallback(() => {
-      setBackgroundData({ ...backgroundData, editing: true });
-    }, [backgroundData]),
+    toggleTabMode = useCallback(() => setTabMode(!tabMode), [tabMode]),
+    toggleReplaceMode = useCallback(
+      () => setOptionData({ ...optionData, replace: !optionData.replace }),
+      [optionData]
+    ),
+    toggleGridMode = useCallback(
+      () => setOptionData({ ...optionData, grid: !optionData.grid }),
+      [optionData]
+    ),
+    layerDropdownOnChange = useCallback(
+      (value: string) => setLayerDropdownValue(value),
+      []
+    ),
+    openBackgroundMenu = useCallback(
+      () => setOptionData({ ...optionData, bgEditing: true }),
+      [optionData]
+    ),
+    toggleBackgroundVisible = useCallback(
+      () => setOptionData({ ...optionData, bgVisible: !optionData.bgVisible }),
+      [optionData]
+    ),
     addLayer = useCallback(() => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
@@ -113,7 +120,7 @@ const Trace = () => {
     );
   return (
     <LayerContext
-      value={{ layerData, setLayerData, backgroundData, setBackgroundData }}
+      value={{ layerData, setLayerData, optionData, setOptionData }}
     >
       <Spoiler text={"Trace"}>
         <div className={Styles.table}>
@@ -155,17 +162,11 @@ const Trace = () => {
               value={"convertSpaceToTab"}
               active={tabMode}
             />
-            <Button
-              click={toggleLineMode}
-              text={"線画M"}
-              value={"convertColorToBlack"}
-              active={lineMode}
-            />
             <Button //todo:置換モードの実装
               click={toggleReplaceMode}
               text={"置換M"}
               value={"convertColorToBlack"}
-              active={replaceMode}
+              active={optionData.replace}
             />
           </div>
           <div className={Styles.row}>
@@ -190,16 +191,34 @@ const Trace = () => {
               />
             </div>
             <div className={Styles.block}>
-              <Button click={openBackgroundMenu} text={"背景"} value={""} />
+              <Button
+                click={toggleGridMode}
+                text={"グリッド"}
+                value={""}
+                active={optionData.grid}
+              />
+              <Button click={openBackgroundMenu} text={"背景設定"} value={""} />
+              {optionData?.bgActive > -1 && (
+                <Button
+                  click={toggleBackgroundVisible}
+                  text={optionData.bgVisible ? "画像非表示" : "画像表示"}
+                  value={""}
+                ></Button>
+              )}
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>
-            <LayerSelector />
+            <div className={Styles.block}>
+              <LayerSelector />
+            </div>
+            <div className={Styles.block}>
+              <div className={Styles.row}></div>
+            </div>
           </div>
         </div>
         <LayerPortal />
       </Spoiler>
-      {backgroundData.editing && <BackgroundPicker />}
+      {optionData.bgEditing && <BackgroundPicker />}
     </LayerContext>
   );
 };

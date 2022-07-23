@@ -5,6 +5,12 @@ type TipsProps = {
   children: ReactNode;
 };
 
+/**
+ * Tips
+ * ホバー時にchildrenを表示する
+ * @param props
+ * @constructor
+ */
 const Tips = (props: TipsProps) => {
   return (
     <div className={Styles.container}>

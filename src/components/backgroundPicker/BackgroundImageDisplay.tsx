@@ -3,32 +3,38 @@ import Styles from "./BackgroundImageDisplay.module.scss";
 import { layerContext } from "@/components/LayerContext";
 import icons from "@/assets/icons";
 
+/**
+ * 背景の選択画面
+ * 有効無効の切り替えとか画像の削除とかも
+ * @constructor
+ */
 const BackgroundPicker = () => {
-  const { backgroundData, setBackgroundData } = useContext(layerContext);
-  if (!backgroundData || !setBackgroundData) return <></>;
+  const { optionData, setOptionData } = useContext(layerContext);
+  if (!optionData || !setOptionData) return <></>;
   const deleteImage = (key: number) => {
-    backgroundData.images.splice(key, 1);
-    if (backgroundData.active >= backgroundData.images.length) {
-      backgroundData.active = -1;
+    optionData.bgImages.splice(key, 1);
+    if (optionData.bgActive >= optionData.bgImages.length) {
+      optionData.bgActive = -1;
     }
-    setBackgroundData({ ...backgroundData });
+    setOptionData({ ...optionData });
   };
   const changeActiveImage = (key: number) => {
-    if (backgroundData.active === key) {
-      backgroundData.active = -1;
+    if (optionData.bgActive === key) {
+      optionData.bgActive = -1;
     } else {
-      backgroundData.active = key;
+      optionData.bgActive = key;
+      optionData.bgVisible = true;
     }
-    setBackgroundData({ ...backgroundData });
+    setOptionData({ ...optionData });
   };
   return (
     <div className={Styles.container}>
-      {backgroundData.images.map((blob, key) => {
+      {optionData.bgImages.map((blob, key) => {
         return (
           <div
             key={`backgroundImageDisplay${key}`}
             className={`${Styles.item} ${
-              key === backgroundData.active ? Styles.active : ""
+              key === optionData.bgActive ? Styles.active : ""
             }`}
           >
             <img

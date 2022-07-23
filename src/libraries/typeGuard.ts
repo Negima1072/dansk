@@ -73,6 +73,10 @@ const typeGuard = {
       typeVerify(i, ["width", "isSpace"]) &&
       typeVerify((i as MonoChar | ProChar).width, ["mincho", "gothic"]),
   },
+  dom: {
+    isDivElement: (i: unknown): i is HTMLDivElement =>
+      i instanceof Element && i.nodeName === "DIV",
+  },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {
   if (typeof item !== "object" || item === null) return false;
