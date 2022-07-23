@@ -37,7 +37,6 @@ export default [
 			name: 'DanSukuMizu'
 		},
 		plugins: plugins,
-		inlineDynamicImports: true,
 	},
 	{
 		input: 'src/Root.tsx',
@@ -47,7 +46,6 @@ export default [
 			name: 'DanSukuMizu'
 		},
 		plugins: plugins,
-		inlineDynamicImports: true,
 	},
 	{
 		input: 'src/popup/popup.ts',
@@ -56,7 +54,15 @@ export default [
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
-		plugins: plugins,
-		inlineDynamicImports: true,
+		plugins: plugins
+	},
+	{
+		input: 'src/options/options.ts',
+		output: {
+			file: `dist/options/options.js`,
+			format: 'umd',
+			name: 'DanSukuMizu'
+		},
+		plugins: plugins
 	}
 ]
