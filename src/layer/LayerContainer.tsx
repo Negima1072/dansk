@@ -4,6 +4,7 @@ import { layerContext } from "@/components/LayerContext";
 import Layer from "@/components/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
 import { objectFitArgs } from "@/@types/types";
+import { context } from "@/components/Context";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -27,9 +28,19 @@ function beforeUnload(e: BeforeUnloadEvent) {
  */
 const LayerContainer = (): JSX.Element => {
   const { layerData, optionData } = useContext(layerContext);
+  const { videoSymbolContainerCanvas } = useContext(context);
   useEffect(() => {
-    window.onbeforeunload =
-      layerData && layerData.length > 0 ? beforeUnload : null;
+    if (layerData && layerData.length > 0) {
+      window.onbeforeunload = beforeUnload;
+      videoSymbolContainerCanvas?.parentElement?.classList.add(
+        Styles.VideoSymbolContainer || ""
+      );
+    } else {
+      window.onbeforeunload = null;
+      videoSymbolContainerCanvas?.parentElement?.classList.remove(
+        Styles.VideoSymbolContainer || ""
+      );
+    }
   }, [layerData]);
   const observerCallback = () => {
     if (

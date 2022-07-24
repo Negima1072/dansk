@@ -9,6 +9,7 @@ type contextTypeNullable = {
   videoElement?: HTMLVideoElement;
   commentCommandInput?: HTMLInputElement;
   commentInputTextarea?: HTMLTextAreaElement;
+  videoSymbolContainerCanvas?: HTMLCanvasElement;
   HeaderElement?: HTMLDivElement;
   MainElement?: HTMLDivElement;
   FooterElement?: HTMLDivElement;
