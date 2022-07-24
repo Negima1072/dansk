@@ -5,6 +5,7 @@ import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./OutputBox.module.scss";
 import Button from "@/components/button/Button";
 import sleep from "@/libraries/sleep";
+import localStorage from "@/libraries/localStorage";
 
 /**
  * 入出力用のテキストエリア
@@ -58,7 +59,9 @@ const OutputBox = (): JSX.Element => {
     if (seekCommand) {
       if (!seekCommand[1] && !seekCommand[3]) {
         window.__videoplayer.currentTime(
-          window.__videoplayer.currentTime() + Number(seekCommand[2]) / 1000
+          window.__videoplayer.currentTime() +
+            Number(seekCommand[2]) /
+              (localStorage.get("option_10msBase") == "true" ? 100 : 1000)
         );
       } else {
         let currentTime = 0;
@@ -154,6 +157,11 @@ const OutputBox = (): JSX.Element => {
             setSpoilerMessage("コメントデータのパースに失敗しました");
             return;
           }
+          const timeSpan = Number(
+            localStorage.get(
+              isOwnerMode ? "option_timespanOwner" : "option_timespanMain"
+            )
+          );
           setSpoilerMessage(`セット中(${i + 1}/${length})`);
           if (setLine(content.command, content.comment)) {
             if (isReverse) {
@@ -161,7 +169,8 @@ const OutputBox = (): JSX.Element => {
             } else {
               textareaValue.shift();
             }
-            await sleep(isOwnerMode ? 250 : 2000);
+            console.log();
+            await sleep(timeSpan);
             commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {
                 key: "Enter",
@@ -176,7 +185,7 @@ const OutputBox = (): JSX.Element => {
           } else {
             setSpoilerMessage(`セットに失敗しました(${i + 1}/${length})`);
           }
-          await sleep(isOwnerMode ? 1000 : 6000);
+          await sleep(timeSpan);
         }
         setIsPosting(false);
       };
