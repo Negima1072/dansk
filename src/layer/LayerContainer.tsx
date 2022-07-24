@@ -30,16 +30,15 @@ const LayerContainer = (): JSX.Element => {
   const { layerData, optionData } = useContext(layerContext);
   const { videoSymbolContainerCanvas } = useContext(context);
   useEffect(() => {
+    const classList = videoSymbolContainerCanvas?.parentElement?.classList,
+      cssClass = Styles.VideoSymbolContainer || "_";
+    if (!classList) return;
     if (layerData && layerData.length > 0) {
       window.onbeforeunload = beforeUnload;
-      videoSymbolContainerCanvas?.parentElement?.classList.add(
-        Styles.VideoSymbolContainer || ""
-      );
+      classList.toggle(cssClass, true);
     } else {
       window.onbeforeunload = null;
-      videoSymbolContainerCanvas?.parentElement?.classList.remove(
-        Styles.VideoSymbolContainer || ""
-      );
+      classList.toggle(cssClass, false);
     }
   }, [layerData]);
   const observerCallback = () => {

@@ -6,7 +6,6 @@ import getElements from "@/libraries/getElements";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
 import sleep from "@/libraries/sleep";
-import Styles from "./Root.scss";
 import localStorage from "./libraries/localStorage";
 
 /**
@@ -92,9 +91,6 @@ const init = async () => {
   LayerElement.id = "dansk:LayerElement";
   LayerElement.onclick = (e) => e.stopImmediatePropagation();
   LayerElement.oncontextmenu = (e) => e.stopImmediatePropagation();
-  videoSymbolContainerCanvas?.parentElement?.classList.add(
-    Styles.VideoSymbolContainer || ""
-  );
   const ReactRootElement = document.createElement("div");
   document.body.append(ReactRootElement);
   const ReactRoot = createRoot(ReactRootElement);
