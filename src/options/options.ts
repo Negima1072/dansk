@@ -83,7 +83,6 @@ window.addEventListener("load", () => {
   };
   const ev = {
     down(e: MouseEvent) {
-      console.log(e);
       const target = e.target as HTMLLIElement;
       const pageX = e.pageX;
       const pageY = e.pageY;

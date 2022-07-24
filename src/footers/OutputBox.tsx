@@ -48,7 +48,6 @@ const OutputBox = (): JSX.Element => {
     } else if (isReverse) {
       for (let i = stringArr.length - 1; i >= 0; i--) {
         const match = stringArr[i]?.match(/^\[([^\]]+)]/);
-        console.log(match);
         if (match && match[1]) {
           command = match[1];
           break;
@@ -169,7 +168,6 @@ const OutputBox = (): JSX.Element => {
             } else {
               textareaValue.shift();
             }
-            console.log();
             await sleep(timeSpan);
             commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {

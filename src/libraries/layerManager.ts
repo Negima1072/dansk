@@ -17,25 +17,24 @@ const layerManager = (
   replaceMode: boolean
 ) => {
   const ua = window.navigator.userAgent,
-    isChromium = ua.match(/Chrome/),
-    isFirefox = ua.match(/Firefox/);
+    isChromium = !!ua.match(/Chrome/),
+    isFirefox = !!ua.match(/Firefox/);
   /**
    * 変更の際に勝手に生えたdivを消したり消えたdivを生やしたり
    * 変更があった際はコールバック(onChange)を呼ぶ
    */
   const update = (): void => {
-    if (isChromium) {
-      for (const element of Array.from(targetElement.children)) {
-        if (element.children.length === 0) continue;
-        if (element.children[0]?.tagName === "BR") {
-          element.children[0].remove();
-        }
+    for (const element of Array.from(targetElement.children)) {
+      if (element.children.length === 0) continue;
+      if (element.children[0]?.tagName === "BR" && isChromium) {
+        element.children[0].remove();
+      }
+      for (const child of Array.from(element.childNodes)) {
+        if (!child.nodeName.match(/#text|BR/)) child.remove();
       }
     }
-    const focusedNoe = caretUtil.getFocusedNode(),
-      focusedText = focusedNoe?.textContent,
-      caretPos = focusedNoe ? caretUtil.get(focusedNoe) : undefined;
-    const { strings, empty } = getInnerText(targetElement, data.height);
+    const caretPos = caretUtil.get(targetElement);
+    const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
       targetElement.children
@@ -65,15 +64,10 @@ const layerManager = (
         if (itemElement.innerHTML === "") {
           itemElement.innerHTML = "<br>";
         }
-        if (itemElement.innerText !== `${strings[index]}\n` && isFirefox) {
-          itemElement.innerText = `${strings[index]}\n`;
-          if (empty) caretUtil.set(itemElement, strings[index]?.length || 0);
-        } else if (
-          itemElement.innerText !== `${strings[index]}` &&
-          isChromium
+        if (
+          itemElement.innerText !== `${strings[index]}${isFirefox ? "\n" : ""}`
         ) {
-          itemElement.innerText = `${strings[index]}`;
-          if (empty) caretUtil.set(itemElement, strings[index]?.length || 0);
+          itemElement.innerText = `${strings[index]}${isFirefox ? "\n" : ""}`;
         }
         if (strings[index]?.match(/[\u00A0\u0020]/)) {
           itemElement.style.background = "rgba(255,0,0,0.3)";
@@ -85,18 +79,24 @@ const layerManager = (
           itemElement.style.background = "none";
         }
 
-        if (
-          itemElement.innerText === `${focusedText}${isFirefox ? "\n" : ""}` &&
-          caretPos
-        ) {
-          caretUtil.set(itemElement, caretPos);
-        }
-
         index++;
       });
     });
     if (isChanged) {
       onChange(data);
+    }
+    let offset = 0;
+    for (const element of Array.from(
+      targetElement.children
+    ) as HTMLDivElement[]) {
+      if (caretPos === undefined) break;
+      const length = element.innerText.length + (isFirefox ? -1 : 0);
+      if (offset + length < caretPos) {
+        offset += length;
+      } else {
+        caretUtil.set(element, caretPos - offset);
+        break;
+      }
     }
     if (window.getSelection()?.anchorNode === targetElement) {
       (targetElement.firstElementChild as HTMLDivElement).focus();
@@ -182,14 +182,17 @@ const adjustChildren = (targetElement: HTMLDivElement, length: number) => {
 const getInnerText = (
   targetElement: HTMLDivElement,
   length: number
-): { strings: string[]; empty: boolean } => {
+): string[] => {
   const strings: string[] = [];
-  let empty = false;
-  if (targetElement.children.length === 0) {
+  if (
+    Array.from(targetElement.childNodes).reduce(
+      (pv, item) => pv + (item.nodeName.match(/#text|BR/) ? 0 : 1),
+      0
+    ) === 0
+  ) {
     strings.push(
       ...targetElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
     );
-    empty = true;
   } else {
     for (const itemElement of Array.from(
       targetElement.children
@@ -206,6 +209,6 @@ const getInnerText = (
     strings[length - 1] = strings.slice(length - 1).join("");
     strings.splice(length);
   }
-  return { strings, empty };
+  return strings;
 };
 export default layerManager;
