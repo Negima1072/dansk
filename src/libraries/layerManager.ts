@@ -33,16 +33,7 @@ const layerManager = (
         if (!child.nodeName.match(/#text|BR/)) child.remove();
       }
     }
-    const focusedNode = caretUtil.getFocusedNode(),
-      focusedText = focusedNode?.textContent,
-      caretPos = focusedNode ? caretUtil.get(focusedNode) : undefined,
-      caretPos_ = caretUtil.get(targetElement);
-    console.log(
-      focusedNode,
-      focusedText,
-      caretPos,
-      caretUtil.get(targetElement)
-    );
+    const caretPos = caretUtil.get(targetElement);
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
@@ -98,12 +89,12 @@ const layerManager = (
     for (const element of Array.from(
       targetElement.children
     ) as HTMLDivElement[]) {
-      if (caretPos_ === undefined) break;
+      if (caretPos === undefined) break;
       const length = element.innerText.length + (isFirefox ? -1 : 0);
-      if (offset + length < caretPos_) {
+      if (offset + length < caretPos) {
         offset += length;
       } else {
-        caretUtil.set(element, caretPos_ - offset);
+        caretUtil.set(element, caretPos - offset);
         break;
       }
     }
@@ -202,7 +193,6 @@ const getInnerText = (
     strings.push(
       ...targetElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
     );
-    console.log(strings);
   } else {
     for (const itemElement of Array.from(
       targetElement.children

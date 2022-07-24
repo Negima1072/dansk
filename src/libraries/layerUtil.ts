@@ -72,8 +72,8 @@ const layerUtil = {
     }
     return aStr.join("") === bStr.join("");
   },
-  parse: (input: string): layer[] | undefined => {
-    console.log(input);
+  parse: (): layer[] | undefined => {
+    //todo:parse用意？
     return [];
   },
   /**
@@ -199,7 +199,6 @@ const command2str = (
     localStorage.get("option_commandOrder") ??
     "ca|patissier|size|position|color|font|ender|full|original"
   ).split("|");
-  console.log(commandOrder);
   commandOrder.forEach((ct) => {
     switch (ct) {
       case "size":
@@ -242,7 +241,6 @@ const command2str = (
         break;
     }
   });
-  console.log(resCommand);
   return `[${resCommand.join(" ")}]`;
 };
 
