@@ -33,7 +33,9 @@ const layerManager = (
         if (!child.nodeName.match(/#text|BR/)) child.remove();
       }
     }
-    const caretPos = caretUtil.get(targetElement);
+    const caretPos = caretUtil.get(targetElement),
+      focusedNode = caretUtil.getFocusedNode(),
+      focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1;
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
@@ -84,18 +86,24 @@ const layerManager = (
     });
     if (isChanged) {
       onChange(data);
-    }
-    let offset = 0;
-    for (const element of Array.from(
-      targetElement.children
-    ) as HTMLDivElement[]) {
-      if (caretPos === undefined) break;
-      const length = element.innerText.length + (isFirefox ? -1 : 0);
-      if (offset + length < caretPos) {
-        offset += length;
-      } else {
-        caretUtil.set(element, caretPos - offset);
-        break;
+      let offset = 0;
+      for (const element of Array.from(
+        targetElement.children
+      ) as HTMLDivElement[]) {
+        if (caretPos === undefined) break;
+        const length = element.innerText.length + (isFirefox ? -1 : 0);
+        if (offset + length < caretPos) {
+          offset += length;
+        } else if (
+          element.innerText ===
+            `${focusedNode?.textContent}${isFirefox ? "\n" : ""}` &&
+          caretPos - offset === focusedPos
+        ) {
+          caretUtil.set(element, caretPos - offset);
+          break;
+        } else {
+          offset += length;
+        }
       }
     }
     if (window.getSelection()?.anchorNode === targetElement) {
