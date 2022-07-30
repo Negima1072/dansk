@@ -7,6 +7,8 @@ import Header from "@/components/Header";
 import Main from "@/components/Main";
 import sleep from "@/libraries/sleep";
 import localStorage from "./libraries/localStorage";
+import MemoPortal from "@/components/MemoPortal";
+import inject from "@/libraries/cssInjector";
 
 /**
  * Reactのルート要素
@@ -23,6 +25,7 @@ const Root = (): JSX.Element => {
     <Context value={{ ...data, exportLayer, setExportLayer }}>
       <Header />
       <Main />
+      <MemoPortal />
       <Footer />
     </Context>
   );
@@ -37,6 +40,7 @@ const init = async () => {
     mainContainerPlayer,
     videoSymbolContainerCanvas: HTMLCanvasElement | undefined,
     videoContainer,
+    mainContainerPlayerPanel,
     count = 0;
   while (count < 30) {
     mainContainer = document.getElementsByClassName(
@@ -44,6 +48,9 @@ const init = async () => {
     )[0] as HTMLDivElement;
     mainContainerPlayer = mainContainer?.getElementsByClassName(
       "MainContainer-player"
+    )[0] as HTMLDivElement;
+    mainContainerPlayerPanel = mainContainer?.getElementsByClassName(
+      "MainContainer-playerPanel"
     )[0] as HTMLDivElement;
     videoSymbolContainerCanvas = document.getElementsByClassName(
       "VideoSymbolContainer-canvas"
@@ -54,6 +61,7 @@ const init = async () => {
     count++;
     if (
       mainContainerPlayer === undefined ||
+      mainContainerPlayerPanel === undefined ||
       videoSymbolContainerCanvas === undefined ||
       videoContainer === undefined
     ) {
@@ -65,6 +73,7 @@ const init = async () => {
   if (
     mainContainer === undefined ||
     mainContainerPlayer === undefined ||
+    mainContainerPlayerPanel === undefined ||
     videoSymbolContainerCanvas === undefined ||
     videoContainer === undefined
   ) {
@@ -85,16 +94,20 @@ const init = async () => {
   mainContainer.after(FooterElement);
   const LayerElement = document.createElement("div");
   videoSymbolContainerCanvas.after(LayerElement);
+  const MemoElement = document.createElement("div");
+  mainContainerPlayerPanel.prepend(MemoElement);
   HeaderElement.id = "dansk:HeaderElement";
   MainElement.id = "dansk:MainElement";
   FooterElement.id = "dansk:FooterElement";
   LayerElement.id = "dansk:LayerElement";
+  MemoElement.id = "dansk:MemoElement";
   LayerElement.onclick = (e) => e.stopImmediatePropagation();
   LayerElement.oncontextmenu = (e) => e.stopImmediatePropagation();
   const ReactRootElement = document.createElement("div");
   document.body.append(ReactRootElement);
   const ReactRoot = createRoot(ReactRootElement);
   ReactRoot.render(<Root />);
+  inject();
   if (localStorage.get("option_commandOrder") == null) {
     localStorage.set(
       "option_commandOrder",
