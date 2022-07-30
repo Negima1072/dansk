@@ -3,6 +3,10 @@ import Styles from "./layerManager.module.scss";
 import replaceCharList from "@/libraries/layerManager.replaceCharList";
 import caretUtil from "@/libraries/caretUtil";
 import typeGuard from "@/libraries/typeGuard";
+
+const ua = window.navigator.userAgent,
+  isChromium = !!ua.match(/Chrome/),
+  isFirefox = !!ua.match(/Firefox/);
 /**
  * レイヤーとイベントハンドラの管理
  * @param data {layer}
@@ -16,9 +20,6 @@ const layerManager = (
   targetElement: HTMLDivElement,
   replaceMode: boolean
 ) => {
-  const ua = window.navigator.userAgent,
-    isChromium = !!ua.match(/Chrome/),
-    isFirefox = !!ua.match(/Firefox/);
   /**
    * 変更の際に勝手に生えたdivを消したり消えたdivを生やしたり
    * 変更があった際はコールバック(onChange)を呼ぶ
@@ -37,6 +38,7 @@ const layerManager = (
       focusedNode = caretUtil.getFocusedNode(),
       focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1;
     const strings = getInnerText(targetElement, data.height);
+    console.log(strings);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
       targetElement.children
@@ -111,6 +113,18 @@ const layerManager = (
       document.getSelection()?.collapse(targetElement.firstElementChild, 0);
     }
     return;
+  };
+  //引用元: https://zenn.dev/takky94/articles/36656269da7c33
+  targetElement.onpaste = (e: ClipboardEvent) => {
+    if (!e.clipboardData) return;
+    const text = e.clipboardData.getData("text/plain");
+    const selection = window.getSelection();
+    if (!selection || !selection.rangeCount) return;
+    selection.deleteFromDocument();
+    selection.getRangeAt(0).insertNode(document.createTextNode(text));
+    selection.getRangeAt(0).collapse();
+    update();
+    e.preventDefault();
   };
   update();
   targetElement.oninput = update;
@@ -192,12 +206,7 @@ const getInnerText = (
   length: number
 ): string[] => {
   const strings: string[] = [];
-  if (
-    Array.from(targetElement.childNodes).reduce(
-      (pv, item) => pv + (item.nodeName.match(/#text|BR/) ? 0 : 1),
-      0
-    ) === 0
-  ) {
+  if (targetElement.childNodes[isFirefox ? 0 : 1]?.nodeName === "#text") {
     strings.push(
       ...targetElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
     );
