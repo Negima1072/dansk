@@ -123,8 +123,8 @@ const layerManager = (
     selection.deleteFromDocument();
     selection.getRangeAt(0).insertNode(document.createTextNode(text));
     selection.getRangeAt(0).collapse();
-    update();
     e.preventDefault();
+    update();
   };
   update();
   targetElement.oninput = update;
