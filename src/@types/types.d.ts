@@ -14,10 +14,9 @@ type contextTypeNullable = {
   MainElement?: HTMLDivElement;
   FooterElement?: HTMLDivElement;
   LayerElement?: HTMLDivElement;
+  MemoElement?: HTMLDivElement;
   exportLayer?: string[];
   setExportLayer?: (layerString: string[]) => void;
-  popup?: ReactNode;
-  setPopup?: (node: ReactNode) => void;
 };
 type contextType = {
   videoElement: HTMLVideoElement;
@@ -27,6 +26,7 @@ type contextType = {
   MainElement: HTMLDivElement;
   FooterElement: HTMLDivElement;
   LayerElement: HTMLDivElement;
+  MemoElement: HTMLDivElement;
   exportLayer: layer[];
   setExportLayer: (layer: layer[]) => void;
 };
