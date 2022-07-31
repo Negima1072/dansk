@@ -18,10 +18,17 @@ const style = `
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 .PlayerPanelContainer-content {
   position: unset!important;
   flex: 1;
+}
+.VideoListPanelContainer {
+  position: unset!important;
+}
+.PlayerPanelContainer-tab {
+  flex-shrink: 0;
 }
 `;
 
