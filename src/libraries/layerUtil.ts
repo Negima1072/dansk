@@ -169,7 +169,7 @@ const layerUtil = {
       if (layer.pos === "shita") string.reverse();
       result.push({
         command: command2str(
-          layer.commands,
+          [...layer.commands],
           layer.color,
           layer.pos,
           layer.font
@@ -194,54 +194,36 @@ const command2str = (
   pos: string,
   font: string
 ) => {
-  const resCommand: string[] = new Array<string>();
-  const commandOrder = (
-    localStorage.get("option_commandOrder") ??
-    "ca|patissier|size|position|color|font|ender|full|original"
-  ).split("|");
-  commandOrder.forEach((ct) => {
-    switch (ct) {
-      case "size":
-        if (commands.includes("big")) resCommand.push("big");
-        else if (commands.includes("medium")) resCommand.push("medium");
-        else if (commands.includes("small")) resCommand.push("small");
-        break;
-      case "position":
-        resCommand.push(pos);
-        break;
-      case "color":
-        if (
-          color == "#000000" &&
-          (localStorage.get("option_repColor01") == "true" ?? false)
-        ) {
-          color = "#010101";
-        }
-        resCommand.push(color);
-        break;
-      case "font":
-        resCommand.push(font);
-        break;
-      case "ender":
-        if (commands.includes("ender")) resCommand.push("ender");
-        break;
-      case "full":
-        if (commands.includes("fill")) resCommand.push("fill");
-        break;
-      case "ca":
-        if (localStorage.get("option_useCA") == "true" ?? false)
-          resCommand.push("ca");
-        break;
-      case "patissier":
-        if (localStorage.get("option_usePat") == "true" ?? false)
-          resCommand.push("patissier");
-        break;
-      case "original":
-        if (localStorage.get("option_useOriginal") == "true" ?? false)
-          resCommand.push(localStorage.get("option_originalText") ?? "");
-        break;
-    }
+  if (localStorage.get("options_useCA") === "true") commands.push("ca");
+  if (localStorage.get("options_usePat") === "true") commands.push("patissier");
+  if (localStorage.get("options_useOriginal") === "true")
+    commands.push("original");
+  commands.push("position");
+  commands.push("font");
+  commands.push("color");
+  const commandsOrder = localStorage.get("options_commandOrder").split("|");
+  const getIndex = (input: string): number => {
+    if (input.match(/big|small|medium/)) return commandsOrder.indexOf("size");
+    const index = commandsOrder.indexOf(input);
+    if (index === -1) return commandsOrder.indexOf("original");
+    return index;
+  };
+  commands.sort((a, b) => {
+    const a_ = getIndex(a),
+      b_ = getIndex(b);
+    if (a_ < b_) return -1;
+    if (a_ > b_) return 1;
+    return 0;
   });
-  return `[${resCommand.join(" ")}]`;
+  if (color == "#000000" && localStorage.get("options_lineMode") === "true") {
+    color = "#010101";
+  }
+  return `[${commands
+    .join(" ")
+    .replace(/position/g, pos)
+    .replace(/font/g, font)
+    .replace(/color/g, color)
+    .replace(/original/g, localStorage.get("options_useOriginal_text"))}]`;
 };
 
 /**

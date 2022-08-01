@@ -6,7 +6,6 @@ import getElements from "@/libraries/getElements";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
 import sleep from "@/libraries/sleep";
-import localStorage from "./libraries/localStorage";
 import MemoPortal from "@/components/MemoPortal";
 import inject from "@/libraries/cssInjector";
 
@@ -108,9 +107,9 @@ const init = async () => {
   const ReactRoot = createRoot(ReactRootElement);
   ReactRoot.render(<Root />);
   inject();
-  if (localStorage.get("option_commandOrder") == null) {
+  /*if (localStorage.get("options_commandOrder") == null) {
     localStorage.set(
-      "option_commandOrder",
+      "options_commandOrder",
       "ca|patissier|size|position|color|font|ender|full|original"
     );
     localStorage.set("option_useCA", "true");
@@ -121,6 +120,6 @@ const init = async () => {
     localStorage.set("option_timespanOwner", "1000");
     localStorage.set("option_10msBase", "false");
     localStorage.set("option_repColor01", "false");
-  }
+  }*/
 };
 void init();

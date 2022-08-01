@@ -26,6 +26,7 @@ const style = `
 }
 .VideoListPanelContainer {
   position: unset!important;
+  height: 100%;
 }
 .PlayerPanelContainer-tab {
   flex-shrink: 0;

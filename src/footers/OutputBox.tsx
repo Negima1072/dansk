@@ -60,7 +60,7 @@ const OutputBox = (): JSX.Element => {
         window.__videoplayer.currentTime(
           window.__videoplayer.currentTime() +
             Number(seekCommand[2]) /
-              (localStorage.get("option_10msBase") == "true" ? 100 : 1000)
+              (localStorage.get("options_useMs") === "true" ? 1000 : 100)
         );
       } else {
         let currentTime = 0;
@@ -158,7 +158,7 @@ const OutputBox = (): JSX.Element => {
           }
           const timeSpan = Number(
             localStorage.get(
-              isOwnerMode ? "option_timespanOwner" : "option_timespanMain"
+              isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
             )
           );
           setSpoilerMessage(`セット中(${i + 1}/${length})`);

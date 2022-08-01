@@ -115,6 +115,34 @@ type optionDataType = {
   replace: boolean;
 };
 
+type localStorageKeys =
+  | "options_commandOrder"
+  | "options_useCA"
+  | "options_usePat"
+  | "options_useOriginal"
+  | "options_useOriginal_text"
+  | "options_timespan_main"
+  | "options_timespan_owner"
+  | "options_useMs"
+  | "options_lineMode"
+  | "memo"
+  | "ppConvertBefore"
+  | "ppConvertBeforeType"
+  | "ppConvertAfter"
+  | "ppConvertAfterType";
+type localStorageItem = {
+  defaultValue: string;
+};
+type localStorageOptionItem = localStorageItem & {
+  description: string;
+  dangerous: boolean;
+  type: "string" | "boolean" | "number";
+  required?: localStorageKeys;
+};
+type localStorageDefaultValues = {
+  [key in localStorageKeys]: localStorageItem | localStorageOptionItem;
+};
+
 type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";
 type crossOriginType = "anonymous" | "use-credentials";
 type nvPlayerApi = {
