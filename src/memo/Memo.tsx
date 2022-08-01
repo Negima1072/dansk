@@ -8,7 +8,7 @@ import Styles from "./Memo.module.scss";
  * @constructor
  */
 const Memo = (): JSX.Element => {
-  const [value, setValue] = useState<string>(localStorage.get("memo") || "");
+  const [value, setValue] = useState<string>(localStorage.get("memo"));
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setValue(e.target.value);
     },
