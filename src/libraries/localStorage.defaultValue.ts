@@ -1,0 +1,75 @@
+import { localStorageDefaultValues } from "@/@types/types";
+
+const defaultValue: localStorageDefaultValues = {
+  options_commandOrder: {
+    defaultValue: "ca|patissier|size|position|color|font|ender|full|original",
+    description: "コマンドの並び替え",
+    dangerous: false,
+    type: "string",
+  },
+  options_useCA: {
+    defaultValue: "true",
+    description: "CAコマンドを追加",
+    dangerous: false,
+    type: "boolean",
+  },
+  options_usePat: {
+    defaultValue: "true",
+    description: "patissierコマンドを追加",
+    dangerous: false,
+    type: "boolean",
+  },
+  options_useOriginal: {
+    defaultValue: "false",
+    description: "独自コマンドを追加",
+    dangerous: false,
+    type: "boolean",
+  },
+  options_useOriginal_text: {
+    defaultValue: "",
+    description: "追加する独自コマンドを入力",
+    dangerous: false,
+    type: "string",
+    required: "options_useOriginal",
+  },
+  options_timespan_main: {
+    defaultValue: "1000",
+    description: "投稿者コメントで投下時の間隔(ms)",
+    dangerous: true,
+    type: "number",
+  },
+  options_timespan_owner: {
+    defaultValue: "6000",
+    description: "視聴者コメントで投下時の間隔(ms)",
+    dangerous: true,
+    type: "number",
+  },
+  options_useMs: {
+    defaultValue: "true",
+    description: "tmコマンドをミリ秒として解釈",
+    dangerous: false,
+    type: "boolean",
+  },
+  options_lineMode: {
+    defaultValue: "false",
+    description: "#000000を#010101に置換",
+    dangerous: false,
+    type: "boolean",
+  },
+  memo: {
+    defaultValue: "",
+  },
+  ppConvertBefore: {
+    defaultValue: "",
+  },
+  ppConvertBeforeType: {
+    defaultValue: "",
+  },
+  ppConvertAfter: {
+    defaultValue: "",
+  },
+  ppConvertAfterType: {
+    defaultValue: "",
+  },
+};
+export default defaultValue;

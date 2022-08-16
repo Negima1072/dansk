@@ -29,6 +29,9 @@ const getElements = async (count = 0): Promise<contextTypeNullable> => {
     ) as HTMLDivElement,
     LayerElement = document.getElementById(
       "dansk:LayerElement"
+    ) as HTMLDivElement,
+    MemoElement = document.getElementById(
+      "dansk:MemoElement"
     ) as HTMLDivElement;
   if (!(videoElement && commentCommandInput && videoSymbolContainerCanvas)) {
     //1分超えたらfail
@@ -47,6 +50,7 @@ const getElements = async (count = 0): Promise<contextTypeNullable> => {
     MainElement,
     FooterElement,
     LayerElement,
+    MemoElement,
   };
 };
 export default getElements;

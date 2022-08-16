@@ -14,10 +14,9 @@ type contextTypeNullable = {
   MainElement?: HTMLDivElement;
   FooterElement?: HTMLDivElement;
   LayerElement?: HTMLDivElement;
+  MemoElement?: HTMLDivElement;
   exportLayer?: string[];
   setExportLayer?: (layerString: string[]) => void;
-  popup?: ReactNode;
-  setPopup?: (node: ReactNode) => void;
 };
 type contextType = {
   videoElement: HTMLVideoElement;
@@ -27,6 +26,7 @@ type contextType = {
   MainElement: HTMLDivElement;
   FooterElement: HTMLDivElement;
   LayerElement: HTMLDivElement;
+  MemoElement: HTMLDivElement;
   exportLayer: layer[];
   setExportLayer: (layer: layer[]) => void;
 };
@@ -113,6 +113,34 @@ type optionDataType = {
   bgVisible: boolean;
   grid: boolean;
   replace: boolean;
+};
+
+type localStorageKeys =
+  | "options_commandOrder"
+  | "options_useCA"
+  | "options_usePat"
+  | "options_useOriginal"
+  | "options_useOriginal_text"
+  | "options_timespan_main"
+  | "options_timespan_owner"
+  | "options_useMs"
+  | "options_lineMode"
+  | "memo"
+  | "ppConvertBefore"
+  | "ppConvertBeforeType"
+  | "ppConvertAfter"
+  | "ppConvertAfterType";
+type localStorageItem = {
+  defaultValue: string;
+};
+type localStorageOptionItem = localStorageItem & {
+  description: string;
+  dangerous: boolean;
+  type: "string" | "boolean" | "number";
+  required?: localStorageKeys;
+};
+type localStorageDefaultValues = {
+  [key in localStorageKeys]: localStorageItem | localStorageOptionItem;
 };
 
 type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";
