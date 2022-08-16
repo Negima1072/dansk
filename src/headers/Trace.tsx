@@ -13,7 +13,7 @@ import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
 import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 import LayerEditor from "@/components/layerEditor/LayerEditor";
-import Options from "@/options/options";
+import Options from "@/options/Options";
 import Popup from "@/components/popup/Popup";
 
 /**
@@ -125,7 +125,35 @@ const Trace = () => {
         setLayerData([...tmpLayer]);
       },
       [layerData]
-    );
+    ),
+    saveToFile = useCallback(() => {
+      const json = JSON.stringify(layerData);
+      const blob = new Blob([json], { type: "application/json" });
+
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `dansk.json`;
+      link.click();
+    }, [layerData]),
+    loadFromFile = useCallback(() => {
+      if (!confirm("現在作業中のデータが消えてしまいますがよろしいですか？"))
+        return;
+      const reader = new FileReader();
+      const input = document.createElement("input");
+      input.type = "file";
+      input.onchange = (e) => {
+        const target = e.target as HTMLInputElement;
+        if (target?.files && target.files[0])
+          reader.readAsText(target.files[0]);
+      };
+      reader.onload = function (e) {
+        if (typeof e.target?.result !== "string") return;
+        const data: unknown = JSON.parse(e.target.result);
+        if (!typeGuard.layer.isLayers(data)) return;
+        setLayerData(data);
+      };
+      input.click();
+    }, []);
   return (
     <LayerContext
       value={{ layerData, setLayerData, optionData, setOptionData }}
@@ -234,6 +262,14 @@ const Trace = () => {
             </div>
             <div className={Styles.block}>
               <LayerEditor />
+            </div>
+            <div className={Styles.block}>
+              <div className={Styles.row}>
+                <Button click={saveToFile} text={"保存"} />
+              </div>
+              <div className={Styles.row}>
+                <Button click={loadFromFile} text={"読込"} />
+              </div>
             </div>
           </div>
         </div>
