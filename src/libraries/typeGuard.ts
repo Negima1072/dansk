@@ -2,6 +2,7 @@ import {
   commentFont,
   commentPos,
   contextType,
+  layer,
   layerTemplate,
   MonoChar,
   ownerComment,
@@ -78,6 +79,30 @@ const typeGuard = {
     isProChar: (i: unknown): i is ProChar =>
       typeVerify(i, ["width", "isSpace"]) &&
       typeVerify((i as MonoChar | ProChar).width, ["mincho", "gothic"]),
+    isLayers: (i: unknown): i is layer[] => {
+      if (!Array.isArray(i)) return false;
+      for (const item of i) {
+        if (!typeGuard.layer.isLayer(item)) return false;
+      }
+      return true;
+    },
+    isLayer: (i: unknown): i is layer =>
+      typeVerify(i, [
+        "id",
+        "commands",
+        "pos",
+        "posList",
+        "text",
+        "value",
+        "areaWidth",
+        "width",
+        "height",
+        "critical",
+        "top",
+        "left",
+        "scale",
+        "size",
+      ]),
   },
   dom: {
     isDivElement: (i: unknown): i is HTMLDivElement =>
