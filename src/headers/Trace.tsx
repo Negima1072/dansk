@@ -13,7 +13,7 @@ import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
 import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 import LayerEditor from "@/components/layerEditor/LayerEditor";
-import Options from "@/options/options";
+import Options from "@/options/Options";
 import Popup from "@/components/popup/Popup";
 
 /**
