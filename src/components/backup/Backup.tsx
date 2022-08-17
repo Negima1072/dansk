@@ -36,7 +36,7 @@ const Backup: React.FC<propType> = (props) => {
       props.close();
     },
     remove = (key: string) => {
-      delete saveData[Number(key)];
+      saveData.splice(Number(key), 1);
       setSaveData([...saveData]);
       localStorage.set("autoSave", saveData);
     };
