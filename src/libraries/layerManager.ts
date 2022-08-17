@@ -38,7 +38,7 @@ const layerManager = (
       focusedNode = caretUtil.getFocusedNode(),
       focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1;
     const strings = getInnerText(targetElement, data.height);
-    console.log(strings);
+    //console.log(strings);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
       targetElement.children

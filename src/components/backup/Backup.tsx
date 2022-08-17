@@ -29,20 +29,27 @@ const Backup: React.FC<propType> = (props) => {
       if (
         !value ||
         !setLayerData ||
-        confirm("現在作業中のデータが消えてしまいますがよろしいですか？")
+        !confirm("現在作業中のデータが消えてしまいますがよろしいですか？")
       )
         return;
       setLayerData(value.data);
       props.close();
     },
     remove = (key: string) => {
-      delete saveData[Number(key)];
+      saveData.splice(Number(key), 1);
       setSaveData([...saveData]);
       localStorage.set("autoSave", saveData);
     };
   return (
     <Popup title={"自動保存"} close={props.close}>
-      {Object.keys(saveData).map((key) => {
+      {
+      () => {
+        if (saveData.length == 0){
+          return (<p>バックアップがありません。</p>);
+        }
+      }}
+      {
+      Object.keys(saveData).map((key) => {
         const value = saveData[Number(key)];
         if (!value) return <></>;
         return (
