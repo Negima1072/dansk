@@ -47,7 +47,8 @@ const Backup: React.FC<propType> = (props) => {
         if (saveData.length == 0){
           return (<p>バックアップがありません。</p>);
         }
-      },
+      }}
+      {
       Object.keys(saveData).map((key) => {
         const value = saveData[Number(key)];
         if (!value) return <></>;
