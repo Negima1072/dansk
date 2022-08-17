@@ -7,6 +7,12 @@ const defaultValue: localStorageDefaultValues = {
     dangerous: false,
     type: "number",
   },
+  options_autoSave_max: {
+    defaultValue: "10",
+    description: "自動保存の最大数",
+    dangerous: false,
+    type: "number",
+  },
   options_commandOrder: {
     defaultValue: "ca|patissier|size|position|color|font|ender|full|original",
     description: "コマンドの並び替え",

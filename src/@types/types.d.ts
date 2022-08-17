@@ -122,6 +122,7 @@ type optionDataType = {
 
 type localStorageKeys =
   | "options_autoSave_span"
+  | "options_autoSave_max"
   | "options_commandOrder"
   | "options_useCA"
   | "options_usePat"

@@ -56,9 +56,12 @@ const Trace = () => {
     console.log(span, span * 60 * 1000);
     if (span <= 0) return;
     autoSaveInterval.current = window.setInterval(() => {
-      const data: unknown = JSON.parse(localStorage.get("autoSave"));
+      const data: Array<unknown> = JSON.parse(localStorage.get("autoSave"));
       if (!typeGuard.localStorage.isAutoSave(data)) return;
       data.push({ data: layerDataRef.current, timestamp: Date.now() });
+      if (data.length > Number(localStorage.get("options_autoSave_max"))){
+        data.shift();
+      }
       localStorage.set("autoSave", data);
     }, span * 60 * 1000);
     return () => {
