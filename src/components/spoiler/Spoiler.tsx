@@ -21,7 +21,7 @@ const Spoiler: React.FC<propType> = (props) => {
   const localStorageKey = "display_" + props.text.toLowerCase();
   if (!typeGuard.localStorage.isKey(localStorageKey)) return <></>;
   setSpoilerOpen(localStorage.get(localStorageKey) == "true");
-  const changeSpoilerVisiblity = (visiblity: boolean) => {
+  const changeSpoilerVisibility = (visiblity: boolean) => {
     setSpoilerOpen(visiblity);
     localStorage.set(localStorageKey, visiblity ? "true" : "false");
   };
@@ -31,7 +31,7 @@ const Spoiler: React.FC<propType> = (props) => {
         open={spoilerOpen}
         text={props.text}
         message={props.message}
-        click={() => changeSpoilerVisiblity(!spoilerOpen)}
+        click={() => changeSpoilerVisibility(!spoilerOpen)}
       />
       {spoilerOpen ? <div>{props.children}</div> : ""}
     </div>
