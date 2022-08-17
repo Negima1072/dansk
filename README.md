@@ -1,6 +1,6 @@
 ﻿# NicoNicoDansaScriptCustom
 This is a script that works with Nico Nico Douga.  It helps to utilize the comment function.  
-Created By @Negima1072 and @eneko0513 and @xpadev-net
+Created By @Negima1072, @eneko0513 and @xpadev-net
 
 ## 推奨環境
 - Chrome
@@ -8,7 +8,6 @@ Created By @Negima1072 and @eneko0513 and @xpadev-net
 - Firefox
 
 その他Chromium系であれば動作すると思われます
-
 
 ## 拡張機能の読み込み
 ### Chrome
@@ -20,6 +19,22 @@ Created By @Negima1072 and @eneko0513 and @xpadev-net
 [デバッガー](about:debugging#/runtime/this-firefox)を開き、「一時的なアドオンを読み込む」から、先程リネームしたmanifest.jsonを選択します  
 
 ## 変更点
+### v1.0.2
+#### 変更
+- 背景画像に単色背景を設定できるよう修正
+- いくつかのバグ修正
+#### 追加
+- メモ機能
+- 設定画面
+   - コマンドの並び変え変更機能
+   - CA、Patissierコマンドの追加機能
+   - 独自コマンド追加機能
+   - 投稿時間間隔変更機能
+   - その他もろもろ設定機能
+- CSS調整機能
+- 保存・読み込み機能
+- 自動保存機能
+
 ### v1.0.0
 #### 廃止
 - 線画モード
@@ -41,7 +56,3 @@ Created By @Negima1072 and @eneko0513 and @xpadev-net
 ctrl/cmd + クリックで複数レイヤーを選択できます
 - 複数の背景を保持できるようにしました  
 ついでに画像をURLから指定できるようになってます
-#### 準備中
-- CSS調整機能
-- 設定機能
-- 保存・読み込み機能
