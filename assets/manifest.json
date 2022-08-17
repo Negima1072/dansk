@@ -1,19 +1,19 @@
 ﻿{
   "name": "DanSukuMizu",
-  "version": "0.0.6",
+  "version": "1.0.1",
   "manifest_version": 3,
-  "description": "DanSukuMizu modified by Negima1072 and @eneko0513",
+  "description": "Created By @Negima1072 and @eneko0513 and @xpadev-net",
   "content_scripts": [
     {
       "matches": ["https://www.nicovideo.jp/watch/*"],
       "js": ["index.js"],
-      "run_at": "document_end"
+      "run_at": "document_start"
     }
   ],
   "permissions": ["tabs"],
   "web_accessible_resources": [
     {
-      "resources": ["embed.js"],
+      "resources": ["main.js"],
       "matches": ["<all_urls>"]
     },
     {

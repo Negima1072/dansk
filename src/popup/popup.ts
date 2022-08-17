@@ -1,5 +1,5 @@
 ﻿import localStorage from "@/libraries/localStorage";
-import typeGuard from "@/typeGuard";
+import typeGuard from "@/libraries/typeGuard";
 
 window.addEventListener("load", () => {
   const beforeTextArea = document.getElementById("before") as HTMLInputElement,
@@ -121,9 +121,9 @@ window.addEventListener("load", () => {
    * @return {string} dansk
    */
   const convertTokomeToDansk = (input: string): string => {
-    const data: ownerComment[] = JSON.parse(input) as ownerComment[];
+    const data = JSON.parse(input) as unknown;
     if (!typeGuard.owner.comments(data)) return "";
-    const result = [];
+    const result: string[] = [];
     for (const line of data) {
       result.push(
         `[${line.command}]${line.comment}`

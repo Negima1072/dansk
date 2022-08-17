@@ -1,0 +1,25 @@
+.input {
+  background-color: white;
+  font-size: 12px;
+  border: solid 1px black;
+  margin: 0;
+}
+.table {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    .row {
+      flex: 32px;
+      line-height: 32px;
+      height: 32px;
+      padding: 0;
+      text-align: center;
+      margin: 1px;
+      user-select: none;
+    }
+  }
+}

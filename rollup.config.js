@@ -5,16 +5,19 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
+import json from '@rollup/plugin-json';
 
 const plugins = [
-	image(),
 	typescript(),
+	json(),
+	image(),
 	postcss({
 		extensions: [".css"],
 		modules: true,
 	}),
 	nodeResolve({
 		extensions: [".js"],
+		browser:true
 	}),
 	replace({
 		preventAssignment: true,
@@ -23,7 +26,7 @@ const plugins = [
 	babel({
 		presets: ["@babel/preset-react"],
 	}),
-	commonjs()
+	commonjs(),
 ];
 
 export default [
@@ -34,30 +37,21 @@ export default [
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
-		plugins: plugins
+		plugins: plugins,
 	},
 	{
-		input: 'src/embed.ts',
+		input: 'src/Root.tsx',
 		output: {
-			file: `dist/embed.js`,
+			file: `dist/main.js`,
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
-		plugins: plugins
+		plugins: plugins,
 	},
 	{
 		input: 'src/popup/popup.ts',
 		output: {
 			file: `dist/popup/popup.js`,
-			format: 'umd',
-			name: 'DanSukuMizu'
-		},
-		plugins: plugins
-	},
-	{
-		input: 'src/options/options.ts',
-		output: {
-			file: `dist/options/options.js`,
 			format: 'umd',
 			name: 'DanSukuMizu'
 		},
