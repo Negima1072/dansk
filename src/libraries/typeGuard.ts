@@ -4,6 +4,7 @@ import {
   contextType,
   layer,
   layerTemplate,
+  localStorageKeys,
   MonoChar,
   ownerComment,
   ProChar,
@@ -107,6 +108,13 @@ const typeGuard = {
   dom: {
     isDivElement: (i: unknown): i is HTMLDivElement =>
       i instanceof Element && i.nodeName === "DIV",
+  },
+  localStorage: {
+    isKey: (i: unknown): i is localStorageKeys =>
+      typeof i === "string" &&
+      !!i.match(
+        /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/
+      ),
   },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {

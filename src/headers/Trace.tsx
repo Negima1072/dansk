@@ -13,7 +13,7 @@ import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
 import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 import LayerEditor from "@/components/layerEditor/LayerEditor";
-import Options from "@/options/Options";
+import Options_ from "@/options/Options";
 import Popup from "@/components/popup/Popup";
 
 /**
@@ -278,7 +278,7 @@ const Trace = () => {
       {optionData.bgEditing && <BackgroundPicker />}
       {optionEditing && (
         <Popup title={"設定"} close={toggleOptionEditing}>
-          <Options />
+          <Options_ />
         </Popup>
       )}
     </LayerContext>
