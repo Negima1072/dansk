@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Styles from "./Spoiler.module.scss";
 import SpoilerButton from "@/components/spoiler/SpoilerButton";
+import localStorage from "@/libraries/localStorage"
 
 type propType = {
   text: string;
@@ -16,6 +17,13 @@ type propType = {
  */
 const Spoiler: React.FC<propType> = (props) => {
   const [spoilerOpen, setSpoilerOpen] = useState<boolean>(true);
+  setSpoilerOpen(
+    (localStorage.get("display_"+props.text.toLowerCase()) == "true")
+  );
+  const changeSpoilerVisiblity = (visiblity: boolean) => {
+    setSpoilerOpen(visiblity);
+    localStorage.set("display_"+props.text.toLowerCase(), visiblity ? "true" : "false")
+  }
   return (
     <div className={Styles.wrapper}>
       <SpoilerButton
