@@ -42,9 +42,15 @@ const Backup: React.FC<propType> = (props) => {
     };
   return (
     <Popup title={"自動保存"} close={props.close}>
-      {Object.keys(saveData).map((key) => {
+      {
+      () => {
+        if (saveData.length == 0){
+          return (<p>バックアップがありません。</p>);
+        }
+      },
+      Object.keys(saveData).map((key) => {
         const value = saveData[Number(key)];
-        if (!value) return <p>バックアップがありません。</p>;
+        if (!value) return <></>;
         return (
           <div className={Styles.block}>
             <h3>{new Date(value.timestamp).toLocaleString()}のバックアップ</h3>
