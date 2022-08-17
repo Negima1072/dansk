@@ -53,7 +53,6 @@ const Trace = () => {
   }, [layerData]);
   useEffect(() => {
     const span = Number(localStorage.get("options_autoSave_span"));
-    console.log(span, span * 60 * 1000);
     if (span <= 0) return;
     autoSaveInterval.current = window.setInterval(() => {
       const data: unknown = JSON.parse(localStorage.get("autoSave"));
