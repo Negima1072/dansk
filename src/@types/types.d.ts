@@ -105,6 +105,11 @@ type layer = layerTemplate & {
   content: layerLine[];
 };
 
+type autoSave = {
+  timestamp: number;
+  data: layer[];
+};
+
 type optionDataType = {
   bgActive: number;
   bgImages: string[];
@@ -116,6 +121,7 @@ type optionDataType = {
 };
 
 type localStorageKeys =
+  | "options_autoSave_span"
   | "options_commandOrder"
   | "options_useCA"
   | "options_usePat"
@@ -125,16 +131,17 @@ type localStorageKeys =
   | "options_timespan_owner"
   | "options_useMs"
   | "options_lineMode"
-  | "memo"
-  | "ppConvertBefore"
-  | "ppConvertBeforeType"
-  | "ppConvertAfter"
-  | "ppConvertAfterType"
   | "display_trace"
   | "display_memo"
   | "display_time"
   | "display_main"
-  | "display_box";
+  | "display_box"
+  | "autoSave"
+  | "memo"
+  | "ppConvertBefore"
+  | "ppConvertBeforeType"
+  | "ppConvertAfter"
+  | "ppConvertAfterType";
 type localStorageItem = {
   defaultValue: string;
 };

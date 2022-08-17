@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Spoiler from "@/components/spoiler/Spoiler";
 import Styles from "./Trace.module.scss";
 import Button from "@/components/button/Button";
@@ -15,6 +21,8 @@ import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 import LayerEditor from "@/components/layerEditor/LayerEditor";
 import Options_ from "@/options/Options";
 import Popup from "@/components/popup/Popup";
+import localStorage from "@/libraries/localStorage";
+import Backup from "@/components/backup/Backup";
 
 /**
  * Traceブロック
@@ -36,7 +44,28 @@ const Trace = () => {
       replace: false,
     }),
     [optionEditing, setOptionEditing] = useState<boolean>(false),
+    [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false),
     { exportLayer, setExportLayer } = useContext(context);
+  const layerDataRef = useRef(layerData),
+    autoSaveInterval = useRef<number>(-1);
+  useEffect(() => {
+    layerDataRef.current = layerData;
+  }, [layerData]);
+  useEffect(() => {
+    const span = Number(localStorage.get("options_autoSave_span"));
+    console.log(span, span * 60 * 1000);
+    if (span <= 0) return;
+    autoSaveInterval.current = window.setInterval(() => {
+      const data: unknown = JSON.parse(localStorage.get("autoSave"));
+      if (!typeGuard.localStorage.isAutoSave(data)) return;
+      data.push({ data: layerDataRef.current, timestamp: Date.now() });
+      localStorage.set("autoSave", data);
+    }, span * 60 * 1000);
+    return () => {
+      window.clearInterval(autoSaveInterval.current);
+      autoSaveInterval.current = -1;
+    };
+  });
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
   const exportHandler = useCallback(
       (value: string) => {
@@ -139,6 +168,9 @@ const Trace = () => {
       link.download = `${fileName}.dansk.json`;
       link.click();
     }, [layerData]),
+    loadFromAutoSave = useCallback(() => {
+      setAutoSaveWindow(true);
+    }, []),
     loadFromFile = useCallback(() => {
       if (!confirm("現在作業中のデータが消えてしまいますがよろしいですか？"))
         return;
@@ -273,7 +305,13 @@ const Trace = () => {
                 <Button click={saveToFile} text={"保存"} />
               </div>
               <div className={Styles.row}>
-                <Button click={loadFromFile} text={"読込"} />
+                <Button click={loadFromFile} text={"ファイルから読込"} />
+              </div>
+              <div className={Styles.row}>
+                <Button
+                  click={loadFromAutoSave}
+                  text={"バックアップから読込"}
+                />
               </div>
             </div>
           </div>
@@ -286,6 +324,7 @@ const Trace = () => {
           <Options_ />
         </Popup>
       )}
+      {autoSaveWindow && <Backup close={() => setAutoSaveWindow(false)} />}
     </LayerContext>
   );
 };

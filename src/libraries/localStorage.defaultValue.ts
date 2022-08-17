@@ -1,6 +1,12 @@
 import { localStorageDefaultValues } from "@/@types/types";
 
 const defaultValue: localStorageDefaultValues = {
+  options_autoSave_span: {
+    defaultValue: "5",
+    description: "自動保存の間隔(分) / 0で無効",
+    dangerous: false,
+    type: "number",
+  },
   options_commandOrder: {
     defaultValue: "ca|patissier|size|position|color|font|ender|full|original",
     description: "コマンドの並び替え",
@@ -56,21 +62,6 @@ const defaultValue: localStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
   },
-  memo: {
-    defaultValue: "",
-  },
-  ppConvertBefore: {
-    defaultValue: "",
-  },
-  ppConvertBeforeType: {
-    defaultValue: "",
-  },
-  ppConvertAfter: {
-    defaultValue: "",
-  },
-  ppConvertAfterType: {
-    defaultValue: "",
-  },
   display_trace: {
     defaultValue: "true",
   },
@@ -85,6 +76,24 @@ const defaultValue: localStorageDefaultValues = {
   },
   display_box: {
     defaultValue: "true",
+  },
+  autoSave: {
+    defaultValue: "[]",
+  },
+  memo: {
+    defaultValue: "",
+  },
+  ppConvertBefore: {
+    defaultValue: "",
+  },
+  ppConvertBeforeType: {
+    defaultValue: "",
+  },
+  ppConvertAfter: {
+    defaultValue: "",
+  },
+  ppConvertAfterType: {
+    defaultValue: "",
   },
 };
 export default defaultValue;
