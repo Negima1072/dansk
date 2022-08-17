@@ -37,6 +37,8 @@ const layerManager = (
     const caretPos = caretUtil.get(targetElement),
       focusedNode = caretUtil.getFocusedNode(),
       focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1;
+    const init = !targetElement.classList.contains("dansk:LayerItemElement");
+    if (init) targetElement.classList.add("dansk:LayerItemElement");
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
@@ -76,7 +78,13 @@ const layerManager = (
           itemElement.style.background = "rgba(255,0,0,0.3)";
         } else {
           if (item !== strings[index]) {
-            group.content[itemIndex] = strings[index] as string;
+            if (init) {
+              itemElement.innerText = `${group.content[itemIndex]}${
+                isFirefox ? "\n" : ""
+              }`;
+            } else {
+              group.content[itemIndex] = strings[index] as string;
+            }
             isChanged = true;
           }
           itemElement.style.background = "none";
