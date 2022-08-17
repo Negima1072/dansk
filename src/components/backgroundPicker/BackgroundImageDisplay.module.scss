@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 300px;
+  overflow-y: scroll;
+  border: solid 1px black;
+  padding: 5px;
+  .item {
+    width: calc(50% - 12px);
+    height: 50%;
+    position: relative;
+    border: solid 1px;
+    background-color: #777777;
+    margin: 12px 12px 0 0;
+    &.active {
+      background-color: white;
+      border: solid blue 1px;
+    }
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #f4f4f4;
+      border: solid 1px black;
+    }
+  }
+}

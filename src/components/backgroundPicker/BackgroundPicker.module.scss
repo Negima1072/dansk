@@ -1,0 +1,19 @@
+.tips {
+  width: 350px;
+  border-collapse: collapse;
+  th,
+  td {
+    border: solid 1px black;
+  }
+}
+.urlInput {
+  &:invalid {
+    border: solid 1px red;
+  }
+}
+.color {
+  width: 1px;
+  height: 1px;
+  border: none;
+  opacity: 0;
+}

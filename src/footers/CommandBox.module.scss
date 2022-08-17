@@ -1,0 +1,14 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  .row {
+    display: flex;
+    flex-direction: row;
+    padding: 2px 0;
+    .group {
+      display: flex;
+      flex-direction: row;
+      margin-right: 20px;
+    }
+  }
+}
