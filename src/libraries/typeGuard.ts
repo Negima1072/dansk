@@ -1,4 +1,5 @@
 import {
+  autoSave,
   commentFont,
   commentPos,
   contextType,
@@ -115,6 +116,17 @@ const typeGuard = {
       !!i.match(
         /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/
       ),
+    isAutoSave: (i: unknown): i is autoSave[] => {
+      if (!Array.isArray(i)) return false;
+      for (const item of i) {
+        if (
+          typeVerify(item, ["data", "timestamp"]) &&
+          !typeGuard.layer.isLayers((item as autoSave)?.data)
+        )
+          return false;
+      }
+      return true;
+    },
   },
 };
 const typeVerify = (item: unknown, keys: string[]): boolean => {
