@@ -129,7 +129,12 @@ type localStorageKeys =
   | "ppConvertBefore"
   | "ppConvertBeforeType"
   | "ppConvertAfter"
-  | "ppConvertAfterType";
+  | "ppConvertAfterType"
+  | "display_trace"
+  | "display_memo"
+  | "display_time"
+  | "display_main"
+  | "display_box";
 type localStorageItem = {
   defaultValue: string;
 };

@@ -13,7 +13,7 @@ import LayerPortal from "@/components/LayerPortal";
 import LayerContext from "@/components/LayerContext";
 import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 import LayerEditor from "@/components/layerEditor/LayerEditor";
-import Options from "@/options/Options";
+import Options_ from "@/options/Options";
 import Popup from "@/components/popup/Popup";
 
 /**
@@ -129,10 +129,14 @@ const Trace = () => {
     saveToFile = useCallback(() => {
       const json = JSON.stringify(layerData);
       const blob = new Blob([json], { type: "application/json" });
-
+      const fileName = window.prompt("ファイル名を入力してください", "");
+      if (fileName === "" || fileName === null) {
+        alert("キャンセルされました");
+        return;
+      }
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
-      link.download = `dansk.json`;
+      link.download = `${fileName}.dansk.json`;
       link.click();
     }, [layerData]),
     loadFromFile = useCallback(() => {
@@ -141,6 +145,7 @@ const Trace = () => {
       const reader = new FileReader();
       const input = document.createElement("input");
       input.type = "file";
+      input.accept = ".dansk.json,*";
       input.onchange = (e) => {
         const target = e.target as HTMLInputElement;
         if (target?.files && target.files[0])
@@ -278,7 +283,7 @@ const Trace = () => {
       {optionData.bgEditing && <BackgroundPicker />}
       {optionEditing && (
         <Popup title={"設定"} close={toggleOptionEditing}>
-          <Options />
+          <Options_ />
         </Popup>
       )}
     </LayerContext>

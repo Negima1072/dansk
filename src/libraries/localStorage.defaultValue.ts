@@ -85,6 +85,6 @@ const defaultValue: localStorageDefaultValues = {
   },
   display_box: {
     defaultValue: "true",
-  }
+  },
 };
 export default defaultValue;
