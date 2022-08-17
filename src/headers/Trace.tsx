@@ -182,14 +182,16 @@ const Trace = () => {
       input.accept = ".dansk.json,*";
       input.onchange = (e) => {
         const target = e.target as HTMLInputElement;
-        if (target?.files && target.files[0])
+        if (target?.files && target.files[0]) {
           reader.readAsText(target.files[0]);
+        }
       };
       reader.onload = function (e) {
         if (typeof e.target?.result !== "string") return;
         const data: unknown = JSON.parse(e.target.result);
         if (!typeGuard.layer.isLayers(data)) return;
-        setLayerData(data);
+        setLayerData([]);
+        setTimeout(() => setLayerData(data), 1);
       };
       input.click();
     }, []);

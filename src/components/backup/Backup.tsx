@@ -32,7 +32,8 @@ const Backup: React.FC<propType> = (props) => {
         !confirm("現在作業中のデータが消えてしまいますがよろしいですか？")
       )
         return;
-      setLayerData(value.data);
+      setLayerData([]);
+      setTimeout(() => setLayerData(value.data), 1);
       props.close();
     },
     remove = (key: string) => {
