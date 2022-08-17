@@ -3,7 +3,7 @@ import { localStorageDefaultValues } from "@/@types/types";
 const defaultValue: localStorageDefaultValues = {
   options_autoSave_span: {
     defaultValue: "5",
-    description: "自動保存の間隔(分) / 0で無効",
+    description: "自動保存の間隔(分) / 0で無効 / 反映には再読み込みが必要",
     dangerous: false,
     type: "number",
   },

@@ -42,27 +42,28 @@ const Backup: React.FC<propType> = (props) => {
     };
   return (
     <Popup title={"自動保存"} close={props.close}>
-      {
-      () => {
-        if (saveData.length == 0){
-          return (<p>バックアップがありません。</p>);
-        }
-      }}
-      {
-      Object.keys(saveData).map((key) => {
-        const value = saveData[Number(key)];
-        if (!value) return <></>;
-        return (
-          <div className={Styles.block}>
-            <h3>{new Date(value.timestamp).toLocaleString()}のバックアップ</h3>
-            <p>レイヤー数：{value.data.length}</p>
-            <div>
-              <Button click={() => load(key)} text={"復元"} />
-              <Button click={() => remove(key)} text={"削除"} />
-            </div>
-          </div>
-        );
-      })}
+      <div className={Styles.wrapper}>
+        {saveData.length == 0 ? (
+          <p>バックアップがありません。</p>
+        ) : (
+          Object.keys(saveData).map((key) => {
+            const value = saveData[Number(key)];
+            if (!value) return <span key={key}></span>;
+            return (
+              <div className={Styles.block} key={key}>
+                <h3>
+                  {new Date(value.timestamp).toLocaleString()}のバックアップ
+                </h3>
+                <p>レイヤー数：{value.data.length}</p>
+                <div>
+                  <Button click={() => load(key)} text={"復元"} />
+                  <Button click={() => remove(key)} text={"削除"} />
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
     </Popup>
   );
 };

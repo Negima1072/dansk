@@ -56,10 +56,10 @@ const Trace = () => {
     console.log(span, span * 60 * 1000);
     if (span <= 0) return;
     autoSaveInterval.current = window.setInterval(() => {
-      const data: Array<unknown> = JSON.parse(localStorage.get("autoSave"));
+      const data: unknown = JSON.parse(localStorage.get("autoSave"));
       if (!typeGuard.localStorage.isAutoSave(data)) return;
       data.push({ data: layerDataRef.current, timestamp: Date.now() });
-      if (data.length > Number(localStorage.get("options_autoSave_max"))){
+      if (data.length > Number(localStorage.get("options_autoSave_max"))) {
         data.shift();
       }
       localStorage.set("autoSave", data);
@@ -68,7 +68,7 @@ const Trace = () => {
       window.clearInterval(autoSaveInterval.current);
       autoSaveInterval.current = -1;
     };
-  });
+  }, [setTabMode]);
   if (exportLayer === undefined || setExportLayer === undefined) return <></>;
   const exportHandler = useCallback(
       (value: string) => {
@@ -305,7 +305,7 @@ const Trace = () => {
             </div>
             <div className={Styles.block}>
               <div className={Styles.row}>
-                <Button click={saveToFile} text={"保存"} />
+                <Button click={saveToFile} text={"ファイルに保存"} />
               </div>
               <div className={Styles.row}>
                 <Button click={loadFromFile} text={"ファイルから読込"} />

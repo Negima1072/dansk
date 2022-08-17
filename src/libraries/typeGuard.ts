@@ -120,7 +120,7 @@ const typeGuard = {
       if (!Array.isArray(i)) return false;
       for (const item of i) {
         if (
-          typeVerify(item, ["data", "timestamp"]) &&
+          !typeVerify(item, ["data", "timestamp"]) ||
           !typeGuard.layer.isLayers((item as autoSave)?.data)
         )
           return false;
