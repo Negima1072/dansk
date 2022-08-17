@@ -71,5 +71,20 @@ const defaultValue: localStorageDefaultValues = {
   ppConvertAfterType: {
     defaultValue: "",
   },
+  display_trace: {
+    defaultValue: "true",
+  },
+  display_memo: {
+    defaultValue: "true",
+  },
+  display_time: {
+    defaultValue: "true",
+  },
+  display_main: {
+    defaultValue: "true",
+  },
+  display_box: {
+    defaultValue: "true",
+  }
 };
 export default defaultValue;
