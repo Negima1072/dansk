@@ -103,6 +103,7 @@ type layer = layerTemplate & {
   selected: boolean;
   color: string;
   content: layerLine[];
+  overwrite?: boolean;
 };
 
 type autoSave = {
@@ -187,5 +188,8 @@ type nvPlayerApi = {
 declare global {
   interface Window {
     __videoplayer: nvPlayerApi;
+  }
+  interface Event {
+    isComposing: boolean;
   }
 }
