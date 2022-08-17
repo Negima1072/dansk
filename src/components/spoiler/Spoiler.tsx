@@ -17,13 +17,14 @@ type propType = {
  * @constructor
  */
 const Spoiler: React.FC<propType> = (props) => {
-  const [spoilerOpen, setSpoilerOpen] = useState<boolean>(true);
   const localStorageKey = "display_" + props.text.toLowerCase();
   if (!typeGuard.localStorage.isKey(localStorageKey)) return <></>;
-  setSpoilerOpen(localStorage.get(localStorageKey) == "true");
-  const changeSpoilerVisibility = (visiblity: boolean) => {
-    setSpoilerOpen(visiblity);
-    localStorage.set(localStorageKey, visiblity ? "true" : "false");
+  const [spoilerOpen, setSpoilerOpen] = useState<boolean>(
+    localStorage.get(localStorageKey) == "true"
+  );
+  const changeSpoilerVisibility = (visibility: boolean) => {
+    setSpoilerOpen(visibility);
+    localStorage.set(localStorageKey, visibility ? "true" : "false");
   };
   return (
     <div className={Styles.wrapper}>
