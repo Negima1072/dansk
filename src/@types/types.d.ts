@@ -12,6 +12,7 @@ type contextTypeNullable = {
   videoSymbolContainerCanvas?: HTMLCanvasElement;
   HeaderElement?: HTMLDivElement;
   MainElement?: HTMLDivElement;
+  BackgroundImageElement?: HTMLDivElement;
   FooterElement?: HTMLDivElement;
   LayerElement?: HTMLDivElement;
   MemoElement?: HTMLDivElement;
@@ -24,6 +25,7 @@ type contextType = {
   commentInputTextarea: HTMLTextAreaElement;
   HeaderElement: HTMLDivElement;
   MainElement: HTMLDivElement;
+  BackgroundImageElement: HTMLDivElement;
   FooterElement: HTMLDivElement;
   LayerElement: HTMLDivElement;
   MemoElement: HTMLDivElement;
