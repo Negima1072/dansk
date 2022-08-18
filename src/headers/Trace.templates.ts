@@ -443,5 +443,24 @@ const Templates: layerTemplates = {
       { font: 19, line: 17, lineCount: 2, height: 38.6, count: 7 },
     ],
   },
+  s18_4: {
+    id: "s18_4",
+    commands: ["small"],
+    pos: "shita",
+    posList: ["shita","ue"],
+    text: "small shita W37 L2&L1",
+    value: "small_shita_gothic_W27_L2:7_L1:4_C11",
+    areaWidth: 515,
+    width: 27,
+    height: 18,
+    critical: false,
+    top: { ue: 0, naka: 0, shita: 5 },
+    left: 92,
+    scale: { x: 0.887, y: 0.978 },
+    size: [
+      { font: 19, line: 17, lineCount: 1, height: 22.1, count: 4 },
+      { font: 19, line: 17, lineCount: 2, height: 38.6, count: 7 },
+    ],
+  },
 };
 export default Templates;
