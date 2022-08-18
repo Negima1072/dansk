@@ -114,6 +114,10 @@ const OutputBox = (): JSX.Element => {
     commentInputTextarea.dispatchEvent(new Event("input", { bubbles: true }));
     return true;
   };
+  const onClearClick = useCallback(() => {
+    setTextareaValue("");
+    setIsReverse(false);
+  })
   const onSetLineClick = useCallback(() => {
       if (
         !commentCommandInput ||
@@ -213,6 +217,11 @@ const OutputBox = (): JSX.Element => {
             text="逆から"
             click={toggleIsReverse}
             active={isReverse}
+          />
+          <Button
+            disabled={isPosting}
+            text="クリア"
+            click={onClearClick}
           />
           <Button
             disabled={isPosting}
