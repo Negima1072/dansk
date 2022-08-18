@@ -51,8 +51,8 @@ const init = async () => {
     mainContainerPlayerPanel = mainContainer?.getElementsByClassName(
       "MainContainer-playerPanel"
     )[0] as HTMLDivElement;
-    videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas"
+    videoSymbolContainerCanvas = document.querySelectorAll(
+      ".CommentRenderer>canvas"
     )[0] as HTMLCanvasElement;
     videoContainer = document.getElementsByClassName(
       "InView VideoContainer"
