@@ -40,6 +40,7 @@ JSONは型定義ができないので使用しない
 
 ### リリースの仕方
 1. mainブランチにPullRequestを出しマージする
+2. mainブランチ宛にバージョン名の変更,README.mdの変更をpushする。
 2. main->ReleaseでPullRequestを出しマージする
 3. Releaseブランチでmain->Releaseのマージコミット宛にバージョン名(vx.x.x)のタグをpushする
 4. Actionが実行される（自動）
