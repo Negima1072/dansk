@@ -32,7 +32,7 @@ const OutputBox = (): JSX.Element => {
       return;
     setTextareaValue([...textareaValue, ...exportLayer]);
     setExportLayer([]);
-  }, [exportLayer]);
+  }, [exportLayer, textareaValue]);
   const getCommandAndComment = (
     stringArr: string[],
     isReverse: boolean
@@ -141,10 +141,10 @@ const OutputBox = (): JSX.Element => {
           ),
           length = textareaValue.length;
         const timeSpan = Number(
-            localStorage.get(
-              isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
-            )
-          );
+          localStorage.get(
+            isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
+          )
+        );
         setIsPosting(true);
         setSpoilerMessage("待機中");
         for (let i = 0; i < length; i++) {
@@ -213,6 +213,11 @@ const OutputBox = (): JSX.Element => {
             text="逆から"
             click={toggleIsReverse}
             active={isReverse}
+          />
+          <Button
+            disabled={isPosting}
+            text="クリア"
+            click={() => setTextareaValue([])}
           />
           <Button
             disabled={isPosting}
