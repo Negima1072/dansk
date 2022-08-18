@@ -114,10 +114,6 @@ const OutputBox = (): JSX.Element => {
     commentInputTextarea.dispatchEvent(new Event("input", { bubbles: true }));
     return true;
   };
-  const onClearClick = () => {
-    textareaValue.splice(0);
-    setIsReverse(false);
-  };
   const onSetLineClick = useCallback(() => {
       if (
         !commentCommandInput ||
@@ -221,7 +217,7 @@ const OutputBox = (): JSX.Element => {
           <Button
             disabled={isPosting}
             text="クリア"
-            click={onClearClick}
+            click={() => setTextareaValue([])}
           />
           <Button
             disabled={isPosting}
