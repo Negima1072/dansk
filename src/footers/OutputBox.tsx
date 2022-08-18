@@ -114,10 +114,10 @@ const OutputBox = (): JSX.Element => {
     commentInputTextarea.dispatchEvent(new Event("input", { bubbles: true }));
     return true;
   };
-  const onClearClick = useCallback(() => {
+  const onClearClick = () => {
     textareaValue.splice(0);
     setIsReverse(false);
-  }, [textareaValue]);
+  };
   const onSetLineClick = useCallback(() => {
       if (
         !commentCommandInput ||
