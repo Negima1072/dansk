@@ -115,7 +115,7 @@ const OutputBox = (): JSX.Element => {
     return true;
   };
   const onClearClick = useCallback(() => {
-    setTextareaValue("");
+    setExportLayer([]);
     setIsReverse(false);
   })
   const onSetLineClick = useCallback(() => {
