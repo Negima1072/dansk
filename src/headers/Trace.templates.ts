@@ -197,7 +197,7 @@ const Templates: layerTemplates = {
     critical: false,
     top: { ue: 3, naka: -9, shita: -21 }, //todo ue:2?
     left: 3,
-    scale: { x: 1.002, y: 1.019 },
+    scale: { x: 1.002, y: 1.008 },
     size: [{ font: 25.3, line: 27, lineCount: 14 }],
   },
   me15: {
