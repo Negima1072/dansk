@@ -32,7 +32,9 @@ const layerManager = (
         element.children[0].remove();
       }
       for (const child of Array.from(element.childNodes)) {
-        if (!child.nodeName.match(/#text|BR/)) child.remove();
+        if (!child.nodeName.match(/#text|BR|SPAN/)) {
+          child.remove();
+        }
       }
     }
     const caretPos = caretUtil.get(targetElement),
