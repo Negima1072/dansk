@@ -59,10 +59,10 @@ const init = async () => {
     )[0] as HTMLDivElement;
     (document.getElementsByClassName(
       "CommentRenderer"
-    )[0] as HTMLDivElement).style.zIndex = 20;
+    )[0] as HTMLDivElement).style.zIndex = "20";
     (document.querySelectorAll(
       ".CommentRenderer>canvas"
-    )[0] as HTMLDivElement).style.zIndex = 20;
+    )[0] as HTMLDivElement).style.zIndex = "20";
     count++;
     if (
       mainContainerPlayer === undefined ||
