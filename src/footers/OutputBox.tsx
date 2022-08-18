@@ -201,6 +201,7 @@ const OutputBox = (): JSX.Element => {
             className={Styles.textarea}
             value={textareaValue.join("\n")}
             disabled={isPosting}
+            wrap="off"
             onChange={(e) =>
               setTextareaValue(e.target.value.split(/\r\n|\r|\n/))
             }
