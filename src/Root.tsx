@@ -57,6 +57,12 @@ const init = async () => {
     videoContainer = document.getElementsByClassName(
       "InView VideoContainer"
     )[0] as HTMLDivElement;
+    (document.getElementsByClassName(
+      "CommentRenderer"
+    )[0] as HTMLDivElement).style.zIndex = 20;
+    (document.querySelectorAll(
+      ".CommentRenderer>canvas"
+    )[0] as HTMLDivElement).style.zIndex = 20;
     count++;
     if (
       mainContainerPlayer === undefined ||
@@ -107,19 +113,5 @@ const init = async () => {
   const ReactRoot = createRoot(ReactRootElement);
   ReactRoot.render(<Root />);
   inject();
-  /*if (localStorage.get("options_commandOrder") == null) {
-    localStorage.set(
-      "options_commandOrder",
-      "ca|patissier|size|position|color|font|ender|full|original"
-    );
-    localStorage.set("option_useCA", "true");
-    localStorage.set("option_usePat", "false");
-    localStorage.set("option_useOriginal", "false");
-    localStorage.set("option_originalText", "");
-    localStorage.set("option_timespanMain", "6000");
-    localStorage.set("option_timespanOwner", "1000");
-    localStorage.set("option_10msBase", "false");
-    localStorage.set("option_repColor01", "false");
-  }*/
 };
 void init();

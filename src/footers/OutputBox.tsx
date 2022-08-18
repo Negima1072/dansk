@@ -154,13 +154,13 @@ const OutputBox = (): JSX.Element => {
             setSpoilerMessage("キャンセルされました");
             return;
           }
-          await sleep(timeSpan);
           const content = getCommandAndComment(textareaValue, isReverse);
           if (!content) {
             setIsPosting(false);
             setSpoilerMessage("コメントデータのパースに失敗しました");
             return;
           }
+          await sleep(timeSpan);
           setSpoilerMessage(`セット中(${i + 1}/${length})`);
           if (setLine(content.command, content.comment)) {
             if (isReverse) {
@@ -168,7 +168,7 @@ const OutputBox = (): JSX.Element => {
             } else {
               textareaValue.shift();
             }
-            await sleep(500);
+            await sleep(200);
             commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {
                 key: "Enter",
