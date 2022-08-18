@@ -216,11 +216,6 @@ const OutputBox = (): JSX.Element => {
           />
           <Button
             disabled={isPosting}
-            text="クリア"
-            click={() => setTextareaValue([])}
-          />
-          <Button
-            disabled={isPosting}
             text="1行セット"
             click={onSetLineClick}
           />
