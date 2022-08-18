@@ -140,9 +140,13 @@ const OutputBox = (): JSX.Element => {
             /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/
           ),
           length = textareaValue.length;
+        const timeSpan = Number(
+            localStorage.get(
+              isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
+            )
+          );
         setIsPosting(true);
         setSpoilerMessage("待機中");
-        await sleep(isOwnerMode ? 1000 : 6000);
         for (let i = 0; i < length; i++) {
           if (postAllCancel.current) {
             setIsPosting(false);
@@ -150,17 +154,13 @@ const OutputBox = (): JSX.Element => {
             setSpoilerMessage("キャンセルされました");
             return;
           }
+          await sleep(timeSpan);
           const content = getCommandAndComment(textareaValue, isReverse);
           if (!content) {
             setIsPosting(false);
             setSpoilerMessage("コメントデータのパースに失敗しました");
             return;
           }
-          const timeSpan = Number(
-            localStorage.get(
-              isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
-            )
-          );
           setSpoilerMessage(`セット中(${i + 1}/${length})`);
           if (setLine(content.command, content.comment)) {
             if (isReverse) {
@@ -168,7 +168,7 @@ const OutputBox = (): JSX.Element => {
             } else {
               textareaValue.shift();
             }
-            await sleep(timeSpan);
+            await sleep(500);
             commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {
                 key: "Enter",
@@ -183,7 +183,6 @@ const OutputBox = (): JSX.Element => {
           } else {
             setSpoilerMessage(`セットに失敗しました(${i + 1}/${length})`);
           }
-          await sleep(timeSpan);
         }
         setIsPosting(false);
       };
