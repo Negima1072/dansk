@@ -23,6 +23,7 @@ import Options_ from "@/options/Options";
 import Popup from "@/components/popup/Popup";
 import localStorage from "@/libraries/localStorage";
 import Backup from "@/components/backup/Backup";
+import uuidUtil from "@/libraries/uuidUtil";
 
 /**
  * Traceブロック
@@ -144,6 +145,7 @@ const Trace = () => {
           content: layerUtil.generateLineFromTemplate(template),
           selected: true,
           color: "#000000",
+          layerId: uuidUtil.v4(),
         },
       ]);
     }, [layerData, layerDropdownValue]),
@@ -193,6 +195,9 @@ const Trace = () => {
         setLayerData(
           data.map((layer) => {
             layer.overwrite = true;
+            if (!layer.layerId) {
+              layer.layerId = uuidUtil.v4();
+            }
             return layer;
           })
         );

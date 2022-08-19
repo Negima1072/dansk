@@ -106,6 +106,7 @@ type layer = layerTemplate & {
   color: string;
   content: layerLine[];
   overwrite?: boolean;
+  layerId: string;
 };
 
 type autoSave = {
