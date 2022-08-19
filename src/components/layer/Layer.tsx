@@ -48,6 +48,15 @@ const Layer = (props: LayerProps): JSX.Element => {
   };
   useEffect(() => {
     if (!layerElement.current || !optionData) return;
+    if (
+      !(
+        props.data.id === currentLayer.current?.id &&
+        props.data.pos === currentLayer.current?.pos
+      )
+    ) {
+      props.data.overwrite = true;
+    }
+    currentLayer.current = props.data;
     layerManager(
       props.data,
       onchange,
