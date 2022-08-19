@@ -37,11 +37,20 @@ const caretUtil = {
    * @param offset
    */
   set: (targetElement: HTMLElement, offset: number) => {
-    const targetNode = targetElement.childNodes[0];
+    let length = 0,
+      index = 0,
+      targetNode = targetElement.childNodes[index];
+    while ((targetNode?.textContent?.length || 0) + length < offset) {
+      length += targetNode?.textContent?.length || 0;
+      index++;
+      if (targetElement.childNodes.length <= index)
+        throw new Error("failed to get target node");
+      targetNode = targetElement.childNodes[index];
+    }
     const range = document.createRange();
     const selection = window.getSelection();
     if (!selection || !targetNode) return;
-    range.setStart(targetNode, offset);
+    range.setStart(targetNode, offset - length);
     range.collapse(true);
 
     selection.removeAllRanges();
