@@ -14,8 +14,9 @@ const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   left: 0;
 `;
 
-const BackgroundImage = styled.img<{ mode: objectFitArgs }>`
+const BackgroundImage = styled.img<{ mode: objectFitArgs; opacity: number }>`
   object-fit: ${(props) => props.mode};
+  opacity: ${(props) => props.opacity};
 `;
 
 function beforeUnload(e: BeforeUnloadEvent) {
@@ -84,6 +85,7 @@ const LayerContainer = (): JSX.Element => {
               src={optionData.bgImages[optionData.bgActive]}
               alt={"backgroundImage"}
               mode={optionData.bgMode}
+              opacity={optionData.bgTransparency/100}
             />,
             BackgroundImageElement
           )

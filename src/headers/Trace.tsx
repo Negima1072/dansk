@@ -24,6 +24,7 @@ import Popup from "@/components/popup/Popup";
 import localStorage from "@/libraries/localStorage";
 import Backup from "@/components/backup/Backup";
 import uuidUtil from "@/libraries/uuidUtil";
+import Slider from "@/components/slider/Slider";
 
 /**
  * Traceブロック
@@ -41,6 +42,7 @@ const Trace = () => {
       bgEditing: false,
       bgMode: "fill",
       bgVisible: true,
+      bgTransparency: 100,
       grid: false,
       replace: false,
     }),
@@ -121,6 +123,10 @@ const Trace = () => {
     ),
     toggleBackgroundVisible = useCallback(
       () => setOptionData({ ...optionData, bgVisible: !optionData.bgVisible }),
+      [optionData]
+    ),
+    changeBackgroundTransparency = useCallback(
+      (t: number) => setOptionData({ ...optionData, bgTransparency: t}),
       [optionData]
     ),
     toggleOptionEditing = useCallback(
@@ -303,6 +309,14 @@ const Trace = () => {
                   text={optionData.bgVisible ? "画像非表示" : "画像表示"}
                   value={""}
                 ></Button>
+              )}
+              {optionData?.bgActive > -1 && (
+                <Slider
+                  change={changeBackgroundTransparency}
+                  value={100}
+                  max={100}
+                  min={0}
+                ></Slider>
               )}
             </div>
           </div>
