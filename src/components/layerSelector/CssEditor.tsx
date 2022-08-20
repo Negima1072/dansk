@@ -28,6 +28,8 @@ const CssEditor = (props: EditorProps) => {
       data.top.shita = value;
     } else if (key === "left") {
       data.left = value;
+    } else if (key === "width") {
+      data.width = value;
     } else if (key === "scale_x") {
       data.scale.x = value;
     } else if (key === "scale_y") {
@@ -102,6 +104,16 @@ const CssEditor = (props: EditorProps) => {
                     type="number"
                     value={data.left}
                     onChange={(e) => update("left", e)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th colSpan={2}>width</th>
+                <td>
+                  <input
+                    type="number"
+                    value={data.width}
+                    onChange={(e) => update("width", e)}
                   />
                 </td>
               </tr>
