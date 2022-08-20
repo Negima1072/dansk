@@ -126,7 +126,7 @@ const Trace = () => {
       [optionData]
     ),
     changeBackgroundTransparency = useCallback(
-      (t: number) => setOptionData({ ...optionData, bgTransparency: t}),
+      (t: number) => setOptionData({ ...optionData, bgTransparency: t }),
       [optionData]
     ),
     toggleOptionEditing = useCallback(
