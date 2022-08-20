@@ -120,6 +120,7 @@ type optionDataType = {
   bgEditing: boolean;
   bgMode: objectFitArgs;
   bgVisible: boolean;
+  bgTransparency: number;
   grid: boolean;
   replace: boolean;
 };
