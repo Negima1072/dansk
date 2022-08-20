@@ -42,7 +42,9 @@ const Layer = (props: LayerProps): JSX.Element => {
     currentLayer = useRef<layer>();
   const onchange = (layer: layer) => {
     if (!layerData || !setLayerData) return;
-    layerData[props.id] = layer;
+    for (let i = 0; i < layerData.length; i++) {
+      if (layerData[i]?.layerId === layer.layerId) layerData[i] = layer;
+    }
     currentLayer.current = layer;
     setLayerData([...layerData]);
   };

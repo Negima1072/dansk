@@ -126,45 +126,53 @@ const CssEditor = (props: EditorProps) => {
                   />
                 </td>
               </tr>
-              {data.content.map((value, index) => {
-                return (
-                  <>
-                    <tr key={`comment${index}_font`}>
-                      <th rowSpan={3}>コメント{index + 1}</th>
-                      <th>fontSize</th>
-                      <td>
-                        <input
-                          type="number"
-                          value={value.font}
-                          onChange={(e) => update(`comment_font_${index}`, e)}
-                        />
-                      </td>
-                    </tr>
-                    <tr key={`comment${index}_line`}>
-                      <th>lineHeight</th>
-                      <td>
-                        <input
-                          type="number"
-                          value={value.line}
-                          onChange={(e) => update(`comment_line_${index}`, e)}
-                        />
-                      </td>
-                    </tr>
-                    <tr key={`comment${index}_height`}>
-                      <th>height</th>
-                      <td>
-                        <input
-                          type="number"
-                          value={value.height || value.line * value.lineCount}
-                          onChange={(e) => update(`comment_height_${index}`, e)}
-                        />
-                      </td>
-                    </tr>
-                  </>
-                );
-              })}
             </tbody>
           </table>
+          {data.content.map((value, index) => {
+            return (
+              <table className={Styles.table} key={`comment${index}`}>
+                <thead>
+                  <tr>
+                    <th colSpan={2}>名前</th>
+                    <th>値</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th rowSpan={3}>コメント{index + 1}</th>
+                    <th>fontSize</th>
+                    <td>
+                      <input
+                        type="number"
+                        value={value.font}
+                        onChange={(e) => update(`comment_font_${index}`, e)}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>lineHeight</th>
+                    <td>
+                      <input
+                        type="number"
+                        value={value.line}
+                        onChange={(e) => update(`comment_line_${index}`, e)}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>height</th>
+                    <td>
+                      <input
+                        type="number"
+                        value={value.height || value.line * value.lineCount}
+                        onChange={(e) => update(`comment_height_${index}`, e)}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            );
+          })}
         </div>
       </div>
     </Popup>

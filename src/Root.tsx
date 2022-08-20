@@ -42,7 +42,7 @@ const init = async () => {
     videoContainer,
     mainContainerPlayerPanel,
     count = 0;
-  while (count < 30) {
+  while (count < 300) {
     mainContainer = document.getElementsByClassName(
       "MainContainer"
     )[0] as HTMLDivElement;
