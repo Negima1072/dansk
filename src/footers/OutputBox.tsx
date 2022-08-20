@@ -54,7 +54,7 @@ const OutputBox = (): JSX.Element => {
         }
       }
     }
-    const seekCommand = command.match(/\[tm(?:(\d+):)?(\d+)(?:\.(\d+))?]/);
+    const seekCommand = command.match(/tm(?:(\d+):)?(\d+)(?:\.(\d+))?/);
     if (seekCommand) {
       if (!seekCommand[1] && !seekCommand[3]) {
         window.__videoplayer.currentTime(
@@ -97,14 +97,16 @@ const OutputBox = (): JSX.Element => {
      * Reactの管理するelement.valueは正常に動作しないので↓を参考にする
      * https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
      */
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-      window.HTMLInputElement.prototype,
-      "value"
-    )?.set;
-    if (!nativeInputValueSetter) return false;
-    nativeInputValueSetter.call(commentCommandInput, command);
-    commentCommandInput.dispatchEvent(new Event("change", { bubbles: true }));
-    commentCommandInput.dispatchEvent(new Event("input", { bubbles: true }));
+    if(command != ""){
+      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        "value"
+      )?.set;
+      if (!nativeInputValueSetter) return false;
+      nativeInputValueSetter.call(commentCommandInput, command);
+      commentCommandInput.dispatchEvent(new Event("change", { bubbles: true }));
+      commentCommandInput.dispatchEvent(new Event("input", { bubbles: true }));
+    }
     const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
       window.HTMLTextAreaElement.prototype,
       "value"
