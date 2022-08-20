@@ -35,7 +35,7 @@ const CssEditor = (props: EditorProps) => {
     } else if (key === "scale_y") {
       data.scale.y = value;
     } else {
-      const match = key.match(/^comment_(font|line|height)_(\d)$/);
+      const match = key.match(/^comment_(font|line|height)_(\d+)$/);
       if (!match) return;
       const target = data.content[Number(match[2])];
       if (!target) return;
