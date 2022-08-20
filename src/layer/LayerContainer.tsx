@@ -85,7 +85,7 @@ const LayerContainer = (): JSX.Element => {
               src={optionData.bgImages[optionData.bgActive]}
               alt={"backgroundImage"}
               mode={optionData.bgMode}
-              opacity={optionData.bgTransparency/100}
+              opacity={optionData.bgTransparency / 100}
             />,
             BackgroundImageElement
           )
