@@ -139,6 +139,7 @@ const layerManager = (
   };
   update();
   targetElement.oninput = update;
+  targetElement.onblur = update;
   targetElement.oncopy = (e) => {
     const copied = window.getSelection()?.toString() || "";
     e.clipboardData?.setData("text/plain", copied);
