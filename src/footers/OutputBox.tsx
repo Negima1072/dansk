@@ -213,17 +213,6 @@ const OutputBox = (): JSX.Element => {
         <div className={Styles.row}>
           <Button
             disabled={isPosting}
-            text="逆から"
-            click={toggleIsReverse}
-            active={isReverse}
-          />
-          <Button
-            disabled={isPosting}
-            text="クリア"
-            click={() => setTextareaValue([])}
-          />
-          <Button
-            disabled={isPosting}
             text="1行セット"
             click={onSetLineClick}
           />
@@ -236,6 +225,17 @@ const OutputBox = (): JSX.Element => {
           ) : (
             <Button disabled={isPosting} text="全行投下" click={onPostAll} />
           )}
+          <Button
+            disabled={isPosting}
+            text="クリア"
+            click={() => setTextareaValue([])}
+          />
+          <Button
+            disabled={isPosting}
+            text="逆から"
+            click={toggleIsReverse}
+            active={isReverse}
+          />
         </div>
       </div>
     </Spoiler>
