@@ -97,7 +97,7 @@ const OutputBox = (): JSX.Element => {
      * Reactの管理するelement.valueは正常に動作しないので↓を参考にする
      * https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
      */
-    if(command != ""){
+    if (command != "") {
       const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
         window.HTMLInputElement.prototype,
         "value"
@@ -204,9 +204,10 @@ const OutputBox = (): JSX.Element => {
             value={textareaValue.join("\n")}
             disabled={isPosting}
             wrap="off"
-            onChange={(e) =>
-              setTextareaValue(e.target.value.split(/\r\n|\r|\n/))
-            }
+            onChange={(e) => {
+              const data = e.target.value.split(/\r\n|\r|\n/);
+              setTextareaValue(e.target.value === "" ? [] : data);
+            }}
           ></textarea>
         </div>
         <div className={Styles.row}>
