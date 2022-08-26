@@ -20,6 +20,8 @@ const layerManager = (
   targetElement: HTMLDivElement,
   replaceMode: boolean
 ) => {
+  targetElement.setAttribute("layerId", data.layerId);
+  targetElement.id = `dansk:layer:${data.layerId}`;
   /**
    * 変更の際に勝手に生えたdivを消したり消えたdivを生やしたり
    * 変更があった際はコールバック(onChange)を呼ぶ
@@ -39,7 +41,8 @@ const layerManager = (
     }
     const caretPos = caretUtil.get(targetElement),
       focusedNode = caretUtil.getFocusedNode(),
-      focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1;
+      focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1,
+      focusedLines = focusedNode?.textContent?.split(/\r?\n/g);
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
@@ -47,14 +50,16 @@ const layerManager = (
     ) as HTMLDivElement[];
     let isChanged = false,
       index = 0;
-    data.content.forEach((group, groupIndex) => {
+    data.content.forEach((group) => {
       group.content.forEach((item, itemIndex) => {
         const itemElement = groupElements[index];
         if (!itemElement) return;
+        itemElement.id = `dansk:layer${data.layerId}Line${index}`;
         itemElement.classList.add(
           Styles.danskLayerItem || "_",
-          `dansk:layerGroup${groupIndex}Item${itemIndex}`
+          "dansk:layerLineItem"
         );
+        itemElement.setAttribute("lineIndex", `${index}`);
         itemElement.style.lineHeight = `${group.line}px`;
         itemElement.style.height = `${group.line}px`;
         itemElement.style.fontSize = `${group.font}px`;
@@ -95,27 +100,45 @@ const layerManager = (
       });
     });
     if (data.overwrite) {
-      data.overwrite = false;
       onChange(data);
     } else if (isChanged) {
       onChange(data);
-      let offset = 0;
-      for (const element of Array.from(
-        targetElement.children
-      ) as HTMLDivElement[]) {
-        if (caretPos === undefined) break;
-        const length = element.innerText.length + (isFirefox ? -1 : 0);
-        if (offset + length < caretPos) {
-          offset += length;
-        } else if (
-          element.innerText ===
-            `${focusedNode?.textContent}${isFirefox ? "\n" : ""}` &&
-          caretPos - offset === focusedPos
-        ) {
-          caretUtil.set(element, caretPos - offset);
-          break;
+      if (caretPos && focusedLines) {
+        let focusedText = undefined;
+        let focusedCaretPos = undefined;
+        if (focusedPos && focusedLines.length > 1) {
+          let offset = 0;
+          for (let i = 0; i < focusedLines.length; i++) {
+            const value = focusedLines[i];
+            if (!value) continue;
+            if (offset + value.length < focusedPos) {
+              offset += value.length;
+            } else {
+              focusedCaretPos = focusedPos - offset;
+              focusedText = focusedLines[i];
+              break;
+            }
+          }
         } else {
-          offset += length;
+          focusedText = focusedLines[0];
+          focusedCaretPos = focusedPos;
+        }
+        let offset = 0;
+        for (const element of Array.from(
+          targetElement.children
+        ) as HTMLDivElement[]) {
+          const length = element.innerText.length + (isFirefox ? -1 : 0);
+          if (offset + length < caretPos) {
+            offset += length;
+          } else if (
+            element.innerText === `${focusedText}${isFirefox ? "\n" : ""}` &&
+            caretPos - offset === focusedCaretPos
+          ) {
+            caretUtil.set(element, caretPos - offset);
+            break;
+          } else {
+            offset += length;
+          }
         }
       }
     }
