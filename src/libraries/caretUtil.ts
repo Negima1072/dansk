@@ -31,6 +31,15 @@ const caretUtil = {
     range.setEnd(originalRange.endContainer, originalRange.endOffset);
     return range.toString().replace(/\r?\n/g, "").length;
   },
+  isEOL: (targetElement: Node): boolean | undefined => {
+    const selection = document.getSelection();
+    if (!selection || selection.rangeCount === 0) return undefined;
+    const pos1 = caretUtil.get(targetElement);
+    selection.modify("move", "forward", "character");
+    const pos2 = caretUtil.get(targetElement);
+    selection.modify("move", "backward", "character");
+    return pos1 == pos2;
+  },
   /**
    * カーソル位置を設定する
    * @param targetElement

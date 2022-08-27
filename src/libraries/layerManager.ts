@@ -154,7 +154,17 @@ const layerManager = (
     const text = e.clipboardData.getData("text/plain");
     const selection = window.getSelection();
     if (!selection || !selection.rangeCount) return;
+    console.log(selection, caretUtil.getFocusedElement());
     selection.deleteFromDocument();
+    const isEOL = caretUtil.isEOL(targetElement);
+    const _pos = caretUtil.get(targetElement);
+    console.log(
+      isEOL,
+      _pos,
+      document.activeElement,
+      caretUtil.getFocusedElement(),
+      caretUtil.getFocusedNode()
+    );
     selection.getRangeAt(0).insertNode(document.createTextNode(text));
     selection.getRangeAt(0).collapse();
     e.preventDefault();
@@ -263,4 +273,5 @@ const getInnerText = (
   }
   return strings;
 };
+
 export default layerManager;

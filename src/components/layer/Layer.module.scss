@@ -17,7 +17,7 @@
     pointer-events: unset;
     outline: #ffff00 solid 0.2px;
     &.grid {
-      & > div {
+      & + .outline > div > div {
         outline: #ff00ff solid 0.2px;
       }
     }
@@ -37,6 +37,15 @@
   .item {
     transform-origin: left;
   }
+}
+.textarea {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  color: inherit;
+  overflow: scroll;
 }
 
 .outline {
