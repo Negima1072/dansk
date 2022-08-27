@@ -75,6 +75,17 @@ const Trace = () => {
         const targetData: layer[] = [];
         for (const layer of layerData) {
           if (isSelectedOnly && !layer.selected) continue;
+          layer.content = layer.content.map((value) => {
+            while (value.content.length < value.lineCount) {
+              value.content.push("");
+            }
+            while (value.content.length > value.lineCount) {
+              value.content[value.lineCount - 1] += value.content
+                .splice(value.lineCount)
+                .join("");
+            }
+            return value;
+          });
           targetData.push(layer);
         }
         const strings = layerUtil.toString(
