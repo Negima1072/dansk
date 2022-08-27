@@ -114,6 +114,11 @@ type autoSave = {
   data: layer[];
 };
 
+type history = {
+  caretPos?: { layerId: string; line: number; pos: number };
+  layerData: layer[];
+};
+
 type optionDataType = {
   bgActive: number;
   bgImages: string[];
