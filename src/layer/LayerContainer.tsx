@@ -35,7 +35,7 @@ const LayerContainer = (): JSX.Element => {
   useEffect(() => {
     const classList = videoSymbolContainerCanvas?.parentElement?.classList,
       cssClass = Styles.VideoSymbolContainer || "_";
-    if (!classList) return;
+    if (!classList || process.env.NODE_ENV === "development") return;
     if (layerData && layerData.length > 0) {
       window.onbeforeunload = beforeUnload;
       classList.toggle(cssClass, true);

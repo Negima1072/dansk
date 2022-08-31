@@ -11,12 +11,12 @@ import Button from "@/components/button/Button";
 import Dropdown from "@/components/dropdown/Dropdown";
 import Templates from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
-import { layer, optionDataType } from "@/@types/types";
+import { layer } from "@/@types/types";
 import LayerSelector from "@/components/layerSelector/LayerSelector";
 import layerUtil from "@/libraries/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
 import LayerPortal from "@/components/LayerPortal";
-import LayerContext from "@/components/LayerContext";
+import { layerContext } from "@/components/LayerContext";
 import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
 import LayerEditor from "@/components/layerEditor/LayerEditor";
 import Options_ from "@/options/Options";
@@ -35,22 +35,15 @@ const Trace = () => {
     [layerDropdownValue, setLayerDropdownValue] = useState<string>(
       "big_ue_ender_full_gothic_W17_L9"
     ),
-    [layerData, setLayerData] = useState<layer[]>([]),
-    [optionData, setOptionData] = useState<optionDataType>({
-      bgActive: -1,
-      bgImages: [],
-      bgEditing: false,
-      bgMode: "fill",
-      bgVisible: true,
-      bgTransparency: 100,
-      grid: false,
-      replace: false,
-    }),
     [optionEditing, setOptionEditing] = useState<boolean>(false),
     [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false),
-    { exportLayer, setExportLayer } = useContext(context);
+    { exportLayer, setExportLayer } = useContext(context),
+    { layerData, setLayerData, optionData, setOptionData } =
+      useContext(layerContext);
   const layerDataRef = useRef(layerData),
     autoSaveInterval = useRef<number>(-1);
+  if (!layerData || !setLayerData || !optionData || !setOptionData)
+    return <></>;
   useEffect(() => {
     layerDataRef.current = layerData;
   }, [layerData]);
@@ -59,7 +52,8 @@ const Trace = () => {
     if (span <= 0) return;
     autoSaveInterval.current = window.setInterval(() => {
       const data: unknown = JSON.parse(localStorage.get("autoSave"));
-      if (!typeGuard.localStorage.isAutoSave(data)) return;
+      if (!typeGuard.localStorage.isAutoSave(data) || !layerDataRef.current)
+        return;
       data.push({ data: layerDataRef.current, timestamp: Date.now() });
       if (data.length > Number(localStorage.get("options_autoSave_max"))) {
         data.shift();
@@ -81,6 +75,17 @@ const Trace = () => {
         const targetData: layer[] = [];
         for (const layer of layerData) {
           if (isSelectedOnly && !layer.selected) continue;
+          layer.content = layer.content.map((value) => {
+            while (value.content.length < value.lineCount) {
+              value.content.push("");
+            }
+            while (value.content.length > value.lineCount) {
+              value.content[value.lineCount - 1] += value.content
+                .splice(value.lineCount)
+                .join("");
+            }
+            return value;
+          });
           targetData.push(layer);
         }
         const strings = layerUtil.toString(
@@ -211,9 +216,7 @@ const Trace = () => {
       input.click();
     }, []);
   return (
-    <LayerContext
-      value={{ layerData, setLayerData, optionData, setOptionData }}
-    >
+    <>
       <Spoiler text={"Trace"}>
         <div className={Styles.table}>
           <div className={Styles.row}>
@@ -352,7 +355,7 @@ const Trace = () => {
         </Popup>
       )}
       {autoSaveWindow && <Backup close={() => setAutoSaveWindow(false)} />}
-    </LayerContext>
+    </>
   );
 };
 export default Trace;

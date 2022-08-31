@@ -114,6 +114,11 @@ type autoSave = {
   data: layer[];
 };
 
+type history = {
+  caretPos?: { layerId: string; line: number; pos: number };
+  layerData: layer[];
+};
+
 type optionDataType = {
   bgActive: number;
   bgImages: string[];
@@ -162,7 +167,33 @@ type localStorageDefaultValues = {
 };
 
 type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";
+
+declare global {
+  interface Window {
+    __videoplayer: nvPlayerApi;
+  }
+  interface Event {
+    isComposing: boolean;
+  }
+  interface Selection {
+    modify: (
+      alter: "move" | "extend",
+      direction: "forward" | "backward" | "left" | "right",
+      granularity:
+        | "character"
+        | "word"
+        | "sentence"
+        | "line"
+        | "paragraph"
+        | "lineboundary"
+        | "sentenceboundary"
+        | "paragraphboundary"
+        | "documentboundary"
+    ) => void;
+  }
+}
 type crossOriginType = "anonymous" | "use-credentials";
+
 type nvPlayerApi = {
   autoplay: () => boolean;
   buffered: () => TimeRanges;
@@ -189,11 +220,3 @@ type nvPlayerApi = {
   src: () => string;
   volume: (volume?: number) => number;
 };
-declare global {
-  interface Window {
-    __videoplayer: nvPlayerApi;
-  }
-  interface Event {
-    isComposing: boolean;
-  }
-}

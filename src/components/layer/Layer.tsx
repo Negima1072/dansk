@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { ChangeEvent, useContext, useRef } from "react";
 import { layer } from "@/@types/types";
 import Styles from "./Layer.module.scss";
 import { layerContext } from "@/components/LayerContext";
-import layerManager from "@/libraries/layerManager";
+//import layerManager from "@/libraries/layerManager";
 import grids from "@/assets/grids";
 
 type LayerProps = {
@@ -24,9 +24,19 @@ const LayerBox = styled.div<LayerBoxProps>`
   width: ${(props) => props._width}px;
   transform: scale(${(p) => p._scale.x}, ${(p) => p._scale.y});
 `;
-type LayerGroupProps = { height: number | undefined };
-const LayerGroup = styled.div<LayerGroupProps>`
-  height: ${(props) => (props.height ? `${props.height}px` : "unset")};
+type LayerItemProps = { _height: number | undefined };
+const LayerItem = styled.div<LayerItemProps>`
+  height: ${(props) => (props._height ? `${props._height}px` : "unset")};
+`;
+type LayerInputProps = {
+  _height: number | undefined;
+  _lineHeight: number;
+  _fontSize: number;
+};
+const LayerInput = styled.textarea<LayerInputProps>`
+  height: ${(props) => (props._height ? `${props._height}px` : "unset")};
+  line-height: ${(props) => props._lineHeight}px;
+  font-size: ${(props) => props._fontSize}px;
 `;
 
 /**
@@ -48,7 +58,7 @@ const Layer = (props: LayerProps): JSX.Element => {
     currentLayer.current = layer;
     setLayerData([...layerData]);
   };
-  useEffect(() => {
+  /*useEffect(() => {
     if (!layerElement.current || !optionData) return;
     if (!(props.data.layerId === currentLayer.current?.layerId)) {
       props.data.overwrite = true;
@@ -60,7 +70,19 @@ const Layer = (props: LayerProps): JSX.Element => {
       layerElement.current,
       optionData.replace
     );
-  }, [layerElement, layerData, props.data, optionData?.replace]);
+  }, [layerElement, layerData, props.data, optionData?.replace]);*/
+  const updateData = (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
+    const line = props.data.content[index];
+    const value = e.target.value.split("\n");
+    if (!line) return;
+    if (value.length > line.lineCount) {
+      e.target.style.background = "rgba(255,0,0,0.3)";
+    } else {
+      e.target.style.background = "none";
+    }
+    line.content = value;
+    onchange(props.data);
+  };
   return (
     <>
       {optionData?.grid &&
@@ -80,10 +102,26 @@ const Layer = (props: LayerProps): JSX.Element => {
         textColor={props.data.color}
         _width={props.data.areaWidth}
         _scale={props.data.scale}
-        contentEditable={props.data.selected ? "true" : "false"}
         ref={layerElement}
         spellCheck={"false"}
-      />
+      >
+        {props.data.content.map((value, index) => {
+          return (
+            <LayerInput
+              _height={value.height || value.line * value.lineCount}
+              _lineHeight={value.line}
+              _fontSize={value.font}
+              key={`layer${props.id}-group${index}`}
+              className={Styles.textarea}
+              value={value.content.join("\n")}
+              onChange={(e) => updateData(e, index)}
+              spellCheck={false}
+              wrap={"soft"}
+              onScroll={(e) => (e.target as HTMLTextAreaElement).scroll(0, 0)}
+            />
+          );
+        })}
+      </LayerBox>
       {props.data.selected && props.data.visible && (
         <LayerBox
           className={Styles.outline}
@@ -95,10 +133,19 @@ const Layer = (props: LayerProps): JSX.Element => {
         >
           {props.data.content.map((value, index) => {
             return (
-              <LayerGroup
-                height={value.height || value.line * value.lineCount}
-                key={`layer${props.id}-group${index}`}
-              />
+              <LayerItem
+                _height={value.height || value.line * value.lineCount}
+                key={`layerOutline${props.id}-group${index}`}
+              >
+                {[...Array(value.lineCount)].map((_, index_) => {
+                  return (
+                    <LayerItem
+                      _height={value.line}
+                      key={`layerOutline${props.id}-group${index}-line${index_}`}
+                    />
+                  );
+                })}
+              </LayerItem>
             );
           })}
         </LayerBox>
