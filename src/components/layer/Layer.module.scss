@@ -7,10 +7,6 @@
   padding: 0;
   width: 660px;
   height: 420px;
-  text-shadow: rgb(0 0 0 / 20%) 1px 1px 0, rgb(0 0 0 / 20%) -1px 1px 0px,
-    rgb(0 0 0 / 20%) 1px -1px 0px, rgb(0 0 0 / 20%) -1px -1px 0px,
-    rgb(0 0 0 / 20%) 1px 0px 0px, rgb(0 0 0 / 20%) -1px 0px 0px,
-    rgb(0 0 0 / 20%) 0px 1px 0px, rgb(0 0 0 / 20%) 0px -1px 0px;
   pointer-events: none;
   transform-origin: 0 0;
   &.active {
@@ -45,9 +41,17 @@
   border: none;
   outline: none;
   color: inherit;
-  overflow: scroll;
+  overflow: visible;
   padding: 0;
   margin: 0;
+  scrollbar-width: none;
+  text-shadow: rgb(0 0 0 / 20%) 1px 1px 0, rgb(0 0 0 / 20%) -1px 1px 0px,
+    rgb(0 0 0 / 20%) 1px -1px 0px, rgb(0 0 0 / 20%) -1px -1px 0px,
+    rgb(0 0 0 / 20%) 1px 0px 0px, rgb(0 0 0 / 20%) -1px 0px 0px,
+    rgb(0 0 0 / 20%) 0px 1px 0px, rgb(0 0 0 / 20%) 0px -1px 0px !important;
+}
+.textarea::-webkit-scrollbar {
+  display: none;
 }
 
 .outline {
