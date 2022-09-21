@@ -38,7 +38,10 @@ const OutputBox = (): JSX.Element => {
     isReverse: boolean
   ): { command: string; comment: string } | undefined => {
     if (!window.__videoplayer.paused()) window.__videoplayer.pause();
-    const targetLine = stringArr[isReverse ? stringArr.length - 1 : 0];
+    const targetLine = stringArr[isReverse ? stringArr.length - 1 : 0]
+      ?.replace(/\[tb]/g, "\u0009")
+      .replace(/\[03]/g, "[03]");
+    console.log(targetLine, stringArr[isReverse ? stringArr.length - 1 : 0]);
     let command = "";
     const match = targetLine?.match(/^(?:\[([^\]]+)])?(.*)/);
     if (!match || !match[2]) return;

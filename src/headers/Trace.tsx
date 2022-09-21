@@ -192,7 +192,7 @@ const Trace = () => {
       const reader = new FileReader();
       const input = document.createElement("input");
       input.type = "file";
-      input.accept = ".dansk.json,*";
+      input.accept = ".json,*";
       input.onchange = (e) => {
         const target = e.target as HTMLInputElement;
         if (target?.files && target.files[0]) {
