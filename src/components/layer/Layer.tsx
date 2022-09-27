@@ -125,7 +125,7 @@ const Layer = (props: LayerProps): JSX.Element => {
               value={value.content.join("\n")}
               onChange={(e) => updateData(e, index)}
               spellCheck={false}
-              wrap={"soft"}
+              wrap={"off"}
               onScroll={(e) => (e.target as HTMLTextAreaElement).scroll(0, 0)}
             />
           );
