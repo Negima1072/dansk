@@ -39,9 +39,18 @@ const OutputBox = (): JSX.Element => {
   ): { command: string; comment: string } | undefined => {
     if (!window.__videoplayer.paused()) window.__videoplayer.pause();
     const targetLine = stringArr[isReverse ? stringArr.length - 1 : 0]
-      ?.replace(/\[tb]/g, "\u0009")
-      .replace(/\[03]/g, "[03]");
-    console.log(targetLine, stringArr[isReverse ? stringArr.length - 1 : 0]);
+      ?.replace(/\[A0]/gi, "\u00A0")
+      .replace(/\[SP]/gi, "\u3000")
+      .replace(/\[00]/gi, "\u2000")
+      .replace(/\[01]/gi, "\u2001")
+      .replace(/\[02]/gi, "\u2002")
+      .replace(/\[03]/gi, "\u2003")
+      .replace(/\[04]/gi, "\u2004")
+      .replace(/\[05]/gi, "\u2005")
+      .replace(/\[06]/gi, "\u2006")
+      .replace(/\[0A]/gi, "\u200A")
+      .replace(/\[0B]/gi, "\u200B")
+      .replace(/\[TA?B]/gi, "\u0009");
     let command = "";
     const match = targetLine?.match(/^(?:\[([^\]]+)])?(.*)/);
     if (!match || !match[2]) return;
