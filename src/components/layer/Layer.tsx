@@ -5,6 +5,7 @@ import Styles from "./Layer.module.scss";
 import { layerContext } from "@/components/LayerContext";
 //import layerManager from "@/libraries/layerManager";
 import grids from "@/assets/grids";
+import replaceCharList from "@/libraries/layerManager.replaceCharList";
 
 type LayerProps = {
   id: number;
@@ -73,6 +74,13 @@ const Layer = (props: LayerProps): JSX.Element => {
   }, [layerElement, layerData, props.data, optionData?.replace]);*/
   const updateData = (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
     const line = props.data.content[index];
+    const char = replaceCharList[(e.nativeEvent as InputEvent).data || ""];
+    if (char && optionData?.replace) {
+      const t = e.target as HTMLTextAreaElement;
+      const i = t.selectionStart;
+      t.value = t.value.slice(0, i - 1) + char + t.value.slice(i);
+      t.setSelectionRange(i, i);
+    }
     const value = e.target.value.split("\n");
     if (!line) return;
     if (value.length > line.lineCount) {
@@ -83,6 +91,7 @@ const Layer = (props: LayerProps): JSX.Element => {
     line.content = value;
     onchange(props.data);
   };
+
   return (
     <>
       {optionData?.grid &&
@@ -137,14 +146,16 @@ const Layer = (props: LayerProps): JSX.Element => {
                 _height={value.height || value.line * value.lineCount}
                 key={`layerOutline${props.id}-group${index}`}
               >
-                {[...Array(value.lineCount)].map((_, index_) => {
-                  return (
-                    <LayerItem
-                      _height={value.line}
-                      key={`layerOutline${props.id}-group${index}-line${index_}`}
-                    />
-                  );
-                })}
+                {[...(Array(value.lineCount) as undefined[])].map(
+                  (_, index_) => {
+                    return (
+                      <LayerItem
+                        _height={value.line}
+                        key={`layerOutline${props.id}-group${index}-line${index_}`}
+                      />
+                    );
+                  }
+                )}
               </LayerItem>
             );
           })}
