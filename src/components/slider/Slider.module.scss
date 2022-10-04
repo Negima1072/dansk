@@ -1,3 +1,10 @@
-.slider {
+.slidercont {
   height: 24px;
+  display: inline-block;
+}
+
+.slider {
+  display: inline-block;
+  height: 24px;
+  vertical-align: middle;
 }
