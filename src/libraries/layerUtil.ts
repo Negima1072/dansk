@@ -209,7 +209,7 @@ const command2str = (layer: layer) => {
   }
   return `[${commands
     .join(" ")
-    .replace(/layerName/g, layer.text.replace(/\s/g, "-") + "_")
+    .replace(/layerName/g, layer.text.replace(/\s/g, "-"))
     .replace(/position/g, pos)
     .replace(/font/g, font)
     .replace(/color/g, color)
