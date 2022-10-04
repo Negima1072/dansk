@@ -223,31 +223,38 @@ const OutputBox = (): JSX.Element => {
           ></textarea>
         </div>
         <div className={Styles.row}>
-          <Button
-            disabled={isPosting}
-            text="1行セット"
-            click={onSetLineClick}
-          />
-          {isPosting ? (
+          <div className={Styles.block}>
             <Button
-              disabled={!isPosting}
-              text="キャンセル"
-              click={onPostAllCancel}
+              disabled={isPosting}
+              text="1行セット"
+              click={onSetLineClick}
             />
-          ) : (
-            <Button disabled={isPosting} text="全行投下" click={onPostAll} />
-          )}
-          <Button
-            disabled={isPosting}
-            text="クリア"
-            click={() => setTextareaValue([])}
-          />
-          <Button
-            disabled={isPosting}
-            text="逆から"
-            click={toggleIsReverse}
-            active={isReverse}
-          />
+            {isPosting ? (
+              <Button
+                disabled={!isPosting}
+                text="キャンセル"
+                click={onPostAllCancel}
+              />
+            ) : (
+              <Button disabled={isPosting} text="全行投下" click={onPostAll} />
+            )}
+            <Button
+              disabled={isPosting}
+              text="クリア"
+              click={() => setTextareaValue([])}
+            />
+          </div>
+          <div className={Styles.block}>
+            <Button
+              disabled={isPosting}
+              text="逆から"
+              click={toggleIsReverse}
+              active={isReverse}
+            />
+          </div>
+          <div className={Styles.right}>
+            <p className={Styles.rowMessage}>行数: {textareaValue.length}</p>
+          </div>
         </div>
       </div>
     </Spoiler>
