@@ -28,15 +28,17 @@ const Button = (props: sliderProps) => {
     props.change(Number(e.target.value));
   };
   return (
-    <input
-      type={"range"}
-      className={`${Styles.slider} ${props.active ? Styles.active : ""}`}
-      onChange={onSliderChange}
-      disabled={props.disabled || false}
-      value={value}
-      min={props.min}
-      max={props.max}
-    />
+    <div className={Styles.slidercont}>
+      <input
+        type={"range"}
+        className={`${Styles.slider} ${props.active ? Styles.active : ""}`}
+        onChange={onSliderChange}
+        disabled={props.disabled || false}
+        value={value}
+        min={props.min}
+        max={props.max}
+      />
+    </div>
   );
 };
 export default Button;
