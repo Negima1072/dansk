@@ -418,8 +418,11 @@ const comment2str = (
       [];
     item.content.forEach((data, index) => {
       const { width, leftSpaceWidth } = getCommentWidth(data, layer.font);
-      if (width === leftSpaceWidth) return;
-      group.push({ width, leftSpaceWidth, index });
+      if (width === leftSpaceWidth) {
+        group.push({ width: 0, leftSpaceWidth: layerWidth / 2, index });
+      } else {
+        group.push({ width, leftSpaceWidth, index });
+      }
     });
     return group;
   });
@@ -463,8 +466,7 @@ const comment2str = (
     commentWidth = [];
     comment.forEach((data, index) => {
       const { width, leftSpaceWidth } = getCommentWidth(data, layer.font);
-      if (width === leftSpaceWidth || !commentWidth) return;
-      commentWidth.push({ width, leftSpaceWidth, index });
+      commentWidth?.push({ width, leftSpaceWidth, index });
     });
     /** グループ内で一番幅が広い行 */
     const maxWidth = getMaxWidthIndex(commentWidth);
@@ -527,6 +529,7 @@ const comment2str = (
             commentMaxLength - comment.length
           }文字`
         );
+      if (template.join("\n") === "") template = ["\uA001"];
       output.push({ content: template, width: template.join("\n").length });
     }
     result.push(
