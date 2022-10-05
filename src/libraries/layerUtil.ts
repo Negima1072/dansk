@@ -207,9 +207,17 @@ const command2str = (layer: layer) => {
   if (color == "#000000" && localStorage.get("options_lineMode") === "true") {
     color = "#010101";
   }
+  let layerName = layer.text.replace(/\s/g, "-");
+  if (
+    layerName.match(
+      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|_live|invisible/
+    )
+  ) {
+    layerName += "_";
+  }
   return `[${commands
     .join(" ")
-    .replace(/layerName/g, layer.text.replace(/\s/g, "-"))
+    .replace(/layerName/g, layerName)
     .replace(/position/g, pos)
     .replace(/font/g, font)
     .replace(/color/g, color)
