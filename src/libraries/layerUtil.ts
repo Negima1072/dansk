@@ -418,8 +418,11 @@ const comment2str = (
       [];
     item.content.forEach((data, index) => {
       const { width, leftSpaceWidth } = getCommentWidth(data, layer.font);
-      if (width === leftSpaceWidth) return;
-      group.push({ width, leftSpaceWidth, index });
+      if (width === leftSpaceWidth) {
+        group.push({ width: 0, leftSpaceWidth: layerWidth / 2, index });
+      } else {
+        group.push({ width, leftSpaceWidth, index });
+      }
     });
     return group;
   });
@@ -456,15 +459,14 @@ const comment2str = (
     /** コメントの横幅(px) */
     const width = layerWidth - removableSpace * 2;
     /** 左の空白を消した文字列 */
-    let comment = group.content.map((value) =>
+    const comment = group.content.map((value) =>
       removeLeadingSpace(value, removableSpace)
     );
     //空白を消したので更新
     commentWidth = [];
     comment.forEach((data, index) => {
       const { width, leftSpaceWidth } = getCommentWidth(data, layer.font);
-      if (width === leftSpaceWidth || !commentWidth) return;
-      commentWidth.push({ width, leftSpaceWidth, index });
+      commentWidth?.push({ width, leftSpaceWidth, index });
     });
     /** グループ内で一番幅が広い行 */
     const maxWidth = getMaxWidthIndex(commentWidth);
@@ -482,7 +484,6 @@ const comment2str = (
     commentWidth.sort((a, b) =>
       a.width > b.width ? -1 : a.width < b.width ? 1 : 0
     );
-    if (replaceTab) comment = space2tab(comment);
     /** 出力用配列 */
     const output: { content: string[]; width: number }[] = [];
     for (const value of commentWidth) {
@@ -515,6 +516,7 @@ const comment2str = (
         index === array.length - 1 ? "\uA001" : ""
       );
       template[value.index] = commentLine;
+      if (replaceTab) template = space2tab(template);
       if (template.join("\n").length > commentMaxLength)
         return alert(
           `文字数が上限を突破しました\nレイヤー名：${
@@ -527,7 +529,7 @@ const comment2str = (
             commentMaxLength - comment.length
           }文字`
         );
-      if (replaceTab) template = space2tab(template);
+      if (template.join("\n") === "") template = ["\uA001"];
       output.push({ content: template, width: template.join("\n").length });
     }
     result.push(

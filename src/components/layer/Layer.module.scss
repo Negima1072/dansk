@@ -9,6 +9,7 @@
   height: 420px;
   pointer-events: none;
   transform-origin: 0 0;
+  font-size: 0;
   &.active {
     pointer-events: unset;
     outline: #ffff00 solid 0.2px;
