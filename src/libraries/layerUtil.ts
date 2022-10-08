@@ -350,9 +350,21 @@ const removeLeadingSpace = (input: string, width: number) => {
   }
   return replaceSpace(input, 1);
 };
-
+/**
+ * 左右位置調整のための空白を末尾に追加
+ * @param input
+ * @param width
+ */
 const addTrailingSpace = (input: string, width: number) => {
   input += "\u200A".repeat(width);
+  input = replaceSpace(input, 0);
+  return input;
+};
+/**
+ *
+ */
+const addDRSpace = (input: string, width: number) => {
+  input = `${"\u200A".repeat(width)}${input}${"\u200A".repeat(width)}`;
   input = replaceSpace(input, 0);
   return input;
 };
@@ -512,6 +524,7 @@ const comment2str = (
         commentLine,
         width - getCommentWidth(commentLine, layer.font).width
       );
+      if (layer.drWidth) commentLine = addDRSpace(commentLine, layer.drWidth);
       let template: string[] = comment.map((_, index, array) =>
         index === array.length - 1 ? "\uA001" : ""
       );
