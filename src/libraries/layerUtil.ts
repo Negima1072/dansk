@@ -305,9 +305,20 @@ const getCommentWidth = (
   return { leftSpaceWidth, width };
 };
 const getCharWidth = (char: string, font: commentFont): MonoChar => {
-  const charItem = CharList[char] || CharList.default;
-  if (typeGuard.layer.isMonoChar(charItem)) return charItem;
-  return { ...charItem, width: charItem.width[font] };
+  const charItem = CharList[char];
+  if (charItem) {
+    if (typeGuard.layer.isMonoChar(charItem)) return charItem;
+    return { ...charItem, width: charItem.width[font] };
+  }
+  for (const regex in CharList) {
+    const charItem = CharList[regex];
+    if (charItem && char.match(new RegExp(regex, "i"))) {
+      if (typeGuard.layer.isMonoChar(charItem)) return charItem;
+      return { ...charItem, width: charItem.width[font] };
+    }
+  }
+  if (typeGuard.layer.isMonoChar(CharList.default)) return CharList.default;
+  return { ...CharList.default, width: CharList.default.width[font] };
 };
 /**
  * 先頭の空白の長さ調節
