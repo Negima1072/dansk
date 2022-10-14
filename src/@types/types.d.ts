@@ -106,7 +106,7 @@ type layerTemplate = {
   height: number;
   /** 臨海幅 or DRの場合にtrue */
   critical: boolean;
-  /** DRの画面外幅(片側)・DR出ない場合は指定不要 */
+  /** DRの画面外幅(片側)・DRでない場合は指定不要 */
   drWidth?: number;
   /** 各テンプレごとのtop位置(px) */
   top: { ue: number; naka: number; shita: number };
