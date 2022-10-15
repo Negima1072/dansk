@@ -305,9 +305,20 @@ const getCommentWidth = (
   return { leftSpaceWidth, width };
 };
 const getCharWidth = (char: string, font: commentFont): MonoChar => {
-  const charItem = CharList[char] || CharList.default;
-  if (typeGuard.layer.isMonoChar(charItem)) return charItem;
-  return { ...charItem, width: charItem.width[font] };
+  const charItem = CharList[char];
+  if (charItem) {
+    if (typeGuard.layer.isMonoChar(charItem)) return charItem;
+    return { ...charItem, width: charItem.width[font] };
+  }
+  for (const regex in CharList) {
+    const charItem = CharList[regex];
+    if (charItem && char.match(new RegExp(regex, "i"))) {
+      if (typeGuard.layer.isMonoChar(charItem)) return charItem;
+      return { ...charItem, width: charItem.width[font] };
+    }
+  }
+  if (typeGuard.layer.isMonoChar(CharList.default)) return CharList.default;
+  return { ...CharList.default, width: CharList.default.width[font] };
 };
 /**
  * 先頭の空白の長さ調節
@@ -350,9 +361,21 @@ const removeLeadingSpace = (input: string, width: number) => {
   }
   return replaceSpace(input, 1);
 };
-
+/**
+ * 左右位置調整のための空白を末尾に追加
+ * @param input
+ * @param width
+ */
 const addTrailingSpace = (input: string, width: number) => {
   input += "\u200A".repeat(width);
+  input = replaceSpace(input, 0);
+  return input;
+};
+/**
+ *
+ */
+const addDRSpace = (input: string, width: number) => {
+  input = `${"\u200A".repeat(width)}${input}${"\u200A".repeat(width)}`;
   input = replaceSpace(input, 0);
   return input;
 };
@@ -512,6 +535,7 @@ const comment2str = (
         commentLine,
         width - getCommentWidth(commentLine, layer.font).width
       );
+      if (layer.drWidth) commentLine = addDRSpace(commentLine, layer.drWidth);
       let template: string[] = comment.map((_, index, array) =>
         index === array.length - 1 ? "\uA001" : ""
       );

@@ -1,8 +1,12 @@
 import { ReactNode } from "react";
 
+/** 投稿者コメント */
 type ownerComment = {
+  /** 時間: mm:ss.ss */
   time: string;
+  /** コマンド(スペース区切り) */
   command: string;
+  /** コメントデータ */
   comment: string;
 };
 type contextTypeNullable = {
@@ -58,7 +62,6 @@ type ProChar = {
   };
   isSpace: boolean;
 };
-
 type CharList = {
   [key: string]: MonoChar | ProChar;
   default: MonoChar | ProChar;
@@ -83,19 +86,41 @@ type layerLine = {
   content: string[];
 };
 type layerTemplate = {
+  /** 適用するコマンド */
   commands: string[];
+  /** 初期位置 */
   pos: commentPos;
+  /** テンプレが対応している位置 */
   posList: commentPos[];
+  /** テンプレート名 */
   text: string;
+  /** 旧だんすくの識別名 */
   value: string;
+  /** 配列のキー */
   id: string;
+  /** textareaの横幅(px) */
   areaWidth: number;
+  /** 横幅 */
   width: number;
+  /** 行数 */
   height: number;
+  /** 臨海幅 or DRの場合にtrue */
   critical: boolean;
+  /** DRの画面外幅(片側)・DRでない場合は指定不要 */
+  drWidth?: number;
+  /** 各テンプレごとのtop位置(px) */
   top: { ue: number; naka: number; shita: number };
+  /** left位置(px) */
   left: number;
+  /** x/yそれぞれのtransform scaleの値 */
   scale: { x: number; y: number };
+  /** {
+  font: font-size(px)
+  line: line-height(px)
+  lineCount: 行数
+  height: height(px)
+  count: 何回繰り返すか
+} */
   size: layerSizeData[];
 };
 type layer = layerTemplate & {
@@ -112,11 +137,6 @@ type layer = layerTemplate & {
 type autoSave = {
   timestamp: number;
   data: layer[];
-};
-
-type history = {
-  caretPos?: { layerId: string; line: number; pos: number };
-  layerData: layer[];
 };
 
 type optionDataType = {
@@ -173,9 +193,11 @@ declare global {
   interface Window {
     __videoplayer: nvPlayerApi;
   }
+
   interface Event {
     isComposing: boolean;
   }
+
   interface Selection {
     modify: (
       alter: "move" | "extend",
