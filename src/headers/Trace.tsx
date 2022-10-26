@@ -142,12 +142,19 @@ const Trace = () => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
       if (!typeGuard.trace.template(template)) return;
-      const _layerData = layerData.map((value) => {
-        value.selected = false;
-        return value;
-      });
+      const color: string | false | undefined = layerData.reduce((pv, val) => {
+        if (val.selected) {
+          val.selected = false;
+          if (pv === undefined) {
+            return val.color;
+          } else {
+            return false;
+          }
+        }
+        return pv;
+      }, undefined as undefined | false | string);
       setLayerData([
-        ..._layerData,
+        ...layerData,
         {
           ...template,
           type: id,
@@ -155,7 +162,7 @@ const Trace = () => {
           visible: true,
           content: layerUtil.generateLineFromTemplate(template),
           selected: true,
-          color: "#000000",
+          color: color || "#000000",
           layerId: uuidUtil.v4(),
         },
       ]);
