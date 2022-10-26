@@ -312,7 +312,7 @@ const getCharWidth = (char: string, font: commentFont): MonoChar => {
   }
   for (const regex in CharList) {
     const charItem = CharList[regex];
-    if (charItem && char.match(new RegExp(regex, "i"))) {
+    if (regex.length > 1 && charItem && char.match(new RegExp(regex, "i"))) {
       if (typeGuard.layer.isMonoChar(charItem)) return charItem;
       return { ...charItem, width: charItem.width[font] };
     }
