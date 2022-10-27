@@ -50,7 +50,8 @@ const OutputBox = (): JSX.Element => {
       .replace(/\[06]/gi, "\u2006")
       .replace(/\[0A]/gi, "\u200A")
       .replace(/\[0B]/gi, "\u200B")
-      .replace(/\[TA?B]/gi, "\u0009");
+      .replace(/\[TA?B]/gi, "\u0009")
+      .replace(/<BR>/gi, "\n");
     let command = "";
     const match = targetLine?.match(/^(?:\[([^\]]+)])?(.*)/);
     if (!match || !match[2]) return;
@@ -175,7 +176,11 @@ const OutputBox = (): JSX.Element => {
             return;
           }
           await sleep(timeSpan);
-          setSpoilerMessage(`セット中(進行度: ${i + 1}/${length} 文字数: ${content.comment.length})`);
+          setSpoilerMessage(
+            `セット中(進行度: ${i + 1}/${length} 文字数: ${
+              content.comment.length
+            })`
+          );
           if (setLine(content.command, content.comment)) {
             if (isReverse) {
               textareaValue.pop();
@@ -193,9 +198,17 @@ const OutputBox = (): JSX.Element => {
               })
             );
             setTextareaValue([...textareaValue]);
-            setSpoilerMessage(`投下しました(進行度: ${i + 1}/${length} 文字数: ${content.comment.length})`);
+            setSpoilerMessage(
+              `投下しました(進行度: ${i + 1}/${length} 文字数: ${
+                content.comment.length
+              })`
+            );
           } else {
-            setSpoilerMessage(`セットに失敗しました(進行度: ${i + 1}/${length} 文字数: ${content.comment.length})`);
+            setSpoilerMessage(
+              `セットに失敗しました(進行度: ${i + 1}/${length} 文字数: ${
+                content.comment.length
+              })`
+            );
           }
         }
         setIsPosting(false);
