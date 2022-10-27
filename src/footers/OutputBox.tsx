@@ -6,6 +6,7 @@ import Styles from "./OutputBox.module.scss";
 import Button from "@/components/button/Button";
 import sleep from "@/libraries/sleep";
 import localStorage from "@/libraries/localStorage";
+import CommentsDetail from "@/components/commentsDetail/CommentsDetail";
 
 /**
  * 入出力用のテキストエリア
@@ -21,6 +22,7 @@ const OutputBox = (): JSX.Element => {
     [textareaValue, setTextareaValue] = useState<string[]>([]),
     [isReverse, setIsReverse] = useState<boolean>(false),
     [isPosting, setIsPosting] = useState<boolean>(false),
+    [isShowDetails, setIsShowDetails] = useState<boolean>(false),
     [spoilerMessage, setSpoilerMessage] = useState<string>(""),
     postAllCancel = useRef<boolean>(false);
   useEffect(() => {
@@ -50,12 +52,11 @@ const OutputBox = (): JSX.Element => {
       .replace(/\[06]/gi, "\u2006")
       .replace(/\[0A]/gi, "\u200A")
       .replace(/\[0B]/gi, "\u200B")
-      .replace(/\[TA?B]/gi, "\u0009")
-      .replace(/<BR>/gi, "\n");
+      .replace(/\[TA?B]/gi, "\u0009");
     let command = "";
     const match = targetLine?.match(/^(?:\[([^\]]+)])?(.*)/);
     if (!match || !match[2]) return;
-    const comment = match[2];
+    let comment = match[2];
     if (match[1]) {
       command = match[1];
     } else if (isReverse) {
@@ -87,6 +88,7 @@ const OutputBox = (): JSX.Element => {
       stringArr[isReverse ? stringArr.length - 1 : 0] = comment;
       return getCommandAndComment(stringArr, isReverse);
     }
+    comment = comment.replace(/<BR>/gi, "\n");
     return { command, comment };
   };
   const setLine = (command: string, comment: string): boolean => {
@@ -218,59 +220,82 @@ const OutputBox = (): JSX.Element => {
     onPostAllCancel = useCallback(() => (postAllCancel.current = true), []),
     toggleIsReverse = useCallback(() => {
       setIsReverse(!isReverse);
-    }, [isReverse]);
+    }, [isReverse]),
+    toggleCommentsDetail = useCallback(() => {
+      setIsShowDetails(!isShowDetails);
+    }, [isShowDetails]);
   if (exportLayer === undefined) return <></>;
   return (
-    <Spoiler text={"Box"} message={spoilerMessage}>
-      <div className={Styles.table}>
-        <div className={Styles.row}>
-          <textarea
-            className={Styles.textarea}
-            value={textareaValue.join("\n")}
-            disabled={isPosting}
-            wrap="off"
-            onChange={(e) => {
-              const data = e.target.value.split(/\r\n|\r|\n/);
-              setTextareaValue(e.target.value === "" ? [] : data);
-            }}
-          ></textarea>
-        </div>
-        <div className={Styles.row}>
-          <div className={Styles.block}>
-            <Button
+    <>
+      <Spoiler text={"Box"} message={spoilerMessage}>
+        <div className={Styles.table}>
+          <div className={Styles.row}>
+            <textarea
+              className={Styles.textarea}
+              value={textareaValue.join("\n")}
               disabled={isPosting}
-              text="1行セット"
-              click={onSetLineClick}
-            />
-            {isPosting ? (
+              wrap="off"
+              onChange={(e) => {
+                const data = e.target.value.split(/\r\n|\r|\n/);
+                setTextareaValue(e.target.value === "" ? [] : data);
+              }}
+            ></textarea>
+          </div>
+          <div className={Styles.row}>
+            <div className={Styles.block}>
               <Button
-                disabled={!isPosting}
-                text="キャンセル"
-                click={onPostAllCancel}
+                disabled={isPosting}
+                text="1行セット"
+                click={onSetLineClick}
               />
-            ) : (
-              <Button disabled={isPosting} text="全行投下" click={onPostAll} />
-            )}
-            <Button
-              disabled={isPosting}
-              text="クリア"
-              click={() => setTextareaValue([])}
-            />
-          </div>
-          <div className={Styles.block}>
-            <Button
-              disabled={isPosting}
-              text="逆から"
-              click={toggleIsReverse}
-              active={isReverse}
-            />
-          </div>
-          <div className={Styles.right}>
-            <p className={Styles.rowMessage}>行数: {textareaValue.length}</p>
+              {isPosting ? (
+                <Button
+                  disabled={!isPosting}
+                  text="キャンセル"
+                  click={onPostAllCancel}
+                />
+              ) : (
+                <Button
+                  disabled={isPosting}
+                  text="全行投下"
+                  click={onPostAll}
+                />
+              )}
+              <Button
+                disabled={isPosting}
+                text="クリア"
+                click={() => setTextareaValue([])}
+              />
+            </div>
+            <div className={Styles.block}>
+              <Button
+                disabled={isPosting}
+                text="逆から"
+                click={toggleIsReverse}
+                active={isReverse}
+              />
+            </div>
+            <div className={Styles.block}>
+              <Button
+                disabled={isPosting}
+                text="コメント詳細"
+                click={toggleCommentsDetail}
+              />
+            </div>
+            <div className={Styles.right}>
+              <p className={Styles.rowMessage}>行数: {textareaValue.length}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </Spoiler>
+      </Spoiler>
+      {isShowDetails && (
+        <CommentsDetail
+          close={toggleCommentsDetail}
+          textareaValue={textareaValue}
+          isReverse={isReverse}
+        />
+      )}
+    </>
   );
 };
 export default OutputBox;
