@@ -175,7 +175,7 @@ const OutputBox = (): JSX.Element => {
             return;
           }
           await sleep(timeSpan);
-          setSpoilerMessage(`セット中(${i + 1}/${length})`);
+          setSpoilerMessage(`セット中(進行度: ${i + 1}/${length} 文字数: ${content.comment.length})`);
           if (setLine(content.command, content.comment)) {
             if (isReverse) {
               textareaValue.pop();
@@ -193,9 +193,9 @@ const OutputBox = (): JSX.Element => {
               })
             );
             setTextareaValue([...textareaValue]);
-            setSpoilerMessage(`投下しました(${i + 1}/${length})`);
+            setSpoilerMessage(`投下しました(進行度: ${i + 1}/${length} 文字数: ${content.comment.length})`);
           } else {
-            setSpoilerMessage(`セットに失敗しました(${i + 1}/${length})`);
+            setSpoilerMessage(`セットに失敗しました(進行度: ${i + 1}/${length} 文字数: ${content.comment.length})`);
           }
         }
         setIsPosting(false);
