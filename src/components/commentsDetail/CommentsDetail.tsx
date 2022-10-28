@@ -50,6 +50,9 @@ const CommentsDetail: React.FC<propType> = (props) => {
                   Number(seekCommand[3]) / Math.pow(10, seekCommand[3].length);
               timeMSec = currentTime;
             }
+            if (timeMSec < 0) timeMSec = 0;
+            if (timeMSec > window.__videoplayer.duration())
+              timeMSec = window.__videoplayer.duration();
           } else {
             command = match[1];
           }
