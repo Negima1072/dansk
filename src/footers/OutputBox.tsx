@@ -235,6 +235,7 @@ const OutputBox = (): JSX.Element => {
               value={textareaValue.join("\n")}
               disabled={isPosting}
               wrap="off"
+              spellCheck={false}
               onChange={(e) => {
                 const data = e.target.value.split(/\r\n|\r|\n/);
                 setTextareaValue(e.target.value === "" ? [] : data);
