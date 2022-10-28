@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Popup from "@/components/popup/Popup";
 import Styles from "./CommentsDetail.module.scss";
+import timeUtil from "@/libraries/timeUtil";
+import localStorage from "@/libraries/localStorage";
 
 type propType = {
   textareaValue: string[];
@@ -9,42 +11,59 @@ type propType = {
 };
 
 const CommentsDetail: React.FC<propType> = (props) => {
-  const getCommentDetail = (
-    text: string
-  ): { row: number; length: number; command: string } => {
-    const targetLine = text
-      ?.replace(/\[A0]/gi, "\u00A0")
-      .replace(/\[SP]/gi, "\u3000")
-      .replace(/\[00]/gi, "\u2000")
-      .replace(/\[01]/gi, "\u2001")
-      .replace(/\[02]/gi, "\u2002")
-      .replace(/\[03]/gi, "\u2003")
-      .replace(/\[04]/gi, "\u2004")
-      .replace(/\[05]/gi, "\u2005")
-      .replace(/\[06]/gi, "\u2006")
-      .replace(/\[0A]/gi, "\u200A")
-      .replace(/\[0B]/gi, "\u200B")
-      .replace(/\[TA?B]/gi, "\u0009");
-    let comment = targetLine;
-    let command = "";
-    for (;;) {
-      const match = comment?.match(/^(?:\[([^\]]+)])?(.*)/);
-      if (!match || !match[2]) break;
-      comment = match[2];
-      if (match[1]) {
-        const seekCommand = match[1].match(/tm(?:(\d+):)?(\d+)(?:\.(\d+))?/);
-        if (!seekCommand) {
-          command = match[1];
+  const commentDetails = useMemo(() => {
+    let timeMSec = 0;
+    timeMSec = window.__videoplayer.currentTime();
+    return props.textareaValue.map((text) => {
+      const targetLine = text
+        ?.replace(/\[A0]/gi, "\u00A0")
+        .replace(/\[SP]/gi, "\u3000")
+        .replace(/\[00]/gi, "\u2000")
+        .replace(/\[01]/gi, "\u2001")
+        .replace(/\[02]/gi, "\u2002")
+        .replace(/\[03]/gi, "\u2003")
+        .replace(/\[04]/gi, "\u2004")
+        .replace(/\[05]/gi, "\u2005")
+        .replace(/\[06]/gi, "\u2006")
+        .replace(/\[0A]/gi, "\u200A")
+        .replace(/\[0B]/gi, "\u200B")
+        .replace(/\[TA?B]/gi, "\u0009");
+      let comment = targetLine;
+      let command = "";
+      for (;;) {
+        const match = comment?.match(/^(?:\[([^\]]+)])?(.*)/);
+        if (!match || !match[2]) break;
+        comment = match[2];
+        if (match[1]) {
+          const seekCommand = match[1].match(/tm(?:(\d+):)?(\d+)(?:\.(\d+))?/);
+          if (seekCommand) {
+            if (!seekCommand[1] && !seekCommand[3]) {
+              timeMSec +=
+                Number(seekCommand[2]) /
+                (localStorage.get("options_useMs") === "true" ? 1000 : 100);
+            } else {
+              let currentTime = 0;
+              if (seekCommand[1]) currentTime += Number(seekCommand[1]) * 60;
+              if (seekCommand[2]) currentTime += Number(seekCommand[2]);
+              if (seekCommand[3])
+                currentTime +=
+                  Number(seekCommand[3]) / Math.pow(10, seekCommand[3].length);
+              timeMSec = currentTime;
+            }
+          } else {
+            command = match[1];
+          }
+        } else {
+          break;
         }
-      } else {
-        break;
       }
-    }
-    comment = comment.replace(/<BR>/gi, "\n");
-    const row = comment.split("\n").length;
-    const length = comment.length;
-    return { row, length, command };
-  };
+      comment = comment.replace(/<BR>/gi, "\n");
+      const row = comment.split("\n").length;
+      const length = comment.length;
+      const time = timeUtil.time2str(timeMSec);
+      return { row, length, time, command };
+    });
+  }, [props.textareaValue]);
   return (
     <Popup
       title={props.isReverse ? "コメント詳細(逆モード)" : "コメント詳細"}
@@ -58,6 +77,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
             <thead>
               <tr>
                 <th>コメ番</th>
+                <th>時間</th>
                 <th>行数</th>
                 <th>文字数</th>
                 <th>コマンド</th>
@@ -65,12 +85,12 @@ const CommentsDetail: React.FC<propType> = (props) => {
             </thead>
             <tbody>
               {props.isReverse
-                ? props.textareaValue
-                    .map((v, i) => {
-                      const detail = getCommentDetail(v);
+                ? commentDetails
+                    .map((detail, i) => {
                       return (
                         <tr>
                           <td>{i + 1}</td>
+                          <td>{detail.time}</td>
                           <td>{detail.row}</td>
                           <td>{detail.length}</td>
                           <td className={Styles.commandTd}>{detail.command}</td>
@@ -78,11 +98,11 @@ const CommentsDetail: React.FC<propType> = (props) => {
                       );
                     })
                     .reverse()
-                : props.textareaValue.map((v, i) => {
-                    const detail = getCommentDetail(v);
+                : commentDetails.map((detail, i) => {
                     return (
                       <tr>
                         <td>{i + 1}</td>
+                        <td>{detail.time}</td>
                         <td>{detail.row}</td>
                         <td>{detail.length}</td>
                         <td className={Styles.commandTd}>{detail.command}</td>
