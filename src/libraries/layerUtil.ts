@@ -514,6 +514,13 @@ const comment2str = (
       let commentLine = comment[value.index] || "",
         /** 行を追加したか */
         isAdded = false;
+      //最終行かつ空なら[03]を上書きしないようにスキップする
+      if (
+        value.index + 1 === comment.length &&
+        value.index > 0 &&
+        value.width === 0
+      )
+        continue;
       //各行をコメントに足せるか確認していく
       for (const item of output) {
         //最終行の場合、\uA001が要らなくなるので
@@ -541,6 +548,8 @@ const comment2str = (
       );
       template[value.index] = commentLine;
       if (replaceTab) template = space2tab(template);
+      if (template[template.length - 1] === "")
+        template[template.length - 1] = "\uA001";
       if (template.join("\n").length > commentMaxLength)
         return alert(
           `文字数が上限を突破しました\nレイヤー名：${
