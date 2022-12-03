@@ -72,7 +72,7 @@ const Trace = () => {
           isMonospaced = !!value.match(/Monospaced/),
           isOwner = !!value.match(/Owner/),
           isSelectedOnly = !!value.match(/Selected/);
-        const targetData: layer[] = [];
+        let targetData: layer[] = [];
         for (const layer of layerData) {
           if (isSelectedOnly && !layer.selected) continue;
           layer.content = layer.content.map((value) => {
@@ -87,6 +87,13 @@ const Trace = () => {
             return value;
           });
           targetData.push(layer);
+        }
+
+        if (
+          !isSelectedOnly &&
+          localStorage.get("options_exportHiddenLayer") === "false"
+        ) {
+          targetData = targetData.filter((layer) => layer.visible);
         }
         const strings = layerUtil.toString(
           targetData,

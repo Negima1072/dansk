@@ -163,6 +163,7 @@ type localStorageKeys =
   | "options_timespan_owner"
   | "options_useMs"
   | "options_lineMode"
+  | "options_exportHiddenLayer"
   | "display_trace"
   | "display_memo"
   | "display_time"
