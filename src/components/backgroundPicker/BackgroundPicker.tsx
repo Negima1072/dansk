@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Popup from "@/components/popup/Popup";
 import BackgroundImageDisplay from "@/components/backgroundPicker/BackgroundImageDisplay";
 import { layerContext } from "@/components/LayerContext";
@@ -22,26 +16,25 @@ const BackgroundPicker = () => {
   const { optionData, setOptionData } = useContext(layerContext);
   const [urlInputActive, setUrlInputActive] = useState<boolean>(false),
     [urlInputValue, setUrlInputValue] = useState<string>(""),
-    colorInput = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (!colorInput.current) return;
-    colorInput.current.onchange = (e) => {
-      const color = (e.target as HTMLInputElement)?.value,
-        canvas = document.createElement("canvas"),
-        context = canvas.getContext("2d");
-      if (!context || !optionData || !setOptionData) return;
-      canvas.width = 1920;
-      canvas.height = 1080;
-      context.fillStyle = color;
-      context.fillRect(0, 0, 1920, 1080);
-      canvas.toBlob((blob) => {
-        if (!blob) return;
-        optionData.bgImages.push(URL.createObjectURL(blob));
-        setOptionData({ ...optionData });
-      });
-    };
-  }, [colorInput]);
+    [colorInputActive, setColorInputActive] = useState<boolean>(false),
+    [colorInputValue, setColorInputValue] = useState<string>("#000000");
   if (!optionData || !setOptionData) return <></>;
+  const addColorBg = () => {
+    setColorInputActive(false);
+    const color = colorInputValue,
+      canvas = document.createElement("canvas"),
+      context = canvas.getContext("2d");
+    if (!context || !optionData || !setOptionData) return;
+    canvas.width = 1920;
+    canvas.height = 1080;
+    context.fillStyle = color;
+    context.fillRect(0, 0, 1920, 1080);
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      optionData.bgImages.push(URL.createObjectURL(blob));
+      setOptionData({ ...optionData });
+    });
+  };
   const loadFromFile = () => {
       const input = document.createElement("input");
       input.type = "file";
@@ -67,9 +60,6 @@ const BackgroundPicker = () => {
         setUrlInputValue("");
         setUrlInputActive(false);
       }
-    },
-    addColorBackground = () => {
-      colorInput.current?.click();
     };
 
   const drawModeOnChange = useCallback(
@@ -92,8 +82,10 @@ const BackgroundPicker = () => {
             click={() => setUrlInputActive(true)}
             text={"画像をURLから読み込む"}
           />
-          <Button click={addColorBackground} text={"単色背景を追加"} />
-          <input type="color" className={Styles.color} ref={colorInput} />
+          <Button
+            click={() => setColorInputActive(true)}
+            text={"単色背景を追加"}
+          />
         </div>
         <div>
           表示モード：
@@ -162,6 +154,22 @@ const BackgroundPicker = () => {
             pattern={"^https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"}
           />
           <Button click={loadFromURL} text={"追加"} />
+        </Popup>
+      )}
+      {colorInputActive && (
+        <Popup
+          title={"単色背景を追加"}
+          close={() => {
+            setColorInputActive(false);
+          }}
+        >
+          <input
+            className={Styles.urlInput}
+            value={colorInputValue}
+            onChange={(e) => setColorInputValue(e.target.value)}
+            type={"color"}
+          />
+          <Button click={addColorBg} text={"追加"} />
         </Popup>
       )}
     </>
