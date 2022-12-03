@@ -1,6 +1,6 @@
 import { layer } from "@/@types/types";
 import Styles from "./layerManager.module.scss";
-import replaceCharList from "@/libraries/layerManager.replaceCharList";
+import replaceCharList from "@/layer/layerManager/layerManager.replaceCharList";
 import caretUtil from "@/libraries/caretUtil";
 import typeGuard from "@/libraries/typeGuard";
 

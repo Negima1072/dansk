@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
 import Popup from "@/components/popup/Popup";
-import BackgroundImageDisplay from "@/components/backgroundPicker/BackgroundImageDisplay";
+import BackgroundImageDisplay from "@/headers/backgroundPicker/BackgroundImageDisplay";
 import { layerContext } from "@/components/LayerContext";
 import Button from "@/components/button/Button";
 import Dropdown from "@/components/dropdown/Dropdown";

@@ -6,7 +6,7 @@ import {
   layerTemplate,
   MonoChar,
 } from "@/@types/types";
-import localStorage from "./localStorage";
+import localStorage from "@/libraries/localStorage";
 import Templates from "@/headers/Trace.templates";
 import CharList from "./layerUtil.charList";
 import typeGuard from "@/libraries/typeGuard";

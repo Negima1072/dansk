@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useCallback, useContext, useState } from "react";
 import Styles from "./LayerSelector.module.scss";
 import { ReactSortable } from "react-sortablejs";
-import layerUtil from "@/libraries/layerUtil";
+import layerUtil from "@/headers/layerUtil/layerUtil";
 import icons from "@/assets/icons";
 import { layerContext } from "@/components/LayerContext";
 import styled from "styled-components";
-import CssEditor from "@/components/layerSelector/CssEditor";
+import CssEditor from "@/headers/layerSelector/CssEditor";
 import { layer } from "@/@types/types";
 
 type colorProps = {
