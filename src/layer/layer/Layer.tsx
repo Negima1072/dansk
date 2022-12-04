@@ -3,9 +3,8 @@ import React, { ChangeEvent, useContext, useRef } from "react";
 import { layer } from "@/@types/types";
 import Styles from "./Layer.module.scss";
 import { layerContext } from "@/components/LayerContext";
-//import layerManager from "@/libraries/layerManager";
 import grids from "@/assets/grids";
-import replaceCharList from "@/libraries/layerManager.replaceCharList";
+import replaceCharList from "@/layer/layerManager/layerManager.replaceCharList";
 
 type LayerProps = {
   id: number;

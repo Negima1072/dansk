@@ -12,17 +12,17 @@ import Dropdown from "@/components/dropdown/Dropdown";
 import Templates from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
 import { layer } from "@/@types/types";
-import LayerSelector from "@/components/layerSelector/LayerSelector";
-import layerUtil from "@/libraries/layerUtil";
+import LayerSelector from "@/headers/layerSelector/LayerSelector";
+import layerUtil from "@/headers/layerUtil/layerUtil";
 import typeGuard from "@/libraries/typeGuard";
 import LayerPortal from "@/components/LayerPortal";
 import { layerContext } from "@/components/LayerContext";
-import BackgroundPicker from "@/components/backgroundPicker/BackgroundPicker";
-import LayerEditor from "@/components/layerEditor/LayerEditor";
+import BackgroundPicker from "@/headers/backgroundPicker/BackgroundPicker";
+import LayerEditor from "@/headers/layerEditor/LayerEditor";
 import Options_ from "@/options/Options";
 import Popup from "@/components/popup/Popup";
 import localStorage from "@/libraries/localStorage";
-import Backup from "@/components/backup/Backup";
+import Backup from "@/headers/backup/Backup";
 import uuidUtil from "@/libraries/uuidUtil";
 import Slider from "@/components/slider/Slider";
 
@@ -72,7 +72,7 @@ const Trace = () => {
           isMonospaced = !!value.match(/Monospaced/),
           isOwner = !!value.match(/Owner/),
           isSelectedOnly = !!value.match(/Selected/);
-        const targetData: layer[] = [];
+        let targetData: layer[] = [];
         for (const layer of layerData) {
           if (isSelectedOnly && !layer.selected) continue;
           layer.content = layer.content.map((value) => {
@@ -87,6 +87,13 @@ const Trace = () => {
             return value;
           });
           targetData.push(layer);
+        }
+
+        if (
+          !isSelectedOnly &&
+          localStorage.get("options_exportHiddenLayer") === "false"
+        ) {
+          targetData = targetData.filter((layer) => layer.visible);
         }
         const strings = layerUtil.toString(
           targetData,
@@ -137,6 +144,19 @@ const Trace = () => {
     toggleOptionEditing = useCallback(
       () => setOptionEditing(!optionEditing),
       [optionEditing]
+    ),
+    togglePreview = useCallback(
+      () =>
+        setOptionData({
+          ...optionData,
+          preview:
+            optionData.preview === "disable"
+              ? "enable"
+              : optionData.preview === "enable"
+              ? "previewOnly"
+              : "disable",
+        }),
+      [optionData]
     ),
     addLayer = useCallback(() => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
@@ -279,6 +299,16 @@ const Trace = () => {
                 click={toggleOptionEditing}
                 text={"設定"}
                 active={optionEditing}
+              />
+              <Button
+                click={togglePreview}
+                text={
+                  optionData.preview === "disable"
+                    ? "編集"
+                    : optionData.preview === "previewOnly"
+                    ? "プレビュー"
+                    : "編集+プレビュー"
+                }
               />
             </div>
           </div>

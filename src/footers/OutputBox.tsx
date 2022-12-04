@@ -6,7 +6,7 @@ import Styles from "./OutputBox.module.scss";
 import Button from "@/components/button/Button";
 import sleep from "@/libraries/sleep";
 import localStorage from "@/libraries/localStorage";
-import CommentsDetail from "@/components/commentsDetail/CommentsDetail";
+import CommentsDetail from "@/footers/commentsDetail/CommentsDetail";
 
 /**
  * 入出力用のテキストエリア

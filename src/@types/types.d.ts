@@ -9,6 +9,8 @@ type ownerComment = {
   /** コメントデータ */
   comment: string;
 };
+
+type convertFormat = "domo" | "tokome" | "dansk";
 type contextTypeNullable = {
   videoElement?: HTMLVideoElement;
   commentCommandInput?: HTMLInputElement;
@@ -148,6 +150,7 @@ type optionDataType = {
   bgTransparency: number;
   grid: boolean;
   replace: boolean;
+  preview: "disable" | "previewOnly" | "enable";
 };
 
 type localStorageKeys =
@@ -163,6 +166,7 @@ type localStorageKeys =
   | "options_timespan_owner"
   | "options_useMs"
   | "options_lineMode"
+  | "options_exportHiddenLayer"
   | "display_trace"
   | "display_memo"
   | "display_time"
@@ -196,23 +200,6 @@ declare global {
 
   interface Event {
     isComposing: boolean;
-  }
-
-  interface Selection {
-    modify: (
-      alter: "move" | "extend",
-      direction: "forward" | "backward" | "left" | "right",
-      granularity:
-        | "character"
-        | "word"
-        | "sentence"
-        | "line"
-        | "paragraph"
-        | "lineboundary"
-        | "sentenceboundary"
-        | "paragraphboundary"
-        | "documentboundary"
-    ) => void;
   }
 }
 type crossOriginType = "anonymous" | "use-credentials";

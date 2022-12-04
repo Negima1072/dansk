@@ -75,6 +75,12 @@ const defaultValue: localStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
   },
+  options_exportHiddenLayer: {
+    defaultValue: "false",
+    description: "非表示のレイヤーを出力",
+    dangerous: false,
+    type: "boolean",
+  },
   display_trace: {
     defaultValue: "true",
   },

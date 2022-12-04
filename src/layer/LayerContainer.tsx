@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { layerContext } from "@/components/LayerContext";
-import Layer from "@/components/layer/Layer";
+import Layer from "@/layer/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
 import { objectFitArgs } from "@/@types/types";
 import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
+import { Preview } from "@/layer/Preview/Preview";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -53,6 +54,7 @@ const LayerContainer = (): JSX.Element => {
       return;
     const target = targetNode.current.parentElement.parentElement;
     setScale({ x: target.clientWidth / 640, y: target.clientHeight / 360 });
+    console.log(target);
   };
   const [observer] = useState<MutationObserver>(
       new MutationObserver(observerCallback)
@@ -73,10 +75,10 @@ const LayerContainer = (): JSX.Element => {
     });
   }, [targetNode]);
   useEffect(() => observerCallback(), [document.body.classList]);
+  if (!optionData) return <></>;
   return (
     <>
-      {optionData &&
-      optionData?.bgActive > -1 &&
+      {optionData?.bgActive > -1 &&
       optionData.bgVisible &&
       BackgroundImageElement
         ? ReactDOM.createPortal(
@@ -90,11 +92,14 @@ const LayerContainer = (): JSX.Element => {
             BackgroundImageElement
           )
         : ""}
+      {optionData.preview !== "disable" && <Preview />}
       <LayerScale
         ref={targetNode}
         scaleX={scale.x}
         scaleY={scale.y}
-        className={Styles.scaleWrapper}
+        className={`${Styles.scaleWrapper} ${
+          optionData.preview === "previewOnly" && Styles.hide
+        }`}
       >
         {layerData?.map((data, key) => {
           return <Layer key={key} id={key} data={data} />;
