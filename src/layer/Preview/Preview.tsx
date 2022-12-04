@@ -16,15 +16,16 @@ const Preview = () => {
         return {
           ...layer,
           content: layer.content.map((value) => {
-            while (value.content.length < value.lineCount) {
-              value.content.push("");
+            const content = [...value.content];
+            while (content.length < value.lineCount) {
+              content.push("");
             }
-            while (value.content.length > value.lineCount) {
-              value.content[value.lineCount - 1] += value.content
+            while (content.length > value.lineCount) {
+              content[value.lineCount - 1] += content
                 .splice(value.lineCount)
                 .join("");
             }
-            return value;
+            return { ...value, content };
           }),
         };
       });
@@ -51,7 +52,6 @@ const Preview = () => {
         });
       }
     });
-    console.log(dansk, formatted);
     niconicomments.current = new NiconiComments(canvas.current, formatted, {
       format: "formatted",
     });
