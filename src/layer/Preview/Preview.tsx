@@ -46,11 +46,12 @@ const Preview = () => {
           date_usec: 0,
           owner: true,
           premium: true,
-          mail: string.command.split(/\s/),
+          mail: string.command.slice(1, -1).split(/\s/),
           user_id: 0,
         });
       }
     });
+    console.log(dansk, formatted);
     niconicomments.current = new NiconiComments(canvas.current, formatted, {
       format: "formatted",
     });
