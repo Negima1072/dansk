@@ -19,6 +19,7 @@ const layerContextManager = (props: propsType) => {
       bgTransparency: 100,
       grid: false,
       replace: false,
+      preview: "disable",
     });
   /*  document.onkeydown = (ev) => {
       if (

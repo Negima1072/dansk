@@ -145,6 +145,19 @@ const Trace = () => {
       () => setOptionEditing(!optionEditing),
       [optionEditing]
     ),
+    togglePreview = useCallback(
+      () =>
+        setOptionData({
+          ...optionData,
+          preview:
+            optionData.preview === "disable"
+              ? "enable"
+              : optionData.preview === "enable"
+              ? "previewOnly"
+              : "disable",
+        }),
+      [optionData]
+    ),
     addLayer = useCallback(() => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
@@ -286,6 +299,16 @@ const Trace = () => {
                 click={toggleOptionEditing}
                 text={"設定"}
                 active={optionEditing}
+              />
+              <Button
+                click={togglePreview}
+                text={
+                  optionData.preview === "disable"
+                    ? "編集"
+                    : optionData.preview === "previewOnly"
+                    ? "プレビュー"
+                    : "編集+プレビュー"
+                }
               />
             </div>
           </div>

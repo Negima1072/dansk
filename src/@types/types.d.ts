@@ -9,6 +9,8 @@ type ownerComment = {
   /** コメントデータ */
   comment: string;
 };
+
+type convertFormat = "domo" | "tokome" | "dansk";
 type contextTypeNullable = {
   videoElement?: HTMLVideoElement;
   commentCommandInput?: HTMLInputElement;
@@ -148,6 +150,7 @@ type optionDataType = {
   bgTransparency: number;
   grid: boolean;
   replace: boolean;
+  preview: "disable" | "previewOnly" | "enable";
 };
 
 type localStorageKeys =

@@ -6,6 +6,7 @@ import Styles from "./LayerContainer.module.scss";
 import { objectFitArgs } from "@/@types/types";
 import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
+import { Preview } from "@/layer/Preview/Preview";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -73,10 +74,10 @@ const LayerContainer = (): JSX.Element => {
     });
   }, [targetNode]);
   useEffect(() => observerCallback(), [document.body.classList]);
+  if (!optionData) return <></>;
   return (
     <>
-      {optionData &&
-      optionData?.bgActive > -1 &&
+      {optionData?.bgActive > -1 &&
       optionData.bgVisible &&
       BackgroundImageElement
         ? ReactDOM.createPortal(
@@ -90,16 +91,19 @@ const LayerContainer = (): JSX.Element => {
             BackgroundImageElement
           )
         : ""}
-      <LayerScale
-        ref={targetNode}
-        scaleX={scale.x}
-        scaleY={scale.y}
-        className={Styles.scaleWrapper}
-      >
-        {layerData?.map((data, key) => {
-          return <Layer key={key} id={key} data={data} />;
-        })}
-      </LayerScale>
+      {optionData.preview !== "disable" && <Preview />}
+      {optionData.preview !== "previewOnly" && (
+        <LayerScale
+          ref={targetNode}
+          scaleX={scale.x}
+          scaleY={scale.y}
+          className={Styles.scaleWrapper}
+        >
+          {layerData?.map((data, key) => {
+            return <Layer key={key} id={key} data={data} />;
+          })}
+        </LayerScale>
+      )}
     </>
   );
 };
