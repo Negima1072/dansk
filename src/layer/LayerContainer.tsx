@@ -54,6 +54,7 @@ const LayerContainer = (): JSX.Element => {
       return;
     const target = targetNode.current.parentElement.parentElement;
     setScale({ x: target.clientWidth / 640, y: target.clientHeight / 360 });
+    console.log(target);
   };
   const [observer] = useState<MutationObserver>(
       new MutationObserver(observerCallback)
@@ -92,18 +93,18 @@ const LayerContainer = (): JSX.Element => {
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}
-      {optionData.preview !== "previewOnly" && (
-        <LayerScale
-          ref={targetNode}
-          scaleX={scale.x}
-          scaleY={scale.y}
-          className={Styles.scaleWrapper}
-        >
-          {layerData?.map((data, key) => {
-            return <Layer key={key} id={key} data={data} />;
-          })}
-        </LayerScale>
-      )}
+      <LayerScale
+        ref={targetNode}
+        scaleX={scale.x}
+        scaleY={scale.y}
+        className={`${Styles.scaleWrapper} ${
+          optionData.preview === "previewOnly" && Styles.hide
+        }`}
+      >
+        {layerData?.map((data, key) => {
+          return <Layer key={key} id={key} data={data} />;
+        })}
+      </LayerScale>
     </>
   );
 };
