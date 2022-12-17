@@ -25,25 +25,6 @@ const HoverItem = styled.div<pos>`
   top: ${(props) => props.y}px;
 `;
 
-/*
-
-            <ColorDisplay
-              bgColor={color}
-              className={`${Styles.colorInputLabel} ${
-                (color === "" || color === "-") && Styles.invalid
-              }`}
-              htmlFor={Styles.colorInput}
-            />
-            <input
-              type={"color"}
-              value={color === "" || color === "-" ? "#ffffff" : color}
-              id={Styles.colorInput}
-              className={Styles.colorInput}
-              onChange={changeColor}
-              disabled={color === "" || color === "-"}
-            />
- */
-
 const ColorPicker = ({ color, disabled, onChange }: props) => {
   const colorDisplayRef = useRef<HTMLLabelElement>(null);
   const [pos, setPos] = useState<{ x: number; y: number; height: number }>({
