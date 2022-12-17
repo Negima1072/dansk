@@ -4,17 +4,9 @@ import { ReactSortable } from "react-sortablejs";
 import layerUtil from "@/headers/layerUtil/layerUtil";
 import icons from "@/assets/icons";
 import { layerContext } from "@/components/LayerContext";
-import styled from "styled-components";
 import CssEditor from "@/headers/layerSelector/CssEditor";
 import { layer } from "@/@types/types";
-
-type colorProps = {
-  bgColor: string;
-};
-
-const ColorDisplay = styled.label<colorProps>`
-  background-color: ${(props) => props.bgColor};
-`;
+import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 
 /**
  * レイヤー選択・並べ替え・色変更他
@@ -112,6 +104,7 @@ const LayerSelector = () => {
           list={layerData}
           setList={setLayerData}
           disabled={editingLayer !== -1}
+          handle={".handle"}
         >
           {layerData.map((item, key) => (
             <tr
@@ -120,21 +113,15 @@ const LayerSelector = () => {
               } ${item.selected ? Styles.selected : ""}`}
               key={`${item.text}${key}`}
             >
-              <td className={Styles.id}>{key + 1}</td>
+              <td className={`handle ${Styles.id}`}>{key + 1}</td>
               <td className={Styles.icon} onClick={() => toggleVisible(key)}>
                 {item.visible ? icons.eye : icons.eyeClosed}
               </td>
               <td className={Styles.color}>
-                <ColorDisplay
-                  className={Styles.colorLabel}
-                  bgColor={item.color}
-                  htmlFor={`${Styles.tr}-${key}`}
-                />
-                <input
-                  className={Styles.colorInput}
-                  type="color"
-                  id={`${Styles.tr}-${key}`}
-                  onChange={(e) => onColorChange(e, key)}
+                <ColorPicker
+                  color={item.color}
+                  key_={key}
+                  onChange={onColorChange}
                 />
               </td>
               <th
