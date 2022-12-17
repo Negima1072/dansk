@@ -14,7 +14,18 @@
       z-index: -1;
     }
   }
-  &:hover .hoverItem {
+  &.disabled .colorLabel {
+    background: linear-gradient(
+      45deg,
+      white,
+      white 49%,
+      red 49%,
+      red 51%,
+      white 51%,
+      white
+    );
+  }
+  &:not(.disabled):hover .hoverItem {
     display: block;
   }
   .hoverItem {
@@ -29,6 +40,7 @@
       width: 75px;
       border: solid black 1px;
       border-radius: 5px;
+      padding: 5px 10px;
       &:invalid {
         border: solid red 1px;
       }

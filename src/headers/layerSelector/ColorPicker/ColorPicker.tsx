@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 type props = {
   color: string;
+  disabled?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -26,9 +27,24 @@ const HoverItem = styled.div<pos>`
 
 /*
 
+            <ColorDisplay
+              bgColor={color}
+              className={`${Styles.colorInputLabel} ${
+                (color === "" || color === "-") && Styles.invalid
+              }`}
+              htmlFor={Styles.colorInput}
+            />
+            <input
+              type={"color"}
+              value={color === "" || color === "-" ? "#ffffff" : color}
+              id={Styles.colorInput}
+              className={Styles.colorInput}
+              onChange={changeColor}
+              disabled={color === "" || color === "-"}
+            />
  */
 
-const ColorPicker = ({ color, onChange }: props) => {
+const ColorPicker = ({ color, disabled, onChange }: props) => {
   const colorDisplayRef = useRef<HTMLLabelElement>(null);
   const [pos, setPos] = useState<{ x: number; y: number; height: number }>({
     x: 0,
@@ -58,7 +74,7 @@ const ColorPicker = ({ color, onChange }: props) => {
   }, []);
 
   return (
-    <div className={Styles.wrapper}>
+    <div className={`${Styles.wrapper} ${disabled && Styles.disabled}`}>
       <ColorDisplay
         className={`handle ${Styles.colorLabel}`}
         bgColor={color}
@@ -69,6 +85,7 @@ const ColorPicker = ({ color, onChange }: props) => {
           className={Styles.colorInput}
           type="color"
           onChange={(e) => onChange(e)}
+          disabled={disabled}
         />
       </ColorDisplay>
       <HoverItem x={pos.x} y={pos.y + pos.height} className={Styles.hoverItem}>

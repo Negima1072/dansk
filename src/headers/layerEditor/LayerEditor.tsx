@@ -100,7 +100,11 @@ const LayerEditor = () => {
         </div>
         <div className={Styles.block}>
           <div className={Styles.colorInputWrapper}>
-            <ColorPicker color={color} onChange={changeColor} />
+            <ColorPicker
+              color={color}
+              onChange={changeColor}
+              disabled={color === "" || color === "-"}
+            />
           </div>
         </div>
       </div>
