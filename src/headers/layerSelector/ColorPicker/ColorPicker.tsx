@@ -61,7 +61,7 @@ const ColorPicker = ({ color, key_, onChange }: props) => {
   return (
     <div className={Styles.wrapper}>
       <ColorDisplay
-        className={Styles.colorLabel}
+        className={`handle ${Styles.colorLabel}`}
         bgColor={color}
         ref={colorDisplayRef}
         onMouseEnter={onClick}

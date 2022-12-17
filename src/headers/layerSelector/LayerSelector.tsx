@@ -114,7 +114,10 @@ const LayerSelector = () => {
               key={`${item.text}${key}`}
             >
               <td className={`handle ${Styles.id}`}>{key + 1}</td>
-              <td className={Styles.icon} onClick={() => toggleVisible(key)}>
+              <td
+                className={`handle ${Styles.icon}`}
+                onClick={() => toggleVisible(key)}
+              >
                 {item.visible ? icons.eye : icons.eyeClosed}
               </td>
               <td className={Styles.color}>
@@ -125,7 +128,7 @@ const LayerSelector = () => {
                 />
               </td>
               <th
-                className={Styles.name}
+                className={`handle ${Styles.name}`}
                 onClick={(e) => toggleSelected(e, key)}
                 onDoubleClick={() => {
                   setEditingLayer(key);
@@ -144,16 +147,28 @@ const LayerSelector = () => {
                   item.text
                 )}
               </th>
-              <td className={Styles.pos} onClick={() => togglePos(key)}>
+              <td
+                className={`handle ${Styles.pos}`}
+                onClick={() => togglePos(key)}
+              >
                 {item.pos}
               </td>
-              <td className={Styles.font} onClick={() => toggleFont(key)}>
+              <td
+                className={`handle ${Styles.font}`}
+                onClick={() => toggleFont(key)}
+              >
                 {item.font}
               </td>
-              <td className={Styles.icon} onClick={() => setSetting(key)}>
+              <td
+                className={`handle ${Styles.icon}`}
+                onClick={() => setSetting(key)}
+              >
                 {icons.gear}
               </td>
-              <td className={Styles.icon} onClick={() => remove(key)}>
+              <td
+                className={`handle ${Styles.icon}`}
+                onClick={() => remove(key)}
+              >
                 {icons.delete}
               </td>
             </tr>
