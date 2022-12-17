@@ -351,7 +351,7 @@ const Templates: layerTemplates = {
     top: { ue: -1, naka: 0, shita: 0 },
     left: 91,
     scale: { x: 0.826, y: 1 },
-    size: [{ font: 10.2, line: 16, lineCount: 1, height: 16, count: 31 }],
+    size: [{ font: 10.2, line: 16, lineCount: 1, height: 11.5, count: 31 }],
   },
   tm26: {
     id: "tm26",
