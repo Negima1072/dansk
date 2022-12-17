@@ -2,15 +2,8 @@ import React, { ChangeEvent, useCallback, useContext } from "react";
 import Styles from "./LayerEditor.module.scss";
 import { layerContext } from "@/components/LayerContext";
 import Button from "@/components/button/Button";
-import styled from "styled-components";
 import typeGuard from "@/libraries/typeGuard";
-
-type colorProps = {
-  bgColor: string;
-};
-const ColorDisplay = styled.label<colorProps>`
-  background-color: ${(props) => props.bgColor};
-`;
+import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 
 /**
  * layerの一括編集
@@ -107,18 +100,8 @@ const LayerEditor = () => {
         </div>
         <div className={Styles.block}>
           <div className={Styles.colorInputWrapper}>
-            <ColorDisplay
-              bgColor={color}
-              className={`${Styles.colorInputLabel} ${
-                (color === "" || color === "-") && Styles.invalid
-              }`}
-              htmlFor={Styles.colorInput}
-            />
-            <input
-              type={"color"}
-              value={color === "" || color === "-" ? "#ffffff" : color}
-              id={Styles.colorInput}
-              className={Styles.colorInput}
+            <ColorPicker
+              color={color}
               onChange={changeColor}
               disabled={color === "" || color === "-"}
             />
