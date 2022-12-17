@@ -335,7 +335,7 @@ const Templates: layerTemplates = {
     top: { ue: 2, naka: 0, shita: -24.3 },
     left: 7,
     scale: { x: 1.055, y: 1.04 },
-    size: [{ font: 16, line: 17, lineCount: 2, height: 38.7, count: 9 }],
+    size: [{ font: 16, line: 17, lineCount: 2, height: 37, count: 9 }],
   },
   s31: {
     id: "s31",
