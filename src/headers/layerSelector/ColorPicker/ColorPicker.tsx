@@ -4,8 +4,7 @@ import styled from "styled-components";
 
 type props = {
   color: string;
-  key_: number;
-  onChange: (e: ChangeEvent<HTMLInputElement>, key: number) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 type colorProps = {
@@ -29,7 +28,7 @@ const HoverItem = styled.div<pos>`
 
  */
 
-const ColorPicker = ({ color, key_, onChange }: props) => {
+const ColorPicker = ({ color, onChange }: props) => {
   const colorDisplayRef = useRef<HTMLLabelElement>(null);
   const [pos, setPos] = useState<{ x: number; y: number; height: number }>({
     x: 0,
@@ -50,7 +49,7 @@ const ColorPicker = ({ color, key_, onChange }: props) => {
   const update = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setColorInput(value);
-    if (value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) onChange(e, key_);
+    if (value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) onChange(e);
   };
 
   useEffect(() => {
@@ -69,7 +68,7 @@ const ColorPicker = ({ color, key_, onChange }: props) => {
         <input
           className={Styles.colorInput}
           type="color"
-          onChange={(e) => onChange(e, key_)}
+          onChange={(e) => onChange(e)}
         />
       </ColorDisplay>
       <HoverItem x={pos.x} y={pos.y + pos.height} className={Styles.hoverItem}>

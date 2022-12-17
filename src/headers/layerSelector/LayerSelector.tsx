@@ -123,8 +123,7 @@ const LayerSelector = () => {
               <td className={Styles.color}>
                 <ColorPicker
                   color={item.color}
-                  key_={key}
-                  onChange={onColorChange}
+                  onChange={(e) => onColorChange(e, key)}
                 />
               </td>
               <th
