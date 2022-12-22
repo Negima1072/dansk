@@ -547,7 +547,6 @@ const comment2str = (
         index === array.length - 1 ? "\uA001" : ""
       );
       template[value.index] = commentLine;
-      if (replaceTab) template = space2tab(template);
       if (template[template.length - 1] === "")
         template[template.length - 1] = "\uA001";
       if (template.join("\n").length > commentMaxLength)
@@ -567,7 +566,7 @@ const comment2str = (
     }
     result.push(
       ...output.map((value) =>
-        value.content
+        (replaceTab ? space2tab(value.content) : value.content)
           .join("<br>")
           .replace(/\uA001/g, "[03]")
           .replace(/\u0009/g, "[tb]")
