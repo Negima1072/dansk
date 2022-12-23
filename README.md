@@ -21,7 +21,7 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 ## 変更点
 ### v1.0.6-fix
 #### 修正
-- package/manifest.jsonの更新を忘れていたため修正
+- package/manifest.jsonの更新を忘れていたため修正  
   リリース時にpackage.jsonを参照してmanifest.jsonを更新するように変更
 
 ### v1.0.6
