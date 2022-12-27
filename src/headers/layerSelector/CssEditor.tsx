@@ -56,7 +56,7 @@ const CssEditor = (props: EditorProps) => {
       <div className={Styles.row}>
         <div className={Styles.preview}>
           <div className={Styles.layerWrapper}>
-            <Layer data={data} key={0} id={0} />
+            <Layer data={data} />
           </div>
         </div>
         <div className={Styles.tableWrapper}>

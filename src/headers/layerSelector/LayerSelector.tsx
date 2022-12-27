@@ -111,7 +111,7 @@ const LayerSelector = () => {
               className={`${Styles.tr} ${
                 item.posList.includes(item.pos) ? "" : Styles.invalid
               } ${item.selected ? Styles.selected : ""}`}
-              key={`${item.text}${key}`}
+              key={`${item.layerId}`}
             >
               <td className={`handle ${Styles.id}`}>{key + 1}</td>
               <td

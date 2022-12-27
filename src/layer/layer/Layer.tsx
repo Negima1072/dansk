@@ -7,7 +7,6 @@ import grids from "@/assets/grids";
 import replaceCharList from "@/layer/layerManager/layerManager.replaceCharList";
 
 type LayerProps = {
-  id: number;
   data: layer;
 };
 type LayerBoxProps = {
@@ -125,7 +124,7 @@ const Layer = (props: LayerProps): JSX.Element => {
               _height={value.height || value.line * value.lineCount}
               _lineHeight={value.line}
               _fontSize={value.font}
-              key={`layer${props.id}-group${index}`}
+              key={`layer${props.data.layerId}-group${index}`}
               className={Styles.textarea}
               value={value.content.join("\n")}
               onChange={(e) => updateData(e, index)}
@@ -149,14 +148,14 @@ const Layer = (props: LayerProps): JSX.Element => {
             return (
               <LayerItem
                 _height={value.height || value.line * value.lineCount}
-                key={`layerOutline${props.id}-group${index}`}
+                key={`layerOutline${props.data.layerId}-group${index}`}
               >
                 {[...(Array(value.lineCount) as undefined[])].map(
                   (_, index_) => {
                     return (
                       <LayerItem
                         _height={value.line}
-                        key={`layerOutline${props.id}-group${index}-line${index_}`}
+                        key={`layerOutline${props.data.layerId}-group${index}-line${index_}`}
                       />
                     );
                   }
