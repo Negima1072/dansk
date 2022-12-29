@@ -332,7 +332,7 @@ const Templates: layerTemplates = {
     width: 37,
     height: 18,
     critical: false,
-    top: { ue: 2, naka: 0, shita: -24.3 },
+    top: { ue: 2, naka: 0, shita: 14.5 },
     left: 7,
     scale: { x: 1.055, y: 1.045 },
     size: [{ font: 16, line: 17, lineCount: 2, height: 37, count: 9 }],
