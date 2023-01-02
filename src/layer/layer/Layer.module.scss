@@ -24,12 +24,16 @@
     pointer-events: none;
   }
   &.mincho {
-    font-family: "游明朝体", "Yu Mincho", YuMincho, "Hiragino Kaku Gothic ProN",
+    font-family: "游明朝体", "Yu Mincho", YuMincho, "ヒラギノ角ゴシック",
+      "Hiragino Sans", HiraginoSans, "Hiragino Kaku Gothic ProN",
       "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック",
       sans-serif;
   }
   &.gothic {
-    font-family: 游ゴシック, SimHei, Arial, "ＭＳ Ｐゴシック", sans-serif;
+    font-family: 游ゴシック, SimHei, "ヒラギノ明朝 ProN W3", HiraMinProN-W3,
+      "ヒラギノ明朝 ProN", HiraMinProN, "Hiragino Mincho ProN",
+      "ヒラギノ角ゴシック", "Hiragino Sans", HiraginoSans, Arial,
+      "ＭＳ Ｐゴシック", sans-serif;
   }
   .item {
     transform-origin: left;

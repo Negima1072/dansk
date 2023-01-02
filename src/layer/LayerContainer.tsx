@@ -101,8 +101,8 @@ const LayerContainer = (): JSX.Element => {
           optionData.preview === "previewOnly" && Styles.hide
         }`}
       >
-        {layerData?.map((data, key) => {
-          return <Layer key={key} id={key} data={data} />;
+        {layerData?.map((data) => {
+          return <Layer key={data.layerId} data={data} />;
         })}
       </LayerScale>
     </>

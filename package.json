@@ -1,6 +1,6 @@
 {
   "name": "dansuku-mizu",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "DanSukuMizu modified by @Negima1072, @eneko0513 and @xpanet-dev",
   "main": "dist/index.js",
   "scripts": {

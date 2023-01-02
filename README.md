@@ -19,9 +19,15 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 [デバッガー](about:debugging#/runtime/this-firefox)を開き、「一時的なアドオンを読み込む」から、先程リネームしたmanifest.jsonを選択します
 
 ## 変更点
+### v1.0.7
+## 修正
+- Tabモードで１コメントあたり１行しか置換が実行されないバグを修正
+- Macにおける互換性を改善
+- small ue W37 L2のshita位置を修正
+
 ### v1.0.6-fix
 #### 修正
-- package/manifest.jsonの更新を忘れていたため修正
+- package/manifest.jsonの更新を忘れていたため修正  
   リリース時にpackage.jsonを参照してmanifest.jsonを更新するように変更
 
 ### v1.0.6
