@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import Styles from "./BackgroundImageDisplay.module.scss";
-import { layerContext } from "@/components/LayerContext";
 import { icons } from "@/assets/icons";
+import { useAtom } from "jotai";
+import { backgroundAtom } from "@/atoms";
 
 /**
  * 背景の選択画面
@@ -9,32 +10,31 @@ import { icons } from "@/assets/icons";
  * @constructor
  */
 const BackgroundImageDisplay = () => {
-  const { optionData, setOptionData } = useContext(layerContext);
-  if (!optionData || !setOptionData) return <></>;
+  const [background, setBackground] = useAtom(backgroundAtom);
   const deleteImage = (key: number) => {
-    optionData.bgImages.splice(key, 1);
-    if (optionData.bgActive >= optionData.bgImages.length) {
-      optionData.bgActive = -1;
+    background.images.splice(key, 1);
+    if (background.selected >= background.images.length) {
+      background.selected = -1;
     }
-    setOptionData({ ...optionData });
+    setBackground({ ...background });
   };
   const changeActiveImage = (key: number) => {
-    if (optionData.bgActive === key) {
-      optionData.bgActive = -1;
+    if (background.selected === key) {
+      background.selected = -1;
     } else {
-      optionData.bgActive = key;
-      optionData.bgVisible = true;
+      background.selected = key;
+      background.visible = true;
     }
-    setOptionData({ ...optionData });
+    setBackground({ ...background });
   };
   return (
     <div className={Styles.container}>
-      {optionData.bgImages.map((blob, key) => {
+      {background.images.map((blob, key) => {
         return (
           <div
             key={`backgroundImageDisplay${key}`}
             className={`${Styles.item} ${
-              key === optionData.bgActive ? Styles.active : ""
+              key === background.selected ? Styles.active : ""
             }`}
           >
             <img

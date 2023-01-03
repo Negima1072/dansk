@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Styles from "./Backup.module.scss";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
 import { Popup } from "@/components/popup/Popup";
 import { autoSave } from "@/@types/types";
 import { Button } from "@/components/button/Button";
-import { layerContext } from "@/components/LayerContext";
 import { uuid } from "@/libraries/uuidUtil";
+import { useAtom } from "jotai";
+import { layerAtom } from "@/atoms";
 
 type propType = {
   close: () => void;
@@ -20,16 +21,15 @@ type propType = {
  */
 const Backup: React.FC<propType> = (props) => {
   const [saveData, setSaveData] = useState<autoSave[]>(() => {
-      const data: unknown = JSON.parse(Storage.get("autoSave"));
-      if (!typeGuard.localStorage.isAutoSave(data)) return [];
-      return data;
-    }),
-    { setLayerData } = useContext(layerContext);
+    const data: unknown = JSON.parse(Storage.get("autoSave"));
+    if (!typeGuard.localStorage.isAutoSave(data)) return [];
+    return data;
+  });
+  const [_, setLayerData] = useAtom(layerAtom);
   const load = (key: string) => {
       const value = saveData[Number(key)];
       if (
         !value ||
-        !setLayerData ||
         !confirm("現在作業中のデータが消えてしまいますがよろしいですか？")
       )
         return;

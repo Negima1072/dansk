@@ -141,18 +141,6 @@ type autoSave = {
   data: layer[];
 };
 
-type optionDataType = {
-  bgActive: number;
-  bgImages: string[];
-  bgEditing: boolean;
-  bgMode: objectFitArgs;
-  bgVisible: boolean;
-  bgTransparency: number;
-  grid: boolean;
-  replace: boolean;
-  preview: "disable" | "previewOnly" | "enable";
-};
-
 type localStorageKeys =
   | "options_autoSave_span"
   | "options_autoSave_max"
@@ -190,8 +178,6 @@ type localStorageOptionItem = localStorageItem & {
 type localStorageDefaultValues = {
   [key in localStorageKeys]: localStorageItem | localStorageOptionItem;
 };
-
-type objectFitArgs = "contain" | "cover" | "fill" | "none" | "scale-down";
 
 declare global {
   interface Window {

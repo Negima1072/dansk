@@ -1,17 +1,17 @@
-import React, { ChangeEvent, useCallback, useContext } from "react";
+import React, { ChangeEvent, useCallback } from "react";
 import Styles from "./LayerEditor.module.scss";
-import { layerContext } from "@/components/LayerContext";
 import { Button } from "@/components/button/Button";
 import { typeGuard } from "@/libraries/typeGuard";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
+import { useAtom } from "jotai";
+import { layerAtom } from "@/atoms";
 
 /**
  * layerの一括編集
  * @constructor
  */
 const LayerEditor = () => {
-  const { layerData, setLayerData } = useContext(layerContext);
-  if (!layerData || !setLayerData) return <></>;
+  const [layerData, setLayerData] = useAtom(layerAtom);
 
   const color = layerData.reduce(
     (pv, layer) =>

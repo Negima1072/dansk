@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import React, { ChangeEvent, useContext, useRef } from "react";
+import React, { ChangeEvent, useRef } from "react";
 import { layer } from "@/@types/types";
 import Styles from "./Layer.module.scss";
-import { layerContext } from "@/components/LayerContext";
 import { grids } from "@/assets/grids";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
+import { useAtom } from "jotai";
+import { layerAtom, optionAtom } from "@/atoms";
 
 type LayerProps = {
   data: layer;
@@ -46,7 +47,8 @@ const LayerInput = styled.textarea<LayerInputProps>`
  * @constructor
  */
 const Layer = (props: LayerProps): JSX.Element => {
-  const { layerData, setLayerData, optionData } = useContext(layerContext),
+  const [layerData, setLayerData] = useAtom(layerAtom),
+    [optionData] = useAtom(optionAtom),
     layerElement = useRef<HTMLDivElement>(null),
     currentLayer = useRef<layer>();
   const onchange = (layer: layer) => {
