@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback, useContext } from "react";
 import Styles from "./LayerEditor.module.scss";
 import { layerContext } from "@/components/LayerContext";
-import Button from "@/components/button/Button";
-import typeGuard from "@/libraries/typeGuard";
+import { Button } from "@/components/button/Button";
+import { typeGuard } from "@/libraries/typeGuard";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 
 /**
@@ -117,4 +117,4 @@ const LayerEditor = () => {
     </div>
   );
 };
-export default LayerEditor;
+export { LayerEditor };

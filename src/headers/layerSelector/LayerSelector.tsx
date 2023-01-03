@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useCallback, useContext, useState } from "react";
 import Styles from "./LayerSelector.module.scss";
 import { ReactSortable } from "react-sortablejs";
-import layerUtil from "@/headers/layerUtil/layerUtil";
-import icons from "@/assets/icons";
+import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import { icons } from "@/assets/icons";
 import { layerContext } from "@/components/LayerContext";
-import CssEditor from "@/headers/layerSelector/CssEditor";
+import { CssEditor } from "@/headers/layerSelector/CssEditor";
 import { layer } from "@/@types/types";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 
@@ -180,4 +180,4 @@ const LayerSelector = () => {
     </div>
   );
 };
-export default LayerSelector;
+export { LayerSelector };

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
-import LayerContainer from "@/layer/LayerContainer";
+import { LayerContainer } from "@/layer/LayerContainer";
 
 /**
  * レイヤーブロック(プレイヤー内)
@@ -12,4 +12,4 @@ const LayerPortal = (): JSX.Element => {
   if (!LayerElement) return <></>;
   return ReactDOM.createPortal(<LayerContainer />, LayerElement);
 };
-export default LayerPortal;
+export { LayerPortal };

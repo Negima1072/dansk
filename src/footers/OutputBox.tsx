@@ -1,12 +1,12 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { context } from "@/components/Context";
 import React from "react";
-import Spoiler from "@/components/spoiler/Spoiler";
+import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./OutputBox.module.scss";
-import Button from "@/components/button/Button";
-import sleep from "@/libraries/sleep";
-import localStorage from "@/libraries/localStorage";
-import CommentsDetail from "@/footers/commentsDetail/CommentsDetail";
+import { Button } from "@/components/button/Button";
+import { sleep } from "@/libraries/sleep";
+import { Storage } from "@/libraries/localStorage";
+import { CommentsDetail } from "@/footers/commentsDetail/CommentsDetail";
 
 /**
  * 入出力用のテキストエリア
@@ -74,7 +74,7 @@ const OutputBox = (): JSX.Element => {
         window.__videoplayer.currentTime(
           window.__videoplayer.currentTime() +
             Number(seekCommand[2]) /
-              (localStorage.get("options_useMs") === "true" ? 1000 : 100)
+              (Storage.get("options_useMs") === "true" ? 1000 : 100)
         );
       } else {
         let currentTime = 0;
@@ -158,7 +158,7 @@ const OutputBox = (): JSX.Element => {
           ),
           length = textareaValue.length;
         const timeSpan = Number(
-          localStorage.get(
+          Storage.get(
             isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
           )
         );
@@ -299,4 +299,4 @@ const OutputBox = (): JSX.Element => {
     </>
   );
 };
-export default OutputBox;
+export { OutputBox };

@@ -1,4 +1,4 @@
-import LayerContext from "@/components/LayerContext";
+import { LayerContext } from "@/components/LayerContext";
 import React, { useState } from "react";
 import { layer, optionDataType } from "@/@types/types";
 //import caretUtil from "@/libraries/caretUtil";
@@ -6,7 +6,7 @@ import { layer, optionDataType } from "@/@types/types";
 type propsType = {
   children: React.ReactNode;
 };
-const layerContextManager = (props: propsType) => {
+const LayerContextManager = (props: propsType) => {
   const [layerData, setLayerData] = useState<layer[]>([]),
     /*[layerHistory, setLayerHistory] = useState<history[]>([]),
     [layerUndoHistory, setLayerUndoHistory] = useState<history[]>([]),*/
@@ -156,4 +156,4 @@ const layerContextManager = (props: propsType) => {
     </LayerContext>
   );
 };
-export default layerContextManager;
+export { LayerContextManager };

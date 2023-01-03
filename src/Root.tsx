@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-import Context from "@/components/Context";
-import Footer from "@/components/Footer";
-import getElements from "@/libraries/getElements";
-import Header from "@/components/Header";
-import Main from "@/components/Main";
-import sleep from "@/libraries/sleep";
-import MemoPortal from "@/components/MemoPortal";
-import inject from "@/libraries/cssInjector";
+import { Context } from "@/components/Context";
+import { Footer } from "@/components/Footer";
+import { getElements } from "@/libraries/getElements";
+import { Header } from "@/components/Header";
+import { Main } from "@/components/Main";
+import { sleep } from "@/libraries/sleep";
+import { MemoPortal } from "@/components/MemoPortal";
+import { inject } from "@/libraries/cssInjector";
 
 /**
  * Reactのルート要素

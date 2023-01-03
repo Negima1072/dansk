@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useState } from "react";
-import Popup from "@/components/popup/Popup";
-import BackgroundImageDisplay from "@/headers/backgroundPicker/BackgroundImageDisplay";
+import { Popup } from "@/components/popup/Popup";
+import { BackgroundImageDisplay } from "@/headers/backgroundPicker/BackgroundImageDisplay";
 import { layerContext } from "@/components/LayerContext";
-import Button from "@/components/button/Button";
-import Dropdown from "@/components/dropdown/Dropdown";
+import { Button } from "@/components/button/Button";
+import { Dropdown } from "@/components/dropdown/Dropdown";
 import { objectFitArgs } from "@/@types/types";
-import Tips from "@/components/tips/Tips";
+import { Tips } from "@/components/tips/Tips";
 import Styles from "./BackgroundPicker.module.scss";
 
 /**
@@ -175,4 +175,4 @@ const BackgroundPicker = () => {
     </>
   );
 };
-export default BackgroundPicker;
+export { BackgroundPicker };

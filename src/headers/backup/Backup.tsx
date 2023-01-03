@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import Styles from "./Backup.module.scss";
-import localStorage from "@/libraries/localStorage";
-import typeGuard from "@/libraries/typeGuard";
-import Popup from "@/components/popup/Popup";
+import { Storage } from "@/libraries/localStorage";
+import { typeGuard } from "@/libraries/typeGuard";
+import { Popup } from "@/components/popup/Popup";
 import { autoSave } from "@/@types/types";
-import Button from "@/components/button/Button";
+import { Button } from "@/components/button/Button";
 import { layerContext } from "@/components/LayerContext";
-import uuidUtil from "@/libraries/uuidUtil";
+import { uuid } from "@/libraries/uuidUtil";
 
 type propType = {
   close: () => void;
@@ -20,7 +20,7 @@ type propType = {
  */
 const Backup: React.FC<propType> = (props) => {
   const [saveData, setSaveData] = useState<autoSave[]>(() => {
-      const data: unknown = JSON.parse(localStorage.get("autoSave"));
+      const data: unknown = JSON.parse(Storage.get("autoSave"));
       if (!typeGuard.localStorage.isAutoSave(data)) return [];
       return data;
     }),
@@ -37,7 +37,7 @@ const Backup: React.FC<propType> = (props) => {
         value.data.map((layer) => {
           layer.overwrite = true;
           if (!layer.layerId) {
-            layer.layerId = uuidUtil.v4();
+            layer.layerId = uuid();
           }
           return layer;
         })
@@ -47,7 +47,7 @@ const Backup: React.FC<propType> = (props) => {
     remove = (key: string) => {
       saveData.splice(Number(key), 1);
       setSaveData([...saveData]);
-      localStorage.set("autoSave", saveData);
+      Storage.set("autoSave", saveData);
     };
   return (
     <Popup title={"自動保存"} close={props.close}>
@@ -78,4 +78,4 @@ const Backup: React.FC<propType> = (props) => {
     </Popup>
   );
 };
-export default Backup;
+export { Backup };

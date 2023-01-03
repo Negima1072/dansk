@@ -136,4 +136,4 @@ const typeVerify = (item: unknown, keys: string[]): boolean => {
   }
   return true;
 };
-export default typeGuard;
+export { typeGuard };

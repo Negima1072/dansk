@@ -193,4 +193,4 @@ const CharList: CharList = {
     isSpace: false,
   },
 };
-export default CharList;
+export { CharList };

@@ -5,26 +5,26 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Spoiler from "@/components/spoiler/Spoiler";
+import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./Trace.module.scss";
-import Button from "@/components/button/Button";
-import Dropdown from "@/components/dropdown/Dropdown";
-import Templates from "@/headers/Trace.templates";
+import { Button } from "@/components/button/Button";
+import { Dropdown } from "@/components/dropdown/Dropdown";
+import { Templates } from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
 import { layer } from "@/@types/types";
-import LayerSelector from "@/headers/layerSelector/LayerSelector";
-import layerUtil from "@/headers/layerUtil/layerUtil";
-import typeGuard from "@/libraries/typeGuard";
-import LayerPortal from "@/components/LayerPortal";
+import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
+import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import { typeGuard } from "@/libraries/typeGuard";
+import { LayerPortal } from "@/components/LayerPortal";
 import { layerContext } from "@/components/LayerContext";
-import BackgroundPicker from "@/headers/backgroundPicker/BackgroundPicker";
-import LayerEditor from "@/headers/layerEditor/LayerEditor";
-import Options_ from "@/options/Options";
-import Popup from "@/components/popup/Popup";
-import localStorage from "@/libraries/localStorage";
-import Backup from "@/headers/backup/Backup";
-import uuidUtil from "@/libraries/uuidUtil";
-import Slider from "@/components/slider/Slider";
+import { BackgroundPicker } from "@/headers/backgroundPicker/BackgroundPicker";
+import { LayerEditor } from "@/headers/layerEditor/LayerEditor";
+import { Options } from "@/options/Options";
+import { Popup } from "@/components/popup/Popup";
+import { Storage } from "@/libraries/localStorage";
+import { Backup } from "@/headers/backup/Backup";
+import { uuid } from "@/libraries/uuidUtil";
+import { Slider } from "@/components/slider/Slider";
 
 /**
  * Traceブロック
@@ -48,17 +48,17 @@ const Trace = () => {
     layerDataRef.current = layerData;
   }, [layerData]);
   useEffect(() => {
-    const span = Number(localStorage.get("options_autoSave_span"));
+    const span = Number(Storage.get("options_autoSave_span"));
     if (span <= 0) return;
     autoSaveInterval.current = window.setInterval(() => {
-      const data: unknown = JSON.parse(localStorage.get("autoSave"));
+      const data: unknown = JSON.parse(Storage.get("autoSave"));
       if (!typeGuard.localStorage.isAutoSave(data) || !layerDataRef.current)
         return;
       data.push({ data: layerDataRef.current, timestamp: Date.now() });
-      if (data.length > Number(localStorage.get("options_autoSave_max"))) {
+      if (data.length > Number(Storage.get("options_autoSave_max"))) {
         data.shift();
       }
-      localStorage.set("autoSave", data);
+      Storage.set("autoSave", data);
     }, span * 60 * 1000);
     return () => {
       window.clearInterval(autoSaveInterval.current);
@@ -94,7 +94,7 @@ const Trace = () => {
 
         if (
           !isSelectedOnly &&
-          localStorage.get("options_exportHiddenLayer") === "false"
+          Storage.get("options_exportHiddenLayer") === "false"
         ) {
           targetData = targetData.filter((layer) => layer.visible);
         }
@@ -186,7 +186,7 @@ const Trace = () => {
           content: layerUtil.generateLineFromTemplate(template),
           selected: true,
           color: color || "#000000",
-          layerId: uuidUtil.v4(),
+          layerId: uuid(),
         },
       ]);
     }, [layerData, layerDropdownValue]),
@@ -237,7 +237,7 @@ const Trace = () => {
           data.map((layer) => {
             layer.overwrite = true;
             if (!layer.layerId) {
-              layer.layerId = uuidUtil.v4();
+              layer.layerId = uuid();
             }
             return layer;
           })
@@ -391,11 +391,11 @@ const Trace = () => {
       {optionData.bgEditing && <BackgroundPicker />}
       {optionEditing && (
         <Popup title={"設定"} close={toggleOptionEditing}>
-          <Options_ />
+          <Options />
         </Popup>
       )}
       {autoSaveWindow && <Backup close={() => setAutoSaveWindow(false)} />}
     </>
   );
 };
-export default Trace;
+export { Trace };

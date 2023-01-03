@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
-import Trace from "@/headers/Trace";
-import LayerContextManager from "@/headers/LayerContextManager";
+import { Trace } from "@/headers/Trace";
+import { LayerContextManager } from "@/headers/LayerContextManager";
 
 /**
  * ヘッダーブロック(プレイヤー上)
@@ -20,4 +20,4 @@ const Header = (): JSX.Element => {
     HeaderElement
   );
 };
-export default Header;
+export { Header };

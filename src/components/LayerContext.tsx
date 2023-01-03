@@ -28,4 +28,4 @@ const LayerContext = (props: contextProps): JSX.Element => {
   );
 };
 
-export default LayerContext;
+export { LayerContext };

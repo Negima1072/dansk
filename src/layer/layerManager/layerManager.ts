@@ -1,8 +1,8 @@
 import { layer } from "@/@types/types";
 import Styles from "./layerManager.module.scss";
-import replaceCharList from "@/layer/layerManager/layerManager.replaceCharList";
-import caretUtil from "@/libraries/caretUtil";
-import typeGuard from "@/libraries/typeGuard";
+import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
+import { caretUtil } from "@/libraries/caretUtil";
+import { typeGuard } from "@/libraries/typeGuard";
 
 const ua = window.navigator.userAgent,
   isChromium = !!ua.match(/Chrome/),
@@ -274,4 +274,4 @@ const getInnerText = (
   return strings;
 };
 
-export default layerManager;
+export { layerManager };

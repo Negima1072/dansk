@@ -115,4 +115,4 @@ const defaultValue: localStorageDefaultValues = {
     defaultValue: "",
   },
 };
-export default defaultValue;
+export { defaultValue };

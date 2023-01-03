@@ -16,4 +16,4 @@ const Context = (props: contextProps): JSX.Element => {
   );
 };
 
-export default Context;
+export { Context };

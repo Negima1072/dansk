@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { layerContext } from "@/components/LayerContext";
-import Layer from "@/layer/layer/Layer";
+import { Layer } from "@/layer/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
 import { objectFitArgs } from "@/@types/types";
 import { context } from "@/components/Context";
@@ -108,4 +108,4 @@ const LayerContainer = (): JSX.Element => {
     </>
   );
 };
-export default LayerContainer;
+export { LayerContainer };

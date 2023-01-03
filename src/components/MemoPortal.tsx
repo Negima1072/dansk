@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
-import Memo from "@/memo/Memo";
+import { Memo } from "@/memo/Memo";
 
 /**
  * メモブロック(プレイヤー内)
@@ -12,4 +12,4 @@ const MemoPortal = (): JSX.Element => {
   if (!MemoElement) return <></>;
   return ReactDOM.createPortal(<Memo />, MemoElement);
 };
-export default MemoPortal;
+export { MemoPortal };

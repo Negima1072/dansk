@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import Spoiler from "@/components/spoiler/Spoiler";
+import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./CommandBox.module.scss";
-import Button from "@/components/button/Button";
+import { Button } from "@/components/button/Button";
 import { context } from "@/components/Context";
 
-import Commands from "./CommandBox.Commands";
-import tg from "@/libraries/typeGuard";
+import { Commands } from "./CommandBox.Commands";
+import { typeGuard } from "@/libraries/typeGuard";
 
 /**
  * コマンドパレット
@@ -32,8 +32,8 @@ const CommandBox = () => {
     (value: string) => {
       if (
         !(
-          tg.context.commentCommandInput(commentCommandInput) &&
-          tg.context.commentInputTextarea(commentInputTextarea)
+          typeGuard.context.commentCommandInput(commentCommandInput) &&
+          typeGuard.context.commentInputTextarea(commentInputTextarea)
         )
       )
         return;
@@ -144,4 +144,4 @@ const getItemsFromGroup = (group: string): string[] => {
   }
   return result;
 };
-export default CommandBox;
+export { CommandBox };

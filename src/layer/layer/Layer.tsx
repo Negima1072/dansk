@@ -3,8 +3,8 @@ import React, { ChangeEvent, useContext, useRef } from "react";
 import { layer } from "@/@types/types";
 import Styles from "./Layer.module.scss";
 import { layerContext } from "@/components/LayerContext";
-import grids from "@/assets/grids";
-import replaceCharList from "@/layer/layerManager/layerManager.replaceCharList";
+import { grids } from "@/assets/grids";
+import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 
 type LayerProps = {
   data: layer;
@@ -168,4 +168,4 @@ const Layer = (props: LayerProps): JSX.Element => {
     </>
   );
 };
-export default Layer;
+export { Layer };

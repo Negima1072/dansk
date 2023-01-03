@@ -1,4 +1,4 @@
-import sleep from "@/libraries/sleep";
+import { sleep } from "@/libraries/sleep";
 import { contextTypeNullable } from "@/@types/types";
 
 /**
@@ -64,4 +64,4 @@ const getElements = async (count = 0): Promise<contextTypeNullable> => {
     MemoElement,
   };
 };
-export default getElements;
+export { getElements };

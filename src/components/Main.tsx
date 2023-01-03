@@ -1,4 +1,4 @@
-import VideoController from "@/main/VideoController";
+import { VideoController } from "@/main/VideoController";
 import React, { useContext } from "react";
 import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
@@ -17,4 +17,4 @@ const Main = (): JSX.Element => {
     MainElement
   );
 };
-export default Main;
+export { Main };
