@@ -52,6 +52,7 @@
     "eslint": "^8.18.0",
     "eslint-config-prettier": "8.5.0",
     "husky": "^8.0.1",
+    "jotai": "^1.12.1",
     "lint-staged": "^13.0.3",
     "postcss-modules": "^4.3.1",
     "prettier": "2.7.1",
