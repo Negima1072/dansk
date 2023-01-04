@@ -362,6 +362,12 @@ const removeLeadingSpace = (input: string, width: number) => {
  * @param width
  */
 const addTrailingSpace = (input: string, width: number) => {
+  if (width < 0) {
+    alert(
+      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください"
+    );
+    return input;
+  }
   input += "\u200A".repeat(width);
   input = replaceSpace(input, 0);
   return input;
@@ -370,6 +376,12 @@ const addTrailingSpace = (input: string, width: number) => {
  *
  */
 const addDRSpace = (input: string, width: number) => {
+  if (width < 0) {
+    alert(
+      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください"
+    );
+    return input;
+  }
   input = `${"\u200A".repeat(width)}${input}${"\u200A".repeat(width)}`;
   input = replaceSpace(input, 0);
   return input;
