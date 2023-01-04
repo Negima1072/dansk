@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { layer } from "@/@types/types";
+import { layer } from "@/@types/layer";
 import { background } from "@/@types/background";
 import { element } from "@/@types/element";
 

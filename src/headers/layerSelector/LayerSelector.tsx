@@ -4,7 +4,7 @@ import { ReactSortable } from "react-sortablejs";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";
 import { icons } from "@/assets/icons";
 import { CssEditor } from "@/headers/layerSelector/CssEditor";
-import { layer } from "@/@types/types";
+import { layer } from "@/@types/layer";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 import { useAtom } from "jotai";
 import { layerAtom } from "@/atoms";

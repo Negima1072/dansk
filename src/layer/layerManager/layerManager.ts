@@ -1,4 +1,4 @@
-import { layer } from "@/@types/types";
+import { layer } from "@/@types/layer";
 import Styles from "./layerManager.module.scss";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { caretUtil } from "@/libraries/caretUtil";
@@ -9,6 +9,7 @@ const ua = window.navigator.userAgent,
   isFirefox = !!ua.match(/Firefox/);
 /**
  * レイヤーとイベントハンドラの管理
+ * @deprecated
  * @param data {layer}
  * @param onChange
  * @param targetElement

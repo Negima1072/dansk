@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	root: true,
 	env: {
 		es6: true,
@@ -8,7 +8,6 @@ export default {
 	parserOptions: {
 		sourceType: 'module',
 		ecmaVersion: 2019,
-		tsconfigRootDir: __dirname,
 		project: ['./tsconfig.eslint.json']
 	},
 	plugins: [

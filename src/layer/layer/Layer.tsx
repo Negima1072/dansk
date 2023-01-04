@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { ChangeEvent, useRef } from "react";
-import { layer } from "@/@types/types";
+import { layer } from "@/@types/layer";
 import Styles from "./Layer.module.scss";
 import { grids } from "@/assets/grids";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
@@ -59,19 +59,6 @@ const Layer = (props: LayerProps): JSX.Element => {
     currentLayer.current = layer;
     setLayerData([...layerData]);
   };
-  /*useEffect(() => {
-    if (!layerElement.current || !optionData) return;
-    if (!(props.data.layerId === currentLayer.current?.layerId)) {
-      props.data.overwrite = true;
-    }
-    currentLayer.current = props.data;
-    layerManager(
-      props.data,
-      onchange,
-      layerElement.current,
-      optionData.replace
-    );
-  }, [layerElement, layerData, props.data, optionData?.replace]);*/
   const updateData = (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
     const line = props.data.content[index];
     const char = replaceCharList[(e.nativeEvent as InputEvent).data || ""];

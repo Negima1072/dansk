@@ -11,7 +11,7 @@ import { Button } from "@/components/button/Button";
 import { Dropdown } from "@/components/dropdown/Dropdown";
 import { Templates } from "@/headers/Trace.templates";
 import { context } from "@/components/Context";
-import { layer } from "@/@types/types";
+import { layer } from "@/@types/layer";
 import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";
 import { typeGuard } from "@/libraries/typeGuard";

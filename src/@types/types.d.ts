@@ -1,3 +1,4 @@
+import { layer, layerTemplate } from "@/@types/layer";
 import { ReactNode } from "react";
 
 /** 投稿者コメント */
@@ -72,69 +73,6 @@ type CharList = {
 type layerTemplates = {
   [key: string]: layerTemplate;
 };
-type layerSizeData = {
-  font: number;
-  line: number;
-  lineCount: number;
-  count?: number;
-  height?: number;
-  margin?: number;
-};
-type layerLine = {
-  font: number;
-  line: number;
-  height?: number;
-  lineCount: number;
-  content: string[];
-};
-type layerTemplate = {
-  /** 適用するコマンド */
-  commands: string[];
-  /** 初期位置 */
-  pos: commentPos;
-  /** テンプレが対応している位置 */
-  posList: commentPos[];
-  /** テンプレート名 */
-  text: string;
-  /** 旧だんすくの識別名 */
-  value: string;
-  /** 配列のキー */
-  id: string;
-  /** textareaの横幅(px) */
-  areaWidth: number;
-  /** 横幅 */
-  width: number;
-  /** 行数 */
-  height: number;
-  /** 臨海幅 or DRの場合にtrue */
-  critical: boolean;
-  /** DRの画面外幅(片側)・DRでない場合は指定不要 */
-  drWidth?: number;
-  /** 各テンプレごとのtop位置(px) */
-  top: { ue: number; naka: number; shita: number };
-  /** left位置(px) */
-  left: number;
-  /** x/yそれぞれのtransform scaleの値 */
-  scale: { x: number; y: number };
-  /** {
-  font: font-size(px)
-  line: line-height(px)
-  lineCount: 行数
-  height: height(px)
-  count: 何回繰り返すか
-} */
-  size: layerSizeData[];
-};
-type layer = layerTemplate & {
-  type: string;
-  font: commentFont;
-  visible: boolean;
-  selected: boolean;
-  color: string;
-  content: layerLine[];
-  overwrite?: boolean;
-  layerId: string;
-};
 
 type autoSave = {
   timestamp: number;
@@ -177,42 +115,4 @@ type localStorageOptionItem = localStorageItem & {
 };
 type localStorageDefaultValues = {
   [key in localStorageKeys]: localStorageItem | localStorageOptionItem;
-};
-
-declare global {
-  interface Window {
-    __videoplayer: nvPlayerApi;
-  }
-
-  interface Event {
-    isComposing: boolean;
-  }
-}
-type crossOriginType = "anonymous" | "use-credentials";
-
-type nvPlayerApi = {
-  autoplay: () => boolean;
-  buffered: () => TimeRanges;
-  canPlayType: () => string;
-  clear: () => undefined;
-  crossOrigin: (crossOrigin?: crossOriginType) => crossOriginType;
-  currentSrc: () => string;
-  currentTime: (currentTime?: number) => number;
-  defaultPlaybackRate: () => number;
-  duration: () => number;
-  element: () => HTMLVideoElement;
-  enableCurrentTimeSmoothing: boolean;
-  ended: () => boolean;
-  load: () => unknown;
-  mirror: (isMirror: boolean) => boolean | unknown;
-  muted: (isMuted?: boolean) => boolean | unknown;
-  originalCurrentTime: () => number;
-  pause: () => unknown;
-  paused: () => boolean;
-  play: () => unknown;
-  playbackRate: (rate?: number) => number;
-  playbackStalled: () => boolean;
-  seeking: () => boolean;
-  src: () => string;
-  volume: (volume?: number) => number;
 };
