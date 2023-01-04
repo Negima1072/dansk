@@ -507,16 +507,16 @@ const comment2str = (
     );
     /** 出力用配列 */
     const output: { content: string[]; width: number }[] = [];
-    for (const value of commentWidth) {
+    for (const lineWidth of commentWidth) {
       /** 行の文字列 */
-      let commentLine = comment[value.index] || "",
+      let commentLine = comment[lineWidth.index] || "",
         /** 行を追加したか */
         isAdded = false;
       //最終行かつ空なら[03]を上書きしないようにスキップする
       if (
-        value.index + 1 === comment.length &&
-        value.index > 0 &&
-        value.width === 0
+        lineWidth.index + 1 === comment.length &&
+        lineWidth.index > 0 &&
+        lineWidth.width === 0
       )
         continue;
       //各行をコメントに足せるか確認していく
@@ -525,10 +525,10 @@ const comment2str = (
         if (
           item.width +
             commentLine.length -
-            (value.index === comment.length - 1 ? 1 : 0) <=
+            (lineWidth.index === comment.length - 1 ? 1 : 0) <=
           commentMaxLength
         ) {
-          item.content[value.index] = commentLine;
+          item.content[lineWidth.index] = commentLine;
           item.width = item.content.join("\n").length;
           isAdded = true;
           break;
@@ -536,15 +536,12 @@ const comment2str = (
       }
       if (isAdded) continue;
       //どのコメントにも足せなかった場合
-      commentLine = addTrailingSpace(
-        commentLine,
-        width - getCommentWidth(commentLine, layer.font).width
-      );
+      commentLine = addTrailingSpace(commentLine, width - lineWidth.width);
       if (layer.drWidth) commentLine = addDRSpace(commentLine, layer.drWidth);
       let template: string[] = comment.map((_, index, array) =>
         index === array.length - 1 ? "\uA001" : ""
       );
-      template[value.index] = commentLine;
+      template[lineWidth.index] = commentLine;
       if (template[template.length - 1] === "")
         template[template.length - 1] = "\uA001";
       if (template.join("\n").length > commentMaxLength)
@@ -552,7 +549,7 @@ const comment2str = (
           `文字数が上限を突破しました\nレイヤー名：${
             layer.text
           }\nコメント番号：${index + 1}\n突破した行：${
-            value.index + 1
+            lineWidth.index + 1
           }\n文字数：${commentLine.length}\nコメントモード：${
             isOwnerMode ? "投稿者コメント" : "一般コメント"
           }\nコメント上限：${commentMaxLength}文字\n使用可能な文字数：${
