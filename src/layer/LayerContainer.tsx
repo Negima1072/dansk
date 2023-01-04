@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Layer } from "@/layer/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
 import { objectFitArgs } from "@/@types/background";
-import { context } from "@/components/Context";
 import ReactDOM from "react-dom";
 import { Preview } from "@/layer/Preview/Preview";
 import { useAtom } from "jotai";
-import { backgroundAtom, layerAtom, optionAtom } from "@/atoms";
+import { backgroundAtom, elementAtom, layerAtom, optionAtom } from "@/atoms";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -34,10 +33,10 @@ const LayerContainer = (): JSX.Element => {
   const [layerData] = useAtom(layerAtom);
   const [background] = useAtom(backgroundAtom);
   const [optionData] = useAtom(optionAtom);
-  const { videoSymbolContainerCanvas, BackgroundImageElement } =
-    useContext(context);
+  const [elements] = useAtom(elementAtom);
   useEffect(() => {
-    const classList = videoSymbolContainerCanvas?.parentElement?.classList,
+    const classList =
+        elements?.videoSymbolContainerCanvas.parentElement?.classList,
       cssClass = Styles.VideoSymbolContainer || "_";
     if (!classList || process.env.NODE_ENV === "development") return;
     if (layerData && layerData.length > 0) {
@@ -80,7 +79,7 @@ const LayerContainer = (): JSX.Element => {
   useEffect(() => observerCallback(), [document.body.classList]);
   return (
     <>
-      {background.selected > -1 && background.visible && BackgroundImageElement
+      {background.selected > -1 && background.visible && elements
         ? ReactDOM.createPortal(
             <BackgroundImage
               className={`${Styles.backgroundImage}`}
@@ -89,7 +88,7 @@ const LayerContainer = (): JSX.Element => {
               mode={background.mode}
               opacity={background.transparency / 100}
             />,
-            BackgroundImageElement
+            elements?.BackgroundImageElement
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}

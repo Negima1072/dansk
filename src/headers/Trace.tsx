@@ -1,16 +1,9 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./Trace.module.scss";
 import { Button } from "@/components/button/Button";
 import { Dropdown } from "@/components/dropdown/Dropdown";
 import { Templates } from "@/headers/Trace.templates";
-import { context } from "@/components/Context";
 import { layer } from "@/@types/layer";
 import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";
@@ -25,7 +18,12 @@ import { Backup } from "@/headers/backup/Backup";
 import { uuid } from "@/libraries/uuidUtil";
 import { Slider } from "@/components/slider/Slider";
 import { useAtom } from "jotai";
-import { backgroundAtom, layerAtom, optionAtom } from "@/atoms";
+import {
+  backgroundAtom,
+  exportLayerAtom,
+  layerAtom,
+  optionAtom,
+} from "@/atoms";
 
 /**
  * Traceブロック
@@ -38,7 +36,7 @@ const Trace = () => {
     ),
     [optionEditing, setOptionEditing] = useState<boolean>(false),
     [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false),
-    { exportLayer, setExportLayer } = useContext(context),
+    [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
     [layerData, setLayerData] = useAtom(layerAtom),
     [optionData, setOptionData] = useAtom(optionAtom),
     [background, setBackground] = useAtom(backgroundAtom);
@@ -67,7 +65,6 @@ const Trace = () => {
       autoSaveInterval.current = -1;
     };
   }, [setTabMode]);
-  if (exportLayer === undefined || setExportLayer === undefined) return <></>;
   const exportHandler = useCallback(
       (value: string) => {
         const layerString: string[] = [],

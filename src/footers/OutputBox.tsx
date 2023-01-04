@@ -1,5 +1,4 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { context } from "@/components/Context";
+import { useCallback, useEffect, useRef, useState } from "react";
 import React from "react";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./OutputBox.module.scss";
@@ -7,18 +6,16 @@ import { Button } from "@/components/button/Button";
 import { sleep } from "@/libraries/sleep";
 import { Storage } from "@/libraries/localStorage";
 import { CommentsDetail } from "@/footers/commentsDetail/CommentsDetail";
+import { useAtom } from "jotai";
+import { elementAtom, exportLayerAtom } from "@/atoms";
 
 /**
  * 入出力用のテキストエリア
  * @constructor
  */
 const OutputBox = (): JSX.Element => {
-  const {
-      exportLayer,
-      setExportLayer,
-      commentInputTextarea,
-      commentCommandInput,
-    } = useContext(context),
+  const [elements] = useAtom(elementAtom),
+    [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
     [textareaValue, setTextareaValue] = useState<string[]>([]),
     [isReverse, setIsReverse] = useState<boolean>(false),
     [isPosting, setIsPosting] = useState<boolean>(false),
@@ -26,12 +23,7 @@ const OutputBox = (): JSX.Element => {
     [spoilerMessage, setSpoilerMessage] = useState<string>(""),
     postAllCancel = useRef<boolean>(false);
   useEffect(() => {
-    if (
-      exportLayer === undefined ||
-      setExportLayer === undefined ||
-      exportLayer.length === 0
-    )
-      return;
+    if (!elements || exportLayer.length === 0) return;
     setTextareaValue([...textareaValue, ...exportLayer]);
     setExportLayer([]);
   }, [exportLayer, textareaValue]);
@@ -92,7 +84,7 @@ const OutputBox = (): JSX.Element => {
     return { command, comment };
   };
   const setLine = (command: string, comment: string): boolean => {
-    if (!commentCommandInput || !commentInputTextarea) return false;
+    if (!elements) return false;
     comment = comment
       .replace(/\[A0]/gi, "\u00A0")
       .replace(/\[SP]/gi, "\u3000")
@@ -118,26 +110,27 @@ const OutputBox = (): JSX.Element => {
         "value"
       )?.set;
       if (!nativeInputValueSetter) return false;
-      nativeInputValueSetter.call(commentCommandInput, command);
-      commentCommandInput.dispatchEvent(new Event("change", { bubbles: true }));
-      commentCommandInput.dispatchEvent(new Event("input", { bubbles: true }));
+      nativeInputValueSetter.call(elements.commentCommandInput, command);
+      elements.commentCommandInput.dispatchEvent(
+        new Event("change", { bubbles: true })
+      );
+      elements.commentCommandInput.dispatchEvent(
+        new Event("input", { bubbles: true })
+      );
     }
     const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
       window.HTMLTextAreaElement.prototype,
       "value"
     )?.set;
     if (!nativeTextAreaValueSetter) return false;
-    nativeTextAreaValueSetter.call(commentInputTextarea, comment);
-    commentInputTextarea.dispatchEvent(new Event("input", { bubbles: true }));
+    nativeTextAreaValueSetter.call(elements.commentInputTextarea, comment);
+    elements.commentInputTextarea.dispatchEvent(
+      new Event("input", { bubbles: true })
+    );
     return true;
   };
   const onSetLineClick = useCallback(() => {
-      if (
-        !commentCommandInput ||
-        !commentInputTextarea ||
-        textareaValue.length === 0
-      )
-        return;
+      if (!elements || textareaValue.length === 0) return;
       const content = getCommandAndComment(textareaValue, isReverse);
       if (!content) return;
       if (setLine(content.command, content.comment)) {
@@ -151,7 +144,7 @@ const OutputBox = (): JSX.Element => {
     }, [textareaValue, isReverse]),
     onPostAll = useCallback(() => {
       const postAll = async () => {
-        if (!commentInputTextarea) return;
+        if (!elements) return;
         postAllCancel.current = false;
         const isOwnerMode = !!location.href.match(
             /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/
@@ -190,7 +183,7 @@ const OutputBox = (): JSX.Element => {
               textareaValue.shift();
             }
             await sleep(200);
-            commentInputTextarea.dispatchEvent(
+            elements.commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {
                 key: "Enter",
                 keyCode: 13,
@@ -216,7 +209,7 @@ const OutputBox = (): JSX.Element => {
         setIsPosting(false);
       };
       void postAll();
-    }, [textareaValue, commentInputTextarea]),
+    }, [textareaValue, elements]),
     onPostAllCancel = useCallback(() => (postAllCancel.current = true), []),
     toggleIsReverse = useCallback(() => {
       setIsReverse(!isReverse);
