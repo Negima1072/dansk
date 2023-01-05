@@ -21,7 +21,7 @@ type sliderProps = {
  * @param props
  * @constructor
  */
-const Button = (props: sliderProps) => {
+const Slider = (props: sliderProps) => {
   const [value, setValue] = useState<number>(props.value);
   const onSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(Number(e.target.value));
@@ -41,4 +41,4 @@ const Button = (props: sliderProps) => {
     </div>
   );
 };
-export default Button;
+export { Slider };

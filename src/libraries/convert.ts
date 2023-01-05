@@ -1,4 +1,4 @@
-import typeGuard from "@/libraries/typeGuard";
+import { typeGuard } from "@/libraries/typeGuard";
 import { convertFormat } from "@/@types/types";
 
 /**

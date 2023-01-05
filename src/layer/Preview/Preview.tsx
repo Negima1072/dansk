@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Styles from "./Preview.module.scss";
-import { layerContext } from "@/components/LayerContext";
 import NiconiComments from "@xpadev-net/niconicomments";
-import layerUtil from "@/headers/layerUtil/layerUtil";
+import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import { useAtom } from "jotai";
+import { layerAtom } from "@/atoms";
 
 const Preview = () => {
   const canvas = useRef<HTMLCanvasElement>(null),
     niconicomments = useRef<NiconiComments>();
-  const { layerData } = useContext(layerContext);
+  const [layerData] = useAtom(layerAtom);
   useEffect(() => {
     if (!layerData || !canvas.current) return;
     const target = layerData

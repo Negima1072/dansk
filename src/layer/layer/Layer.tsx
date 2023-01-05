@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import React, { ChangeEvent, useContext, useRef } from "react";
-import { layer } from "@/@types/types";
+import React, { ChangeEvent, useRef } from "react";
+import { layer } from "@/@types/layer";
 import Styles from "./Layer.module.scss";
-import { layerContext } from "@/components/LayerContext";
-import grids from "@/assets/grids";
-import replaceCharList from "@/layer/layerManager/layerManager.replaceCharList";
+import { grids } from "@/assets/grids";
+import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
+import { useAtom } from "jotai";
+import { layerAtom, optionAtom } from "@/atoms";
 
 type LayerProps = {
   data: layer;
@@ -46,7 +47,8 @@ const LayerInput = styled.textarea<LayerInputProps>`
  * @constructor
  */
 const Layer = (props: LayerProps): JSX.Element => {
-  const { layerData, setLayerData, optionData } = useContext(layerContext),
+  const [layerData, setLayerData] = useAtom(layerAtom),
+    [optionData] = useAtom(optionAtom),
     layerElement = useRef<HTMLDivElement>(null),
     currentLayer = useRef<layer>();
   const onchange = (layer: layer) => {
@@ -57,19 +59,6 @@ const Layer = (props: LayerProps): JSX.Element => {
     currentLayer.current = layer;
     setLayerData([...layerData]);
   };
-  /*useEffect(() => {
-    if (!layerElement.current || !optionData) return;
-    if (!(props.data.layerId === currentLayer.current?.layerId)) {
-      props.data.overwrite = true;
-    }
-    currentLayer.current = props.data;
-    layerManager(
-      props.data,
-      onchange,
-      layerElement.current,
-      optionData.replace
-    );
-  }, [layerElement, layerData, props.data, optionData?.replace]);*/
   const updateData = (e: ChangeEvent<HTMLTextAreaElement>, index: number) => {
     const line = props.data.content[index];
     const char = replaceCharList[(e.nativeEvent as InputEvent).data || ""];
@@ -168,4 +157,4 @@ const Layer = (props: LayerProps): JSX.Element => {
     </>
   );
 };
-export default Layer;
+export { Layer };

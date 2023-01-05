@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
-import Popup from "@/components/popup/Popup";
+import { Popup } from "@/components/popup/Popup";
 import Styles from "./CommentsDetail.module.scss";
-import timeUtil from "@/libraries/timeUtil";
-import localStorage from "@/libraries/localStorage";
+import { time2str } from "@/libraries/timeUtil";
+import { Storage } from "@/libraries/localStorage";
 
 type propType = {
   textareaValue: string[];
@@ -40,7 +40,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
             if (!seekCommand[1] && !seekCommand[3]) {
               timeMSec +=
                 Number(seekCommand[2]) /
-                (localStorage.get("options_useMs") === "true" ? 1000 : 100);
+                (Storage.get("options_useMs") === "true" ? 1000 : 100);
             } else {
               let currentTime = 0;
               if (seekCommand[1]) currentTime += Number(seekCommand[1]) * 60;
@@ -63,7 +63,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
       comment = comment.replace(/<BR>/gi, "\n");
       const row = comment.split("\n").length;
       const length = comment.length;
-      const time = timeUtil.time2str(timeMSec);
+      const time = time2str(timeMSec);
       return { row, length, time, command };
     });
   }, [props.textareaValue]);
@@ -120,4 +120,4 @@ const CommentsDetail: React.FC<propType> = (props) => {
   );
 };
 
-export default CommentsDetail;
+export { CommentsDetail };

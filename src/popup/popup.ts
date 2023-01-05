@@ -1,4 +1,4 @@
-﻿import localStorage from "@/libraries/localStorage";
+﻿import { Storage } from "@/libraries/localStorage";
 import { convertText } from "@/libraries/convert";
 import { convertFormat } from "@/@types/types";
 
@@ -19,23 +19,23 @@ window.addEventListener("load", () => {
    * -> cookieから移行
    */
   const save = () => {
-    localStorage.set("ppConvertBefore", beforeTextArea.value);
-    localStorage.set("ppConvertBeforeType", beforeOptions.value);
-    localStorage.set("ppConvertAfter", afterTextArea.value);
-    localStorage.set("ppConvertAfterType", afterOptions.value);
+    Storage.set("ppConvertBefore", beforeTextArea.value);
+    Storage.set("ppConvertBeforeType", beforeOptions.value);
+    Storage.set("ppConvertAfter", afterTextArea.value);
+    Storage.set("ppConvertAfterType", afterOptions.value);
   };
 
   beforeTextArea.value =
-    getCookie("dnsk_pp_before") || localStorage.get("ppConvertBefore") || "";
+    getCookie("dnsk_pp_before") || Storage.get("ppConvertBefore") || "";
   beforeOptions.value =
     getCookie("dnsk_pp_before_type") ||
-    localStorage.get("ppConvertBeforeType") ||
+    Storage.get("ppConvertBeforeType") ||
     "domo";
   afterTextArea.value =
-    getCookie("dnsk_pp_after") || localStorage.get("ppConvertAfter") || "";
+    getCookie("dnsk_pp_after") || Storage.get("ppConvertAfter") || "";
   afterOptions.value =
     getCookie("dnsk_pp_after_type") ||
-    localStorage.get("ppConvertAfterType") ||
+    Storage.get("ppConvertAfterType") ||
     "dansk";
   save();
 

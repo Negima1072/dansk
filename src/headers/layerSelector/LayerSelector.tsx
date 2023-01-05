@@ -1,19 +1,20 @@
-import React, { ChangeEvent, useCallback, useContext, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import Styles from "./LayerSelector.module.scss";
 import { ReactSortable } from "react-sortablejs";
-import layerUtil from "@/headers/layerUtil/layerUtil";
-import icons from "@/assets/icons";
-import { layerContext } from "@/components/LayerContext";
-import CssEditor from "@/headers/layerSelector/CssEditor";
-import { layer } from "@/@types/types";
+import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import { icons } from "@/assets/icons";
+import { CssEditor } from "@/headers/layerSelector/CssEditor";
+import { layer } from "@/@types/layer";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
+import { useAtom } from "jotai";
+import { layerAtom } from "@/atoms";
 
 /**
  * レイヤー選択・並べ替え・色変更他
  * @constructor
  */
 const LayerSelector = () => {
-  const { layerData, setLayerData } = useContext(layerContext),
+  const [layerData, setLayerData] = useAtom(layerAtom),
     [editingLayer, setEditingLayer] = useState<number>(-1),
     [editingLayerName, setEditingLayerName] = useState<string>(""),
     [isSetting, setSetting] = useState<number>(-1);
@@ -180,4 +181,4 @@ const LayerSelector = () => {
     </div>
   );
 };
-export default LayerSelector;
+export { LayerSelector };

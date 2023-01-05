@@ -440,4 +440,4 @@ const Templates: layerTemplates = {
     ],
   },
 };
-export default Templates;
+export { Templates };

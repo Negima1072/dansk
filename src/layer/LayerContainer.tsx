@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { layerContext } from "@/components/LayerContext";
-import Layer from "@/layer/layer/Layer";
+import { Layer } from "@/layer/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
-import { objectFitArgs } from "@/@types/types";
-import { context } from "@/components/Context";
+import { objectFitArgs } from "@/@types/background";
 import ReactDOM from "react-dom";
 import { Preview } from "@/layer/Preview/Preview";
+import { useAtom } from "jotai";
+import { backgroundAtom, elementAtom, layerAtom, optionAtom } from "@/atoms";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -30,11 +30,13 @@ function beforeUnload(e: BeforeUnloadEvent) {
  * @constructor
  */
 const LayerContainer = (): JSX.Element => {
-  const { layerData, optionData } = useContext(layerContext);
-  const { videoSymbolContainerCanvas, BackgroundImageElement } =
-    useContext(context);
+  const [layerData] = useAtom(layerAtom);
+  const [background] = useAtom(backgroundAtom);
+  const [optionData] = useAtom(optionAtom);
+  const [elements] = useAtom(elementAtom);
   useEffect(() => {
-    const classList = videoSymbolContainerCanvas?.parentElement?.classList,
+    const classList =
+        elements?.videoSymbolContainerCanvas.parentElement?.classList,
       cssClass = Styles.VideoSymbolContainer || "_";
     if (!classList || process.env.NODE_ENV === "development") return;
     if (layerData && layerData.length > 0) {
@@ -75,21 +77,18 @@ const LayerContainer = (): JSX.Element => {
     });
   }, [targetNode]);
   useEffect(() => observerCallback(), [document.body.classList]);
-  if (!optionData) return <></>;
   return (
     <>
-      {optionData?.bgActive > -1 &&
-      optionData.bgVisible &&
-      BackgroundImageElement
+      {background.selected > -1 && background.visible && elements
         ? ReactDOM.createPortal(
             <BackgroundImage
               className={`${Styles.backgroundImage}`}
-              src={optionData.bgImages[optionData.bgActive]}
+              src={background.images[background.selected]}
               alt={"backgroundImage"}
-              mode={optionData.bgMode}
-              opacity={optionData.bgTransparency / 100}
+              mode={background.mode}
+              opacity={background.transparency / 100}
             />,
-            BackgroundImageElement
+            elements?.BackgroundImageElement
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}
@@ -108,4 +107,4 @@ const LayerContainer = (): JSX.Element => {
     </>
   );
 };
-export default LayerContainer;
+export { LayerContainer };
