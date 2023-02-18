@@ -38,6 +38,9 @@
   .item {
     transform-origin: left;
   }
+  &.showOnTop {
+    z-index: 10;
+  }
 }
 .textarea {
   width: 100%;
