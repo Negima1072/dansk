@@ -7,7 +7,7 @@ import { autoSave } from "@/@types/types";
 import { Button } from "@/components/button/Button";
 import { uuid } from "@/libraries/uuidUtil";
 import { layerAtom } from "@/atoms";
-import { useUpdateAtom } from "jotai/utils";
+import { useSetAtom } from "jotai";
 
 type propType = {
   close: () => void;
@@ -19,13 +19,13 @@ type propType = {
  * @param props
  * @constructor
  */
-const Backup: React.FC<propType> = (props) => {
+const Backup = (props: propType) => {
   const [saveData, setSaveData] = useState<autoSave[]>(() => {
     const data: unknown = JSON.parse(Storage.get("autoSave"));
     if (!typeGuard.localStorage.isAutoSave(data)) return [];
     return data;
   });
-  const setLayerData = useUpdateAtom(layerAtom);
+  const setLayerData = useSetAtom(layerAtom);
   const load = (key: string) => {
       const value = saveData[Number(key)];
       if (

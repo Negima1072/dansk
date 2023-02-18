@@ -8,14 +8,14 @@ import { sleep } from "@/libraries/sleep";
 import { MemoPortal } from "@/components/MemoPortal";
 import { inject } from "@/libraries/cssInjector";
 import { elementAtom } from "@/atoms";
-import { useUpdateAtom } from "jotai/utils";
+import { useSetAtom } from "jotai";
 
 /**
  * Reactのルート要素
  * @constructor
  */
 const Root = (): JSX.Element => {
-  const setElements = useUpdateAtom(elementAtom);
+  const setElements = useSetAtom(elementAtom);
   useEffect(() => {
     const init = async () => setElements(await getElements());
     void init();
