@@ -81,6 +81,12 @@ const defaultValue: localStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
   },
+  options_showSelectedLayerOnTop: {
+    defaultValue: "false",
+    description: "選択中のレイヤーを一番上に表示",
+    dangerous: false,
+    type: "boolean",
+  },
   display_trace: {
     defaultValue: "true",
   },

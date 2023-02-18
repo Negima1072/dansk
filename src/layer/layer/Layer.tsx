@@ -6,6 +6,7 @@ import { grids } from "@/assets/grids";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { useAtom } from "jotai";
 import { layerAtom, optionAtom } from "@/atoms";
+import { Storage } from "@/libraries/localStorage";
 
 type LayerProps = {
   data: layer;
@@ -98,6 +99,10 @@ const Layer = (props: LayerProps): JSX.Element => {
           props.data.selected ? Styles.active : ""
         } ${props.data.visible ? "" : Styles.invisible} ${
           optionData?.grid && grids[props.data.value] ? Styles.grid : ""
+        } ${
+          props.data.selected &&
+          Storage.get("options_showSelectedLayerOnTop") &&
+          Styles.showOnTop
         }`}
         top={props.data.top[props.data.pos]}
         left={props.data.left}

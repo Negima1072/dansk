@@ -93,6 +93,7 @@ type localStorageKeys =
   | "options_useMs"
   | "options_lineMode"
   | "options_exportHiddenLayer"
+  | "options_showSelectedLayerOnTop"
   | "display_trace"
   | "display_memo"
   | "display_time"
