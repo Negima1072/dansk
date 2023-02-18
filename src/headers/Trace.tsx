@@ -42,8 +42,6 @@ const Trace = () => {
     [background, setBackground] = useAtom(backgroundAtom);
   const layerDataRef = useRef(layerData),
     autoSaveInterval = useRef<number>(-1);
-  if (!layerData || !setLayerData || !optionData || !setOptionData)
-    return <></>;
   useEffect(() => {
     layerDataRef.current = layerData;
   }, [layerData]);
@@ -55,7 +53,8 @@ const Trace = () => {
       if (
         !typeGuard.localStorage.isAutoSave(data) ||
         !layerDataRef.current ||
-        layerDataRef.current.length < 1
+        layerDataRef.current.length < 1 ||
+        JSON.stringify(layerDataRef.current) === JSON.stringify(data.at(-1))
       )
         return;
       data.push({ data: layerDataRef.current, timestamp: Date.now() });
