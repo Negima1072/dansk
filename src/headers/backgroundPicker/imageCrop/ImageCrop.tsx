@@ -44,6 +44,7 @@ const ImageCrop = ({ imageId }: props) => {
   const save = () => {
     const img = document.createElement("img");
     img.src = image.crop?.original || image.url;
+    img.crossOrigin = "Anonymous";
     img.onload = () => {
       const baseCanvas = document.createElement("canvas");
       baseCanvas.width = 2560;
