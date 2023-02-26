@@ -37,6 +37,7 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
 
   useEffect(() => {
     setColorInputText(color);
+    setColorInput(color);
   }, [color]);
 
   const onClick = () => {
@@ -66,7 +67,7 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
         ref={colorDisplayRef}
         onMouseEnter={onClick}
       >
-        {!disabled && (
+        {!disabled && colorInput && (
           <input
             className={Styles.colorInput}
             type="color"
