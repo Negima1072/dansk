@@ -8,6 +8,7 @@ import { Storage } from "@/libraries/localStorage";
 import { CommentsDetail } from "@/footers/commentsDetail/CommentsDetail";
 import { useAtom } from "jotai";
 import { elementAtom, exportLayerAtom } from "@/atoms";
+import { updateReactInput } from "@/libraries/elementUtil";
 
 /**
  * 入出力用のテキストエリア
@@ -105,28 +106,9 @@ const OutputBox = (): JSX.Element => {
      * https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
      */
     if (command != "") {
-      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-        window.HTMLInputElement.prototype,
-        "value"
-      )?.set;
-      if (!nativeInputValueSetter) return false;
-      nativeInputValueSetter.call(elements.commentCommandInput, command);
-      elements.commentCommandInput.dispatchEvent(
-        new Event("change", { bubbles: true })
-      );
-      elements.commentCommandInput.dispatchEvent(
-        new Event("input", { bubbles: true })
-      );
+      updateReactInput(elements.commentCommandInput, command);
     }
-    const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
-      window.HTMLTextAreaElement.prototype,
-      "value"
-    )?.set;
-    if (!nativeTextAreaValueSetter) return false;
-    nativeTextAreaValueSetter.call(elements.commentInputTextarea, comment);
-    elements.commentInputTextarea.dispatchEvent(
-      new Event("input", { bubbles: true })
-    );
+    updateReactInput(elements.commentInputTextarea, comment);
     return true;
   };
   const onSetLineClick = useCallback(() => {

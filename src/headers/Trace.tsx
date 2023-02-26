@@ -54,7 +54,8 @@ const Trace = () => {
         !typeGuard.localStorage.isAutoSave(data) ||
         !layerDataRef.current ||
         layerDataRef.current.length < 1 ||
-        JSON.stringify(layerDataRef.current) === JSON.stringify(data.at(-1))
+        JSON.stringify(layerDataRef.current) ===
+          JSON.stringify(data.at(-1)?.data)
       )
         return;
       data.push({ data: layerDataRef.current, timestamp: Date.now() });
