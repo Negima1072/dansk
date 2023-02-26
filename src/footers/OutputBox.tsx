@@ -8,7 +8,10 @@ import { Storage } from "@/libraries/localStorage";
 import { CommentsDetail } from "@/footers/commentsDetail/CommentsDetail";
 import { useAtom } from "jotai";
 import { elementAtom, exportLayerAtom } from "@/atoms";
-import { updateReactInput } from "@/libraries/elementUtil";
+import {
+  updateReactHTMLInput,
+  updateReactHTMLTextArea,
+} from "@/libraries/elementUtil";
 
 /**
  * 入出力用のテキストエリア
@@ -106,9 +109,9 @@ const OutputBox = (): JSX.Element => {
      * https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
      */
     if (command != "") {
-      updateReactInput(elements.commentCommandInput, command);
+      updateReactHTMLInput(elements.commentCommandInput, command);
     }
-    updateReactInput(elements.commentInputTextarea, comment);
+    updateReactHTMLTextArea(elements.commentInputTextarea, comment);
     return true;
   };
   const onSetLineClick = useCallback(() => {

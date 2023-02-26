@@ -184,7 +184,7 @@ const BackgroundPicker = () => {
       )}
       {imageCrop >= 0 && (
         <Popup title={"切り抜き"} close={() => setImageCrop(-1)}>
-          <ImageCrop imageId={imageCrop} />
+          <ImageCrop imageId={imageCrop} close={() => setImageCrop(-1)} />
         </Popup>
       )}
     </>

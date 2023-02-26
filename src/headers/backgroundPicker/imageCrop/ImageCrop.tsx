@@ -8,6 +8,7 @@ import { Button } from "@/components/button/Button";
 
 type props = {
   imageId: number;
+  close: () => void;
 };
 
 const getActualRange = (range: cropRange) => {
@@ -19,7 +20,7 @@ const getActualRange = (range: cropRange) => {
   };
 };
 
-const ImageCrop = ({ imageId }: props) => {
+const ImageCrop = ({ imageId, close }: props) => {
   const [background, setBackground] = useAtom(backgroundAtom);
   const image = background.images[imageId];
   const [range, setRange] = useState<cropRange>(
@@ -79,6 +80,7 @@ const ImageCrop = ({ imageId }: props) => {
         };
         image.url = URL.createObjectURL(blob);
         setBackground({ ...background });
+        close();
       });
     };
   };

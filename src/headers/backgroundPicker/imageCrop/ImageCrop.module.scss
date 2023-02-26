@@ -2,9 +2,10 @@
   width: 75vw;
   .container {
     position: relative;
-    width: 100%;
     aspect-ratio: 16/9;
     background-color: #333333;
+    max-height: 700px;
+    margin: 0 auto;
     .clipWrapper {
       z-index: 1;
       position: absolute;
