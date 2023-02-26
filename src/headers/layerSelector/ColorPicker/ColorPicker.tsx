@@ -25,6 +25,16 @@ const HoverItem = styled.div<pos>`
   top: ${(props) => props.y}px;
 `;
 
+const convert6digitHexColorCode = (color: string) => {
+  if (color.length === 4) {
+    const r = color.slice(1, 1),
+      g = color.slice(2, 2),
+      b = color.slice(3, 3);
+    return `#${r.repeat(2)}${g.repeat(2)}${b.repeat(2)}`;
+  }
+  return color;
+};
+
 const ColorPicker = ({ color, disabled, onChange }: props) => {
   const colorDisplayRef = useRef<HTMLLabelElement>(null);
   const [pos, setPos] = useState<{ x: number; y: number; height: number }>({
@@ -73,7 +83,7 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
             type="color"
             onChange={(e) => onChange(e)}
             disabled={disabled}
-            value={colorInput}
+            value={convert6digitHexColorCode(colorInput)}
           />
         )}
       </ColorDisplay>
