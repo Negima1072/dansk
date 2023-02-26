@@ -68,7 +68,7 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
       >
         {!disabled && (
           <input
-            className={Styles.colorInputText}
+            className={Styles.colorInput}
             type="color"
             onChange={(e) => onChange(e)}
             disabled={disabled}
