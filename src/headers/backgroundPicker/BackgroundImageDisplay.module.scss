@@ -8,8 +8,9 @@
   border: solid 1px black;
   padding: 5px;
   .item {
-    width: calc(50% - 12px);
+    max-width: calc(50% - 12px);
     height: 50%;
+    aspect-ratio: 16/9;
     position: relative;
     border: solid 1px;
     background-color: #777777;
