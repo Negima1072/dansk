@@ -32,10 +32,11 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
     y: 0,
     height: 0,
   });
+  const [colorInputText, setColorInputText] = useState(color);
   const [colorInput, setColorInput] = useState(color);
 
   useEffect(() => {
-    setColorInput(color);
+    setColorInputText(color);
   }, [color]);
 
   const onClick = () => {
@@ -45,8 +46,11 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
 
   const update = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setColorInput(value);
-    if (value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) onChange(e);
+    setColorInputText(value);
+    if (value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) {
+      onChange(e);
+      setColorInput(value);
+    }
   };
 
   useEffect(() => {
@@ -64,7 +68,7 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
       >
         {!disabled && (
           <input
-            className={Styles.colorInput}
+            className={Styles.colorInputText}
             type="color"
             onChange={(e) => onChange(e)}
             disabled={disabled}
@@ -75,7 +79,7 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
       <HoverItem x={pos.x} y={pos.y + pos.height} className={Styles.hoverItem}>
         <input
           type="text"
-          value={colorInput}
+          value={colorInputText}
           onChange={update}
           className={Styles.input}
           pattern={"^#([0-9a-fA-Z]{3}|[0-9a-fA-Z]{6})$"}
