@@ -62,13 +62,15 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
         ref={colorDisplayRef}
         onMouseEnter={onClick}
       >
-        <input
-          className={Styles.colorInput}
-          type="color"
-          onChange={(e) => onChange(e)}
-          disabled={disabled}
-          value={colorInput}
-        />
+        {!disabled && (
+          <input
+            className={Styles.colorInput}
+            type="color"
+            onChange={(e) => onChange(e)}
+            disabled={disabled}
+            value={colorInput}
+          />
+        )}
       </ColorDisplay>
       <HoverItem x={pos.x} y={pos.y + pos.height} className={Styles.hoverItem}>
         <input
