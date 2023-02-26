@@ -27,12 +27,17 @@ const HoverItem = styled.div<pos>`
 
 const convert6digitHexColorCode = (color: string) => {
   if (color.length === 4) {
-    const r = color.slice(1, 1),
-      g = color.slice(2, 2),
-      b = color.slice(3, 3);
-    return `#${r.repeat(2)}${g.repeat(2)}${b.repeat(2)}`;
+    const match = color.match(/#([0-9a-f])([0-9a-f])([0-9a-f])/i);
+    if (!match) {
+      return "#000000";
+    }
+    return `#${match[1]?.repeat(2)}${match[2]?.repeat(2)}${match[3]?.repeat(
+      2
+    )}`;
+  } else if (color.length === 7) {
+    return color;
   }
-  return color;
+  return "#000000";
 };
 
 const ColorPicker = ({ color, disabled, onChange }: props) => {
