@@ -214,7 +214,7 @@ const Trace = () => {
       const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = `${fileName}${
-        Storage.get("options_addDatetimeToFilename")
+        Storage.get("options_addDatetimeToFilename") === "true"
           ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
           : ""
       }.dansk.json`;
