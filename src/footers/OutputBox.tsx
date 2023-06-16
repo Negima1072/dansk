@@ -167,7 +167,7 @@ const OutputBox = (): JSX.Element => {
             } else {
               textareaValue.shift();
             }
-            await sleep(200);
+            await sleep(500);
             elements.commentInputTextarea.dispatchEvent(
               new KeyboardEvent("keydown", {
                 key: "Enter",
