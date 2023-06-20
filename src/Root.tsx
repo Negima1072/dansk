@@ -104,20 +104,26 @@ const init = async () => {
     input: URL | RequestInfo,
     init?: RequestInit | undefined
   ): Promise<Response> => {
-    const url_pattern =
-      /^https:\/\/nvcomment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
-    if (init && url_pattern.test(input.toString())) {
-      if (init.method === "POST" && init.body) {
-        if (Storage.get("options_disable184") === "true") {
-          const body = JSON.parse(init.body.toString()) as commentPublishData;
-          if (body.commands && body.commands.includes("184")) {
-            body.commands = body.commands.filter(
-              (command: string) => command !== "184"
-            );
-            init.body = JSON.stringify(body);
+    try {
+      const url_pattern =
+        /^https:\/\/nvcomment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
+      if (init && url_pattern.test(input.toString())) {
+        if (init.method === "POST" && init.body) {
+          if (Storage.get("options_disable184") === "true") {
+            const body = JSON.parse(init.body.toString()) as commentPublishData;
+            if (body.commands && Array.isArray(body.commands)) {
+              if (body.commands.includes("184")) {
+                body.commands = body.commands.filter(
+                  (command: string) => command !== "184"
+                );
+                init.body = JSON.stringify(body);
+              }
+            }
           }
         }
       }
+    } catch (error) {
+      console.error(error);
     }
     return fetch_origin(input, init);
   };
