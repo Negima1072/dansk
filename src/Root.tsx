@@ -121,6 +121,13 @@ const init = async () => {
     }
     return fetch_origin(input, init);
   };
+  const postBtnElement = document.querySelector(
+    ".CommentPostButton"
+  ) as HTMLButtonElement;
+  if (postBtnElement) {
+    postBtnElement.style.backgroundColor =
+      Storage.get("options_disable184") === "true" ? "#ff8300" : "#007cff";
+  }
   const HeaderElement = document.createElement("div");
   mainContainer.before(HeaderElement);
   const MainElement = document.createElement("div");
