@@ -95,6 +95,7 @@ type localStorageKeys =
   | "options_exportHiddenLayer"
   | "options_showSelectedLayerOnTop"
   | "options_addDatetimeToFilename"
+  | "options_disable184"
   | "display_trace"
   | "display_memo"
   | "display_time"
@@ -117,4 +118,12 @@ type localStorageOptionItem = localStorageItem & {
 };
 type localStorageDefaultValues = {
   [key in localStorageKeys]: localStorageItem | localStorageOptionItem;
+};
+
+type commentPublishData = {
+  body: string;
+  commands: string[];
+  postKey: string;
+  videoId: string;
+  vposMs: number;
 };

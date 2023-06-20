@@ -93,6 +93,12 @@ const defaultValue: localStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
   },
+  options_disable184: {
+    defaultValue: "false",
+    description: "184コマンドを無効化",
+    dangerous: false,
+    type: "boolean",
+  },
   display_trace: {
     defaultValue: "true",
   },

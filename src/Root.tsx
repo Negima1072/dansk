@@ -6,9 +6,11 @@ import { Header } from "@/components/Header";
 import { Main } from "@/components/Main";
 import { sleep } from "@/libraries/sleep";
 import { MemoPortal } from "@/components/MemoPortal";
+import { Storage } from "@/libraries/localStorage";
 import { inject } from "@/libraries/cssInjector";
 import { elementAtom } from "@/atoms";
 import { useSetAtom } from "jotai";
+import { commentPublishData } from "./@types/types";
 
 /**
  * Reactのルート要素
@@ -97,6 +99,28 @@ const init = async () => {
     },
     { passive: false }
   );
+  const fetch_origin = window.fetch;
+  window.fetch = (
+    input: URL | RequestInfo,
+    init?: RequestInit | undefined
+  ): Promise<Response> => {
+    const url_pattern =
+      /^https:\/\/nvcomment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
+    if (init && url_pattern.test(input.toString())) {
+      if (init.method === "POST" && init.body) {
+        if (Storage.get("options_disable184") === "true") {
+          const body = JSON.parse(init.body.toString()) as commentPublishData;
+          if (body.commands && body.commands.includes("184")) {
+            body.commands = body.commands.filter(
+              (command: string) => command !== "184"
+            );
+            init.body = JSON.stringify(body);
+          }
+        }
+      }
+    }
+    return fetch_origin(input, init);
+  };
   const HeaderElement = document.createElement("div");
   mainContainer.before(HeaderElement);
   const MainElement = document.createElement("div");
