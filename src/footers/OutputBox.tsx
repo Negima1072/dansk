@@ -201,7 +201,19 @@ const OutputBox = (): JSX.Element => {
     }, [isReverse]),
     toggleCommentsDetail = useCallback(() => {
       setIsShowDetails(!isShowDetails);
-    }, [isShowDetails]);
+    }, [isShowDetails]),
+    downloadTextArea = useCallback(() => {
+      const blob = new Blob([textareaValue.join("\n")], {
+        type: "text/plain",
+      });
+      const url_textarea = window.URL.createObjectURL(blob);
+      const a_textarea = document.createElement("a");
+      a_textarea.href = url_textarea;
+      a_textarea.download = "comments.txt";
+      a_textarea.click();
+      a_textarea.remove();
+      window.URL.revokeObjectURL(url_textarea);
+    }, [textareaValue]);
   if (exportLayer === undefined) return <></>;
   return (
     <>
@@ -259,6 +271,13 @@ const OutputBox = (): JSX.Element => {
                 disabled={isPosting}
                 text="コメント詳細"
                 click={toggleCommentsDetail}
+              />
+            </div>
+            <div className={Styles.block}>
+              <Button
+                disabled={isPosting}
+                text="ダウンロード"
+                click={downloadTextArea}
               />
             </div>
             <div className={Styles.right}>
