@@ -139,6 +139,51 @@ const Trace = () => {
       () => setBackground({ ...background, open: true }),
       [background]
     ),
+    downloadScreenshot = useCallback(() => {
+      const video_el = document.querySelector(
+        "#MainVideoPlayer>video"
+      ) as HTMLVideoElement;
+      const comment_el = document.querySelector(
+        ".CommentRenderer>canvas"
+      ) as HTMLCanvasElement;
+      const symbol_el = document.querySelector(
+        ".VideoSymbolContainer>canvas"
+      ) as HTMLCanvasElement;
+      const canvas_screenshot = document.createElement("canvas");
+      canvas_screenshot.width = comment_el.width;
+      canvas_screenshot.height = comment_el.height;
+      const ctx = canvas_screenshot.getContext("2d");
+      if (!ctx || !video_el || !comment_el || !symbol_el) return;
+      ctx.drawImage(
+        video_el,
+        0,
+        0,
+        canvas_screenshot.width,
+        canvas_screenshot.height
+      );
+      ctx.drawImage(
+        comment_el,
+        0,
+        0,
+        canvas_screenshot.width,
+        canvas_screenshot.height
+      );
+      ctx.drawImage(
+        symbol_el,
+        0,
+        0,
+        canvas_screenshot.width,
+        canvas_screenshot.height
+      );
+      const url_screenshot = canvas_screenshot.toDataURL("image/png");
+      const a_screenshot = document.createElement("a");
+      a_screenshot.href = url_screenshot;
+      a_screenshot.download = "screenshot.png";
+      a_screenshot.click();
+      a_screenshot.remove();
+      canvas_screenshot.remove();
+      window.URL.revokeObjectURL(url_screenshot);
+    }, []),
     toggleBackgroundVisible = useCallback(
       () => setBackground({ ...background, visible: !background.visible }),
       [background]
@@ -368,6 +413,9 @@ const Trace = () => {
                   min={0}
                 ></Slider>
               )}
+            </div>
+            <div className={Styles.block}>
+              <Button click={downloadScreenshot} text={"スクショ"} value={""} />
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>
