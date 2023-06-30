@@ -24,6 +24,7 @@ import {
   layerAtom,
   optionAtom,
 } from "@/atoms";
+import { domo2dansa } from "@/libraries/domoTool";
 
 /**
  * Traceブロック
@@ -278,7 +279,7 @@ const Trace = () => {
       const reader = new FileReader();
       const input = document.createElement("input");
       input.type = "file";
-      input.accept = ".json,*";
+      input.accept = ".json,.xml,*";
       input.onchange = (e) => {
         const target = e.target as HTMLInputElement;
         if (target?.files && target.files[0]) {
@@ -287,7 +288,12 @@ const Trace = () => {
       };
       reader.onload = function (e) {
         if (typeof e.target?.result !== "string") return;
-        const data: unknown = JSON.parse(e.target.result);
+        let data: unknown;
+        if (e.target.result.startsWith("<?xml")) {
+          data = domo2dansa(e.target.result);
+        } else {
+          data = JSON.parse(e.target.result);
+        }
         if (!typeGuard.layer.isLayers(data)) return;
         setLayerData(
           data.map((layer) => {
