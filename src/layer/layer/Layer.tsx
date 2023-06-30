@@ -57,7 +57,6 @@ const Layer = (props: LayerProps): JSX.Element => {
     for (let i = 0; i < layerData.length; i++) {
       if (layerData[i]?.layerId === layer.layerId) layerData[i] = layer;
     }
-    console.log(layerData);
     currentLayer.current = layer;
     setLayerData([...layerData]);
   };
