@@ -24,16 +24,10 @@ const mode2type: { [key: string]: string | undefined } = {
 };
 
 const domoColor2code = (color: DomoColor): string => {
-  const { ScB, ScG, ScR } = color;
-  const r = Math.round(Number(ScR._text) * 255)
-    .toString(16)
-    .padStart(2, "0");
-  const g = Math.round(Number(ScG._text) * 255)
-    .toString(16)
-    .padStart(2, "0");
-  const b = Math.round(Number(ScB._text) * 255)
-    .toString(16)
-    .padStart(2, "0");
+  const { B, G, R } = color;
+  const r = Math.round(R._text).toString(16).padStart(2, "0");
+  const g = Math.round(G._text).toString(16).padStart(2, "0");
+  const b = Math.round(B._text).toString(16).padStart(2, "0");
   return `#${r}${g}${b}`;
 };
 
