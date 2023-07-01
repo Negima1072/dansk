@@ -24,6 +24,7 @@ import {
   layerAtom,
   optionAtom,
 } from "@/atoms";
+import { domo2dansa } from "@/libraries/domoTool";
 
 /**
  * Traceブロック
@@ -139,7 +140,7 @@ const Trace = () => {
       () => setBackground({ ...background, open: true }),
       [background]
     ),
-    downloadScreenshot = useCallback(() => {
+    downloadScreenshot = useCallback((commentOnly: boolean) => {
       const video_el = document.querySelector(
         "#MainVideoPlayer>video"
       ) as HTMLVideoElement;
@@ -150,17 +151,19 @@ const Trace = () => {
         ".VideoSymbolContainer>canvas"
       ) as HTMLCanvasElement;
       const canvas_screenshot = document.createElement("canvas");
-      canvas_screenshot.width = comment_el.width;
-      canvas_screenshot.height = comment_el.height;
+      canvas_screenshot.width = Number.parseInt(comment_el.style.width);
+      canvas_screenshot.height = Number.parseInt(comment_el.style.height);
       const ctx = canvas_screenshot.getContext("2d");
       if (!ctx || !video_el || !comment_el || !symbol_el) return;
-      ctx.drawImage(
-        video_el,
-        0,
-        0,
-        canvas_screenshot.width,
-        canvas_screenshot.height
-      );
+      if (!commentOnly) {
+        ctx.drawImage(
+          video_el,
+          0,
+          0,
+          canvas_screenshot.width,
+          canvas_screenshot.height
+        );
+      }
       ctx.drawImage(
         comment_el,
         0,
@@ -168,13 +171,15 @@ const Trace = () => {
         canvas_screenshot.width,
         canvas_screenshot.height
       );
-      ctx.drawImage(
-        symbol_el,
-        0,
-        0,
-        canvas_screenshot.width,
-        canvas_screenshot.height
-      );
+      if (!commentOnly) {
+        ctx.drawImage(
+          symbol_el,
+          0,
+          0,
+          canvas_screenshot.width,
+          canvas_screenshot.height
+        );
+      }
       const url_screenshot = canvas_screenshot.toDataURL("image/png");
       const a_screenshot = document.createElement("a");
       a_screenshot.href = url_screenshot;
@@ -274,7 +279,7 @@ const Trace = () => {
       const reader = new FileReader();
       const input = document.createElement("input");
       input.type = "file";
-      input.accept = ".json,*";
+      input.accept = ".json,.xml,*";
       input.onchange = (e) => {
         const target = e.target as HTMLInputElement;
         if (target?.files && target.files[0]) {
@@ -283,7 +288,12 @@ const Trace = () => {
       };
       reader.onload = function (e) {
         if (typeof e.target?.result !== "string") return;
-        const data: unknown = JSON.parse(e.target.result);
+        let data: unknown;
+        if (e.target.result.startsWith("<?xml")) {
+          data = domo2dansa(e.target.result);
+        } else {
+          data = JSON.parse(e.target.result);
+        }
         if (!typeGuard.layer.isLayers(data)) return;
         setLayerData(
           data.map((layer) => {
@@ -415,7 +425,16 @@ const Trace = () => {
               )}
             </div>
             <div className={Styles.block}>
-              <Button click={downloadScreenshot} text={"スクショ"} value={""} />
+              <Button
+                click={() => downloadScreenshot(false)}
+                text={"スクショ"}
+                value={""}
+              />
+              <Button
+                click={() => downloadScreenshot(true)}
+                text={"コメショ"}
+                value={""}
+              />
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>

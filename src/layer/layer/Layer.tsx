@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { ChangeEvent, useRef } from "react";
-import { layer } from "@/@types/layer";
+import { GridPosBlob, layer } from "@/@types/layer";
 import Styles from "./Layer.module.scss";
 import { grids } from "@/assets/grids";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
@@ -85,15 +85,26 @@ const Layer = (props: LayerProps): JSX.Element => {
     line.content = value;
     onchange(props.data);
   };
+  const gridImage = () => {
+    if (optionData?.grid && props.data.selected && props.data.visible) {
+      if (grids[props.data.id] !== undefined) {
+        const grid = grids[props.data.id] as GridPosBlob;
+        if (grid.immutable) {
+          return <img src={grid.any} alt="" />;
+        } else {
+          if (grid[props.data.pos] === undefined) {
+            return <></>;
+          }
+          return <img src={grid[props.data.pos]} alt="" />;
+        }
+      }
+    }
+    return <></>;
+  };
 
   return (
     <>
-      {optionData?.grid &&
-        props.data.selected &&
-        props.data.visible &&
-        grids[props.data.value] && (
-          <img src={grids[props.data.value]} alt={""} />
-        )}
+      <>{gridImage()}</>
       <LayerBox
         className={`${Styles.layer} ${Styles[props.data.font]} ${
           props.data.selected ? Styles.active : ""

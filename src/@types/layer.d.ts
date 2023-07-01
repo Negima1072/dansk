@@ -73,3 +73,18 @@ export type layerLineWidth = {
 };
 export type layerCommentWidth = layerLineWidth[];
 export type layerWidth = layerCommentWidth[];
+
+export type GridPosBlob =
+  | {
+      immutable: false;
+      ue: string;
+      naka?: string;
+      shita: string;
+    }
+  | {
+      immutable: true;
+      any: string;
+    };
+export type GridData = {
+  [key: string]: GridPosBlob;
+};
