@@ -99,6 +99,12 @@ const defaultValue: localStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
   },
+  options_enableColorCode: {
+    defaultValue: "false",
+    description: "非プレ垢のカラーコードを有効化",
+    dangerous: false,
+    type: "boolean",
+  },
   display_trace: {
     defaultValue: "true",
   },

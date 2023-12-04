@@ -96,6 +96,7 @@ type localStorageKeys =
   | "options_showSelectedLayerOnTop"
   | "options_addDatetimeToFilename"
   | "options_disable184"
+  | "options_enableColorCode"
   | "display_trace"
   | "display_memo"
   | "display_time"
