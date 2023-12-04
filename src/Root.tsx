@@ -106,11 +106,12 @@ const init = async () => {
   ): Promise<Response> => {
     try {
       const url_pattern =
-        /^https:\/\/nvcomment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
-      if (init && url_pattern.test(input.toString())) {
-        if (init.method === "POST" && init.body) {
+        /^https:\/\/nv-comment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
+      const url = input instanceof Request ? input.url : input.toString();
+      if (init && url_pattern.test(url)) {
+        if (init.method === "POST" && typeof init.body === "string") {
           if (Storage.get("options_disable184") === "true") {
-            const body = JSON.parse(init.body.toString()) as commentPublishData;
+            const body = JSON.parse(init.body) as commentPublishData;
             if (body.commands && Array.isArray(body.commands)) {
               if (body.commands.includes("184")) {
                 body.commands = body.commands.filter(

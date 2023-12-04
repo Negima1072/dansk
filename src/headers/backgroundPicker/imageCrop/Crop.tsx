@@ -136,7 +136,7 @@ const Crop = ({ update, range }: props) => {
     setCropRange({ ...cropRange });
   };
 
-  const onMouseUp = (_: MouseEvent<HTMLDivElement>) => {
+  const onMouseUp = () => {
     const range = {
       _pos1X: Math.min(cropRange._pos1X, cropRange._pos2X),
       _pos2X: Math.max(cropRange._pos1X, cropRange._pos2X),

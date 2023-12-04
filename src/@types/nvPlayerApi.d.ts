@@ -14,8 +14,8 @@ type nvPlayerApi = {
   enableCurrentTimeSmoothing: boolean;
   ended: () => boolean;
   load: () => unknown;
-  mirror: (isMirror: boolean) => boolean | unknown;
-  muted: (isMuted?: boolean) => boolean | unknown;
+  mirror: (isMirror: boolean) => boolean;
+  muted: (isMuted?: boolean) => boolean;
   originalCurrentTime: () => number;
   pause: () => unknown;
   paused: () => boolean;
