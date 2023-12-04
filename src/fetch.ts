@@ -1,5 +1,6 @@
 import { Storage } from "@/libraries/localStorage";
 import { commentPublishData } from "@/@types/types";
+import NiconiComments from "@xpadev-net/niconicomments";
 
 const injectFetch = () => {
   const originalFetch = window.fetch;
@@ -27,6 +28,43 @@ const injectFetch = () => {
           }
         }
         return originalFetch(input, init);
+      }
+      const urlPatternComment =
+        /^https:\/\/nv-comment\.nicovideo.jp\/v1\/threads$/;
+      if (
+        urlPatternComment.test(url) &&
+        init?.method === "POST" &&
+        typeof init.body === "string" &&
+        Storage.get("options_enableColorCode") === "true"
+      ) {
+        return new Promise<Response>((resolve, reject) => {
+          void (async () => {
+            try {
+              const request = await originalFetch(input, init);
+              const result = (await request.clone().json()) as {
+                data: {
+                  threads: unknown;
+                };
+              };
+              if (!NiconiComments.typeGuard.v1.threads(result?.data?.threads)) {
+                resolve(request);
+                return;
+              }
+              result.data.threads = result.data.threads.map((thread) => {
+                thread.comments = thread.comments.map((comment) => {
+                  return {
+                    ...comment,
+                    isPremium: true,
+                  };
+                });
+                return thread;
+              });
+              return resolve(new Response(JSON.stringify(result)));
+            } catch (e) {
+              reject(e);
+            }
+          })();
+        });
       }
     } catch (error) {
       console.error(error);
