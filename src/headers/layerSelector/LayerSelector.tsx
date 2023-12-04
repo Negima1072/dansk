@@ -58,7 +58,7 @@ const LayerSelector = () => {
         if (
           layerData.reduce(
             (count, item) => count + Number(item.selected),
-            0
+            0,
           ) === 0
         )
           layer.selected = true;
@@ -77,7 +77,7 @@ const LayerSelector = () => {
         setLayerData([...layerData]);
         setSetting(-1);
       },
-      [isSetting, layerData]
+      [isSetting, layerData],
     ),
     remove = (key: number) => {
       if (!confirm(`削除してよろしいですか？`)) return;

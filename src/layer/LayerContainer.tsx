@@ -58,7 +58,7 @@ const LayerContainer = (): JSX.Element => {
     setScale({ x: target.clientWidth / 640, y: target.clientHeight / 360 });
   };
   const [observer] = useState<MutationObserver>(
-      new MutationObserver(observerCallback)
+      new MutationObserver(observerCallback),
     ),
     [scale, setScale] = useState<{ x: number; y: number }>({ x: 1, y: 1 }),
     targetNode = useRef<HTMLDivElement>(null);
@@ -87,7 +87,7 @@ const LayerContainer = (): JSX.Element => {
               mode={background.mode}
               opacity={background.transparency / 100}
             />,
-            elements?.BackgroundImageElement
+            elements?.BackgroundImageElement,
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}

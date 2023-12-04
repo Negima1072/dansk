@@ -34,7 +34,7 @@ const typeGuard = {
         i !== null &&
         typeGuard.context.videoElement((i as contextType).videoElement) &&
         typeGuard.context.commentCommandInput(
-          (i as contextType).commentCommandInput
+          (i as contextType).commentCommandInput,
         )
       ),
     videoElement: (i: unknown): i is HTMLVideoElement =>
@@ -114,7 +114,7 @@ const typeGuard = {
     isKey: (i: unknown): i is localStorageKeys =>
       typeof i === "string" &&
       !!i.match(
-        /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/
+        /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/,
       ),
     isAutoSave: (i: unknown): i is autoSave[] => {
       if (!Array.isArray(i)) return false;

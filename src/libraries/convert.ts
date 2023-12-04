@@ -10,7 +10,7 @@ import { convertFormat } from "@/@types/types";
 const convertText = (
   inputFormat: convertFormat,
   outputFormat: convertFormat,
-  input: string
+  input: string,
 ) => {
   if (inputFormat == outputFormat) return input;
   let dansk = "";
@@ -49,7 +49,7 @@ const convertDomoToDansk = (input: string): string => {
     }
     commandCount = (
       line.match(
-        /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier/
+        /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier/,
       ) || []
     ).length;
     if (commandCount >= 2) {
@@ -108,7 +108,7 @@ const convertTokomeToDansk = (input: string): string => {
     result.push(
       `[${line.command}]${line.comment}`
         .replace(/\n/g, "<br>")
-        .replace(/\t/g, "[tb]")
+        .replace(/\t/g, "[tb]"),
     );
   }
   return result.join("\n");

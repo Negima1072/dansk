@@ -27,7 +27,7 @@ const CommandBox = () => {
       setCommands(
         elements.commentCommandInput.value
           .split(" ")
-          .filter((str) => str !== "")
+          .filter((str) => str !== ""),
       );
   };
   useEffect(() => {
@@ -37,7 +37,7 @@ const CommandBox = () => {
     return () => {
       elements?.commentCommandInput.removeEventListener(
         "change",
-        commandOnChange
+        commandOnChange,
       );
     };
   }, [elements, commands]);
@@ -70,18 +70,18 @@ const CommandBox = () => {
           if (!group) return;
           const items = getItemsFromGroup(group);
           currentCommands = currentCommands.filter(
-            (item) => !items.includes(item)
+            (item) => !items.includes(item),
           );
           currentCommands = [...currentCommands, value];
         }
         updateReactHTMLInput(
           elements.commentCommandInput,
-          currentCommands.join(" ")
+          currentCommands.join(" "),
         );
         setCommands(currentCommands);
       }
     },
-    [commands, elements]
+    [commands, elements],
   );
 
   return (

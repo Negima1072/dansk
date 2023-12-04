@@ -1,23 +1,23 @@
 const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
   window.HTMLInputElement.prototype,
-  "value"
+  "value",
 )?.set;
 const nativeInputValueGetter = Object.getOwnPropertyDescriptor(
   window.HTMLInputElement.prototype,
-  "value"
+  "value",
 )?.get;
 const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
   window.HTMLTextAreaElement.prototype,
-  "value"
+  "value",
 )?.set;
 const nativeTextAreaValueGetter = Object.getOwnPropertyDescriptor(
   window.HTMLTextAreaElement.prototype,
-  "value"
+  "value",
 )?.get;
 
 const updateReactHTMLInput = (
   targetElement: HTMLInputElement,
-  content: string
+  content: string,
 ) => {
   if (!nativeInputValueSetter || !nativeInputValueGetter) return;
   while (nativeInputValueGetter.call(targetElement) !== content) {
@@ -28,7 +28,7 @@ const updateReactHTMLInput = (
 };
 const updateReactHTMLTextArea = (
   targetElement: HTMLTextAreaElement,
-  content: string
+  content: string,
 ) => {
   if (!nativeTextAreaValueSetter || !nativeTextAreaValueGetter) return;
   while (nativeTextAreaValueGetter.call(targetElement) !== content) {

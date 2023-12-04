@@ -15,7 +15,7 @@ const Header = (): JSX.Element => {
     <>
       <Trace />
     </>,
-    elements.HeaderElement
+    elements.HeaderElement,
   );
 };
 export { Header };
