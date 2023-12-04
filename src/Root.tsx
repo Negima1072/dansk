@@ -10,7 +10,7 @@ import { Storage } from "@/libraries/localStorage";
 import { inject } from "@/libraries/cssInjector";
 import { elementAtom } from "@/atoms";
 import { useSetAtom } from "jotai";
-import { commentPublishData } from "./@types/types";
+import { injectFetch } from "@/fetch";
 
 /**
  * Reactのルート要素
@@ -99,35 +99,7 @@ const init = async () => {
     },
     { passive: false },
   );
-  const fetch_origin = window.fetch;
-  window.fetch = (
-    input: URL | RequestInfo,
-    init?: RequestInit | undefined,
-  ): Promise<Response> => {
-    try {
-      const url_pattern =
-        /^https:\/\/nv-comment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
-      const url = input instanceof Request ? input.url : input.toString();
-      if (init && url_pattern.test(url)) {
-        if (init.method === "POST" && typeof init.body === "string") {
-          if (Storage.get("options_disable184") === "true") {
-            const body = JSON.parse(init.body) as commentPublishData;
-            if (body.commands && Array.isArray(body.commands)) {
-              if (body.commands.includes("184")) {
-                body.commands = body.commands.filter(
-                  (command: string) => command !== "184",
-                );
-                init.body = JSON.stringify(body);
-              }
-            }
-          }
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    return fetch_origin(input, init);
-  };
+  injectFetch();
   const postBtnElement = document.querySelector(
     ".CommentPostButton",
   ) as HTMLButtonElement;
