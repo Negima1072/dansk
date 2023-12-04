@@ -15,7 +15,7 @@ type colorButtonProps = {
   color: string;
 };
 
-const ColorButton = styled.input.attrs((props: colorButtonProps) => ({
+const ColorButton = styled.input.attrs<colorButtonProps>((props) => ({
   style: {
     backgroundColor: props.color,
   },

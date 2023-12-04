@@ -33,7 +33,7 @@ const OutputBox = (): JSX.Element => {
   }, [exportLayer, textareaValue]);
   const getCommandAndComment = (
     stringArr: string[],
-    isReverse: boolean
+    isReverse: boolean,
   ): { command: string; comment: string } | undefined => {
     if (!window.__videoplayer.paused()) window.__videoplayer.pause();
     const targetLine = stringArr[isReverse ? stringArr.length - 1 : 0]
@@ -70,7 +70,7 @@ const OutputBox = (): JSX.Element => {
         window.__videoplayer.currentTime(
           window.__videoplayer.currentTime() +
             Number(seekCommand[2]) /
-              (Storage.get("options_useMs") === "true" ? 1000 : 100)
+              (Storage.get("options_useMs") === "true" ? 1000 : 100),
         );
       } else {
         let currentTime = 0;
@@ -132,13 +132,13 @@ const OutputBox = (): JSX.Element => {
         if (!elements) return;
         postAllCancel.current = false;
         const isOwnerMode = !!location.href.match(
-            /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/
+            /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/,
           ),
           length = textareaValue.length;
         const timeSpan = Number(
           Storage.get(
-            isOwnerMode ? "options_timespan_owner" : "options_timespan_main"
-          )
+            isOwnerMode ? "options_timespan_owner" : "options_timespan_main",
+          ),
         );
         setIsPosting(true);
         setSpoilerMessage("待機中");
@@ -159,7 +159,7 @@ const OutputBox = (): JSX.Element => {
           setSpoilerMessage(
             `セット中(進行度: ${i + 1}/${length} 文字数: ${
               content.comment.length
-            })`
+            })`,
           );
           if (setLine(content.command, content.comment)) {
             if (isReverse) {
@@ -175,19 +175,19 @@ const OutputBox = (): JSX.Element => {
                 which: 13,
                 bubbles: true,
                 cancelable: true,
-              })
+              }),
             );
             setTextareaValue([...textareaValue]);
             setSpoilerMessage(
               `投下しました(進行度: ${i + 1}/${length} 文字数: ${
                 content.comment.length
-              })`
+              })`,
             );
           } else {
             setSpoilerMessage(
               `セットに失敗しました(進行度: ${i + 1}/${length} 文字数: ${
                 content.comment.length
-              })`
+              })`,
             );
           }
         }

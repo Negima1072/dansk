@@ -75,7 +75,7 @@ const Layer = (props: LayerProps): JSX.Element => {
       value.length > line.lineCount ||
       value.reduce(
         (pv, val) => pv + Number(!!val.match(/[\u00A0\u0020]|\u3033\u3035/g)),
-        0
+        0,
       ) > 0
     ) {
       e.target.style.background = "rgba(255,0,0,0.3)";
@@ -163,7 +163,7 @@ const Layer = (props: LayerProps): JSX.Element => {
                         key={`layerOutline${props.data.layerId}-group${index}-line${index_}`}
                       />
                     );
-                  }
+                  },
                 )}
               </LayerItem>
             );

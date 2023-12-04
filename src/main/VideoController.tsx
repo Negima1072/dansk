@@ -25,7 +25,7 @@ const VideoController = (): JSX.Element => {
   const updateTime = (time: number, relative = true) => {
     setIsSeeking(true);
     const commentOnOffButton = document.getElementsByClassName(
-      "CommentOnOffButton"
+      "CommentOnOffButton",
     )[0] as HTMLButtonElement;
     if (relative) time += window.__videoplayer.currentTime();
     if (time < 0) time = 0;
@@ -45,7 +45,7 @@ const VideoController = (): JSX.Element => {
       setValueChanged(true);
       setValue(e.target.value);
     },
-    [value]
+    [value],
   );
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -55,7 +55,7 @@ const VideoController = (): JSX.Element => {
         (e.target as HTMLInputElement).blur();
       }
     },
-    [value]
+    [value],
   );
   const onInputBlur = useCallback(() => {
     if (isValueChanged) {

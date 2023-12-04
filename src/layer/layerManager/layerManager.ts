@@ -19,7 +19,7 @@ const layerManager = (
   data: layer,
   onChange: (layer: layer) => void,
   targetElement: HTMLDivElement,
-  replaceMode: boolean
+  replaceMode: boolean,
 ) => {
   targetElement.setAttribute("layerId", data.layerId);
   targetElement.id = `dansk:layer:${data.layerId}`;
@@ -47,7 +47,7 @@ const layerManager = (
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
-      targetElement.children
+      targetElement.children,
     ) as HTMLDivElement[];
     let isChanged = false,
       index = 0;
@@ -58,7 +58,7 @@ const layerManager = (
         itemElement.id = `dansk:layer${data.layerId}Line${index}`;
         itemElement.classList.add(
           Styles.danskLayerItem || "_",
-          "dansk:layerLineItem"
+          "dansk:layerLineItem",
         );
         itemElement.setAttribute("lineIndex", `${index}`);
         itemElement.style.lineHeight = `${group.line}px`;
@@ -126,7 +126,7 @@ const layerManager = (
         }
         let offset = 0;
         for (const element of Array.from(
-          targetElement.children
+          targetElement.children,
         ) as HTMLDivElement[]) {
           const length = element.innerText.length + (isFirefox ? -1 : 0);
           if (offset + length < caretPos) {
@@ -164,7 +164,7 @@ const layerManager = (
       _pos,
       document.activeElement,
       caretUtil.getFocusedElement(),
-      caretUtil.getFocusedNode()
+      caretUtil.getFocusedNode(),
     );
     selection.getRangeAt(0).insertNode(document.createTextNode(text));
     selection.getRangeAt(0).collapse();
@@ -202,7 +202,7 @@ const layerManager = (
     e.preventDefault();
     focusedElement.innerText = `${focusedElement.innerText.slice(
       0,
-      caretPos
+      caretPos,
     )}${char}${focusedElement.innerText.slice(caretPos)}`;
     caretUtil.set(focusedElement, caretPos + 1);
   };
@@ -236,7 +236,7 @@ const adjustChildren = (targetElement: HTMLDivElement, length: number) => {
   if (isFocusLost && targetElement.lastElementChild) {
     caretUtil.set(
       targetElement.lastElementChild as HTMLDivElement,
-      (targetElement.lastElementChild as HTMLDivElement).innerText.length - 1
+      (targetElement.lastElementChild as HTMLDivElement).innerText.length - 1,
     );
   }
 };
@@ -249,19 +249,19 @@ const adjustChildren = (targetElement: HTMLDivElement, length: number) => {
  */
 const getInnerText = (
   targetElement: HTMLDivElement,
-  length: number
+  length: number,
 ): string[] => {
   const strings: string[] = [];
   if (targetElement.childNodes[isFirefox ? 0 : 1]?.nodeName === "#text") {
     strings.push(
-      ...targetElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
+      ...targetElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/),
     );
   } else {
     for (const itemElement of Array.from(
-      targetElement.children
+      targetElement.children,
     ) as HTMLDivElement[]) {
       strings.push(
-        ...itemElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/)
+        ...itemElement.innerText.replace(/\n$/, "").split(/\r\n|\r|\n/),
       );
     }
   }

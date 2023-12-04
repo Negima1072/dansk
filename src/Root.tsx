@@ -47,23 +47,23 @@ const init = async () => {
     count = 0;
   while (count < 300) {
     mainContainer = document.getElementsByClassName(
-      "MainContainer"
+      "MainContainer",
     )[0] as HTMLDivElement;
     mainContainerPlayer = mainContainer?.getElementsByClassName(
-      "MainContainer-player"
+      "MainContainer-player",
     )[0] as HTMLDivElement;
     mainContainerPlayerPanel = mainContainer?.getElementsByClassName(
-      "MainContainer-playerPanel"
+      "MainContainer-playerPanel",
     )[0] as HTMLDivElement;
     if (mainContainer?.getElementsByClassName("CommentRenderer").length > 0)
       CommentRenderer = mainContainer?.getElementsByClassName(
-        "CommentRenderer"
+        "CommentRenderer",
       )[0] as HTMLDivElement;
     videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas"
+      "VideoSymbolContainer-canvas",
     )[0] as HTMLCanvasElement;
     videoContainer = document.getElementsByClassName(
-      "InView VideoContainer"
+      "InView VideoContainer",
     )[0] as HTMLDivElement;
     videoPlayer = document.getElementById("VideoPlayer") as HTMLDivElement;
     count++;
@@ -97,24 +97,25 @@ const init = async () => {
     (e) => {
       (e.target as HTMLDivElement).scroll(0, 0);
     },
-    { passive: false }
+    { passive: false },
   );
   const fetch_origin = window.fetch;
   window.fetch = (
     input: URL | RequestInfo,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ): Promise<Response> => {
     try {
       const url_pattern =
-        /^https:\/\/nvcomment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
-      if (init && url_pattern.test(input.toString())) {
-        if (init.method === "POST" && init.body) {
+        /^https:\/\/nv-comment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
+      const url = input instanceof Request ? input.url : input.toString();
+      if (init && url_pattern.test(url)) {
+        if (init.method === "POST" && typeof init.body === "string") {
           if (Storage.get("options_disable184") === "true") {
-            const body = JSON.parse(init.body.toString()) as commentPublishData;
+            const body = JSON.parse(init.body) as commentPublishData;
             if (body.commands && Array.isArray(body.commands)) {
               if (body.commands.includes("184")) {
                 body.commands = body.commands.filter(
-                  (command: string) => command !== "184"
+                  (command: string) => command !== "184",
                 );
                 init.body = JSON.stringify(body);
               }
@@ -128,7 +129,7 @@ const init = async () => {
     return fetch_origin(input, init);
   };
   const postBtnElement = document.querySelector(
-    ".CommentPostButton"
+    ".CommentPostButton",
   ) as HTMLButtonElement;
   if (postBtnElement) {
     postBtnElement.style.backgroundColor =

@@ -33,7 +33,7 @@ const domoColor2code = (color: DomoColor): string => {
 
 const domoLines2content = (
   item: DomoCommentItem,
-  template: layerTemplate
+  template: layerTemplate,
 ): string[] => {
   if (item.Lines.string === undefined) {
     return Array(template.height).fill("") as string[];

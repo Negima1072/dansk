@@ -27,7 +27,7 @@ const CropDisplay = styled.div.attrs<cropRange>((p) => ({
 
 const getPosition = (
   e: MouseEvent<HTMLElement>,
-  wrapper: RefObject<HTMLDivElement>
+  wrapper: RefObject<HTMLDivElement>,
 ) => {
   const x =
       (e.clientX - (wrapper.current?.getBoundingClientRect().left || 0)) /
@@ -40,7 +40,7 @@ const getPosition = (
 
 const getMovement = (
   e: MouseEvent<HTMLElement>,
-  wrapper: RefObject<HTMLDivElement>
+  wrapper: RefObject<HTMLDivElement>,
 ) => {
   const x = e.movementX / (wrapper.current?.clientWidth || 1),
     y = e.movementY / (wrapper.current?.clientHeight || 1);
@@ -136,7 +136,7 @@ const Crop = ({ update, range }: props) => {
     setCropRange({ ...cropRange });
   };
 
-  const onMouseUp = (_: MouseEvent<HTMLDivElement>) => {
+  const onMouseUp = () => {
     const range = {
       _pos1X: Math.min(cropRange._pos1X, cropRange._pos2X),
       _pos2X: Math.max(cropRange._pos1X, cropRange._pos2X),

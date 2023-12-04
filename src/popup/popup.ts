@@ -5,7 +5,7 @@ import { convertFormat } from "@/@types/types";
 window.addEventListener("load", () => {
   const beforeTextArea = document.getElementById("before") as HTMLInputElement,
     beforeOptions = document.getElementById(
-      "before_select"
+      "before_select",
     ) as HTMLSelectElement,
     afterTextArea = document.getElementById("after") as HTMLInputElement,
     afterOptions = document.getElementById("after_select") as HTMLSelectElement,
@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
     afterTextArea.value = convertText(
       beforeOptions.value as convertFormat,
       afterOptions.value as convertFormat,
-      beforeTextArea.value
+      beforeTextArea.value,
     );
     save();
   };
@@ -69,7 +69,7 @@ window.addEventListener("load", () => {
     beforeTextArea.value = convertText(
       afterOptions.value as convertFormat,
       beforeOptions.value as convertFormat,
-      afterTextArea.value
+      afterTextArea.value,
     );
     save();
   };
