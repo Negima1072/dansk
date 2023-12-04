@@ -1,10 +1,9 @@
-import { DomoColor, DomoCommentItem, DomoXML } from "@/@types/domo";
 import { layer, layerComment, layerTemplate } from "@/@types/layer";
-import { xml2js } from "xml-js";
 import { uuid } from "./uuidUtil";
 import { Templates } from "@/headers/Trace.templates";
+import NiconiComments from "@xpadev-net/niconicomments";
 
-const mode2type: { [key: string]: string | undefined } = {
+const mode2type = {
   Big9: "be9",
   Big10: "be10_1",
   Medium14: "me14",
@@ -17,49 +16,66 @@ const mode2type: { [key: string]: string | undefined } = {
   Medium27: "tm27",
   Small38: "ts38",
   Small39: "ts39",
-  ozto52: undefined,
-  ozto70: undefined,
-  ozto75: undefined,
-  ozto100: undefined,
+} as const satisfies { [key: string]: string | undefined };
+
+const getTemplateByDomoMode = (
+  mode: string,
+): { template: layerTemplate; type: valueOf<typeof mode2type> } | undefined => {
+  if (
+    !((i: string): i is keyof typeof mode2type =>
+      Object.hasOwnProperty.call(mode2type, i))(mode)
+  )
+    return;
+  const templateType = mode2type[mode];
+  if (!templateType) return;
+  const template = Templates[templateType];
+  if (!template) return;
+  return { template: template, type: templateType };
 };
 
-const domoColor2code = (color: DomoColor): string => {
-  const { B, G, R } = color;
-  const r = Math.round(R._text).toString(16).padStart(2, "0");
-  const g = Math.round(G._text).toString(16).padStart(2, "0");
-  const b = Math.round(B._text).toString(16).padStart(2, "0");
+const domoColor2code = (color: Element): string => {
+  const red = color.getElementsByTagName("R")[0]?.textContent;
+  const green = color.getElementsByTagName("G")[0]?.textContent;
+  const blue = color.getElementsByTagName("B")[0]?.textContent;
+  const r = Math.round(Number(red) || 0)
+    .toString(16)
+    .padStart(2, "0");
+  const g = Math.round(Number(green) || 0)
+    .toString(16)
+    .padStart(2, "0");
+  const b = Math.round(Number(blue) || 0)
+    .toString(16)
+    .padStart(2, "0");
   return `#${r}${g}${b}`;
 };
 
 const domoLines2content = (
-  item: DomoCommentItem,
+  lines: Element[],
+  width: number,
   template: layerTemplate,
 ): string[] => {
-  if (item.Lines.string === undefined) {
+  if (lines.length === 0) {
     return Array(template.height).fill("") as string[];
   }
-  if (template.width - item.Width._text >= 0) {
-    let paddingStr = "x".repeat(template.width - item.Width._text + 2);
+  const paddingStr = (() => {
+    const spacerWidth = Math.floor(template.width - width);
+    if (spacerWidth < 1) {
+      return "";
+    }
+    let paddingStr = "x".repeat(spacerWidth + 2);
     paddingStr = paddingStr.replace(/xx/g, " ");
     paddingStr = paddingStr.replace(/x/g, " ");
-    return item.Lines.string.map((line) => {
-      if (line._text) {
-        if (line._text.trim() !== "") {
-          return paddingStr + line._text;
-        }
+    return paddingStr;
+  })();
+  return lines.map((line) => {
+    if (line.textContent) {
+      if (line.textContent.trim() !== "") {
+        console.log(`${paddingStr}${line.textContent}`);
+        return `${paddingStr}${line.textContent}`;
       }
-      return "";
-    });
-  } else {
-    return item.Lines.string.map((line) => {
-      if (line._text) {
-        if (line._text.trim() !== "") {
-          return line._text;
-        }
-      }
-      return "";
-    });
-  }
+    }
+    return "";
+  });
 };
 
 /**
@@ -67,37 +83,53 @@ const domoLines2content = (
  * @pram xml どーもさんツールのXML(string)
  */
 const domo2dansa = (xml: string): layer[] => {
-  const xmlData = xml2js(xml, { compact: true, nativeType: true }) as DomoXML;
+  const parser = new DOMParser();
+  const xmlData = parser.parseFromString(xml, "application/xml");
+  const comments = Array.from(xmlData.getElementsByTagName("DataCommentItem"));
   const layers: layer[] = [];
-  xmlData.DataCommentSet.CommentList.DataCommentItem.forEach((item) => {
-    const template_type = mode2type[item.Mode._text];
-    if (template_type) {
-      const _layerTemplate = Templates[template_type];
-      if (_layerTemplate) {
-        const layerCommentSize = _layerTemplate.size[0];
-        if (layerCommentSize) {
-          const comment: layerComment = {
-            font: layerCommentSize.font,
-            line: layerCommentSize.line,
-            lineCount: layerCommentSize.lineCount,
-            content: domoLines2content(item, _layerTemplate),
-          };
-          const _layer: layer = {
-            ..._layerTemplate,
-            type: template_type,
-            font: "gothic",
-            visible: true,
-            selected: false,
-            color: domoColor2code(item.Color),
-            content: [comment],
-            layerId: uuid(),
-            pos: item.Pos._text,
-          };
-          layers.push(_layer);
-        }
-      }
-    }
-  });
+  for (const comment of comments) {
+    const result = getTemplateByDomoMode(
+      comment.getElementsByTagName("Mode")[0]?.textContent ?? "",
+    );
+    if (!result) continue;
+    const { template, type } = result;
+    const templateCommentSize = template.size[0];
+    const lines = Array.from(
+      comment
+        .getElementsByTagName("Lines")[0]
+        ?.getElementsByTagName("string") ?? [],
+    );
+    const width =
+      Number(comment.getElementsByTagName("Width")[0]?.textContent) ||
+      undefined;
+    const color = comment.getElementsByTagName("Color")[0];
+    const pos = comment.getElementsByTagName("Pos")[0]?.textContent;
+    if (
+      !templateCommentSize ||
+      !color ||
+      !NiconiComments.typeGuard.comment.loc(pos) ||
+      !width
+    )
+      continue;
+    const content: layerComment = {
+      font: templateCommentSize.font,
+      line: templateCommentSize.line,
+      lineCount: templateCommentSize.lineCount,
+      content: domoLines2content(lines, width, template),
+    };
+    const _layer: layer = {
+      ...template,
+      type: type,
+      font: "gothic",
+      visible: true,
+      selected: false,
+      color: domoColor2code(color),
+      content: [content],
+      layerId: uuid(),
+      pos: pos,
+    };
+    layers.push(_layer);
+  }
   return layers;
 };
 
