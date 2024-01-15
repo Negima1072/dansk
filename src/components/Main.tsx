@@ -1,8 +1,9 @@
-import { VideoController } from "@/main/VideoController";
-import ReactDOM from "react-dom";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import ReactDOM from "react-dom";
+
 import { elementAtom } from "@/atoms";
-import { FC } from "react";
+import { VideoController } from "@/main/VideoController";
 
 /**
  * メインブロック(プレイヤー内)
@@ -15,7 +16,7 @@ const Main: FC = () => {
     <>
       <VideoController />
     </>,
-    elements.MainElement
+    elements.MainElement,
   );
 };
 export { Main };

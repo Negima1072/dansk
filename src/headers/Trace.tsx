@@ -1,30 +1,32 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Spoiler } from "@/components/spoiler/Spoiler";
-import Styles from "./Trace.module.scss";
-import { Button } from "@/components/button/Button";
-import { Dropdown } from "@/components/dropdown/Dropdown";
-import { Templates } from "@/headers/Trace.templates";
-import { TLayer } from "@/@types/layer";
-import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
-import { layerUtil } from "@/headers/layerUtil/layerUtil";
-import { typeGuard } from "@/libraries/typeGuard";
-import { LayerPortal } from "@/components/LayerPortal";
-import { BackgroundPicker } from "@/headers/backgroundPicker/BackgroundPicker";
-import { LayerEditor } from "@/headers/layerEditor/LayerEditor";
-import { Options } from "@/options/Options";
-import { Popup } from "@/components/popup/Popup";
-import { Storage } from "@/libraries/localStorage";
-import { Backup } from "@/headers/backup/Backup";
-import { uuid } from "@/libraries/uuidUtil";
-import { Slider } from "@/components/slider/Slider";
 import { useAtom } from "jotai";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import type { TLayer } from "@/@types/layer";
 import {
   backgroundAtom,
   exportLayerAtom,
   layerAtom,
   optionAtom,
 } from "@/atoms";
+import { Button } from "@/components/button/Button";
+import { Dropdown } from "@/components/dropdown/Dropdown";
+import { LayerPortal } from "@/components/LayerPortal";
+import { Popup } from "@/components/popup/Popup";
+import { Slider } from "@/components/slider/Slider";
+import { Spoiler } from "@/components/spoiler/Spoiler";
+import { BackgroundPicker } from "@/headers/backgroundPicker/BackgroundPicker";
+import { Backup } from "@/headers/backup/Backup";
+import { LayerEditor } from "@/headers/layerEditor/LayerEditor";
+import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
+import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import { Templates } from "@/headers/Trace.templates";
 import { domo2dansa } from "@/libraries/domoTool";
+import { Storage } from "@/libraries/localStorage";
+import { typeGuard } from "@/libraries/typeGuard";
+import { uuid } from "@/libraries/uuidUtil";
+import { Options } from "@/options/Options";
+
+import Styles from "./Trace.module.scss";
 
 /**
  * Traceブロック
@@ -33,7 +35,7 @@ import { domo2dansa } from "@/libraries/domoTool";
 const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false),
     [layerDropdownValue, setLayerDropdownValue] = useState<string>(
-      "big_ue_ender_full_gothic_W17_L9"
+      "big_ue_ender_full_gothic_W17_L9",
     ),
     [optionEditing, setOptionEditing] = useState<boolean>(false),
     [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false),
@@ -49,22 +51,25 @@ const Trace = () => {
   useEffect(() => {
     const span = Number(Storage.get("options_autoSave_span"));
     if (span <= 0) return;
-    autoSaveInterval.current = window.setInterval(() => {
-      const data: unknown = JSON.parse(Storage.get("autoSave"));
-      if (
-        !typeGuard.localStorage.isAutoSave(data) ||
-        !layerDataRef.current ||
-        layerDataRef.current.length < 1 ||
-        JSON.stringify(layerDataRef.current) ===
-          JSON.stringify(data.at(-1)?.data)
-      )
-        return;
-      data.push({ data: layerDataRef.current, timestamp: Date.now() });
-      if (data.length > Number(Storage.get("options_autoSave_max"))) {
-        data.shift();
-      }
-      Storage.set("autoSave", data);
-    }, span * 60 * 1000);
+    autoSaveInterval.current = window.setInterval(
+      () => {
+        const data: unknown = JSON.parse(Storage.get("autoSave"));
+        if (
+          !typeGuard.localStorage.isAutoSave(data) ||
+          !layerDataRef.current ||
+          layerDataRef.current.length < 1 ||
+          JSON.stringify(layerDataRef.current) ===
+            JSON.stringify(data.at(-1)?.data)
+        )
+          return;
+        data.push({ data: layerDataRef.current, timestamp: Date.now() });
+        if (data.length > Number(Storage.get("options_autoSave_max"))) {
+          data.shift();
+        }
+        Storage.set("autoSave", data);
+      },
+      span * 60 * 1000,
+    );
     return () => {
       window.clearInterval(autoSaveInterval.current);
       autoSaveInterval.current = -1;
@@ -106,7 +111,7 @@ const Trace = () => {
           targetData,
           isMonospaced,
           tabMode,
-          isOwner
+          isOwner,
         );
         if (!strings) return;
         for (const string of strings) {
@@ -121,34 +126,34 @@ const Trace = () => {
         }
         setExportLayer([...exportLayer, ...layerString]);
       },
-      [exportLayer, layerData, tabMode]
+      [exportLayer, layerData, tabMode],
     ),
     toggleTabMode = useCallback(() => setTabMode(!tabMode), [tabMode]),
     toggleReplaceMode = useCallback(
       () => setOptionData({ ...optionData, replace: !optionData.replace }),
-      [optionData]
+      [optionData],
     ),
     toggleGridMode = useCallback(
       () => setOptionData({ ...optionData, grid: !optionData.grid }),
-      [optionData]
+      [optionData],
     ),
     layerDropdownOnChange = useCallback(
       (value: string) => setLayerDropdownValue(value),
-      []
+      [],
     ),
     openBackgroundMenu = useCallback(
       () => setBackground({ ...background, open: true }),
-      [background]
+      [background],
     ),
     downloadScreenshot = useCallback((commentOnly: boolean) => {
       const video_el = document.querySelector(
-        "#MainVideoPlayer>video"
+        "#MainVideoPlayer>video",
       ) as HTMLVideoElement;
       const comment_el = document.querySelector(
-        ".CommentRenderer>canvas"
+        ".CommentRenderer>canvas",
       ) as HTMLCanvasElement;
       const symbol_el = document.querySelector(
-        ".VideoSymbolContainer>canvas"
+        ".VideoSymbolContainer>canvas",
       ) as HTMLCanvasElement;
       const canvas_screenshot = document.createElement("canvas");
       canvas_screenshot.width = Number.parseInt(comment_el.style.width);
@@ -161,7 +166,7 @@ const Trace = () => {
           0,
           0,
           canvas_screenshot.width,
-          canvas_screenshot.height
+          canvas_screenshot.height,
         );
       }
       ctx.drawImage(
@@ -169,7 +174,7 @@ const Trace = () => {
         0,
         0,
         canvas_screenshot.width,
-        canvas_screenshot.height
+        canvas_screenshot.height,
       );
       if (!commentOnly) {
         ctx.drawImage(
@@ -177,7 +182,7 @@ const Trace = () => {
           0,
           0,
           canvas_screenshot.width,
-          canvas_screenshot.height
+          canvas_screenshot.height,
         );
       }
       const url_screenshot = canvas_screenshot.toDataURL("image/png");
@@ -191,15 +196,15 @@ const Trace = () => {
     }, []),
     toggleBackgroundVisible = useCallback(
       () => setBackground({ ...background, visible: !background.visible }),
-      [background]
+      [background],
     ),
     changeBackgroundTransparency = useCallback(
       (t: number) => setBackground({ ...background, transparency: t }),
-      [background]
+      [background],
     ),
     toggleOptionEditing = useCallback(
       () => setOptionEditing(!optionEditing),
-      [optionEditing]
+      [optionEditing],
     ),
     togglePreview = useCallback(
       () =>
@@ -209,26 +214,29 @@ const Trace = () => {
             optionData.preview === "disable"
               ? "enable"
               : optionData.preview === "enable"
-              ? "previewOnly"
-              : "disable",
+                ? "previewOnly"
+                : "disable",
         }),
-      [optionData]
+      [optionData],
     ),
     addLayer = useCallback(() => {
       const id = layerUtil.getIdByValue(layerDropdownValue);
       const template = Templates[id];
       if (!typeGuard.trace.template(template)) return;
-      const color: string | false | undefined = layerData.reduce((pv, val) => {
-        if (val.selected) {
-          val.selected = false;
-          if (pv === undefined) {
-            return val.color;
-          } else {
-            return false;
+      const color: string | false | undefined = layerData.reduce(
+        (pv, val) => {
+          if (val.selected) {
+            val.selected = false;
+            if (pv === undefined) {
+              return val.color;
+            } else {
+              return false;
+            }
           }
-        }
-        return pv;
-      }, undefined as undefined | false | string);
+          return pv;
+        },
+        undefined as undefined | false | string,
+      );
       setLayerData([
         ...layerData,
         {
@@ -251,7 +259,7 @@ const Trace = () => {
         });
         setLayerData([...tmpLayer]);
       },
-      [layerData]
+      [layerData],
     ),
     saveToFile = useCallback(() => {
       const json = JSON.stringify(layerData);
@@ -302,7 +310,7 @@ const Trace = () => {
               layer.layerId = uuid();
             }
             return layer;
-          })
+          }),
         );
       };
       input.click();
@@ -371,8 +379,8 @@ const Trace = () => {
                   optionData.preview === "disable"
                     ? "編集"
                     : optionData.preview === "previewOnly"
-                    ? "プレビュー"
-                    : "編集+プレビュー"
+                      ? "プレビュー"
+                      : "編集+プレビュー"
                 }
               />
             </div>

@@ -1,4 +1,4 @@
-import { TCommandList } from "@/@types/types";
+import type { TCommandList } from "@/@types/types";
 
 /**
  * Mainブロックのコマンドの並びを指定

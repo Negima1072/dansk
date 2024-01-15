@@ -1,8 +1,9 @@
-import ReactDOM from "react-dom";
-import { Trace } from "@/headers/Trace";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import ReactDOM from "react-dom";
+
 import { elementAtom } from "@/atoms";
-import { FC } from "react";
+import { Trace } from "@/headers/Trace";
 
 /**
  * ヘッダーブロック(プレイヤー上)
@@ -15,7 +16,7 @@ const Header: FC = () => {
     <>
       <Trace />
     </>,
-    elements.HeaderElement
+    elements.HeaderElement,
   );
 };
 export { Header };

@@ -1,4 +1,4 @@
-import { TCommentPos } from "./types";
+import type { TCommentPos } from "./types";
 
 type XMLText<T = string> = {
   _text: T;

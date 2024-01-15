@@ -1,4 +1,4 @@
-import { TGridData } from "@/@types/layer";
+import type { TGridData } from "@/@types/layer";
 
 /**
  * gridの画像blob

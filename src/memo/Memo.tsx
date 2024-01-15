@@ -1,6 +1,9 @@
-import { ChangeEvent, FC, useState } from "react";
+import type { ChangeEvent, FC } from "react";
+import { useState } from "react";
+
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { Storage } from "@/libraries/localStorage";
+
 import Styles from "./Memo.module.scss";
 
 /**

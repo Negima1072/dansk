@@ -1,4 +1,4 @@
-import { TCommentFont, TCommentPos } from "@/@types/types";
+import type { TCommentFont, TCommentPos } from "@/@types/types";
 
 export type TLayerTemplate = {
   /** 適用するコマンド */

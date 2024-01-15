@@ -1,16 +1,24 @@
 import { useState } from "react";
-import { defaultValue } from "@/libraries/localStorage.defaultValue";
-import { TLocalStorageKeys, TLocalStorageOptionItem } from "@/@types/types";
+
+import type {
+  TLocalStorageKeys,
+  TLocalStorageOptionItem,
+} from "@/@types/types";
 import { Storage } from "@/libraries/localStorage";
+import { defaultValue } from "@/libraries/localStorage.defaultValue";
+
 import Styles from "./Options.module.scss";
 
 const Options = () => {
   const [value, setValue] = useState(
-      (Object.keys(defaultValue) as TLocalStorageKeys[]).reduce((pv, key) => {
-        if (!key.match(/^options_/)) return pv;
-        pv[key] = Storage.get(key);
-        return pv;
-      }, {} as { [key in TLocalStorageKeys]: string })
+      (Object.keys(defaultValue) as TLocalStorageKeys[]).reduce(
+        (pv, key) => {
+          if (!key.match(/^options_/)) return pv;
+          pv[key] = Storage.get(key);
+          return pv;
+        },
+        {} as { [key in TLocalStorageKeys]: string },
+      ),
     ),
     updateValue = (key: TLocalStorageKeys, result: string) => {
       //この処理は新機能追加による暫定的な処置です
@@ -25,7 +33,7 @@ const Options = () => {
       }
       if (key === "options_disable184") {
         const postBtn = document.querySelector(
-          ".CommentPostButton"
+          ".CommentPostButton",
         ) as HTMLButtonElement;
         if (postBtn) {
           postBtn.style.backgroundColor =

@@ -6,7 +6,7 @@ const injectFetch = () => {
   const originalFetch = window.fetch;
   window.fetch = (
     input: URL | RequestInfo,
-    init?: RequestInit | undefined
+    init?: RequestInit | undefined,
   ): Promise<Response> => {
     try {
       const url = input instanceof Request ? input.url : input.toString();
@@ -22,7 +22,7 @@ const injectFetch = () => {
         if (body.commands && Array.isArray(body.commands)) {
           if (body.commands.includes("184")) {
             body.commands = body.commands.filter(
-              (command: string) => command !== "184"
+              (command: string) => command !== "184",
             );
             init.body = JSON.stringify(body);
           }

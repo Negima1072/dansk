@@ -1,7 +1,9 @@
-import { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
-import { uuid } from "./uuidUtil";
-import { Templates } from "@/headers/Trace.templates";
 import NiconiComments from "@xpadev-net/niconicomments";
+
+import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
+import { Templates } from "@/headers/Trace.templates";
+
+import { uuid } from "./uuidUtil";
 
 const mode2type = {
   Big9: "be9",
@@ -19,7 +21,7 @@ const mode2type = {
 } as const satisfies { [key: string]: string | undefined };
 
 const getTemplateByDomoMode = (
-  mode: string
+  mode: string,
 ):
   | { template: TLayerTemplate; type: TValueOf<typeof mode2type> }
   | undefined => {
@@ -54,7 +56,7 @@ const domoColor2code = (color: Element): string => {
 const domoLines2content = (
   lines: Element[],
   width: number,
-  template: TLayerTemplate
+  template: TLayerTemplate,
 ): string[] => {
   if (lines.length === 0) {
     return Array(template.height).fill("") as string[];
@@ -91,7 +93,7 @@ const domo2dansa = (xml: string): TLayer[] => {
   const layers: TLayer[] = [];
   for (const comment of comments) {
     const result = getTemplateByDomoMode(
-      comment.getElementsByTagName("Mode")[0]?.textContent ?? ""
+      comment.getElementsByTagName("Mode")[0]?.textContent ?? "",
     );
     if (!result) continue;
     const { template, type } = result;
@@ -99,7 +101,7 @@ const domo2dansa = (xml: string): TLayer[] => {
     const lines = Array.from(
       comment
         .getElementsByTagName("Lines")[0]
-        ?.getElementsByTagName("string") ?? []
+        ?.getElementsByTagName("string") ?? [],
     );
     const width =
       Number(comment.getElementsByTagName("Width")[0]?.textContent) ||

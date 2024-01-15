@@ -1,14 +1,10 @@
-import {
-  ChangeEvent,
-  FC,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import Styles from "./VideoController.module.scss";
+import type { ChangeEvent, FC } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { str2time, time2str } from "@/libraries/timeUtil";
+
+import Styles from "./VideoController.module.scss";
 
 const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
 
@@ -26,7 +22,7 @@ const VideoController: FC = () => {
   const updateTime = (time: number, relative = true) => {
     setIsSeeking(true);
     const commentOnOffButton = document.getElementsByClassName(
-      "CommentOnOffButton"
+      "CommentOnOffButton",
     )[0] as HTMLButtonElement;
     if (relative) time += window.__videoplayer.currentTime();
     if (time < 0) time = 0;
@@ -46,7 +42,7 @@ const VideoController: FC = () => {
       setValueChanged(true);
       setValue(e.target.value);
     },
-    [value]
+    [value],
   );
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,7 +52,7 @@ const VideoController: FC = () => {
         (e.target as HTMLInputElement).blur();
       }
     },
-    [value]
+    [value],
   );
   const onInputBlur = useCallback(() => {
     if (isValueChanged) {

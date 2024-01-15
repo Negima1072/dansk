@@ -1,15 +1,14 @@
-import {
+import type { TLayer, TLayerTemplate } from "@/@types/layer";
+import type {
   TAutoSave,
   TCommentFont,
   TCommentPos,
+  TContextType,
   TLocalStorageKeys,
   TMonoChar,
   TOwnerComment,
-  TContextType,
   TProChar,
 } from "@/@types/types";
-
-import type { TLayer, TLayerTemplate } from "@/@types/layer";
 
 /**
  * typeGuard
@@ -34,7 +33,7 @@ const typeGuard = {
         i !== null &&
         typeGuard.context.videoElement((i as TContextType).videoElement) &&
         typeGuard.context.commentCommandInput(
-          (i as TContextType).commentCommandInput
+          (i as TContextType).commentCommandInput,
         )
       ),
     videoElement: (i: unknown): i is HTMLVideoElement =>
@@ -114,7 +113,7 @@ const typeGuard = {
     isKey: (i: unknown): i is TLocalStorageKeys =>
       typeof i === "string" &&
       !!i.match(
-        /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/
+        /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/,
       ),
     isAutoSave: (i: unknown): i is TAutoSave[] => {
       if (!Array.isArray(i)) return false;

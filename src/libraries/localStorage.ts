@@ -1,4 +1,4 @@
-import { TLocalStorageKeys } from "@/@types/types";
+import type { TLocalStorageKeys } from "@/@types/types";
 
 const STORAGE_PREFIX = "DanSc";
 import { defaultValue } from "@/libraries/localStorage.defaultValue";

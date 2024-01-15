@@ -1,11 +1,11 @@
-﻿import { Storage } from "@/libraries/localStorage";
+﻿import type { TConvertFormat } from "@/@types/types";
 import { convertText } from "@/libraries/convert";
-import { TConvertFormat } from "@/@types/types";
+import { Storage } from "@/libraries/localStorage";
 
 window.addEventListener("load", () => {
   const beforeTextArea = document.getElementById("before") as HTMLInputElement,
     beforeOptions = document.getElementById(
-      "before_select"
+      "before_select",
     ) as HTMLSelectElement,
     afterTextArea = document.getElementById("after") as HTMLInputElement,
     afterOptions = document.getElementById("after_select") as HTMLSelectElement,
@@ -60,7 +60,7 @@ window.addEventListener("load", () => {
     afterTextArea.value = convertText(
       beforeOptions.value as TConvertFormat,
       afterOptions.value as TConvertFormat,
-      beforeTextArea.value
+      beforeTextArea.value,
     );
     save();
   };
@@ -69,7 +69,7 @@ window.addEventListener("load", () => {
     beforeTextArea.value = convertText(
       afterOptions.value as TConvertFormat,
       beforeOptions.value as TConvertFormat,
-      afterTextArea.value
+      afterTextArea.value,
     );
     save();
   };

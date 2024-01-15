@@ -1,4 +1,4 @@
-import { TLayerTemplates } from "@/@types/types";
+import type { TLayerTemplates } from "@/@types/types";
 
 const Templates: TLayerTemplates = {
   be9: {

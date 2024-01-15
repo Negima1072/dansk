@@ -1,4 +1,4 @@
-import { TLocalStorageDefaultValues } from "@/@types/types";
+import type { TLocalStorageDefaultValues } from "@/@types/types";
 
 const defaultValue: TLocalStorageDefaultValues = {
   options_autoSave_span: {

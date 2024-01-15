@@ -29,7 +29,7 @@ const ImageCrop = ({ imageId, close }: props) => {
       _pos1Y: 0.125,
       _pos2X: 0.875,
       _pos2Y: 0.875,
-    }
+    },
   );
   const updateCropRange = (range: TCropRange) => {
     setRange(range);
@@ -63,7 +63,7 @@ const ImageCrop = ({ imageId, close }: props) => {
         320 + offsetX,
         180 + offsetY,
         imgWidth,
-        imgHeight
+        imgHeight,
       );
       const targetCanvas = document.createElement("canvas");
       const { width, height, x, y } = getActualRange(range);
@@ -90,7 +90,7 @@ const ImageCrop = ({ imageId, close }: props) => {
       currentHeight = range._pos2Y - range._pos1Y;
     const targetScale = Math[mode === "shrink" ? "min" : "max"](
       currentWidth,
-      currentHeight
+      currentHeight,
     );
     const targetWidth = targetScale,
       targetHeight = targetScale;

@@ -40,7 +40,7 @@ const Backup = (props: propType) => {
             layer.layerId = uuid();
           }
           return layer;
-        })
+        }),
       );
       props.close();
     },

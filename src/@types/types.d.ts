@@ -1,4 +1,4 @@
-import { TLayer, TLayerTemplate } from "@/@types/layer";
+import type { TLayer, TLayerTemplate } from "@/@types/layer";
 
 /** 投稿者コメント */
 export type TOwnerComment = {

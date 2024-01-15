@@ -50,6 +50,7 @@ const Preview = () => {
           premium: true,
           mail: string.command.slice(1, -1).split(/\s/),
           user_id: 0,
+          is_my_post: false,
         });
       }
     });

@@ -1,8 +1,9 @@
-import ReactDOM from "react-dom";
-import { LayerContainer } from "@/layer/LayerContainer";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import ReactDOM from "react-dom";
+
 import { elementAtom } from "@/atoms";
-import { FC } from "react";
+import { LayerContainer } from "@/layer/LayerContainer";
 
 /**
  * レイヤーブロック(プレイヤー内)

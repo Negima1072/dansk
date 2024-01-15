@@ -1,9 +1,10 @@
-import { CommandBox } from "@/footers/CommandBox";
-import ReactDOM from "react-dom";
-import { OutputBox } from "@/footers/OutputBox";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import ReactDOM from "react-dom";
+
 import { elementAtom } from "@/atoms";
-import { FC } from "react";
+import { CommandBox } from "@/footers/CommandBox";
+import { OutputBox } from "@/footers/OutputBox";
 
 /**
  * フッターブロック(プレイヤー下)
@@ -17,7 +18,7 @@ const Footer: FC = () => {
       <CommandBox />
       <OutputBox />
     </>,
-    elements.FooterElement
+    elements.FooterElement,
   );
 };
 export { Footer };

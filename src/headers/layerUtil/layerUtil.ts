@@ -103,14 +103,14 @@ const layerUtil = {
     layerData: TLayer[],
     monospaced = false,
     replaceTab = false,
-    ownerMode = false
+    ownerMode = false,
   ): { command: string; content: string[] }[] | undefined => {
     /** 出力用文字列 */
     const result = [];
     layerData = layerData.map((layer) => {
       layer.content = layer.content.map((item) => {
         item.content = item.content.map((data) =>
-          replaceSpace(data, 2).replace(/\s*$/g, "")
+          replaceSpace(data, 2).replace(/\s*$/g, ""),
         );
         return item;
       });
@@ -129,7 +129,7 @@ const layerUtil = {
           layerComment.content.map((value) => {
             const { width, leftSpaceWidth } = getCommentWidth(
               value,
-              layer.font
+              layer.font,
             );
             if (width === leftSpaceWidth) {
               widths.push(0);
@@ -141,7 +141,7 @@ const layerUtil = {
                 Math.abs(leftSpaceWidth - (layer.width * 12 - width))) /
                 12) *
                 layerComment.font *
-                layer.scale.x
+                layer.scale.x,
             );
           });
         });
@@ -155,7 +155,7 @@ const layerUtil = {
         monospaced,
         replaceTab,
         ownerMode,
-        width
+        width,
       );
       if (!string) return;
       if (layer.pos === "shita") string.reverse();
@@ -205,7 +205,7 @@ const command2str = (layer: TLayer) => {
   let layerName = layer.text.replace(/\s/g, "-");
   if (
     layerName.match(
-      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|_live|invisible/
+      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|_live|invisible/,
     )
   ) {
     layerName += "_";
@@ -274,7 +274,7 @@ const space2tab = (input: string): string => {
  */
 const getCommentWidth = (
   input: string,
-  font: TCommentFont
+  font: TCommentFont,
 ): { width: number; leftSpaceWidth: number } => {
   /** 左の空白幅 */
   let leftSpaceWidth = 0,
@@ -361,7 +361,7 @@ const removeLeadingSpace = (input: string, width: number) => {
 const addTrailingSpace = (input: string, width: number) => {
   if (width < 0) {
     alert(
-      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください"
+      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください",
     );
     return input;
   }
@@ -375,7 +375,7 @@ const addTrailingSpace = (input: string, width: number) => {
 const addDRSpace = (input: string, width: number) => {
   if (width < 0) {
     alert(
-      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください"
+      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください",
     );
     return input;
   }
@@ -388,7 +388,7 @@ const addDRSpace = (input: string, width: number) => {
  * @param input
  */
 const getMaxWidthIndex = (
-  input: { width: number }[]
+  input: { width: number }[],
 ): { index: number; value: number } => {
   const widthArr = input.map((value) => value.width),
     maxValue = Math.max(...widthArr);
@@ -429,7 +429,7 @@ const comment2str = (
   monospaced: boolean,
   replaceTab: boolean,
   isOwnerMode: boolean,
-  monoWidth: number | undefined
+  monoWidth: number | undefined,
 ): string[] | undefined => {
   /** コメント文字数上限 */
   const commentMaxLength = isOwnerMode ? 1024 : 75;
@@ -478,7 +478,7 @@ const comment2str = (
     const width = layerTemplateWidth - removableSpace * 2;
     /** 左の空白を消した文字列 */
     const comment = layerComment.content.map((value) =>
-      removeLeadingSpace(value, removableSpace)
+      removeLeadingSpace(value, removableSpace),
     );
     //空白を消したので更新
     commentWidth = [];
@@ -496,11 +496,11 @@ const comment2str = (
           index + 1
         }\nテンプレート幅：${layerTemplateWidth}\nコメント幅：${
           maxWidth.value
-        }\nコメント行：${maxWidth.index + 1}`
+        }\nコメント行：${maxWidth.index + 1}`,
       );
     //幅大きい順にソート
     commentWidth.sort((a, b) =>
-      a.width > b.width ? -1 : a.width < b.width ? 1 : 0
+      a.width > b.width ? -1 : a.width < b.width ? 1 : 0,
     );
     /** 出力用配列 */
     const output: { content: string[]; width: number }[] = [];
@@ -538,7 +538,7 @@ const comment2str = (
       if (layer.drWidth) commentLine = addDRSpace(commentLine, layer.drWidth);
       if (replaceTab) commentLine = space2tab(commentLine);
       let template: string[] = comment.map((_, index, array) =>
-        index === array.length - 1 ? "\uA001" : ""
+        index === array.length - 1 ? "\uA001" : "",
       );
       template[lineWidth.index] = commentLine;
       if (template[template.length - 1] === "")
@@ -553,7 +553,7 @@ const comment2str = (
             isOwnerMode ? "投稿者コメント" : "一般コメント"
           }\nコメント上限：${commentMaxLength}文字\n使用可能な文字数：${
             commentMaxLength - comment.length
-          }文字`
+          }文字`,
         );
       if (template.join("\n") === "") template = ["\uA001"];
       output.push({ content: template, width: template.join("\n").length });
@@ -563,8 +563,8 @@ const comment2str = (
         (replaceTab ? spaceArr2TabArr(value.content) : value.content)
           .join("<br>")
           .replace(/\uA001/g, "[03]")
-          .replace(/\u0009/g, "[tb]")
-      )
+          .replace(/\u0009/g, "[tb]"),
+      ),
     );
   });
   return result;

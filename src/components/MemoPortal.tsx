@@ -1,8 +1,9 @@
-import ReactDOM from "react-dom";
-import { Memo } from "@/memo/Memo";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import ReactDOM from "react-dom";
+
 import { elementAtom } from "@/atoms";
-import { FC } from "react";
+import { Memo } from "@/memo/Memo";
 
 /**
  * メモブロック(プレイヤー内)

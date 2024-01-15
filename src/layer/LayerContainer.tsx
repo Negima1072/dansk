@@ -1,12 +1,15 @@
-import { FC, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { Layer } from "@/layer/layer/Layer";
-import Styles from "./LayerContainer.module.scss";
-import { TObjectFitArgs } from "@/@types/background";
-import ReactDOM from "react-dom";
-import { Preview } from "@/layer/Preview/Preview";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
+import styled from "styled-components";
+
+import type { TObjectFitArgs } from "@/@types/background";
 import { backgroundAtom, elementAtom, layerAtom, optionAtom } from "@/atoms";
+import { Layer } from "@/layer/layer/Layer";
+import { Preview } from "@/layer/Preview/Preview";
+
+import Styles from "./LayerContainer.module.scss";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -58,7 +61,7 @@ const LayerContainer: FC = () => {
     setScale({ x: target.clientWidth / 640, y: target.clientHeight / 360 });
   };
   const [observer] = useState<MutationObserver>(
-      new MutationObserver(observerCallback)
+      new MutationObserver(observerCallback),
     ),
     [scale, setScale] = useState<{ x: number; y: number }>({ x: 1, y: 1 }),
     targetNode = useRef<HTMLDivElement>(null);
@@ -87,7 +90,7 @@ const LayerContainer: FC = () => {
               mode={background.mode}
               opacity={background.transparency / 100}
             />,
-            elements?.BackgroundImageElement
+            elements?.BackgroundImageElement,
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}
