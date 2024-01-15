@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import Styles from "./VideoController.module.scss";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { str2time, time2str } from "@/libraries/timeUtil";

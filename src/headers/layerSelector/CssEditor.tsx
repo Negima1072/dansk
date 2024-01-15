@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Popup } from "@/components/popup/Popup";
 import Styles from "./CssEditor.module.scss";
 import { TLayer } from "@/@types/layer";

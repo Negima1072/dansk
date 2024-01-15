@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { LayerContainer } from "@/layer/LayerContainer";
 import { useAtom } from "jotai";

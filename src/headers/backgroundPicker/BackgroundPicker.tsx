@@ -1,4 +1,4 @@
-import React, { useCallback, useState, ChangeEvent } from "react";
+import { useCallback, useState, ChangeEvent } from "react";
 import { Popup } from "@/components/popup/Popup";
 import { BackgroundImageDisplay } from "@/headers/backgroundPicker/BackgroundImageDisplay";
 import { Button } from "@/components/button/Button";

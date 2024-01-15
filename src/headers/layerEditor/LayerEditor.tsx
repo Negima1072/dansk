@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from "react";
+import { ChangeEvent, useCallback } from "react";
 import Styles from "./LayerEditor.module.scss";
 import { Button } from "@/components/button/Button";
 import { typeGuard } from "@/libraries/typeGuard";

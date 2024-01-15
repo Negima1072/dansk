@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { Trace } from "@/headers/Trace";
 import { useAtom } from "jotai";

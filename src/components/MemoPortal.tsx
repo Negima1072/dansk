@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { Memo } from "@/memo/Memo";
 import { useAtom } from "jotai";

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./CommandBox.module.scss";
 import { Button } from "@/components/button/Button";

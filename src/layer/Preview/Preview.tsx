@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Styles from "./Preview.module.scss";
 import NiconiComments, { FormattedComment } from "@xpadev-net/niconicomments";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";

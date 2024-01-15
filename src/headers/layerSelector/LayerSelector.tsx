@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import Styles from "./LayerSelector.module.scss";
 import { ReactSortable } from "react-sortablejs";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";

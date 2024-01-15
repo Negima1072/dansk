@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import { TGridPosBlob, TLayer } from "@/@types/layer";
 import Styles from "./Layer.module.scss";
 import { grids } from "@/assets/grids";

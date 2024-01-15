@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Popup } from "@/components/popup/Popup";
 import Styles from "./CommentsDetail.module.scss";
 import { time2str } from "@/libraries/timeUtil";

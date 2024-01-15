@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { MouseEvent, RefObject, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Styles from "./Crop.module.scss";
 import { TCropKey, TCropRange } from "@/@types/background";

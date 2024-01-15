@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Styles from "./Backup.module.scss";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";

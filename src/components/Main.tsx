@@ -1,5 +1,4 @@
 import { VideoController } from "@/main/VideoController";
-import React from "react";
 import ReactDOM from "react-dom";
 import { useAtom } from "jotai";
 import { elementAtom } from "@/atoms";

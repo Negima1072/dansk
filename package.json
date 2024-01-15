@@ -10,7 +10,7 @@
     "build:dev": "npm run copy-assets&&rollup -c rollup.develop.config.mjs&&node ./utils/replaceVersion.mjs",
     "watch": "rollup -c rollup.develop.config.mjs -w",
     "copy-assets": "npx rimraf dist&&copyfiles -u 1 \"assets/**/*\" dist/",
-    "check-types": "npx tsc --noEmit --jsx react",
+    "check-types": "npx tsc --noEmit",
     "eslint": "eslint src/**/*.ts*",
     "eslint:fix": "eslint src/**/*.ts* --fix",
     "format": "prettier --write \"src/**/*.{tsx,ts,js,json,css,scss}\"",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAtom } from "jotai";
 import { backgroundAtom } from "@/atoms";
 import Styles from "./ImageCrop.module.scss";

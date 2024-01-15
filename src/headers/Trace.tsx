@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./Trace.module.scss";
 import { Button } from "@/components/button/Button";

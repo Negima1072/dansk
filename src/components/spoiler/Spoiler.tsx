@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Styles from "./Spoiler.module.scss";
 import { SpoilerButton } from "@/components/spoiler/SpoilerButton";
 import { Storage } from "@/libraries/localStorage";

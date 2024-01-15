@@ -1,4 +1,3 @@
-import React from "react";
 import Styles from "./BackgroundImageDisplay.module.scss";
 import { icons } from "@/assets/icons";
 import { useAtom } from "jotai";
