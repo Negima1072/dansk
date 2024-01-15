@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, FC, useRef } from "react";
 import { TGridPosBlob, TLayer } from "@/@types/layer";
 import Styles from "./Layer.module.scss";
 import { grids } from "@/assets/grids";
@@ -47,7 +47,7 @@ const LayerInput = styled.textarea<LayerInputProps>`
  * @param props
  * @constructor
  */
-const Layer = (props: LayerProps): JSX.Element => {
+const Layer: FC<LayerProps> = (props) => {
   const [layerData, setLayerData] = useAtom(layerAtom),
     [optionData] = useAtom(optionAtom),
     layerElement = useRef<HTMLDivElement>(null),

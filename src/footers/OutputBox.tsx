@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import Styles from "./OutputBox.module.scss";
 import { Button } from "@/components/button/Button";
@@ -16,7 +16,7 @@ import {
  * 入出力用のテキストエリア
  * @constructor
  */
-const OutputBox = (): JSX.Element => {
+const OutputBox: FC = () => {
   const [elements] = useAtom(elementAtom),
     [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
     [textareaValue, setTextareaValue] = useState<string[]>([]),

@@ -1,4 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Styles from "./VideoController.module.scss";
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { str2time, time2str } from "@/libraries/timeUtil";
@@ -10,7 +17,7 @@ const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
  * buttonsにある秒数(のそれぞれ+-)のボタンが生成される
  * @constructor
  */
-const VideoController = (): JSX.Element => {
+const VideoController: FC = () => {
   const [value, setValue] = useState<string>("0"),
     [isValueChanged, setValueChanged] = useState<boolean>(false),
     [isSeeking, setIsSeeking] = useState<boolean>(false),

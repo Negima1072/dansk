@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Layer } from "@/layer/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
@@ -29,7 +29,7 @@ function beforeUnload(e: BeforeUnloadEvent) {
  * レイヤー全体を管理
  * @constructor
  */
-const LayerContainer = (): JSX.Element => {
+const LayerContainer: FC = () => {
   const [layerData] = useAtom(layerAtom);
   const [background] = useAtom(backgroundAtom);
   const [optionData] = useAtom(optionAtom);
