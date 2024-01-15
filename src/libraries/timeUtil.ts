@@ -25,7 +25,7 @@ const str2time = (date: string): number | undefined => {
  */
 const time2str = (time: number): string => {
   return `${String(Math.floor(time / 60)).padStart(2, "0")}:${String(
-    (time % 60).toFixed(2).padStart(5, "0"),
+    (time % 60).toFixed(2).padStart(5, "0")
   )}`;
 };
 export { str2time, time2str };

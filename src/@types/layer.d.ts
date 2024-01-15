@@ -1,12 +1,12 @@
-import { commentFont, commentPos } from "@/@types/types";
+import { TCommentFont, TCommentPos } from "@/@types/types";
 
-export type layerTemplate = {
+export type TLayerTemplate = {
   /** 適用するコマンド */
   commands: string[];
   /** 初期位置 */
-  pos: commentPos;
+  pos: TCommentPos;
   /** テンプレが対応している位置 */
-  posList: commentPos[];
+  posList: TCommentPos[];
   /** テンプレート名 */
   text: string;
   /** 旧だんすくの識別名 */
@@ -36,10 +36,10 @@ export type layerTemplate = {
   height: height(px)
   count: 何回繰り返すか
 } */
-  size: layerCommentTemplate[];
+  size: TLayerCommentTemplate[];
 };
 
-export type layerCommentTemplate = {
+export type TLayerCommentTemplate = {
   font: number;
   line: number;
   lineCount: number;
@@ -48,17 +48,17 @@ export type layerCommentTemplate = {
   margin?: number;
 };
 
-export type layer = layerTemplate & {
+export type TLayer = TLayerTemplate & {
   type: string;
-  font: commentFont;
+  font: TCommentFont;
   visible: boolean;
   selected: boolean;
   color: string;
-  content: layerComment[];
+  content: TLayerComment[];
   overwrite?: boolean;
   layerId: string;
 };
-export type layerComment = {
+export type TLayerComment = {
   font: number;
   line: number;
   height?: number;
@@ -66,15 +66,15 @@ export type layerComment = {
   content: string[];
 };
 
-export type layerLineWidth = {
+export type TLayerLineWidth = {
   width: number;
   leftSpaceWidth: number;
   index: number;
 };
-export type layerCommentWidth = layerLineWidth[];
-export type layerWidth = layerCommentWidth[];
+export type TLayerCommentWidth = TLayerLineWidth[];
+export type TLayerWidth = TLayerCommentWidth[];
 
-export type GridPosBlob =
+export type TGridPosBlob =
   | {
       immutable: false;
       ue: string;
@@ -85,6 +85,6 @@ export type GridPosBlob =
       immutable: true;
       any: string;
     };
-export type GridData = {
-  [key: string]: GridPosBlob;
+export type TGridData = {
+  [key: string]: TGridPosBlob;
 };

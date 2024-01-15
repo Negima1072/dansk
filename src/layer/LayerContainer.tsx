@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Layer } from "@/layer/layer/Layer";
 import Styles from "./LayerContainer.module.scss";
-import { objectFitArgs } from "@/@types/background";
+import { TObjectFitArgs } from "@/@types/background";
 import ReactDOM from "react-dom";
 import { Preview } from "@/layer/Preview/Preview";
 import { useAtom } from "jotai";
@@ -15,7 +15,7 @@ const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   left: 0;
 `;
 
-const BackgroundImage = styled.img<{ mode: objectFitArgs; opacity: number }>`
+const BackgroundImage = styled.img<{ mode: TObjectFitArgs; opacity: number }>`
   object-fit: ${(props) => props.mode};
   opacity: ${(props) => props.opacity};
 `;
@@ -58,7 +58,7 @@ const LayerContainer = (): JSX.Element => {
     setScale({ x: target.clientWidth / 640, y: target.clientHeight / 360 });
   };
   const [observer] = useState<MutationObserver>(
-      new MutationObserver(observerCallback),
+      new MutationObserver(observerCallback)
     ),
     [scale, setScale] = useState<{ x: number; y: number }>({ x: 1, y: 1 }),
     targetNode = useRef<HTMLDivElement>(null);
@@ -87,7 +87,7 @@ const LayerContainer = (): JSX.Element => {
               mode={background.mode}
               opacity={background.transparency / 100}
             />,
-            elements?.BackgroundImageElement,
+            elements?.BackgroundImageElement
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}

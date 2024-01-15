@@ -1,4 +1,4 @@
-import { commentPos } from "./types";
+import { TCommentPos } from "./types";
 
 type XMLText<T = string> = {
   _text: T;
@@ -8,7 +8,7 @@ type XMLTextNullable<T = string> = {
   _text?: T;
 };
 
-type DomoColor = {
+export type DomoColor = {
   A: XMLText<number>;
   B: XMLText<number>;
   G: XMLText<number>;
@@ -19,25 +19,25 @@ type DomoColor = {
   ScR: XMLText<number>;
 };
 
-type DomoCommentItem = {
+export type DomoCommentItem = {
   Color: DomoColor;
   Lines: {
     string?: XMLTextNullable<string>[];
   };
   Mode: XMLText<string>;
-  Pos: XMLText<commentPos>;
+  Pos: XMLText<TCommentPos>;
   Size: XMLText<string>;
   Width: XMLText<number>;
   index: XMLText<number>;
 };
 
-type DomoXML = {
+export type DomoXML = {
   DataCommentSet: {
     CommentList: {
       DataCommentItem: DomoCommentItem[];
     };
     CommentWidth: XMLText<number>;
-    SelectedPos: XMLText<commentPos>;
+    SelectedPos: XMLText<TCommentPos>;
     SelectedSize: XMLText<string>;
   };
 };

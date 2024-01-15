@@ -4,7 +4,7 @@ import { ReactSortable } from "react-sortablejs";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";
 import { icons } from "@/assets/icons";
 import { CssEditor } from "@/headers/layerSelector/CssEditor";
-import { layer } from "@/@types/layer";
+import { TLayer } from "@/@types/layer";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 import { useAtom } from "jotai";
 import { layerAtom } from "@/atoms";
@@ -58,7 +58,7 @@ const LayerSelector = () => {
         if (
           layerData.reduce(
             (count, item) => count + Number(item.selected),
-            0,
+            0
           ) === 0
         )
           layer.selected = true;
@@ -72,12 +72,12 @@ const LayerSelector = () => {
       setLayerData([...layerData]);
     },
     closeCssEditor = useCallback(
-      (data: layer) => {
+      (data: TLayer) => {
         layerData[isSetting] = data;
         setLayerData([...layerData]);
         setSetting(-1);
       },
-      [isSetting, layerData],
+      [isSetting, layerData]
     ),
     remove = (key: number) => {
       if (!confirm(`削除してよろしいですか？`)) return;

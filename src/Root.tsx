@@ -47,23 +47,23 @@ const init = async () => {
     count = 0;
   while (count < 300) {
     mainContainer = document.getElementsByClassName(
-      "MainContainer",
+      "MainContainer"
     )[0] as HTMLDivElement;
     mainContainerPlayer = mainContainer?.getElementsByClassName(
-      "MainContainer-player",
+      "MainContainer-player"
     )[0] as HTMLDivElement;
     mainContainerPlayerPanel = mainContainer?.getElementsByClassName(
-      "MainContainer-playerPanel",
+      "MainContainer-playerPanel"
     )[0] as HTMLDivElement;
     if (mainContainer?.getElementsByClassName("CommentRenderer").length > 0)
       CommentRenderer = mainContainer?.getElementsByClassName(
-        "CommentRenderer",
+        "CommentRenderer"
       )[0] as HTMLDivElement;
     videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas",
+      "VideoSymbolContainer-canvas"
     )[0] as HTMLCanvasElement;
     videoContainer = document.getElementsByClassName(
-      "InView VideoContainer",
+      "InView VideoContainer"
     )[0] as HTMLDivElement;
     videoPlayer = document.getElementById("VideoPlayer") as HTMLDivElement;
     count++;
@@ -97,11 +97,11 @@ const init = async () => {
     (e) => {
       (e.target as HTMLDivElement).scroll(0, 0);
     },
-    { passive: false },
+    { passive: false }
   );
   injectFetch();
   const postBtnElement = document.querySelector(
-    ".CommentPostButton",
+    ".CommentPostButton"
   ) as HTMLButtonElement;
   if (postBtnElement) {
     postBtnElement.style.backgroundColor =

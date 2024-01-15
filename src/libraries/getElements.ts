@@ -1,40 +1,40 @@
 import { sleep } from "@/libraries/sleep";
-import { element } from "@/@types/element";
+import { TElement } from "@/@types/element";
 
 /**
  * reactマウント用の親要素を取得する
  * @param count {number} リトライ回数
  */
-const getElements = async (count = 0): Promise<element> => {
+const getElements = async (count = 0): Promise<TElement> => {
   const videoElement = (
       document.getElementById("MainVideoPlayer") as HTMLDivElement
     )?.getElementsByTagName("video")[0] as HTMLVideoElement,
     commentCommandInput = document.getElementsByClassName(
-      "CommentCommandInput",
+      "CommentCommandInput"
     )[0] as HTMLInputElement,
     commentInputTextarea = document.getElementsByClassName(
-      "CommentInput-textarea",
+      "CommentInput-textarea"
     )[0] as HTMLTextAreaElement,
     videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas",
+      "VideoSymbolContainer-canvas"
     )[0] as HTMLCanvasElement,
     HeaderElement = document.getElementById(
-      "dansk:HeaderElement",
+      "dansk:HeaderElement"
     ) as HTMLDivElement,
     MainElement = document.getElementById(
-      "dansk:MainElement",
+      "dansk:MainElement"
     ) as HTMLDivElement,
     BackgroundImageElement = document.getElementById(
-      "dansk:BackgroundImageElement",
+      "dansk:BackgroundImageElement"
     ) as HTMLDivElement,
     FooterElement = document.getElementById(
-      "dansk:FooterElement",
+      "dansk:FooterElement"
     ) as HTMLDivElement,
     LayerElement = document.getElementById(
-      "dansk:LayerElement",
+      "dansk:LayerElement"
     ) as HTMLDivElement,
     MemoElement = document.getElementById(
-      "dansk:MemoElement",
+      "dansk:MemoElement"
     ) as HTMLDivElement;
   if (
     !(

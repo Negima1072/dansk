@@ -3,7 +3,7 @@ import Styles from "./Backup.module.scss";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
 import { Popup } from "@/components/popup/Popup";
-import { autoSave } from "@/@types/types";
+import { TAutoSave } from "@/@types/types";
 import { Button } from "@/components/button/Button";
 import { uuid } from "@/libraries/uuidUtil";
 import { layerAtom } from "@/atoms";
@@ -20,7 +20,7 @@ type propType = {
  * @constructor
  */
 const Backup = (props: propType) => {
-  const [saveData, setSaveData] = useState<autoSave[]>(() => {
+  const [saveData, setSaveData] = useState<TAutoSave[]>(() => {
     const data: unknown = JSON.parse(Storage.get("autoSave"));
     if (!typeGuard.localStorage.isAutoSave(data)) return [];
     return data;
@@ -40,7 +40,7 @@ const Backup = (props: propType) => {
             layer.layerId = uuid();
           }
           return layer;
-        }),
+        })
       );
       props.close();
     },

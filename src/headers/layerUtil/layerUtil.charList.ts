@@ -1,4 +1,4 @@
-import { CharList } from "@/@types/types";
+import { TCharList } from "@/@types/types";
 
 /**
  * 横幅情報を格納するObject
@@ -9,7 +9,7 @@ import { CharList } from "@/@types/types";
  * キーは正規表現or対象文字
  * 同じ幅の文字が他にない場合はキーを文字にすることで処理時間を短縮できる
  */
-const CharList: CharList = {
+const CharList: TCharList = {
   "\u2003": {
     width: 12,
     isSpace: true,

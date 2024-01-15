@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Styles from "./Preview.module.scss";
-import NiconiComments from "@xpadev-net/niconicomments";
+import NiconiComments, { FormattedComment } from "@xpadev-net/niconicomments";
 import { layerUtil } from "@/headers/layerUtil/layerUtil";
 import { useAtom } from "jotai";
 import { layerAtom } from "@/atoms";
@@ -32,7 +32,7 @@ const Preview = () => {
       });
     const dansk = layerUtil.toString(target, false, false, true);
     if (!dansk) return;
-    const formatted: formattedComment[] = [];
+    const formatted: FormattedComment[] = [];
     dansk.forEach((string, index) => {
       for (const line of string.content) {
         formatted.push({

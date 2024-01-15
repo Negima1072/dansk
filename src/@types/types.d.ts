@@ -1,8 +1,7 @@
-import { layer, layerTemplate } from "@/@types/layer";
-import { ReactNode } from "react";
+import { TLayer, TLayerTemplate } from "@/@types/layer";
 
 /** 投稿者コメント */
-type ownerComment = {
+export type TOwnerComment = {
   /** 時間: mm:ss.ss */
   time: string;
   /** コマンド(スペース区切り) */
@@ -11,22 +10,8 @@ type ownerComment = {
   comment: string;
 };
 
-type convertFormat = "domo" | "tokome" | "dansk";
-type contextTypeNullable = {
-  videoElement?: HTMLVideoElement;
-  commentCommandInput?: HTMLInputElement;
-  commentInputTextarea?: HTMLTextAreaElement;
-  videoSymbolContainerCanvas?: HTMLCanvasElement;
-  HeaderElement?: HTMLDivElement;
-  MainElement?: HTMLDivElement;
-  BackgroundImageElement?: HTMLDivElement;
-  FooterElement?: HTMLDivElement;
-  LayerElement?: HTMLDivElement;
-  MemoElement?: HTMLDivElement;
-  exportLayer?: string[];
-  setExportLayer?: (layerString: string[]) => void;
-};
-type contextType = {
+export type TConvertFormat = "domo" | "tokome" | "dansk";
+export type TContextType = {
   videoElement: HTMLVideoElement;
   commentCommandInput: HTMLInputElement;
   commentInputTextarea: HTMLTextAreaElement;
@@ -36,50 +21,46 @@ type contextType = {
   FooterElement: HTMLDivElement;
   LayerElement: HTMLDivElement;
   MemoElement: HTMLDivElement;
-  exportLayer: layer[];
-  setExportLayer: (layer: layer[]) => void;
-};
-type contextProps = {
-  children: ReactNode;
-  value?: contextTypeNullable;
+  exportLayer: TLayer[];
+  setExportLayer: (layer: TLayer[]) => void;
 };
 
-type commentPos = "ue" | "naka" | "shita";
-type commentFont = "mincho" | "gothic";
+export type TCommentPos = "ue" | "naka" | "shita";
+export type TCommentFont = "mincho" | "gothic";
 
-type command = {
+type TCommand = {
   text: string;
   value: string;
   group: string;
 };
-type commandList = command[][][];
+export type TCommandList = TCommand[][][];
 
-type MonoChar = {
+export type TMonoChar = {
   width: number;
   isSpace: boolean;
 };
-type ProChar = {
+export type TProChar = {
   width: {
     mincho: number;
     gothic: number;
   };
   isSpace: boolean;
 };
-type CharList = {
-  [key: string]: MonoChar | ProChar;
-  default: MonoChar | ProChar;
+export type TCharList = {
+  [key: string]: TMonoChar | TProChar;
+  default: TMonoChar | TProChar;
 };
 
-type layerTemplates = {
-  [key: string]: layerTemplate;
+export type TLayerTemplates = {
+  [key: string]: TLayerTemplate;
 };
 
-type autoSave = {
+export type TAutoSave = {
   timestamp: number;
-  data: layer[];
+  data: TLayer[];
 };
 
-type localStorageKeys =
+export type TLocalStorageKeys =
   | "options_autoSave_span"
   | "options_autoSave_max"
   | "options_commandOrder"
@@ -108,23 +89,25 @@ type localStorageKeys =
   | "ppConvertBeforeType"
   | "ppConvertAfter"
   | "ppConvertAfterType";
-type localStorageItem = {
+type TLocalStorageItem = {
   defaultValue: string;
 };
-type localStorageOptionItem = localStorageItem & {
+export type TLocalStorageOptionItem = TLocalStorageItem & {
   description: string;
   dangerous: boolean;
   type: "string" | "boolean" | "number";
-  required?: localStorageKeys;
+  required?: TLocalStorageKeys;
 };
-type localStorageDefaultValues = {
-  [key in localStorageKeys]: localStorageItem | localStorageOptionItem;
+export type TLocalStorageDefaultValues = {
+  [key in TLocalStorageKeys]: TLocalStorageItem | TLocalStorageOptionItem;
 };
 
-type commentPublishData = {
+export type TCommentPublishData = {
   body: string;
   commands: string[];
   postKey: string;
   videoId: string;
   vposMs: number;
 };
+
+export {};

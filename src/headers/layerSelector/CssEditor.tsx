@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
 import { Popup } from "@/components/popup/Popup";
 import Styles from "./CssEditor.module.scss";
-import { layer } from "@/@types/layer";
+import { TLayer } from "@/@types/layer";
 import { Layer } from "@/layer/layer/Layer";
 
 type EditorProps = {
-  close: (data: layer) => void;
-  data?: layer;
+  close: (data: TLayer) => void;
+  data?: TLayer;
 };
 
 /**

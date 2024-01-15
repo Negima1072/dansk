@@ -3,7 +3,7 @@ import { Popup } from "@/components/popup/Popup";
 import { BackgroundImageDisplay } from "@/headers/backgroundPicker/BackgroundImageDisplay";
 import { Button } from "@/components/button/Button";
 import { Dropdown } from "@/components/dropdown/Dropdown";
-import { objectFitArgs } from "@/@types/background";
+import { TObjectFitArgs } from "@/@types/background";
 import { Tips } from "@/components/tips/Tips";
 import Styles from "./BackgroundPicker.module.scss";
 import { useAtom } from "jotai";
@@ -86,10 +86,10 @@ const BackgroundPicker = () => {
 
   const drawModeOnChange = useCallback(
     (value: string) => {
-      background.mode = value as objectFitArgs;
+      background.mode = value as TObjectFitArgs;
       setBackground({ ...background });
     },
-    [background],
+    [background]
   );
 
   const onColorInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -100,7 +100,7 @@ const BackgroundPicker = () => {
   const onColorTextInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(
       e.target.value,
-      e.target.value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i),
+      e.target.value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)
     );
     setColorInputTextValue(e.target.value);
     if (e.target.value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)) {

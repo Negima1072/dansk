@@ -7,16 +7,16 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import Styles from "./Crop.module.scss";
-import { cropKey, cropRange } from "@/@types/background";
+import { TCropKey, TCropRange } from "@/@types/background";
 
 type props = {
-  update: (range: cropRange) => void;
-  range: cropRange;
+  update: (range: TCropRange) => void;
+  range: TCropRange;
 };
 
-type moveTarget = cropKey | "move";
+type moveTarget = TCropKey | "move";
 
-const CropDisplay = styled.div.attrs<cropRange>((p) => ({
+const CropDisplay = styled.div.attrs<TCropRange>((p) => ({
   style: {
     left: `${Math.min(p._pos1X, p._pos2X) * 100}%`,
     top: `${Math.min(p._pos1Y, p._pos2Y) * 100}%`,
@@ -27,7 +27,7 @@ const CropDisplay = styled.div.attrs<cropRange>((p) => ({
 
 const getPosition = (
   e: MouseEvent<HTMLElement>,
-  wrapper: RefObject<HTMLDivElement>,
+  wrapper: RefObject<HTMLDivElement>
 ) => {
   const x =
       (e.clientX - (wrapper.current?.getBoundingClientRect().left || 0)) /
@@ -40,7 +40,7 @@ const getPosition = (
 
 const getMovement = (
   e: MouseEvent<HTMLElement>,
-  wrapper: RefObject<HTMLDivElement>,
+  wrapper: RefObject<HTMLDivElement>
 ) => {
   const x = e.movementX / (wrapper.current?.clientWidth || 1),
     y = e.movementY / (wrapper.current?.clientHeight || 1);
@@ -91,7 +91,7 @@ const handles = [
 ];
 
 const Crop = ({ update, range }: props) => {
-  const [cropRange, setCropRange] = useState<cropRange>(range);
+  const [cropRange, setCropRange] = useState<TCropRange>(range);
   const [moveTarget, setMoveTarget] = useState<(moveTarget | "init")[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -128,7 +128,7 @@ const Crop = ({ update, range }: props) => {
       return;
     }
     const { x, y } = getPosition(e, wrapperRef);
-    (["_pos1X", "_pos1Y", "_pos2X", "_pos2Y"] as cropKey[]).forEach((key) => {
+    (["_pos1X", "_pos1Y", "_pos2X", "_pos2Y"] as TCropKey[]).forEach((key) => {
       if (moveTarget.includes(key)) {
         cropRange[key] = key.includes("X") ? x : y;
       }

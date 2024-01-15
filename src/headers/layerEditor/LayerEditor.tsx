@@ -31,10 +31,10 @@ const LayerEditor = () => {
               value.pos = target;
             }
             return value;
-          }),
+          })
         );
       },
-      [layerData],
+      [layerData]
     ),
     changeFont = useCallback(
       (target: string) => {
@@ -45,10 +45,10 @@ const LayerEditor = () => {
               value.font = target;
             }
             return value;
-          }),
+          })
         );
       },
-      [layerData],
+      [layerData]
     ),
     changeColor = useCallback(
       (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,10 +58,10 @@ const LayerEditor = () => {
               value.color = e.target.value;
             }
             return value;
-          }),
+          })
         );
       },
-      [layerData],
+      [layerData]
     ),
     move = useCallback(
       (target: string) => {
@@ -82,7 +82,7 @@ const LayerEditor = () => {
         }
         setLayerData([...layerData]);
       },
-      [layerData],
+      [layerData]
     );
   return (
     <div className={Styles.table}>

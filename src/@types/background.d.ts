@@ -1,30 +1,30 @@
-export type objectFitArgs =
+export type TObjectFitArgs =
   | "contain"
   | "cover"
   | "fill"
   | "none"
   | "scale-down";
 
-export type background = {
+export type TBackground = {
   selected: number;
-  images: backgroundImage[];
+  images: TBackgroundImage[];
   open: boolean;
-  mode: objectFitArgs;
+  mode: TObjectFitArgs;
   visible: boolean;
   transparency: number;
 };
 
-export type backgroundImage = {
+export type TBackgroundImage = {
   id: string;
   url: string;
   crop?: {
     original: string;
-    range: cropRange;
+    range: TCropRange;
   };
 };
 
-export type cropRange = {
-  [key in cropKey]: number;
+export type TCropRange = {
+  [key in TCropKey]: number;
 };
 
-export type cropKey = "_pos1X" | "_pos2X" | "_pos1Y" | "_pos2Y";
+export type TCropKey = "_pos1X" | "_pos2X" | "_pos1Y" | "_pos2Y";

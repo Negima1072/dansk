@@ -1,11 +1,11 @@
 ﻿import { Storage } from "@/libraries/localStorage";
 import { convertText } from "@/libraries/convert";
-import { convertFormat } from "@/@types/types";
+import { TConvertFormat } from "@/@types/types";
 
 window.addEventListener("load", () => {
   const beforeTextArea = document.getElementById("before") as HTMLInputElement,
     beforeOptions = document.getElementById(
-      "before_select",
+      "before_select"
     ) as HTMLSelectElement,
     afterTextArea = document.getElementById("after") as HTMLInputElement,
     afterOptions = document.getElementById("after_select") as HTMLSelectElement,
@@ -58,18 +58,18 @@ window.addEventListener("load", () => {
 
   replaceButton.onclick = () => {
     afterTextArea.value = convertText(
-      beforeOptions.value as convertFormat,
-      afterOptions.value as convertFormat,
-      beforeTextArea.value,
+      beforeOptions.value as TConvertFormat,
+      afterOptions.value as TConvertFormat,
+      beforeTextArea.value
     );
     save();
   };
 
   repairButton.onclick = () => {
     beforeTextArea.value = convertText(
-      afterOptions.value as convertFormat,
-      beforeOptions.value as convertFormat,
-      afterTextArea.value,
+      afterOptions.value as TConvertFormat,
+      beforeOptions.value as TConvertFormat,
+      afterTextArea.value
     );
     save();
   };

@@ -17,7 +17,7 @@ const Footer = (): JSX.Element => {
       <CommandBox />
       <OutputBox />
     </>,
-    elements.FooterElement,
+    elements.FooterElement
   );
 };
 export { Footer };

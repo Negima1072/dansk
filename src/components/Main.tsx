@@ -15,7 +15,7 @@ const Main = (): JSX.Element => {
     <>
       <VideoController />
     </>,
-    elements.MainElement,
+    elements.MainElement
   );
 };
 export { Main };

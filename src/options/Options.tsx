@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { defaultValue } from "@/libraries/localStorage.defaultValue";
-import { localStorageKeys, localStorageOptionItem } from "@/@types/types";
+import { TLocalStorageKeys, TLocalStorageOptionItem } from "@/@types/types";
 import { Storage } from "@/libraries/localStorage";
 import Styles from "./Options.module.scss";
 
 const Options = () => {
   const [value, setValue] = useState(
-      (Object.keys(defaultValue) as localStorageKeys[]).reduce(
-        (pv, key) => {
-          if (!key.match(/^options_/)) return pv;
-          pv[key] = Storage.get(key);
-          return pv;
-        },
-        {} as { [key in localStorageKeys]: string },
-      ),
+      (Object.keys(defaultValue) as TLocalStorageKeys[]).reduce((pv, key) => {
+        if (!key.match(/^options_/)) return pv;
+        pv[key] = Storage.get(key);
+        return pv;
+      }, {} as { [key in TLocalStorageKeys]: string })
     ),
-    updateValue = (key: localStorageKeys, result: string) => {
+    updateValue = (key: TLocalStorageKeys, result: string) => {
       //この処理は新機能追加による暫定的な処置です
       if (
         key === "options_exportLayerName" &&
@@ -28,7 +25,7 @@ const Options = () => {
       }
       if (key === "options_disable184") {
         const postBtn = document.querySelector(
-          ".CommentPostButton",
+          ".CommentPostButton"
         ) as HTMLButtonElement;
         if (postBtn) {
           postBtn.style.backgroundColor =
@@ -41,8 +38,8 @@ const Options = () => {
     };
   return (
     <div className={Styles.wrapper}>
-      {(Object.keys(value) as localStorageKeys[]).map((key) => {
-        const defValue = defaultValue[key] as localStorageOptionItem;
+      {(Object.keys(value) as TLocalStorageKeys[]).map((key) => {
+        const defValue = defaultValue[key] as TLocalStorageOptionItem;
         if (defValue.required && Storage.get(defValue.required) !== "true")
           return <div key={key}></div>;
         switch (defValue.type) {
