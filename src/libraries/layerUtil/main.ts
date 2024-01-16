@@ -7,8 +7,8 @@ import {
   TMeasuredLayerLine,
 } from "@/@types/layer";
 import { preProcess } from "./preProcess";
-import { rebuildSpace } from "@/headers/layerUtil/utils";
-import { command2str } from "@/headers/layerUtil/command";
+import { rebuildSpace } from "@/libraries/layerUtil/utils";
+import { command2str } from "@/libraries/layerUtil/command";
 
 export const layers2string = (
   _layers: TLayer[],

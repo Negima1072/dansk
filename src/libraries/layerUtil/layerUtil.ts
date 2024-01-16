@@ -2,7 +2,7 @@ import { TCommentFont, TCommentPos } from "@/@types/types";
 import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
 import { Storage } from "@/libraries/localStorage";
 import { Templates } from "@/headers/Trace.templates";
-import { layers2string } from "@/headers/layerUtil/main";
+import { layers2string } from "@/libraries/layerUtil/main";
 
 /**
  * layer関係の処理をする関数集

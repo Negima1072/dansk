@@ -1,11 +1,11 @@
 import { TLayer, TLayerExportOptions, TMeasuredLayer } from "@/@types/layer";
 import { TCommentFont, TMonoChar } from "@/@types/types";
-import { CharList } from "@/headers/layerUtil/layerUtil.charList";
+import { CharList } from "@/libraries/layerUtil/layerUtil.charList";
 import { typeGuard } from "@/libraries/typeGuard";
 import {
   rebuildSpace,
   rebuildSpaceWithCompat,
-} from "@/headers/layerUtil/utils";
+} from "@/libraries/layerUtil/utils";
 
 export const preProcess = (
   layers: TLayer[],
