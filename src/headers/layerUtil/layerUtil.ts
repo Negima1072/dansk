@@ -4,6 +4,7 @@ import type {
   TLayerComment,
   TLayerCommentWidth,
   TLayerTemplate,
+  TLayerWidth,
 } from "@/@types/layer";
 import { Storage } from "@/libraries/localStorage";
 import { Templates } from "@/headers/Trace.templates";
@@ -440,7 +441,7 @@ const comment2str = (
   /** 削除可能な空白(px) */
   let removableSpace = 0;
   /** 各コメントの横幅(px) */
-  const layerWidth = layer.content.map((layerComment) => {
+  const layerWidth: TLayerWidth = layer.content.map((layerComment) => {
     const commentWidth: TLayerCommentWidth = [];
     layerComment.content.forEach((line, index) => {
       const { width, leftSpaceWidth } = getCommentWidth(line, layer.font);
@@ -535,6 +536,7 @@ const comment2str = (
       if (isAdded) continue;
       //どのコメントにも足せなかった場合
       commentLine = addTrailingSpace(commentLine, width - lineWidth.width);
+      console.log(JSON.stringify([commentLine]), width, lineWidth.width);
       if (layer.drWidth) commentLine = addDRSpace(commentLine, layer.drWidth);
       if (replaceTab) commentLine = space2tab(commentLine);
       let template: string[] = comment.map((_, index, array) =>

@@ -66,6 +66,36 @@ export type TLayerComment = {
   content: string[];
 };
 
+export type TMeasuredLayer = Omit<TLayer, "content"> & {
+  width: number;
+  templateWidth: number;
+  content: TMeasuredLayerComment[];
+};
+
+export type TMeasuredLayerComment = Omit<TLayerComment, "content"> & {
+  width: number;
+  content: TMeasuredLayerLine[];
+};
+
+export type TMeasuredLayerLine = {
+  width: number;
+  leftSpaceWidth: number;
+  content: string;
+  index: number;
+};
+
+export type TLayerExportOptions = {
+  monospaced: boolean;
+  useTab: boolean;
+  owner: boolean;
+  disableSpaceOptimization: boolean;
+};
+
+export type TLayerExportResultItem = {
+  content: string[];
+  count: number;
+};
+
 export type TLayerLineWidth = {
   width: number;
   leftSpaceWidth: number;
