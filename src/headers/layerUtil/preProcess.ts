@@ -122,7 +122,9 @@ const preProcessSpace = (layers: TLayer[]) => {
     ...layer,
     content: layer.content.map((comment) => ({
       ...comment,
-      content: comment.content.map((line) => rebuildSpaceWithCompat(line)),
+      content: comment.content.map((line) =>
+        rebuildSpaceWithCompat(line).replace(/\s*$/g, ""),
+      ),
     })),
   }));
 };
