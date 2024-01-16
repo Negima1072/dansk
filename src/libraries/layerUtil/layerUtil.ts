@@ -3,6 +3,7 @@ import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
 import { Storage } from "@/libraries/localStorage";
 import { Templates } from "@/headers/Trace.templates";
 import { layers2string } from "@/libraries/layerUtil/main";
+import { OverflowError } from "@/libraries/layerUtil/OverflowError";
 
 /**
  * layer関係の処理をする関数集
@@ -99,13 +100,23 @@ const layerUtil = {
     replaceTab: boolean = false,
     ownerMode: boolean = false,
   ): { command: string; content: string[] }[] | undefined => {
-    return layers2string(layerData, {
-      monospaced,
-      useTab: replaceTab,
-      owner: ownerMode,
-      disableSpaceOptimization:
-        Storage.get("options_disableSpaceOptimization") === "true",
-    });
+    try {
+      return layers2string(layerData, {
+        monospaced,
+        useTab: replaceTab,
+        owner: ownerMode,
+        disableSpaceOptimization:
+          Storage.get("options_disableSpaceOptimization") === "true",
+      });
+    } catch (e) {
+      if (e instanceof OverflowError) {
+        alert(
+          `コメントの書き出しに失敗しました\nコメントの長さが${e.limit}文字を超えています\n${e.count}文字\nレイヤー名: ${e.layer.id}`,
+        );
+      }
+      alert("コメントの書き出しに失敗しました");
+      return undefined;
+    }
   },
 };
 

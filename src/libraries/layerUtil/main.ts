@@ -9,6 +9,7 @@ import {
 import { preProcess } from "./preProcess";
 import { rebuildSpace } from "@/libraries/layerUtil/utils";
 import { command2str } from "@/libraries/layerUtil/command";
+import { OverflowError } from "@/libraries/layerUtil/OverflowError";
 
 export const layers2string = (
   _layers: TLayer[],
@@ -102,9 +103,10 @@ const appendLine = (
   template[line.index] = content;
   if (template[template.length - 1] === "")
     template[template.length - 1] = "\uA001";
-  if (template.join("\n").length > commentMaxLength) {
+  const currentLenght = template.join("\n").length;
+  if (currentLenght > commentMaxLength) {
     console.log(template.join("\n"), template.join("\n").length);
-    throw new Error(`comment length is larger than ${commentMaxLength}`);
+    throw new OverflowError(commentMaxLength, currentLenght, layer);
   }
   if (template.join("\n") === "") {
     template[0] = "\uA001";
