@@ -78,6 +78,7 @@ export type TLocalStorageKeys =
   | "options_addDatetimeToFilename"
   | "options_disable184"
   | "options_enableColorCode"
+  | "options_disableSpaceOptimization"
   | "display_trace"
   | "display_memo"
   | "display_time"

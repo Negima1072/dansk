@@ -105,6 +105,12 @@ const defaultValue: TLocalStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
   },
+  options_disableSpaceOptimization: {
+    defaultValue: "false",
+    description: "スペースの最適化を無効化",
+    dangerous: false,
+    type: "boolean",
+  },
   display_trace: {
     defaultValue: "true",
   },
