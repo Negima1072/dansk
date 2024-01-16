@@ -6,7 +6,7 @@ import {
   TMeasuredLayerComment,
   TMeasuredLayerLine,
 } from "@/@types/layer";
-import { postProcess } from "./postProcess";
+import { preProcess } from "./preProcess";
 import { rebuildSpace } from "@/headers/layerUtil/utils";
 import { command2str } from "@/headers/layerUtil/command";
 
@@ -14,7 +14,7 @@ export const layers2string = (
   _layers: TLayer[],
   options: TLayerExportOptions,
 ) => {
-  const layers = postProcess(_layers, options);
+  const layers = preProcess(_layers, options);
   return layers.reduce<{ content: string[]; command: string }[]>(
     (pv, layer) => pv.concat(layer2string(layer, options)),
     [],

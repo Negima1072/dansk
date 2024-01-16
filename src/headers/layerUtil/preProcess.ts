@@ -7,7 +7,7 @@ import {
   rebuildSpaceWithCompat,
 } from "@/headers/layerUtil/utils";
 
-export const postProcess = (
+export const preProcess = (
   layers: TLayer[],
   options: TLayerExportOptions,
 ): TMeasuredLayer[] => {
