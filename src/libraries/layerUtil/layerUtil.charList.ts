@@ -10,7 +10,7 @@ import { TCharList } from "@/@types/types";
  * 同じ幅の文字が他にない場合はキーを文字にすることで処理時間を短縮できる
  */
 const CharList: TCharList = {
-  "\u2003": {
+  "[\u2003\u2001\u3000]": {
     width: 12,
     isSpace: true,
   },
