@@ -1,6 +1,6 @@
-import { localStorageDefaultValues } from "@/@types/types";
+import type { TLocalStorageDefaultValues } from "@/@types/types";
 
-const defaultValue: localStorageDefaultValues = {
+const defaultValue: TLocalStorageDefaultValues = {
   options_autoSave_span: {
     defaultValue: "5",
     description: "自動保存の間隔(分) / 0で無効 / 反映には再読み込みが必要",
@@ -102,6 +102,12 @@ const defaultValue: localStorageDefaultValues = {
   options_enableColorCode: {
     defaultValue: "false",
     description: "非プレ垢のカラーコードを有効化",
+    dangerous: false,
+    type: "boolean",
+  },
+  options_disableSpaceOptimization: {
+    defaultValue: "false",
+    description: "スペースの最適化を無効化",
     dangerous: false,
     type: "boolean",
   },

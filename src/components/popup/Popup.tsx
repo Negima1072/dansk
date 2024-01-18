@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import Styles from "./Popup.module.scss";
 import { icons } from "@/assets/icons";
 

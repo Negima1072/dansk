@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { Layer } from "@/layer/layer/Layer";
-import Styles from "./LayerContainer.module.scss";
-import { objectFitArgs } from "@/@types/background";
-import ReactDOM from "react-dom";
-import { Preview } from "@/layer/Preview/Preview";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
+import styled from "styled-components";
+
+import type { TObjectFitArgs } from "@/@types/background";
 import { backgroundAtom, elementAtom, layerAtom, optionAtom } from "@/atoms";
+import { Layer } from "@/layer/layer/Layer";
+import { Preview } from "@/layer/Preview/Preview";
+
+import Styles from "./LayerContainer.module.scss";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
@@ -15,7 +18,7 @@ const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   left: 0;
 `;
 
-const BackgroundImage = styled.img<{ mode: objectFitArgs; opacity: number }>`
+const BackgroundImage = styled.img<{ mode: TObjectFitArgs; opacity: number }>`
   object-fit: ${(props) => props.mode};
   opacity: ${(props) => props.opacity};
 `;
@@ -29,7 +32,7 @@ function beforeUnload(e: BeforeUnloadEvent) {
  * レイヤー全体を管理
  * @constructor
  */
-const LayerContainer = (): JSX.Element => {
+const LayerContainer: FC = () => {
   const [layerData] = useAtom(layerAtom);
   const [background] = useAtom(backgroundAtom);
   const [optionData] = useAtom(optionAtom);

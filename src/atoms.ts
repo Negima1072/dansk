@@ -1,10 +1,11 @@
 import { atom } from "jotai";
-import { layer } from "@/@types/layer";
-import { background } from "@/@types/background";
-import { element } from "@/@types/element";
+import { TLayer } from "@/@types/layer";
+import { TBackground } from "@/@types/background";
+import { TElement } from "@/@types/element";
+import { TOption } from "@/@types/option";
 
-export const layerAtom = atom<layer[]>([]);
-export const backgroundAtom = atom<background>({
+export const layerAtom = atom<TLayer[]>([]);
+export const backgroundAtom = atom<TBackground>({
   selected: -1,
   images: [],
   open: false,
@@ -12,10 +13,10 @@ export const backgroundAtom = atom<background>({
   visible: true,
   transparency: 100,
 });
-export const optionAtom = atom<option>({
+export const optionAtom = atom<TOption>({
   grid: false,
   replace: false,
   preview: "disable",
 });
-export const elementAtom = atom<element | undefined>(undefined);
+export const elementAtom = atom<TElement | undefined>(undefined);
 export const exportLayerAtom = atom<string[]>([]);

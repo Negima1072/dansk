@@ -1,4 +1,4 @@
-export type element = {
+export type TElement = {
   videoElement: HTMLVideoElement;
   commentCommandInput: HTMLInputElement;
   commentInputTextarea: HTMLTextAreaElement;

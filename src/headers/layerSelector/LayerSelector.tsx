@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import Styles from "./LayerSelector.module.scss";
 import { ReactSortable } from "react-sortablejs";
-import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import { layerUtil } from "@/libraries/layerUtil/layerUtil";
 import { icons } from "@/assets/icons";
 import { CssEditor } from "@/headers/layerSelector/CssEditor";
-import { layer } from "@/@types/layer";
+import { TLayer } from "@/@types/layer";
 import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 import { useAtom } from "jotai";
 import { layerAtom } from "@/atoms";
@@ -72,7 +72,7 @@ const LayerSelector = () => {
       setLayerData([...layerData]);
     },
     closeCssEditor = useCallback(
-      (data: layer) => {
+      (data: TLayer) => {
         layerData[isSetting] = data;
         setLayerData([...layerData]);
         setSetting(-1);

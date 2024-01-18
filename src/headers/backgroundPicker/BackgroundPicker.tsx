@@ -1,9 +1,9 @@
-import React, { useCallback, useState, ChangeEvent } from "react";
+import { useCallback, useState, ChangeEvent } from "react";
 import { Popup } from "@/components/popup/Popup";
 import { BackgroundImageDisplay } from "@/headers/backgroundPicker/BackgroundImageDisplay";
 import { Button } from "@/components/button/Button";
 import { Dropdown } from "@/components/dropdown/Dropdown";
-import { objectFitArgs } from "@/@types/background";
+import { TObjectFitArgs } from "@/@types/background";
 import { Tips } from "@/components/tips/Tips";
 import Styles from "./BackgroundPicker.module.scss";
 import { useAtom } from "jotai";
@@ -86,7 +86,7 @@ const BackgroundPicker = () => {
 
   const drawModeOnChange = useCallback(
     (value: string) => {
-      background.mode = value as objectFitArgs;
+      background.mode = value as TObjectFitArgs;
       setBackground({ ...background });
     },
     [background],

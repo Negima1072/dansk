@@ -1,4 +1,4 @@
-import { layer } from "@/@types/layer";
+import { TLayer } from "@/@types/layer";
 import Styles from "./layerManager.module.scss";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { caretUtil } from "@/libraries/caretUtil";
@@ -10,14 +10,14 @@ const ua = window.navigator.userAgent,
 /**
  * レイヤーとイベントハンドラの管理
  * @deprecated
- * @param data {layer}
+ * @param data {TLayer}
  * @param onChange
  * @param targetElement
  * @param replaceMode
  */
 const layerManager = (
-  data: layer,
-  onChange: (layer: layer) => void,
+  data: TLayer,
+  onChange: (layer: TLayer) => void,
   targetElement: HTMLDivElement,
   replaceMode: boolean,
 ) => {

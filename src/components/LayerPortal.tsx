@@ -1,14 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { LayerContainer } from "@/layer/LayerContainer";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import ReactDOM from "react-dom";
+
 import { elementAtom } from "@/atoms";
+import { LayerContainer } from "@/layer/LayerContainer";
 
 /**
  * レイヤーブロック(プレイヤー内)
  * @constructor
  */
-const LayerPortal = (): JSX.Element => {
+const LayerPortal: FC = () => {
   const [elements] = useAtom(elementAtom);
   if (!elements) return <></>;
   return ReactDOM.createPortal(<LayerContainer />, elements.LayerElement);

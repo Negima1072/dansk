@@ -4,23 +4,29 @@ module.exports = {
 		es6: true,
 		node: true,
 	},
-	parser: '@typescript-eslint/parser',
+	parser: "@typescript-eslint/parser",
 	parserOptions: {
-		sourceType: 'module',
-		ecmaVersion: 2019,
-		project: ['./tsconfig.eslint.json']
+		sourceType: "module",
+		ecmaVersion: "esnext",
+		tsconfigRootDir: __dirname,
+		project: ["./tsconfig.eslint.json"],
 	},
-	plugins: [
-		'@typescript-eslint',
-	],
+	ignorePatterns: ["*.js"],
+	plugins: ["@typescript-eslint", "simple-import-sort"],
 	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-		'plugin:@typescript-eslint/recommended-requiring-type-checking',
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/recommended-requiring-type-checking"
 	],
 	rules: {
 		"@typescript-eslint/restrict-template-expressions": "off",
 		"@typescript-eslint/unbound-method": "off",
+		"@typescript-eslint/consistent-type-imports": "error",
+		"@typescript-eslint/no-unused-vars": "error",
+		"no-unused-vars": "off",
 		"no-control-regex": "off",
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error",
+		"@typescript-eslint/typedef": "error"
 	},
 };

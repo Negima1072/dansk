@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import React, { ChangeEvent, useRef } from "react";
-import { GridPosBlob, layer } from "@/@types/layer";
+import { ChangeEvent, FC, useRef } from "react";
+import { TGridPosBlob, TLayer } from "@/@types/layer";
 import Styles from "./Layer.module.scss";
 import { grids } from "@/assets/grids";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
@@ -9,7 +9,7 @@ import { layerAtom, optionAtom } from "@/atoms";
 import { Storage } from "@/libraries/localStorage";
 
 type LayerProps = {
-  data: layer;
+  data: TLayer;
 };
 type LayerBoxProps = {
   top: number;
@@ -47,12 +47,12 @@ const LayerInput = styled.textarea<LayerInputProps>`
  * @param props
  * @constructor
  */
-const Layer = (props: LayerProps): JSX.Element => {
+const Layer: FC<LayerProps> = (props) => {
   const [layerData, setLayerData] = useAtom(layerAtom),
     [optionData] = useAtom(optionAtom),
     layerElement = useRef<HTMLDivElement>(null),
-    currentLayer = useRef<layer>();
-  const onchange = (layer: layer) => {
+    currentLayer = useRef<TLayer>();
+  const onchange = (layer: TLayer) => {
     if (!layerData || !setLayerData) return;
     for (let i = 0; i < layerData.length; i++) {
       if (layerData[i]?.layerId === layer.layerId) layerData[i] = layer;
@@ -88,7 +88,7 @@ const Layer = (props: LayerProps): JSX.Element => {
   const gridImage = () => {
     if (optionData?.grid && props.data.selected && props.data.visible) {
       if (grids[props.data.id] !== undefined) {
-        const grid = grids[props.data.id] as GridPosBlob;
+        const grid = grids[props.data.id] as TGridPosBlob;
         if (grid.immutable) {
           return <img src={grid.any} alt="" />;
         } else {

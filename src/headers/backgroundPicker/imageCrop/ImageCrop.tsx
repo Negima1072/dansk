@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAtom } from "jotai";
 import { backgroundAtom } from "@/atoms";
 import Styles from "./ImageCrop.module.scss";
 import { Crop } from "@/headers/backgroundPicker/imageCrop/Crop";
-import { cropRange } from "@/@types/background";
+import { TCropRange } from "@/@types/background";
 import { Button } from "@/components/button/Button";
 
 type props = {
@@ -11,7 +11,7 @@ type props = {
   close: () => void;
 };
 
-const getActualRange = (range: cropRange) => {
+const getActualRange = (range: TCropRange) => {
   return {
     x: Math.round(range._pos1X * 2560),
     y: Math.round(range._pos1Y * 1440),
@@ -23,7 +23,7 @@ const getActualRange = (range: cropRange) => {
 const ImageCrop = ({ imageId, close }: props) => {
   const [background, setBackground] = useAtom(backgroundAtom);
   const image = background.images[imageId];
-  const [range, setRange] = useState<cropRange>(
+  const [range, setRange] = useState<TCropRange>(
     image?.crop?.range || {
       _pos1X: 0.125,
       _pos1Y: 0.125,
@@ -31,7 +31,7 @@ const ImageCrop = ({ imageId, close }: props) => {
       _pos2Y: 0.875,
     },
   );
-  const updateCropRange = (range: cropRange) => {
+  const updateCropRange = (range: TCropRange) => {
     setRange(range);
   };
   const reset = () => {

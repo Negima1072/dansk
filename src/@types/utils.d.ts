@@ -1,1 +1,1 @@
-type valueOf<T> = T[keyof T];
+type TValueOf<T> = T[keyof T];

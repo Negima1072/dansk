@@ -1,23 +1,25 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import React from "react";
-import { Spoiler } from "@/components/spoiler/Spoiler";
-import Styles from "./OutputBox.module.scss";
-import { Button } from "@/components/button/Button";
-import { sleep } from "@/libraries/sleep";
-import { Storage } from "@/libraries/localStorage";
-import { CommentsDetail } from "@/footers/commentsDetail/CommentsDetail";
 import { useAtom } from "jotai";
+import type { FC } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { elementAtom, exportLayerAtom } from "@/atoms";
+import { Button } from "@/components/button/Button";
+import { Spoiler } from "@/components/spoiler/Spoiler";
+import { CommentsDetail } from "@/footers/commentsDetail/CommentsDetail";
 import {
   updateReactHTMLInput,
   updateReactHTMLTextArea,
 } from "@/libraries/elementUtil";
+import { Storage } from "@/libraries/localStorage";
+import { sleep } from "@/libraries/sleep";
+
+import Styles from "./OutputBox.module.scss";
 
 /**
  * 入出力用のテキストエリア
  * @constructor
  */
-const OutputBox = (): JSX.Element => {
+const OutputBox: FC = () => {
   const [elements] = useAtom(elementAtom),
     [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
     [textareaValue, setTextareaValue] = useState<string[]>([]),

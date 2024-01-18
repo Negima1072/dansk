@@ -1,5 +1,5 @@
 import { Storage } from "@/libraries/localStorage";
-import { commentPublishData } from "@/@types/types";
+import { TCommentPublishData } from "@/@types/types";
 import NiconiComments from "@xpadev-net/niconicomments";
 
 const injectFetch = () => {
@@ -18,7 +18,7 @@ const injectFetch = () => {
         typeof init.body === "string" &&
         Storage.get("options_disable184") === "true"
       ) {
-        const body = JSON.parse(init.body) as commentPublishData;
+        const body = JSON.parse(init.body) as TCommentPublishData;
         if (body.commands && Array.isArray(body.commands)) {
           if (body.commands.includes("184")) {
             body.commands = body.commands.filter(

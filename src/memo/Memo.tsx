@@ -1,13 +1,16 @@
-import React, { ChangeEvent, useState } from "react";
+import type { ChangeEvent, FC } from "react";
+import { useState } from "react";
+
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { Storage } from "@/libraries/localStorage";
+
 import Styles from "./Memo.module.scss";
 
 /**
  * メモブロック(プレイヤー内)
  * @constructor
  */
-const Memo = (): JSX.Element => {
+const Memo: FC = () => {
   const [value, setValue] = useState<string>(Storage.get("memo"));
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setValue(e.target.value);

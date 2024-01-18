@@ -1,4 +1,3 @@
-import React from "react";
 import Styles from "./Button.module.scss";
 import styled from "styled-components";
 

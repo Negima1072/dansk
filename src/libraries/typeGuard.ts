@@ -1,15 +1,14 @@
-import {
-  autoSave,
-  commentFont,
-  commentPos,
-  localStorageKeys,
-  MonoChar,
-  ownerComment,
-  contextType,
-  ProChar,
+import type { TLayer, TLayerTemplate } from "@/@types/layer";
+import type {
+  TAutoSave,
+  TCommentFont,
+  TCommentPos,
+  TContextType,
+  TLocalStorageKeys,
+  TMonoChar,
+  TOwnerComment,
+  TProChar,
 } from "@/@types/types";
-
-import type { layer, layerTemplate } from "@/@types/layer";
 
 /**
  * typeGuard
@@ -18,9 +17,9 @@ import type { layer, layerTemplate } from "@/@types/layer";
  */
 const typeGuard = {
   owner: {
-    comment: (i: unknown): i is ownerComment =>
+    comment: (i: unknown): i is TOwnerComment =>
       typeVerify(i, ["time", "command", "comment"]),
-    comments: (i: unknown): i is ownerComment[] => {
+    comments: (i: unknown): i is TOwnerComment[] => {
       if (!Array.isArray(i)) return false;
       for (const item of i) {
         if (!typeGuard.owner.comment(item)) return false;
@@ -29,12 +28,12 @@ const typeGuard = {
     },
   },
   context: {
-    props: (i: unknown): i is contextType =>
+    props: (i: unknown): i is TContextType =>
       !!(
         i !== null &&
-        typeGuard.context.videoElement((i as contextType).videoElement) &&
+        typeGuard.context.videoElement((i as TContextType).videoElement) &&
         typeGuard.context.commentCommandInput(
-          (i as contextType).commentCommandInput,
+          (i as TContextType).commentCommandInput,
         )
       ),
     videoElement: (i: unknown): i is HTMLVideoElement =>
@@ -53,7 +52,7 @@ const typeGuard = {
       (i as HTMLTextAreaElement).classList.contains("CommentInput-textarea"),
   },
   trace: {
-    template: (i: unknown): i is layerTemplate =>
+    template: (i: unknown): i is TLayerTemplate =>
       typeVerify(i, [
         "id",
         "commands",
@@ -69,26 +68,26 @@ const typeGuard = {
         "scale",
         "size",
       ]),
-    commentPos: (i: unknown): i is commentPos =>
+    commentPos: (i: unknown): i is TCommentPos =>
       typeof i === "string" && !!i.match(/^ue|naka|shita$/),
-    commentFont: (i: unknown): i is commentFont =>
+    commentFont: (i: unknown): i is TCommentFont =>
       typeof i === "string" && !!i.match(/^mincho|gothic$/),
   },
   layer: {
-    isMonoChar: (i: unknown): i is MonoChar =>
+    isMonoChar: (i: unknown): i is TMonoChar =>
       typeVerify(i, ["width", "isSpace"]) &&
-      typeof (i as MonoChar | ProChar).width === "number",
-    isProChar: (i: unknown): i is ProChar =>
+      typeof (i as TMonoChar | TProChar).width === "number",
+    isProChar: (i: unknown): i is TProChar =>
       typeVerify(i, ["width", "isSpace"]) &&
-      typeVerify((i as MonoChar | ProChar).width, ["mincho", "gothic"]),
-    isLayers: (i: unknown): i is layer[] => {
+      typeVerify((i as TMonoChar | TProChar).width, ["mincho", "gothic"]),
+    isLayers: (i: unknown): i is TLayer[] => {
       if (!Array.isArray(i)) return false;
       for (const item of i) {
         if (!typeGuard.layer.isLayer(item)) return false;
       }
       return true;
     },
-    isLayer: (i: unknown): i is layer =>
+    isLayer: (i: unknown): i is TLayer =>
       typeVerify(i, [
         "id",
         "commands",
@@ -111,17 +110,17 @@ const typeGuard = {
       i instanceof Element && i.nodeName === "DIV",
   },
   localStorage: {
-    isKey: (i: unknown): i is localStorageKeys =>
+    isKey: (i: unknown): i is TLocalStorageKeys =>
       typeof i === "string" &&
       !!i.match(
         /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/,
       ),
-    isAutoSave: (i: unknown): i is autoSave[] => {
+    isAutoSave: (i: unknown): i is TAutoSave[] => {
       if (!Array.isArray(i)) return false;
       for (const item of i) {
         if (
           !typeVerify(item, ["data", "timestamp"]) ||
-          !typeGuard.layer.isLayers((item as autoSave)?.data)
+          !typeGuard.layer.isLayers((item as TAutoSave)?.data)
         )
           return false;
       }

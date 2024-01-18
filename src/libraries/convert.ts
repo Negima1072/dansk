@@ -1,5 +1,5 @@
+import type { TConvertFormat } from "@/@types/types";
 import { typeGuard } from "@/libraries/typeGuard";
-import { convertFormat } from "@/@types/types";
 
 /**
  * inputFormat型のinputをoutputFormat型に変換して返す
@@ -8,8 +8,8 @@ import { convertFormat } from "@/@types/types";
  * @param input
  */
 const convertText = (
-  inputFormat: convertFormat,
-  outputFormat: convertFormat,
+  inputFormat: TConvertFormat,
+  outputFormat: TConvertFormat,
   input: string,
 ) => {
   if (inputFormat == outputFormat) return input;

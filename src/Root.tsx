@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Footer } from "@/components/Footer";
 import { getElements } from "@/libraries/getElements";
@@ -16,7 +16,7 @@ import { injectFetch } from "@/fetch";
  * Reactのルート要素
  * @constructor
  */
-const Root = (): JSX.Element => {
+const Root: FC = () => {
   const setElements = useSetAtom(elementAtom);
   useEffect(() => {
     const init = async () => setElements(await getElements());

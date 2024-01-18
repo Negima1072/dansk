@@ -1,30 +1,32 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Spoiler } from "@/components/spoiler/Spoiler";
-import Styles from "./Trace.module.scss";
-import { Button } from "@/components/button/Button";
-import { Dropdown } from "@/components/dropdown/Dropdown";
-import { Templates } from "@/headers/Trace.templates";
-import { layer } from "@/@types/layer";
-import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
-import { layerUtil } from "@/headers/layerUtil/layerUtil";
-import { typeGuard } from "@/libraries/typeGuard";
-import { LayerPortal } from "@/components/LayerPortal";
-import { BackgroundPicker } from "@/headers/backgroundPicker/BackgroundPicker";
-import { LayerEditor } from "@/headers/layerEditor/LayerEditor";
-import { Options } from "@/options/Options";
-import { Popup } from "@/components/popup/Popup";
-import { Storage } from "@/libraries/localStorage";
-import { Backup } from "@/headers/backup/Backup";
-import { uuid } from "@/libraries/uuidUtil";
-import { Slider } from "@/components/slider/Slider";
 import { useAtom } from "jotai";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import type { TLayer } from "@/@types/layer";
 import {
   backgroundAtom,
   exportLayerAtom,
   layerAtom,
   optionAtom,
 } from "@/atoms";
+import { Button } from "@/components/button/Button";
+import { Dropdown } from "@/components/dropdown/Dropdown";
+import { LayerPortal } from "@/components/LayerPortal";
+import { Popup } from "@/components/popup/Popup";
+import { Slider } from "@/components/slider/Slider";
+import { Spoiler } from "@/components/spoiler/Spoiler";
+import { BackgroundPicker } from "@/headers/backgroundPicker/BackgroundPicker";
+import { Backup } from "@/headers/backup/Backup";
+import { LayerEditor } from "@/headers/layerEditor/LayerEditor";
+import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
+import { Templates } from "@/headers/Trace.templates";
 import { domo2dansa } from "@/libraries/domoTool";
+import { layerUtil } from "@/libraries/layerUtil/layerUtil";
+import { Storage } from "@/libraries/localStorage";
+import { typeGuard } from "@/libraries/typeGuard";
+import { uuid } from "@/libraries/uuidUtil";
+import { Options } from "@/options/Options";
+
+import Styles from "./Trace.module.scss";
 
 /**
  * Traceブロック
@@ -79,7 +81,7 @@ const Trace = () => {
           isMonospaced = !!value.match(/Monospaced/),
           isOwner = !!value.match(/Owner/),
           isSelectedOnly = !!value.match(/Selected/);
-        let targetData: layer[] = [];
+        let targetData: TLayer[] = [];
         for (const layer of layerData) {
           if (isSelectedOnly && !layer.selected) continue;
           targetData.push({

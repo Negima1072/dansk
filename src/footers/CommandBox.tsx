@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Spoiler } from "@/components/spoiler/Spoiler";
-import Styles from "./CommandBox.module.scss";
-import { Button } from "@/components/button/Button";
-
-import { Commands } from "./CommandBox.Commands";
 import { useAtom } from "jotai";
+import { useCallback, useEffect, useState } from "react";
+
 import { elementAtom } from "@/atoms";
+import { Button } from "@/components/button/Button";
+import { Spoiler } from "@/components/spoiler/Spoiler";
 import {
   updateReactHTMLInput,
   updateReactHTMLTextArea,
 } from "@/libraries/elementUtil";
+
+import { Commands } from "./CommandBox.Commands";
+import Styles from "./CommandBox.module.scss";
 
 /**
  * コマンドパレット

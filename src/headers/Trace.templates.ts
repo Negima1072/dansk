@@ -1,6 +1,6 @@
-import { layerTemplates } from "@/@types/types";
+import type { TLayerTemplates } from "@/@types/types";
 
-const Templates: layerTemplates = {
+const Templates: TLayerTemplates = {
   be9: {
     id: "be9",
     commands: ["big", "ender", "full"],

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Styles from "./Preview.module.scss";
-import NiconiComments from "@xpadev-net/niconicomments";
-import { layerUtil } from "@/headers/layerUtil/layerUtil";
+import NiconiComments, { FormattedComment } from "@xpadev-net/niconicomments";
+import { layerUtil } from "@/libraries/layerUtil/layerUtil";
 import { useAtom } from "jotai";
 import { layerAtom } from "@/atoms";
 
@@ -32,7 +32,7 @@ const Preview = () => {
       });
     const dansk = layerUtil.toString(target, false, false, true);
     if (!dansk) return;
-    const formatted: formattedComment[] = [];
+    const formatted: FormattedComment[] = [];
     dansk.forEach((string, index) => {
       for (const line of string.content) {
         formatted.push({
@@ -50,6 +50,7 @@ const Preview = () => {
           premium: true,
           mail: string.command.slice(1, -1).split(/\s/),
           user_id: 0,
+          is_my_post: false,
         });
       }
     });

@@ -1,4 +1,4 @@
-import { commandList } from "@/@types/types";
+import type { TCommandList } from "@/@types/types";
 
 /**
  * Mainブロックのコマンドの並びを指定
@@ -8,7 +8,7 @@ import { commandList } from "@/@types/types";
  * value: 適用されるコマンド dansk:で始まるものはだんすく側で処理する
  * group: 重複できないコマンドごとのグループ
  */
-const Commands: commandList = [
+const Commands: TCommandList = [
   [
     [
       {

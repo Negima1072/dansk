@@ -1,7 +1,9 @@
-import { layer, layerComment, layerTemplate } from "@/@types/layer";
-import { uuid } from "./uuidUtil";
-import { Templates } from "@/headers/Trace.templates";
 import NiconiComments from "@xpadev-net/niconicomments";
+
+import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
+import { Templates } from "@/headers/Trace.templates";
+
+import { uuid } from "./uuidUtil";
 
 const mode2type = {
   Big9: "be9",
@@ -20,7 +22,9 @@ const mode2type = {
 
 const getTemplateByDomoMode = (
   mode: string,
-): { template: layerTemplate; type: valueOf<typeof mode2type> } | undefined => {
+):
+  | { template: TLayerTemplate; type: TValueOf<typeof mode2type> }
+  | undefined => {
   if (
     !((i: string): i is keyof typeof mode2type =>
       Object.hasOwnProperty.call(mode2type, i))(mode)
@@ -52,7 +56,7 @@ const domoColor2code = (color: Element): string => {
 const domoLines2content = (
   lines: Element[],
   width: number,
-  template: layerTemplate,
+  template: TLayerTemplate,
 ): string[] => {
   if (lines.length === 0) {
     return Array(template.height).fill("") as string[];
@@ -82,11 +86,11 @@ const domoLines2content = (
  * どーもさんツールのXMLからダンスクJSONに変換する
  * @pram xml どーもさんツールのXML(string)
  */
-const domo2dansa = (xml: string): layer[] => {
+const domo2dansa = (xml: string): TLayer[] => {
   const parser = new DOMParser();
   const xmlData = parser.parseFromString(xml, "application/xml");
   const comments = Array.from(xmlData.getElementsByTagName("DataCommentItem"));
-  const layers: layer[] = [];
+  const layers: TLayer[] = [];
   for (const comment of comments) {
     const result = getTemplateByDomoMode(
       comment.getElementsByTagName("Mode")[0]?.textContent ?? "",
@@ -111,13 +115,13 @@ const domo2dansa = (xml: string): layer[] => {
       !width
     )
       continue;
-    const content: layerComment = {
+    const content: TLayerComment = {
       font: templateCommentSize.font,
       line: templateCommentSize.line,
       lineCount: templateCommentSize.lineCount,
       content: domoLines2content(lines, width, template),
     };
-    const _layer: layer = {
+    const _layer: TLayer = {
       ...template,
       type: type,
       font: "gothic",

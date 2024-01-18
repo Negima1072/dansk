@@ -1,5 +1,5 @@
 import Styles from "./ColorPicker.module.scss";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 type props = {

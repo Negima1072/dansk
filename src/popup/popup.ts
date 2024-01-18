@@ -1,6 +1,6 @@
-﻿import { Storage } from "@/libraries/localStorage";
+﻿import type { TConvertFormat } from "@/@types/types";
 import { convertText } from "@/libraries/convert";
-import { convertFormat } from "@/@types/types";
+import { Storage } from "@/libraries/localStorage";
 
 window.addEventListener("load", () => {
   const beforeTextArea = document.getElementById("before") as HTMLInputElement,
@@ -58,8 +58,8 @@ window.addEventListener("load", () => {
 
   replaceButton.onclick = () => {
     afterTextArea.value = convertText(
-      beforeOptions.value as convertFormat,
-      afterOptions.value as convertFormat,
+      beforeOptions.value as TConvertFormat,
+      afterOptions.value as TConvertFormat,
       beforeTextArea.value,
     );
     save();
@@ -67,8 +67,8 @@ window.addEventListener("load", () => {
 
   repairButton.onclick = () => {
     beforeTextArea.value = convertText(
-      afterOptions.value as convertFormat,
-      beforeOptions.value as convertFormat,
+      afterOptions.value as TConvertFormat,
+      beforeOptions.value as TConvertFormat,
       afterTextArea.value,
     );
     save();

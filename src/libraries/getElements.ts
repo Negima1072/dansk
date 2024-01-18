@@ -1,11 +1,11 @@
+import type { TElement } from "@/@types/element";
 import { sleep } from "@/libraries/sleep";
-import { element } from "@/@types/element";
 
 /**
  * reactマウント用の親要素を取得する
  * @param count {number} リトライ回数
  */
-const getElements = async (count = 0): Promise<element> => {
+const getElements = async (count = 0): Promise<TElement> => {
   const videoElement = (
       document.getElementById("MainVideoPlayer") as HTMLDivElement
     )?.getElementsByTagName("video")[0] as HTMLVideoElement,
