@@ -103,9 +103,9 @@ const appendLine = (
   template[line.index] = content;
   if (template[template.length - 1] === "")
     template[template.length - 1] = "\uA001";
-  const currentLenght = template.join("\n").length;
-  if (currentLenght > commentMaxLength) {
-    throw new OverflowError(commentMaxLength, currentLenght, layer);
+  const currentLength = template.join("\n").length;
+  if (currentLength > commentMaxLength) {
+    throw new OverflowError(commentMaxLength, currentLength, layer);
   }
   if (template.join("\n") === "") {
     template[0] = "\uA001";
