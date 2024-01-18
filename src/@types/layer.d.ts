@@ -67,13 +67,14 @@ export type TLayerComment = {
 };
 
 export type TMeasuredLayer = Omit<TLayer, "content"> & {
-  width: number;
+  measuredWidth: number;
   templateWidth: number;
   content: TMeasuredLayerComment[];
 };
 
 export type TMeasuredLayerComment = Omit<TLayerComment, "content"> & {
   width: number;
+  targetWidth: number;
   content: TMeasuredLayerLine[];
 };
 

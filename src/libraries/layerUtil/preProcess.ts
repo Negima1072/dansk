@@ -1,4 +1,11 @@
-import { TLayer, TLayerExportOptions, TMeasuredLayer } from "@/@types/layer";
+import {
+  TLayer,
+  TLayerComment,
+  TLayerExportOptions,
+  TMeasuredLayer,
+  TMeasuredLayerComment,
+  TMeasuredLayerLine,
+} from "@/@types/layer";
 import { TCommentFont, TMonoChar } from "@/@types/types";
 import { CharList } from "@/libraries/layerUtil/layerUtil.charList";
 import { typeGuard } from "@/libraries/typeGuard";
@@ -117,7 +124,7 @@ const removeLeadingSpace = (input: string, width: number) => {
   }
   return rebuildSpace(input);
 };
-const preProcessSpace = (layers: TLayer[]) => {
+const preProcessSpace = (layers: TLayer[]): TLayer[] => {
   return layers.map((layer) => ({
     ...layer,
     content: layer.content.map((comment) => ({
@@ -128,37 +135,62 @@ const preProcessSpace = (layers: TLayer[]) => {
     })),
   }));
 };
-const measureLayers = (layers: TLayer[]): TMeasuredLayer[] => {
+const measureLayers = (
+  layers: (TLayer | TMeasuredLayer)[],
+): TMeasuredLayer[] => {
   return layers.map((layer) => {
     const layerTemplateWidth = getLayerTemplateWidth(layer);
-    const commentWidths = layer.content.map((comment) => {
-      const lineWidths = comment.content.map((line, index) => {
-        const measured = measureTextWidth(line, layer.font);
-        if (measured.width === measured.leftSpaceWidth) {
-          return {
-            width: 0,
-            leftSpaceWidth: layerTemplateWidth / 2,
-            index,
-            content: line,
-          };
-        }
+    const commentWidths = layer.content.map<TMeasuredLayerComment>(
+      (comment) => {
+        const lineWidths = comment.content.map<TMeasuredLayerLine>(
+          (line, index) => {
+            const content = typeof line === "string" ? line : line.content;
+            const measured = measureTextWidth(content, layer.font);
+            if (measured.width === measured.leftSpaceWidth) {
+              return {
+                width: 0,
+                leftSpaceWidth: layerTemplateWidth / 2,
+                index,
+                content,
+              };
+            }
+            return {
+              ...measured,
+              index,
+              content,
+            };
+          },
+        );
+        const hasTargetWidth = (
+          comment: TMeasuredLayerComment | TLayerComment,
+        ): comment is TMeasuredLayerComment =>
+          Object.hasOwnProperty.call(comment, "targetWidth");
         return {
-          ...measured,
-          index,
-          content: line,
+          ...comment,
+          content: lineWidths,
+          width: Math.max(...lineWidths.map((line) => line.width)),
+          targetWidth: hasTargetWidth(comment)
+            ? comment.targetWidth
+            : Math.max(
+                ...lineWidths.map((line) => {
+                  return (
+                    layerTemplateWidth -
+                    Math.min(
+                      layerTemplateWidth - line.width,
+                      line.leftSpaceWidth,
+                    ) *
+                      2
+                  );
+                }),
+              ),
         };
-      });
-      return {
-        ...comment,
-        content: lineWidths,
-        width: Math.max(...lineWidths.map((line) => line.width)),
-      };
-    });
+      },
+    );
     return {
       ...layer,
       templateWidth: layerTemplateWidth,
       content: commentWidths,
-      width: Math.max(...commentWidths.map((comment) => comment.width)),
+      measuredWidth: Math.max(...commentWidths.map((comment) => comment.width)),
     };
   });
 };
@@ -208,7 +240,7 @@ const getCharWidth = (char: string, font: TCommentFont): TMonoChar => {
   if (typeGuard.layer.isMonoChar(CharList.default)) return CharList.default;
   return { ...CharList.default, width: CharList.default.width[font] };
 };
-const getLayerTemplateWidth = (layer: TLayer) => {
+const getLayerTemplateWidth = (layer: TLayer | TMeasuredLayer) => {
   let layerTemplateWidth = layer.width * 12;
   if (layer.critical) {
     switch (layerTemplateWidth) {

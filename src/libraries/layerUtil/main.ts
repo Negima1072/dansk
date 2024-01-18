@@ -94,7 +94,7 @@ const appendLine = (
   }
   let content = options.disableSpaceOptimization
     ? line.content
-    : addTrailingSpace(line.content, comment.width - line.width);
+    : addTrailingSpace(line.content, comment.targetWidth - line.width);
   if (layer.drWidth) content = addDRSpace(content, layer.drWidth);
   if (options.useTab) content = space2tab(rebuildSpace(content));
   const template: string[] = comment.content.map((_, index) =>
@@ -105,7 +105,6 @@ const appendLine = (
     template[template.length - 1] = "\uA001";
   const currentLenght = template.join("\n").length;
   if (currentLenght > commentMaxLength) {
-    console.log(template.join("\n"), template.join("\n").length);
     throw new OverflowError(commentMaxLength, currentLenght, layer);
   }
   if (template.join("\n") === "") {
