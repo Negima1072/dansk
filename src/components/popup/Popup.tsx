@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
-import Styles from "./Popup.module.scss";
+import type { ReactNode } from "react";
+
 import { icons } from "@/assets/icons";
+
+import Styles from "./Popup.module.scss";
 
 type PopupProps = {
   children: ReactNode;

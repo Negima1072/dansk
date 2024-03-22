@@ -1,16 +1,18 @@
-import { FC, useEffect } from "react";
+import { useSetAtom } from "jotai";
+import type { FC } from "react";
+import { useEffect } from "react";
 import { createRoot } from "react-dom/client";
+
+import { elementAtom } from "@/atoms";
 import { Footer } from "@/components/Footer";
-import { getElements } from "@/libraries/getElements";
 import { Header } from "@/components/Header";
 import { Main } from "@/components/Main";
-import { sleep } from "@/libraries/sleep";
 import { MemoPortal } from "@/components/MemoPortal";
-import { Storage } from "@/libraries/localStorage";
-import { inject } from "@/libraries/cssInjector";
-import { elementAtom } from "@/atoms";
-import { useSetAtom } from "jotai";
 import { injectFetch } from "@/fetch";
+import { inject } from "@/libraries/cssInjector";
+import { getElements } from "@/libraries/getElements";
+import { Storage } from "@/libraries/localStorage";
+import { sleep } from "@/libraries/sleep";
 
 /**
  * Reactのルート要素

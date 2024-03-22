@@ -1,16 +1,19 @@
-import { useCallback, useState, ChangeEvent } from "react";
-import { Popup } from "@/components/popup/Popup";
-import { BackgroundImageDisplay } from "@/headers/backgroundPicker/BackgroundImageDisplay";
+import { useAtom } from "jotai";
+import type { ChangeEvent } from "react";
+import { useCallback, useState } from "react";
+import styled from "styled-components";
+
+import type { TObjectFitArgs } from "@/@types/background";
+import { backgroundAtom } from "@/atoms";
 import { Button } from "@/components/button/Button";
 import { Dropdown } from "@/components/dropdown/Dropdown";
-import { TObjectFitArgs } from "@/@types/background";
+import { Popup } from "@/components/popup/Popup";
 import { Tips } from "@/components/tips/Tips";
-import Styles from "./BackgroundPicker.module.scss";
-import { useAtom } from "jotai";
-import { backgroundAtom } from "@/atoms";
-import { uuid } from "@/libraries/uuidUtil";
+import { BackgroundImageDisplay } from "@/headers/backgroundPicker/BackgroundImageDisplay";
 import { ImageCrop } from "@/headers/backgroundPicker/imageCrop/ImageCrop";
-import styled from "styled-components";
+import { uuid } from "@/libraries/uuidUtil";
+
+import Styles from "./BackgroundPicker.module.scss";
 
 const createImage = (url: string) => {
   return {

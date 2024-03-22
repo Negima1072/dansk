@@ -1,13 +1,16 @@
-import { ChangeEvent, useCallback, useState } from "react";
-import Styles from "./LayerSelector.module.scss";
-import { ReactSortable } from "react-sortablejs";
-import { layerUtil } from "@/libraries/layerUtil/layerUtil";
-import { icons } from "@/assets/icons";
-import { CssEditor } from "@/headers/layerSelector/CssEditor";
-import { TLayer } from "@/@types/layer";
-import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 import { useAtom } from "jotai";
+import type { ChangeEvent } from "react";
+import { useCallback, useState } from "react";
+import { ReactSortable } from "react-sortablejs";
+
+import type { TLayer } from "@/@types/layer";
+import { icons } from "@/assets/icons";
 import { layerAtom } from "@/atoms";
+import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
+import { CssEditor } from "@/headers/layerSelector/CssEditor";
+import { layerUtil } from "@/libraries/layerUtil/layerUtil";
+
+import Styles from "./LayerSelector.module.scss";
 
 /**
  * レイヤー選択・並べ替え・色変更他

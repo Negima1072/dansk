@@ -1,4 +1,4 @@
-import {
+import type {
   TLayer,
   TLayerExportOptions,
   TLayerExportResultItem,
@@ -6,10 +6,11 @@ import {
   TMeasuredLayerComment,
   TMeasuredLayerLine,
 } from "@/@types/layer";
-import { preProcess } from "./preProcess";
-import { rebuildSpace } from "@/libraries/layerUtil/utils";
 import { command2str } from "@/libraries/layerUtil/command";
 import { OverflowError } from "@/libraries/layerUtil/OverflowError";
+import { rebuildSpace } from "@/libraries/layerUtil/utils";
+
+import { preProcess } from "./preProcess";
 
 export const layers2string = (
   _layers: TLayer[],

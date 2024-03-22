@@ -1,5 +1,6 @@
-import Styles from "./Button.module.scss";
 import styled from "styled-components";
+
+import Styles from "./Button.module.scss";
 
 type buttonProps = {
   click: (arg0: string) => void;

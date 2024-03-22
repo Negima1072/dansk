@@ -1,7 +1,10 @@
-import { MouseEvent, RefObject, useEffect, useRef, useState } from "react";
+import type { MouseEvent, RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+
+import type { TCropKey, TCropRange } from "@/@types/background";
+
 import Styles from "./Crop.module.scss";
-import { TCropKey, TCropRange } from "@/@types/background";
 
 type props = {
   update: (range: TCropRange) => void;

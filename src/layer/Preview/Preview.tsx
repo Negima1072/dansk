@@ -1,9 +1,12 @@
-import { useEffect, useRef } from "react";
-import Styles from "./Preview.module.scss";
-import NiconiComments, { FormattedComment } from "@xpadev-net/niconicomments";
-import { layerUtil } from "@/libraries/layerUtil/layerUtil";
+import type { FormattedComment } from "@xpadev-net/niconicomments";
+import NiconiComments from "@xpadev-net/niconicomments";
 import { useAtom } from "jotai";
+import { useEffect, useRef } from "react";
+
 import { layerAtom } from "@/atoms";
+import { layerUtil } from "@/libraries/layerUtil/layerUtil";
+
+import Styles from "./Preview.module.scss";
 
 const Preview = () => {
   const canvas = useRef<HTMLCanvasElement>(null),

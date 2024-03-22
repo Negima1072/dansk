@@ -1,8 +1,10 @@
 import { useState } from "react";
-import Styles from "./Spoiler.module.scss";
+
 import { SpoilerButton } from "@/components/spoiler/SpoilerButton";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
+
+import Styles from "./Spoiler.module.scss";
 
 type propType = {
   text: string;

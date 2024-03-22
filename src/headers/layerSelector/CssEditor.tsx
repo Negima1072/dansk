@@ -1,8 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
+
+import type { TLayer } from "@/@types/layer";
 import { Popup } from "@/components/popup/Popup";
-import Styles from "./CssEditor.module.scss";
-import { TLayer } from "@/@types/layer";
 import { Layer } from "@/layer/layer/Layer";
+
+import Styles from "./CssEditor.module.scss";
 
 type EditorProps = {
   close: (data: TLayer) => void;

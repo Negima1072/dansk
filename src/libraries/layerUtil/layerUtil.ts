@@ -1,9 +1,9 @@
-import { TCommentFont, TCommentPos } from "@/@types/types";
 import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
-import { Storage } from "@/libraries/localStorage";
+import type { TCommentFont, TCommentPos } from "@/@types/types";
 import { Templates } from "@/headers/Trace.templates";
 import { layers2string } from "@/libraries/layerUtil/main";
 import { OverflowError } from "@/libraries/layerUtil/OverflowError";
+import { Storage } from "@/libraries/localStorage";
 
 /**
  * layer関係の処理をする関数集
