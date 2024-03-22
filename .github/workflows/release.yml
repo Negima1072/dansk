@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
         node-version: [16.x]
@@ -24,12 +26,39 @@ jobs:
         npm install
         ls
         npm run build
-    - name: Archive
+    - name: Prepare
       run: |
         cp -f README.md dist
-        mv dist/ dansk_${GITHUB_REF##*/}/
-        zip -r dansk_${GITHUB_REF##*/}.zip dansk_${GITHUB_REF##*/}/
-    - name: UploadZip
+    - name: Package for Chrome
+        cp -r dist/ dist_chrome/
+        rm -rf dist_chrome/manifest.firefox.json
+        zip -r dansk-chrome-${GITHUB_REF##*/}.zip dist_chrome
+    - name: Submit to Chrome Web Store
+      run: |
+        npx chrome-webstore-upload-cli@3 upload --source dansk-chrome-${GITHUB_REF##*/}.zip --auto-publish
+      env:
+        EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+        CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+        REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+    - name: Package for Firefox
+        cp -r dist/ dist_firefox/
+        rm -rf dist_firefox/manifest.json
+        mv dist_firefox/manifest.firefox.json dist_firefox/manifest.json
+    - name: Sign for Firefox
+      run: |
+        npx web-ext@7 sign --source-dir dist_firefox --use-submission-api --channel unlisted
+      env:
+        WEB_EXT_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
+        WEB_EXT_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
+    - name: Upload Release
+      uses: softprops/action-gh-release@v2
+      with:
+        generate_release_notes: true
+        files: |
+          dansk-chrome-${GITHUB_REF##*/}.zip
+          dansk-firefox-${GITHUB_REF##*/}.xpi
+    - name: Post to Discord
       run: | 
         echo '${GITHUB_REF##*/}'
-        curl -X POST -F 'payload_json={"content": "新しいバージョンのリリースのお知らせです😎\rバージョン：'${GITHUB_REF##*/}'\rご意見・ご要望は <#441986140179005440> にお願いします"}' -F "file1=@dansk_${GITHUB_REF##*/}.zip" "https://discord.com/api/webhooks/1000620069820309595/6SJxaZVl_lH456RuCF7ZUoGJ8Wn0Qo4e_2AuGVJoa_CWTPOpFaLH1kjNSPpHjYp9cF1o"
+        curl -X POST -F 'payload_json={"content": "新しいバージョンのリリースのお知らせです😎\rバージョン：'${GITHUB_REF##*/}'\rご意見・ご要望は <#441986140179005440> にお願いします\rChrome → https://chromewebstore.google.com/detail/dansukumizu/cjmnakgpnakmaemloaoaidbohgcldpcc\rFirefox → ダウンロードして有効化"}' -F "file1=@dansk-chrome-${GITHUB_REF##*/}.zip" -F "file2=@dansk-firefox-${GITHUB_REF##*/}.xpi" "https://discord.com/api/webhooks/1000620069820309595/6SJxaZVl_lH456RuCF7ZUoGJ8Wn0Qo4e_2AuGVJoa_CWTPOpFaLH1kjNSPpHjYp9cF1o"
