@@ -53,6 +53,16 @@ const layerComment2string = (
     }
     appendLine(output, layer, comment, line, options);
   }
+  if (output.length === 0) {
+    const isMultiCommentLayer =
+      layer.size.reduce((pv, val) => pv + (val.count ?? 0), 0) > 1;
+    if (isMultiCommentLayer) {
+      output.push({
+        content: ["\uA001"],
+        count: lines.length,
+      });
+    }
+  }
   return result2string(output, options);
 };
 
