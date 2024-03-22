@@ -6,6 +6,7 @@ import replace from '@rollup/plugin-replace';
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
+import preserveDirectives from 'rollup-preserve-directives';
 
 const plugins = [
 	typescript({tsconfig:"./tsconfig.json"}),
@@ -18,6 +19,7 @@ const plugins = [
 	nodeResolve({
 		extensions: [".ts",".tsx"],
 	}),
+	preserveDirectives(),
 	replace({
 		preventAssignment:true,
 		'process.env.NODE_ENV': JSON.stringify( 'development' ),
