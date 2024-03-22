@@ -1,12 +1,15 @@
-import styled from "styled-components";
-import { ChangeEvent, FC, useRef } from "react";
-import { TGridPosBlob, TLayer } from "@/@types/layer";
-import Styles from "./Layer.module.scss";
-import { grids } from "@/assets/grids";
-import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { useAtom } from "jotai";
+import type { ChangeEvent, FC } from "react";
+import { useRef } from "react";
+import styled from "styled-components";
+
+import type { TGridPosBlob, TLayer } from "@/@types/layer";
+import { grids } from "@/assets/grids";
 import { layerAtom, optionAtom } from "@/atoms";
+import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { Storage } from "@/libraries/localStorage";
+
+import Styles from "./Layer.module.scss";
 
 type LayerProps = {
   data: TLayer;

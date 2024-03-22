@@ -1,6 +1,7 @@
-import { Storage } from "@/libraries/localStorage";
-import { TCommentPublishData } from "@/@types/types";
 import NiconiComments from "@xpadev-net/niconicomments";
+
+import type { TCommentPublishData } from "@/@types/types";
+import { Storage } from "@/libraries/localStorage";
 
 const injectFetch = () => {
   const originalFetch = window.fetch;

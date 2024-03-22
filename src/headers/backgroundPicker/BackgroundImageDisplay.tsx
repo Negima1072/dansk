@@ -1,7 +1,9 @@
-import Styles from "./BackgroundImageDisplay.module.scss";
-import { icons } from "@/assets/icons";
 import { useAtom } from "jotai";
+
+import { icons } from "@/assets/icons";
 import { backgroundAtom } from "@/atoms";
+
+import Styles from "./BackgroundImageDisplay.module.scss";
 
 type props = {
   setImageCrop: (key: number) => void;

@@ -1,11 +1,13 @@
 import babel from '@rollup/plugin-babel';
-import {nodeResolve} from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from "@rollup/plugin-typescript";
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
+import terser from '@rollup/plugin-terser';
 import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
+import preserveDirectives from 'rollup-preserve-directives';
 
 const plugins = [
 	typescript(),
@@ -17,8 +19,9 @@ const plugins = [
 	}),
 	nodeResolve({
 		extensions: [".js"],
-		browser:true
+		browser: true
 	}),
+	preserveDirectives(),
 	replace({
 		preventAssignment: true,
 		'process.env.NODE_ENV': JSON.stringify('production'),
@@ -28,6 +31,7 @@ const plugins = [
 		presets: ["@babel/preset-react"],
 	}),
 	commonjs(),
+	terser(),
 ];
 
 export default [

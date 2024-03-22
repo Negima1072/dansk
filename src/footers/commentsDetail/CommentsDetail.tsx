@@ -1,8 +1,10 @@
 import { useMemo } from "react";
+
 import { Popup } from "@/components/popup/Popup";
-import Styles from "./CommentsDetail.module.scss";
-import { time2str } from "@/libraries/timeUtil";
 import { Storage } from "@/libraries/localStorage";
+import { time2str } from "@/libraries/timeUtil";
+
+import Styles from "./CommentsDetail.module.scss";
 
 type propType = {
   textareaValue: string[];

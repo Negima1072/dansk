@@ -1,4 +1,4 @@
-import { TMeasuredLayer } from "@/@types/layer";
+import type { TMeasuredLayer } from "@/@types/layer";
 
 class OverflowError extends Error {
   limit: number;

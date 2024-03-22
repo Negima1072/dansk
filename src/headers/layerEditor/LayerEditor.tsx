@@ -1,10 +1,13 @@
-import { ChangeEvent, useCallback } from "react";
-import Styles from "./LayerEditor.module.scss";
-import { Button } from "@/components/button/Button";
-import { typeGuard } from "@/libraries/typeGuard";
-import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
 import { useAtom } from "jotai";
+import type { ChangeEvent } from "react";
+import { useCallback } from "react";
+
 import { layerAtom } from "@/atoms";
+import { Button } from "@/components/button/Button";
+import { ColorPicker } from "@/headers/layerSelector/ColorPicker/ColorPicker";
+import { typeGuard } from "@/libraries/typeGuard";
+
+import Styles from "./LayerEditor.module.scss";
 
 /**
  * layerの一括編集

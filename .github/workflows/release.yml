@@ -13,23 +13,23 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - name: build
+    - name: Build
       run: |
         npm install
         ls
         npm run build
-    - name: Zip output
+    - name: Archive
       run: |
         cp -f README.md dist
         mv dist/ dansk_${GITHUB_REF##*/}/
-        zip -r ${GITHUB_REF##*/}.zip dansk_${GITHUB_REF##*/}/
+        zip -r dansk_${GITHUB_REF##*/}.zip dansk_${GITHUB_REF##*/}/
     - name: UploadZip
       run: | 
         echo '${GITHUB_REF##*/}'
-        curl -X POST -F 'payload_json={"content": "新しいバージョンのリリースのお知らせです😎\rバージョン：'${GITHUB_REF##*/}'\rご意見・ご要望は <#441986140179005440> にお願いします"}' -F "file1=@${GITHUB_REF##*/}.zip" "https://discord.com/api/webhooks/1000620069820309595/6SJxaZVl_lH456RuCF7ZUoGJ8Wn0Qo4e_2AuGVJoa_CWTPOpFaLH1kjNSPpHjYp9cF1o"
-    
+        curl -X POST -F 'payload_json={"content": "新しいバージョンのリリースのお知らせです😎\rバージョン：'${GITHUB_REF##*/}'\rご意見・ご要望は <#441986140179005440> にお願いします"}' -F "file1=@dansk_${GITHUB_REF##*/}.zip" "https://discord.com/api/webhooks/1000620069820309595/6SJxaZVl_lH456RuCF7ZUoGJ8Wn0Qo4e_2AuGVJoa_CWTPOpFaLH1kjNSPpHjYp9cF1o"

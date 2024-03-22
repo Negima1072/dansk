@@ -1,4 +1,4 @@
-import { TCharList } from "@/@types/types";
+import type { TCharList } from "@/@types/types";
 
 /**
  * 横幅情報を格納するObject

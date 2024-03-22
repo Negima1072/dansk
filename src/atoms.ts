@@ -1,8 +1,9 @@
 import { atom } from "jotai";
-import { TLayer } from "@/@types/layer";
-import { TBackground } from "@/@types/background";
-import { TElement } from "@/@types/element";
-import { TOption } from "@/@types/option";
+
+import type { TBackground } from "@/@types/background";
+import type { TElement } from "@/@types/element";
+import type { TLayer } from "@/@types/layer";
+import type { TOption } from "@/@types/option";
 
 export const layerAtom = atom<TLayer[]>([]);
 export const backgroundAtom = atom<TBackground>({

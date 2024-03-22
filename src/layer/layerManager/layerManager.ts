@@ -1,8 +1,9 @@
-import { TLayer } from "@/@types/layer";
-import Styles from "./layerManager.module.scss";
+import type { TLayer } from "@/@types/layer";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { caretUtil } from "@/libraries/caretUtil";
 import { typeGuard } from "@/libraries/typeGuard";
+
+import Styles from "./layerManager.module.scss";
 
 const ua = window.navigator.userAgent,
   isChromium = !!ua.match(/Chrome/),

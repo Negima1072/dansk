@@ -1,4 +1,6 @@
-import { ChangeEvent, useState } from "react";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
+
 import Styles from "./Slider.module.scss";
 
 type sliderProps = {

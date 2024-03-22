@@ -1,13 +1,15 @@
+import { useSetAtom } from "jotai";
 import { useState } from "react";
-import Styles from "./Backup.module.scss";
+
+import type { TAutoSave } from "@/@types/types";
+import { layerAtom } from "@/atoms";
+import { Button } from "@/components/button/Button";
+import { Popup } from "@/components/popup/Popup";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
-import { Popup } from "@/components/popup/Popup";
-import { TAutoSave } from "@/@types/types";
-import { Button } from "@/components/button/Button";
 import { uuid } from "@/libraries/uuidUtil";
-import { layerAtom } from "@/atoms";
-import { useSetAtom } from "jotai";
+
+import Styles from "./Backup.module.scss";
 
 type propType = {
   close: () => void;

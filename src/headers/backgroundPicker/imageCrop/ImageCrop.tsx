@@ -1,10 +1,12 @@
-import { useState } from "react";
 import { useAtom } from "jotai";
+import { useState } from "react";
+
+import type { TCropRange } from "@/@types/background";
 import { backgroundAtom } from "@/atoms";
-import Styles from "./ImageCrop.module.scss";
-import { Crop } from "@/headers/backgroundPicker/imageCrop/Crop";
-import { TCropRange } from "@/@types/background";
 import { Button } from "@/components/button/Button";
+import { Crop } from "@/headers/backgroundPicker/imageCrop/Crop";
+
+import Styles from "./ImageCrop.module.scss";
 
 type props = {
   imageId: number;
