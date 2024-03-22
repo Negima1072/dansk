@@ -23,8 +23,12 @@ export const layers2string = (
 };
 
 const layer2string = (layer: TMeasuredLayer, options: TLayerExportOptions) => {
+  const content = [...layer.content];
+  if (layer.pos === "shita") {
+    content.reverse();
+  }
   return {
-    content: layer.content.reduce<string[]>((pv, comment) => {
+    content: content.reduce<string[]>((pv, comment) => {
       return pv.concat(layerComment2string(layer, comment, options));
     }, []),
     command: command2str(layer),
