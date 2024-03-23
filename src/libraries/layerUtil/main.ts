@@ -24,8 +24,12 @@ export const layers2string = (
 };
 
 const layer2string = (layer: TMeasuredLayer, options: TLayerExportOptions) => {
+  const content = [...layer.content];
+  if (layer.pos === "shita") {
+    content.reverse();
+  }
   return {
-    content: layer.content.reduce<string[]>((pv, comment) => {
+    content: content.reduce<string[]>((pv, comment) => {
       return pv.concat(layerComment2string(layer, comment, options));
     }, []),
     command: command2str(layer),
@@ -49,6 +53,16 @@ const layerComment2string = (
       line.content = space2tab(line.content);
     }
     appendLine(output, layer, comment, line, options);
+  }
+  if (output.length === 0) {
+    const isMultiCommentLayer =
+      layer.size.reduce((pv, val) => pv + (val.count ?? 0), 0) > 1;
+    if (isMultiCommentLayer) {
+      output.push({
+        content: ["\uA001"],
+        count: lines.length,
+      });
+    }
   }
   return result2string(output, options);
 };
