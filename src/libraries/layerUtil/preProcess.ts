@@ -59,7 +59,30 @@ const adjustEachSpace = (layers: TMeasuredLayer[]) => {
   return measureLayers(spacedLayers);
 };
 const adjustSpace = (layers: TMeasuredLayer[]) => {
-  const targetWidth = Math.max(...layers.map((layer) => layer.width));
+  const targetWidth = Math.max(
+    ...layers.map((layer) => {
+      if (layer.critical) return 0;
+      return Math.max(
+        ...layer.content
+          .map((comment) =>
+            comment.content.map((line) => {
+              if (line.leftSpaceWidth == line.width) return 0;
+              return (
+                ((line.width -
+                  line.leftSpaceWidth +
+                  Math.abs(
+                    line.leftSpaceWidth - (layer.width * 12 - line.width),
+                  )) /
+                  12) *
+                comment.font *
+                layer.scale.x
+              );
+            }),
+          )
+          .flat(),
+      );
+    }),
+  );
   const spacedLayers = layers.map((layer) => ({
     ...layer,
     content: layer.content.map((layerComment) => {
@@ -75,6 +98,7 @@ const adjustSpace = (layers: TMeasuredLayer[]) => {
       }
       return {
         ...layerComment,
+        targetWidth: layer.templateWidth - removeSpace * 2,
         content: layerComment.content.map((line) =>
           removeLeadingSpace(line.content, removeSpace),
         ),
