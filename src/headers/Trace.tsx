@@ -77,54 +77,27 @@ const Trace = () => {
   }, [setTabMode]);
   const exportHandler = useCallback(
       (value: string) => {
-        const layerString: string[] = [],
-          isMonospaced = !!value.match(/Monospaced/),
+        const isMonospaced = !!value.match(/Monospaced/),
           isOwner = !!value.match(/Owner/),
           isSelectedOnly = !!value.match(/Selected/);
-        let targetData: TLayer[] = [];
-        for (const layer of layerData) {
-          if (isSelectedOnly && !layer.selected) continue;
-          targetData.push({
-            ...layer,
-            content: layer.content.map((value) => {
-              const content = [...value.content];
-              while (content.length < value.lineCount) {
-                content.push("");
-              }
-              while (content.length > value.lineCount) {
-                content[value.lineCount - 1] += content
-                  .splice(value.lineCount)
-                  .join("");
-              }
-              return { ...value, content };
-            }),
-          });
+        let targetData: TLayer[] = layerData;
+        if (isSelectedOnly) {
+          targetData = targetData.filter((layer) => layer.selected);
         }
-
         if (
           !isSelectedOnly &&
           Storage.get("options_exportHiddenLayer") === "false"
         ) {
           targetData = targetData.filter((layer) => layer.visible);
         }
-        const strings = layerUtil.toString(
+        const data = layerUtil.toString(
           targetData,
           isMonospaced,
           tabMode,
           isOwner,
         );
-        if (!strings) return;
-        for (const string of strings) {
-          for (const line of string.content) {
-            if (string.command) {
-              layerString.push(string.command + line);
-              string.command = "";
-            } else {
-              layerString.push(line);
-            }
-          }
-        }
-        setExportLayer([...exportLayer, ...layerString]);
+        if (!data) return;
+        setExportLayer([...exportLayer, ...layerUtil.formatAsString(data)]);
       },
       [exportLayer, layerData, tabMode],
     ),

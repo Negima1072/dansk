@@ -99,7 +99,7 @@ const layerUtil = {
     monospaced: boolean = false,
     replaceTab: boolean = false,
     ownerMode: boolean = false,
-  ): { command: string; content: string[] }[] | undefined => {
+  ): { content: string[]; command: string }[] | undefined => {
     try {
       return layers2string(layerData, {
         monospaced,
@@ -117,6 +117,22 @@ const layerUtil = {
       alert("コメントの書き出しに失敗しました");
       return undefined;
     }
+  },
+  formatAsString: (
+    data: { content: string[]; command: string }[],
+  ): string[] => {
+    const result: string[] = [];
+    for (const comment of data) {
+      for (const line of comment.content) {
+        if (comment.command) {
+          result.push(comment.command + line);
+          comment.command = "";
+        } else {
+          result.push(line);
+        }
+      }
+    }
+    return result;
   },
 };
 
