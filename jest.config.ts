@@ -199,6 +199,7 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+  testRegex: "/__tests__/.*\.(test|spec)\.[jt]sx?$"
 
 };
 

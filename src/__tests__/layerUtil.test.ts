@@ -28,6 +28,22 @@ describe("big9", () => {
     const string = layerUtil.formatAsString(output);
     expect(string).toEqual(SampleOutputData.big9.tab);
   });
+
+  test("monospaced export", () => {
+    const output = layerUtil.toString(SampleLayerData.big9, true, false, false);
+    expect(output).toBeDefined();
+    if (!output) return;
+    const string = layerUtil.formatAsString(output);
+    expect(string).toEqual(SampleOutputData.big9.monospaced);
+  });
+
+  test("monospaced tab export", () => {
+    const output = layerUtil.toString(SampleLayerData.big9, true, true, false);
+    expect(output).toBeDefined();
+    if (!output) return;
+    const string = layerUtil.formatAsString(output);
+    expect(string).toEqual(SampleOutputData.big9.monospaced_tab);
+  });
 });
 
 describe("ts38", () => {
