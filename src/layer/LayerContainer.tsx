@@ -38,8 +38,7 @@ const LayerContainer: FC = () => {
   const [optionData] = useAtom(optionAtom);
   const [elements] = useAtom(elementAtom);
   useEffect(() => {
-    const classList =
-        elements?.videoSymbolContainerCanvas.parentElement?.classList,
+    const classList = elements?.commentCanvas.parentElement?.classList,
       cssClass = Styles.VideoSymbolContainer || "_";
     if (!classList || process.env.NODE_ENV === "development") return;
     if (layerData && layerData.length > 0) {

@@ -2,7 +2,7 @@ export type TElement = {
   videoElement: HTMLVideoElement;
   commentCommandInput: HTMLInputElement;
   commentInputTextarea: HTMLTextAreaElement;
-  videoSymbolContainerCanvas: HTMLCanvasElement;
+  commentCanvas: HTMLCanvasElement;
   HeaderElement: HTMLDivElement;
   MainElement: HTMLDivElement;
   BackgroundImageElement: HTMLDivElement;

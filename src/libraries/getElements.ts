@@ -6,17 +6,17 @@ import { sleep } from "@/libraries/sleep";
  * @param count {number} リトライ回数
  */
 const getElements = async (count = 0): Promise<TElement> => {
-  const videoElement = (
-      document.getElementById("MainVideoPlayer") as HTMLDivElement
-    )?.getElementsByTagName("video")[0] as HTMLVideoElement,
-    commentCommandInput = document.getElementsByClassName(
-      "CommentCommandInput",
+  const videoElement = document.querySelectorAll(
+      "div[data-name=content] > video",
+    )[0] as HTMLVideoElement,
+    commentCommandInput = document.querySelectorAll(
+      "input[placeholder='コマンド']",
     )[0] as HTMLInputElement,
-    commentInputTextarea = document.getElementsByClassName(
-      "CommentInput-textarea",
+    commentInputTextarea = document.querySelectorAll(
+      "textarea[placeholder='コメントを入力']",
     )[0] as HTMLTextAreaElement,
-    videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas",
+    commentCanvas = document.querySelectorAll(
+      "div[data-name=comment] > canvas",
     )[0] as HTMLCanvasElement,
     HeaderElement = document.getElementById(
       "dansk:HeaderElement",
@@ -40,7 +40,7 @@ const getElements = async (count = 0): Promise<TElement> => {
     !(
       videoElement &&
       commentCommandInput &&
-      videoSymbolContainerCanvas &&
+      commentCanvas &&
       BackgroundImageElement
     )
   ) {
@@ -55,7 +55,7 @@ const getElements = async (count = 0): Promise<TElement> => {
     videoElement,
     commentCommandInput,
     commentInputTextarea,
-    videoSymbolContainerCanvas,
+    commentCanvas,
     HeaderElement,
     MainElement,
     BackgroundImageElement,
