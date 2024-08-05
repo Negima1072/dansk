@@ -11,7 +11,7 @@ import { MemoPortal } from "@/components/MemoPortal";
 import { injectFetch } from "@/fetch";
 import { inject } from "@/libraries/cssInjector";
 import { getElements } from "@/libraries/getElements";
-import { Storage } from "@/libraries/localStorage";
+//import { Storage } from "@/libraries/localStorage";
 import { sleep } from "@/libraries/sleep";
 
 /**
@@ -40,43 +40,34 @@ const Root: FC = () => {
  */
 const init = async () => {
   let mainContainer,
-    mainContainerPlayer,
-    CommentRenderer,
-    videoSymbolContainerCanvas: HTMLCanvasElement | undefined,
-    videoContainer,
-    mainContainerPlayerPanel,
-    videoPlayer,
+    commentViewerContainer,
+    videoContentContainer,
+    videoCommentContiner,
+    videoElement: HTMLVideoElement | undefined,
     count = 0;
   while (count < 300) {
-    mainContainer = document.getElementsByClassName(
-      "MainContainer",
+    mainContainer = document.querySelectorAll(
+      "div.grid-area_\\[player\\]",
     )[0] as HTMLDivElement;
-    mainContainerPlayer = mainContainer?.getElementsByClassName(
-      "MainContainer-player",
+    commentViewerContainer = document.querySelectorAll(
+      "div.grid-area_\\[sidebar\\] > div > div",
     )[0] as HTMLDivElement;
-    mainContainerPlayerPanel = mainContainer?.getElementsByClassName(
-      "MainContainer-playerPanel",
+    videoContentContainer = document.querySelectorAll(
+      "div[data-name=content]",
     )[0] as HTMLDivElement;
-    if (mainContainer?.getElementsByClassName("CommentRenderer").length > 0)
-      CommentRenderer = mainContainer?.getElementsByClassName(
-        "CommentRenderer",
-      )[0] as HTMLDivElement;
-    videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas",
-    )[0] as HTMLCanvasElement;
-    videoContainer = document.getElementsByClassName(
-      "InView VideoContainer",
+    videoCommentContiner = document.querySelectorAll(
+      "div[data-name=comment]",
     )[0] as HTMLDivElement;
-    videoPlayer = document.getElementById("VideoPlayer") as HTMLDivElement;
+    videoElement = document.querySelectorAll(
+      "div[data-name=content] > video",
+    )[0] as HTMLVideoElement;
     count++;
     if (
       mainContainer === undefined ||
-      mainContainerPlayer === undefined ||
-      mainContainerPlayerPanel === undefined ||
-      CommentRenderer === undefined ||
-      videoSymbolContainerCanvas === undefined ||
-      videoContainer === undefined ||
-      videoPlayer === undefined
+      commentViewerContainer === undefined ||
+      videoContentContainer === undefined ||
+      videoCommentContiner === undefined ||
+      videoElement === undefined
     ) {
       await sleep(100);
     } else {
@@ -85,23 +76,67 @@ const init = async () => {
   }
   if (
     mainContainer === undefined ||
-    mainContainerPlayer === undefined ||
-    mainContainerPlayerPanel === undefined ||
-    CommentRenderer === undefined ||
-    videoSymbolContainerCanvas === undefined ||
-    videoContainer === undefined ||
-    videoPlayer === undefined
+    commentViewerContainer === undefined ||
+    videoContentContainer === undefined ||
+    videoCommentContiner === undefined ||
+    videoElement === undefined
   ) {
     throw new Error("fail to get required element");
   }
-  videoContainer.addEventListener(
-    "scroll",
-    (e) => {
-      (e.target as HTMLDivElement).scroll(0, 0);
+  // for tmp make nvapi
+  window.__videoplayer = {
+    autoplay: () => videoElement.autoplay,
+    buffered: () => videoElement.buffered,
+    canPlayType: () => videoElement.canPlayType(""),
+    clear: () => {},
+    crossOrigin: (crossOrigin) => {
+      if (crossOrigin) {
+        videoElement.crossOrigin = crossOrigin;
+      }
+      return videoElement.crossOrigin as crossOriginType;
     },
-    { passive: false },
-  );
+    currentSrc: () => videoElement.currentSrc,
+    currentTime: (currentTime) => {
+      if (currentTime) {
+        videoElement.currentTime = currentTime;
+      }
+      return videoElement.currentTime;
+    },
+    defaultPlaybackRate: () => videoElement.defaultPlaybackRate,
+    duration: () => videoElement.duration,
+    element: () => videoElement,
+    enableCurrentTimeSmoothing: false,
+    ended: () => videoElement.ended,
+    load: () => videoElement.load(),
+    mirror: () => false,
+    muted: (isMuted) => {
+      if (isMuted !== undefined) {
+        videoElement.muted = isMuted;
+      }
+      return videoElement.muted;
+    },
+    originalCurrentTime: () => videoElement.currentTime,
+    pause: () => videoElement.pause(),
+    paused: () => videoElement.paused,
+    play: () => videoElement.play(),
+    playbackRate: (rate) => {
+      if (rate) {
+        videoElement.playbackRate = rate;
+      }
+      return videoElement.playbackRate;
+    },
+    playbackStalled: () => false,
+    seeking: () => videoElement.seeking,
+    src: () => videoElement.src,
+    volume: (volume) => {
+      if (volume) {
+        videoElement.volume = volume;
+      }
+      return videoElement.volume;
+    },
+  };
   injectFetch();
+  /*
   const postBtnElement = document.querySelector(
     ".CommentPostButton",
   ) as HTMLButtonElement;
@@ -109,22 +144,46 @@ const init = async () => {
     postBtnElement.style.backgroundColor =
       Storage.get("options_disable184") === "true" ? "#ff8300" : "#007cff";
   }
+  */
+  if (mainContainer.parentElement !== null) {
+    mainContainer.parentElement.style.gridTemplateAreas = `
+      "d_header sidebar"
+      "player sidebar"
+      "d_footer sidebar"
+      "meta sidebar"
+      "bottom sidebar"
+      ". sidebar"
+    `;
+  }
+  const videoContainer = document.querySelectorAll(
+    "div[data-name=stage]",
+  )[0] as HTMLDivElement;
+  videoContainer.addEventListener(
+    "scroll",
+    (e) => {
+      (e.target as HTMLDivElement).scroll(0, 0);
+    },
+    { passive: false },
+  );
+  const videoController_1 = mainContainer.querySelectorAll(
+    "div[tabindex='0']>div>div.p_base",
+  )[0] as HTMLDivElement;
+  if (videoController_1) {
+    videoController_1.style.position = "relative";
+    videoController_1.style.zIndex = "11";
+  }
   const HeaderElement = document.createElement("div");
   mainContainer.before(HeaderElement);
-  const MainElement = document.createElement("div");
-  mainContainerPlayer.appendChild(MainElement);
   const FooterElement = document.createElement("div");
   mainContainer.after(FooterElement);
   const BackgroundImageElement = document.createElement("div");
-  /*CommentRenderer.insertBefore(
-    BackgroundImageElement,
-    CommentRenderer.firstChild
-  );*/
-  videoPlayer.appendChild(BackgroundImageElement);
+  videoContentContainer.appendChild(BackgroundImageElement);
   const LayerElement = document.createElement("div");
-  videoSymbolContainerCanvas.after(LayerElement);
+  videoCommentContiner.appendChild(LayerElement);
   const MemoElement = document.createElement("div");
-  mainContainerPlayerPanel.prepend(MemoElement);
+  commentViewerContainer.before(MemoElement);
+  const MainElement = document.createElement("div");
+  commentViewerContainer.before(MainElement);
   HeaderElement.id = "dansk:HeaderElement";
   MainElement.id = "dansk:MainElement";
   BackgroundImageElement.id = "dansk:BackgroundImageElement";

@@ -21,20 +21,20 @@ const VideoController: FC = () => {
 
   const updateTime = (time: number, relative = true) => {
     setIsSeeking(true);
-    const commentOnOffButton = document.getElementsByClassName(
-      "CommentOnOffButton",
-    )[0] as HTMLButtonElement;
+    //const commentOnOffButton = document.getElementsByClassName(
+    //  "CommentOnOffButton",
+    //)[0] as HTMLButtonElement;
     if (relative) time += window.__videoplayer.currentTime();
     if (time < 0) time = 0;
     if (time > window.__videoplayer.duration())
       time = window.__videoplayer.duration();
     window.__videoplayer.currentTime(Math.floor(time * 100) / 100 + 0.001);
-    if (
-      document.getElementsByClassName("CommentOnOffButton-iconHide").length > 0
-    ) {
-      commentOnOffButton.click();
-    }
-    commentOnOffButton.click();
+    //if (
+    //  document.getElementsByClassName("CommentOnOffButton-iconHide").length > 0
+    //) {
+    //  commentOnOffButton.click();
+    //}
+    //commentOnOffButton.click();
     setIsSeeking(false);
   };
   const onInputChange = useCallback(
