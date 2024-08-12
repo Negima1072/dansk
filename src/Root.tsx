@@ -102,12 +102,12 @@ const init = async () => {
     videoController_1.style.position = "relative";
     videoController_1.style.zIndex = "11";
   }
-  const seekbarElement = videoController_1.querySelectorAll(
-    "div.pos_relative>div.pos_absolute>div>div",
-  )[2] as HTMLDivElement;
-  const timeBeforeButton = document.querySelectorAll(
-    "div[role=group] > div > button.cursor_pointer",
-  )[0] as HTMLButtonElement;
+  const reactFiberProp = Object.keys(mainContainer).find((k) =>
+    k.startsWith("__reactFiber"),
+  ) as keyof HTMLDivElement;
+  const playerOperation = (
+    mainContainer[reactFiberProp] as unknown as ReactFiber
+  )?.child?.child?.memoizedProps?.playerOperation as PlayerOperation;
   // for tmp make nvapi
   window.__videoplayer = {
     autoplay: () => videoElement.autoplay,
@@ -123,25 +123,12 @@ const init = async () => {
     currentSrc: () => videoElement.currentSrc,
     currentTime: (currentTime) => {
       if (currentTime) {
-        if (videoElement.currentTime > currentTime) {
-          const b = seekbarElement.getBoundingClientRect();
-          seekbarElement.dispatchEvent(
-            new MouseEvent("click", {
-              view: window,
-              bubbles: true,
-              cancelable: true,
-              clientX: b.left,
-              clientY: b.top,
-            }),
-          );
-          timeBeforeButton.click();
-        }
-        videoElement.currentTime = currentTime;
+        playerOperation.currentTime.set(currentTime);
       }
-      return videoElement.currentTime;
+      return playerOperation.currentTime.get();
     },
     defaultPlaybackRate: () => videoElement.defaultPlaybackRate,
-    duration: () => videoElement.duration,
+    duration: () => playerOperation.duration,
     element: () => videoElement,
     enableCurrentTimeSmoothing: false,
     ended: () => videoElement.ended,
@@ -149,14 +136,14 @@ const init = async () => {
     mirror: () => false,
     muted: (isMuted) => {
       if (isMuted !== undefined) {
-        videoElement.muted = isMuted;
+        playerOperation.mute.set(isMuted);
       }
-      return videoElement.muted;
+      return playerOperation.mute.isMuted;
     },
     originalCurrentTime: () => videoElement.currentTime,
-    pause: () => videoElement.pause(),
-    paused: () => videoElement.paused,
-    play: () => videoElement.play(),
+    pause: () => playerOperation.playback.pause(),
+    paused: () => !playerOperation.playback.isPlaying,
+    play: () => playerOperation.playback.play(),
     playbackRate: (rate) => {
       if (rate) {
         videoElement.playbackRate = rate;
@@ -164,13 +151,13 @@ const init = async () => {
       return videoElement.playbackRate;
     },
     playbackStalled: () => false,
-    seeking: () => videoElement.seeking,
+    seeking: () => playerOperation.seek.isSeeking,
     src: () => videoElement.src,
     volume: (volume) => {
       if (volume) {
-        videoElement.volume = volume;
+        playerOperation.volume.set(volume);
       }
-      return videoElement.volume;
+      return playerOperation.volume.get();
     },
   };
   injectFetch();

@@ -28,7 +28,7 @@ const VideoController: FC = () => {
     if (time < 0) time = 0;
     if (time > window.__videoplayer.duration())
       time = window.__videoplayer.duration();
-    window.__videoplayer.currentTime(Math.floor(time * 100) / 100 + 0.001);
+    window.__videoplayer.currentTime((Math.floor(time * 100) + 0.1) / 100);
     //if (
     //  document.getElementsByClassName("CommentOnOffButton-iconHide").length > 0
     //) {
