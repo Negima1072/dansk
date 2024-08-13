@@ -83,25 +83,6 @@ const init = async () => {
   ) {
     throw new Error("fail to get required element");
   }
-  const styleElement = document.createElement("style");
-  document.head.appendChild(styleElement);
-  styleElement.textContent = `
-  div.grid-area_\\[player\\] > div.pos_relative > div > div > div > div.d_flex {
-    z-index: 12;
-  }
-  #dansk\\:FooterElement {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  `;
-  const videoController_1 = mainContainer.querySelectorAll(
-    "div[tabindex='0']>div>div.p_base",
-  )[0] as HTMLDivElement;
-  if (videoController_1) {
-    videoController_1.style.position = "relative";
-    videoController_1.style.zIndex = "11";
-  }
   const reactFiberProp = Object.keys(mainContainer).find((k) =>
     k.startsWith("__reactFiber"),
   ) as keyof HTMLDivElement;
@@ -170,16 +151,6 @@ const init = async () => {
       Storage.get("options_disable184") === "true" ? "#ff8300" : "#007cff";
   }
   */
-  if (mainContainer.parentElement !== null) {
-    mainContainer.parentElement.style.gridTemplateAreas = `
-      "d_header sidebar"
-      "player sidebar"
-      "d_footer sidebar"
-      "meta sidebar"
-      "bottom sidebar"
-      ". sidebar"
-    `;
-  }
   const videoContainer = document.querySelectorAll(
     "div[data-name=stage]",
   )[0] as HTMLDivElement;
