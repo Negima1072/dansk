@@ -1,4 +1,4 @@
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import type { FC } from "react";
 import { useEffect } from "react";
 import { createRoot } from "react-dom/client";
@@ -9,8 +9,13 @@ import { Header } from "@/components/Header";
 import { Main } from "@/components/Main";
 import { MemoPortal } from "@/components/MemoPortal";
 import { injectFetch } from "@/fetch";
+import { useLocation } from "@/hooks/useLocation";
 import { inject } from "@/libraries/cssInjector";
-import { getElements } from "@/libraries/getElements";
+import {
+  createBackgroundImageElement,
+  createLayerElement,
+  getElements,
+} from "@/libraries/getElements";
 //import { Storage } from "@/libraries/localStorage";
 import { sleep } from "@/libraries/sleep";
 
@@ -19,11 +24,34 @@ import { sleep } from "@/libraries/sleep";
  * @constructor
  */
 const Root: FC = () => {
-  const setElements = useSetAtom(elementAtom);
+  const [elements, setElements] = useAtom(elementAtom);
+  const location = useLocation();
   useEffect(() => {
-    const init = async () => setElements(await getElements());
+    const init = async () => {
+      console.log("init");
+      if (!elements) {
+        setElements(await getElements());
+        return;
+      }
+      await new Promise<void>((resolve) => {
+        const check = () => {
+          console.log(
+            document.body.contains(elements.LayerElement),
+            document.getElementById("dansk:LayerElement"),
+          );
+          if (!document.body.contains(elements.LayerElement)) {
+            resolve();
+            return;
+          }
+          setTimeout(check, 1000);
+        };
+        check();
+      });
+      console.log("reinit");
+      setElements(await getElements());
+    };
     void init();
-  }, []);
+  }, [location]);
   return (
     <>
       <Header />
@@ -165,9 +193,9 @@ const init = async () => {
   mainContainer.before(HeaderElement);
   const FooterElement = document.createElement("div");
   mainContainer.after(FooterElement);
-  const BackgroundImageElement = document.createElement("div");
+  const BackgroundImageElement = createBackgroundImageElement();
   videoContentContainer.appendChild(BackgroundImageElement);
-  const LayerElement = document.createElement("div");
+  const LayerElement = createLayerElement();
   videoCommentContiner.appendChild(LayerElement);
   const MemoElement = document.createElement("div");
   commentViewerContainer.before(MemoElement);
@@ -175,12 +203,8 @@ const init = async () => {
   commentViewerContainer.before(MainElement);
   HeaderElement.id = "dansk:HeaderElement";
   MainElement.id = "dansk:MainElement";
-  BackgroundImageElement.id = "dansk:BackgroundImageElement";
   FooterElement.id = "dansk:FooterElement";
-  LayerElement.id = "dansk:LayerElement";
   MemoElement.id = "dansk:MemoElement";
-  LayerElement.onclick = (e) => e.stopImmediatePropagation();
-  LayerElement.oncontextmenu = (e) => e.stopImmediatePropagation();
   const ReactRootElement = document.createElement("div");
   document.body.append(ReactRootElement);
   const ReactRoot = createRoot(ReactRootElement);

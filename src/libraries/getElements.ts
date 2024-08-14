@@ -24,18 +24,28 @@ const getElements = async (count = 0): Promise<TElement> => {
     MainElement = document.getElementById(
       "dansk:MainElement",
     ) as HTMLDivElement,
-    BackgroundImageElement = document.getElementById(
-      "dansk:BackgroundImageElement",
-    ) as HTMLDivElement,
     FooterElement = document.getElementById(
       "dansk:FooterElement",
-    ) as HTMLDivElement,
-    LayerElement = document.getElementById(
-      "dansk:LayerElement",
     ) as HTMLDivElement,
     MemoElement = document.getElementById(
       "dansk:MemoElement",
     ) as HTMLDivElement;
+  let BackgroundImageElement = document.getElementById(
+    "dansk:BackgroundImageElement",
+  ) as HTMLDivElement;
+  let LayerElement = document.getElementById(
+    "dansk:LayerElement",
+  ) as HTMLDivElement;
+  if (
+    !BackgroundImageElement ||
+    !document.body.contains(BackgroundImageElement)
+  ) {
+    const videoContentContainer = document.querySelectorAll(
+      "div[data-name=content]",
+    )[0] as HTMLDivElement;
+    BackgroundImageElement ??= createBackgroundImageElement();
+    videoContentContainer.appendChild(BackgroundImageElement);
+  }
   if (
     !(
       videoElement &&
@@ -51,6 +61,13 @@ const getElements = async (count = 0): Promise<TElement> => {
     await sleep(500);
     return await getElements(count + 1);
   }
+  if (!LayerElement || !document.body.contains(LayerElement)) {
+    const videoCommentContiner = document.querySelectorAll(
+      "div[data-name=comment]",
+    )[0] as HTMLDivElement;
+    LayerElement ??= createLayerElement();
+    videoCommentContiner.appendChild(LayerElement);
+  }
   return {
     videoElement,
     commentCommandInput,
@@ -65,3 +82,17 @@ const getElements = async (count = 0): Promise<TElement> => {
   };
 };
 export { getElements };
+
+export const createLayerElement = () => {
+  const LayerElement = document.createElement("div");
+  LayerElement.id = "dansk:LayerElement";
+  LayerElement.onclick = (e) => e.stopImmediatePropagation();
+  LayerElement.oncontextmenu = (e) => e.stopImmediatePropagation();
+  return LayerElement;
+};
+
+export const createBackgroundImageElement = () => {
+  const BackgroundImageElement = document.createElement("div");
+  BackgroundImageElement.id = "dansk:BackgroundImageElement";
+  return BackgroundImageElement;
+};
