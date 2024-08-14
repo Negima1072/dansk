@@ -83,6 +83,18 @@ const getElements = async (count = 0): Promise<TElement> => {
 };
 export { getElements };
 
+export const getMainContainer = () => {
+  return document.querySelectorAll(
+    "div.grid-area_\\[player\\]",
+  )[0] as HTMLDivElement;
+};
+
+export const getVideoElement = () => {
+  return document.querySelectorAll(
+    "div[data-name=content] > video",
+  )[0] as HTMLVideoElement;
+};
+
 export const createLayerElement = () => {
   const LayerElement = document.createElement("div");
   LayerElement.id = "dansk:LayerElement";

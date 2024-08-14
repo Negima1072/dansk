@@ -15,9 +15,12 @@ import {
   createBackgroundImageElement,
   createLayerElement,
   getElements,
+  getMainContainer,
+  getVideoElement,
 } from "@/libraries/getElements";
 //import { Storage } from "@/libraries/localStorage";
 import { sleep } from "@/libraries/sleep";
+import { initVideoPlayer } from "@/libraries/videoPlayerApi";
 
 /**
  * Reactのルート要素
@@ -49,6 +52,7 @@ const Root: FC = () => {
       });
       console.log("reinit");
       setElements(await getElements());
+      initVideoPlayer(getMainContainer(), getVideoElement());
     };
     void init();
   }, [location]);
@@ -74,9 +78,7 @@ const init = async () => {
     videoElement: HTMLVideoElement | undefined,
     count = 0;
   while (count < 300) {
-    mainContainer = document.querySelectorAll(
-      "div.grid-area_\\[player\\]",
-    )[0] as HTMLDivElement;
+    mainContainer = getMainContainer();
     commentViewerContainer = document.querySelectorAll(
       "div.grid-area_\\[sidebar\\] > div > div",
     )[0] as HTMLDivElement;
@@ -86,9 +88,7 @@ const init = async () => {
     videoCommentContiner = document.querySelectorAll(
       "div[data-name=comment]",
     )[0] as HTMLDivElement;
-    videoElement = document.querySelectorAll(
-      "div[data-name=content] > video",
-    )[0] as HTMLVideoElement;
+    videoElement = getVideoElement();
     count++;
     if (
       mainContainer === undefined ||
@@ -111,64 +111,7 @@ const init = async () => {
   ) {
     throw new Error("fail to get required element");
   }
-  const reactFiberProp = Object.keys(mainContainer).find((k) =>
-    k.startsWith("__reactFiber"),
-  ) as keyof HTMLDivElement;
-  const playerOperation = (
-    mainContainer[reactFiberProp] as unknown as ReactFiber
-  )?.child?.child?.memoizedProps?.playerOperation as PlayerOperation;
-  // for tmp make nvapi
-  window.__videoplayer = {
-    autoplay: () => videoElement.autoplay,
-    buffered: () => videoElement.buffered,
-    canPlayType: () => videoElement.canPlayType(""),
-    clear: () => {},
-    crossOrigin: (crossOrigin) => {
-      if (crossOrigin) {
-        videoElement.crossOrigin = crossOrigin;
-      }
-      return videoElement.crossOrigin as crossOriginType;
-    },
-    currentSrc: () => videoElement.currentSrc,
-    currentTime: (currentTime) => {
-      if (currentTime) {
-        playerOperation.currentTime.set(currentTime);
-      }
-      return playerOperation.currentTime.get();
-    },
-    defaultPlaybackRate: () => videoElement.defaultPlaybackRate,
-    duration: () => playerOperation.duration,
-    element: () => videoElement,
-    enableCurrentTimeSmoothing: false,
-    ended: () => videoElement.ended,
-    load: () => videoElement.load(),
-    mirror: () => false,
-    muted: (isMuted) => {
-      if (isMuted !== undefined) {
-        playerOperation.mute.set(isMuted);
-      }
-      return playerOperation.mute.isMuted;
-    },
-    originalCurrentTime: () => videoElement.currentTime,
-    pause: () => playerOperation.playback.pause(),
-    paused: () => !playerOperation.playback.isPlaying,
-    play: () => playerOperation.playback.play(),
-    playbackRate: (rate) => {
-      if (rate) {
-        videoElement.playbackRate = rate;
-      }
-      return videoElement.playbackRate;
-    },
-    playbackStalled: () => false,
-    seeking: () => playerOperation.seek.isSeeking,
-    src: () => videoElement.src,
-    volume: (volume) => {
-      if (volume) {
-        playerOperation.volume.set(volume);
-      }
-      return playerOperation.volume.get();
-    },
-  };
+  initVideoPlayer(mainContainer, videoElement);
   injectFetch();
   /*
   const postBtnElement = document.querySelector(
