@@ -8,6 +8,25 @@ const useLocation = () => {
       setCurrentHref(window.location.href);
     };
 
+    const originalPushState = window.history.pushState;
+    window.history.pushState = function (
+      data: unknown,
+      ununsed: string,
+      url?: string | URL | null,
+    ) {
+      originalPushState.apply(this, [data, ununsed, url]);
+      handleLocationChange();
+    };
+    const originalReplaceState = window.history.replaceState;
+    window.history.replaceState = function (
+      data: unknown,
+      ununsed: string,
+      url?: string | URL | null,
+    ) {
+      originalReplaceState.apply(this, [data, ununsed, url]);
+      handleLocationChange();
+    };
+
     window.addEventListener("popstate", handleLocationChange);
     window.addEventListener("hashchange", handleLocationChange);
 
