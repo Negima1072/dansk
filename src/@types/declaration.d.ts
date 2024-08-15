@@ -39,3 +39,53 @@ type NvPlayerApi = {
   src: () => string;
   volume: (volume?: number) => number;
 };
+
+type PlayerOperation = {
+  bufferedTime: { get: () => number };
+  commentVisibility: {
+    isVisible: boolean;
+    set: (isVisible: boolean) => void;
+  };
+  currentTime: {
+    get: () => number;
+    set: (time: number) => void;
+  };
+  duration: number;
+  loop: {
+    isLoop: boolean;
+    toggle: () => void;
+    set: (isLoop: boolean) => void;
+  };
+  mute: {
+    isMuted: boolean;
+    toggle: () => void;
+    set: (isMuted: boolean) => void;
+  };
+  playback: {
+    isPlaying: boolean;
+    toggle: () => void;
+    play: () => void;
+    pause: () => void;
+  };
+  seek: {
+    backward: () => void;
+    backwardSeconds: number;
+    forward: () => void;
+    forwardSeconds: number;
+    isForbidden: boolean;
+    isSeeking: boolean;
+    set: (time: number) => void;
+    toHead: () => void;
+  };
+  volume: {
+    get: () => number;
+    set: (volume: number) => void;
+    down: () => void;
+    up: () => void;
+  };
+};
+
+type ReactFiber = {
+  child?: ReactFiber;
+  memoizedProps?: { [key: string]: unknown };
+};
