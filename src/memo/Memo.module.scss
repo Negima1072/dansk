@@ -1,6 +1,8 @@
 .textarea {
+  padding: 2px;
   width: 100%;
   resize: vertical;
   color: var(--colors-action-text-on-base);
   fill: var(--colors-action-text-on-base);
+  background-color: var(--colors-layer-content-overlay);
 }
