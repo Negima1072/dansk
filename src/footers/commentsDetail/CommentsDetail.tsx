@@ -93,7 +93,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
                 ? commentDetails
                     .map((detail, i) => {
                       return (
-                        <tr>
+                        <tr key={`commentDetail_${i}`}>
                           <td>{i + 1}</td>
                           <td>{detail.time}</td>
                           <td>{detail.row}</td>
@@ -105,7 +105,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
                     .reverse()
                 : commentDetails.map((detail, i) => {
                     return (
-                      <tr>
+                      <tr key={`commentDetail_${i}`}>
                         <td>{i + 1}</td>
                         <td>{detail.time}</td>
                         <td>{detail.row}</td>
