@@ -18,16 +18,37 @@ export const preProcess = (
   layers: TLayer[],
   options: TLayerExportOptions,
 ): TMeasuredLayer[] => {
+  const formattedLayer = formatLayerData(layers);
   if (options.disableSpaceOptimization) {
-    return measureLayers(layers);
+    return measureLayers(formattedLayer);
   }
-  const layersWithSpace = preProcessSpace(layers);
+  const layersWithSpace = preProcessSpace(formattedLayer);
   const measuredLayers = measureLayers(layersWithSpace);
   if (options.monospaced) {
     return adjustSpace(measuredLayers);
   } else {
     return adjustEachSpace(measuredLayers);
   }
+};
+
+const formatLayerData = (layers: TLayer[]) => {
+  return layers.map((layer) => {
+    return {
+      ...layer,
+      content: layer.content.map((value) => {
+        const content = [...value.content];
+        while (content.length < value.lineCount) {
+          content.push("");
+        }
+        while (content.length > value.lineCount) {
+          content[value.lineCount - 1] += content
+            .splice(value.lineCount)
+            .join("");
+        }
+        return { ...value, content };
+      }),
+    };
+  });
 };
 
 const adjustEachSpace = (layers: TMeasuredLayer[]) => {
