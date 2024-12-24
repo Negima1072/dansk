@@ -16,6 +16,11 @@ const plugins = [
 	postcss({
 		extensions: [".css"],
 		modules: true,
+		use: {
+			sass: {
+				silenceDeprecations: ['legacy-js-api'],
+			}
+		}
 	}),
 	nodeResolve({
 		extensions: [".js"],

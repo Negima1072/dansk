@@ -1,7 +1,8 @@
 .input {
-  background-color: white;
+  padding: 2px;
+  background-color: var(--colors-layer-content-overlay);
   font-size: 12px;
-  border: solid 1px black;
+  color: var(--colors-action-text-on-base);
   margin: 0;
 }
 .table {
@@ -20,6 +21,14 @@
       text-align: center;
       margin: 1px;
       user-select: none;
+      cursor: pointer;
+      color: var(--colors-action-text-on-base);
+      fill: var(--colors-action-text-on-base);
+      background-color: var(--colors-action-base);
+      font-weight: var(--font-weights-bold);
+      &:hover {
+        background-color: var(--colors-action-base-hover);
+      }
     }
   }
 }

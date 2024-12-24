@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { TLayer } from "@/@types/layer";
 import {
   backgroundAtom,
+  elementAtom,
   exportLayerAtom,
   layerAtom,
   optionAtom,
@@ -42,7 +43,8 @@ const Trace = () => {
     [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
     [layerData, setLayerData] = useAtom(layerAtom),
     [optionData, setOptionData] = useAtom(optionAtom),
-    [background, setBackground] = useAtom(backgroundAtom);
+    [background, setBackground] = useAtom(backgroundAtom),
+    [elements] = useAtom(elementAtom);
   const layerDataRef = useRef(layerData),
     autoSaveInterval = useRef<number>(-1);
   useEffect(() => {
@@ -119,23 +121,15 @@ const Trace = () => {
       [background],
     ),
     downloadScreenshot = useCallback((commentOnly: boolean) => {
-      const video_el = document.querySelector(
-        "#MainVideoPlayer>video",
-      ) as HTMLVideoElement;
-      const comment_el = document.querySelector(
-        ".CommentRenderer>canvas",
-      ) as HTMLCanvasElement;
-      const symbol_el = document.querySelector(
-        ".VideoSymbolContainer>canvas",
-      ) as HTMLCanvasElement;
+      if (!elements) return;
       const canvas_screenshot = document.createElement("canvas");
-      canvas_screenshot.width = Number.parseInt(comment_el.style.width);
-      canvas_screenshot.height = Number.parseInt(comment_el.style.height);
+      canvas_screenshot.width = elements.commentCanvas.clientWidth;
+      canvas_screenshot.height = elements.commentCanvas.clientHeight;
       const ctx = canvas_screenshot.getContext("2d");
-      if (!ctx || !video_el || !comment_el || !symbol_el) return;
+      if (!ctx) return;
       if (!commentOnly) {
         ctx.drawImage(
-          video_el,
+          elements.videoElement,
           0,
           0,
           canvas_screenshot.width,
@@ -143,25 +137,20 @@ const Trace = () => {
         );
       }
       ctx.drawImage(
-        comment_el,
+        elements.commentCanvas,
         0,
         0,
         canvas_screenshot.width,
         canvas_screenshot.height,
       );
-      if (!commentOnly) {
-        ctx.drawImage(
-          symbol_el,
-          0,
-          0,
-          canvas_screenshot.width,
-          canvas_screenshot.height,
-        );
-      }
       const url_screenshot = canvas_screenshot.toDataURL("image/png");
       const a_screenshot = document.createElement("a");
       a_screenshot.href = url_screenshot;
-      a_screenshot.download = "screenshot.png";
+      a_screenshot.download = `screenshot${
+        Storage.get("options_addDatetimeToFilename") === "true"
+          ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
+          : ""
+      }.png`;
       a_screenshot.click();
       a_screenshot.remove();
       canvas_screenshot.remove();
@@ -419,20 +408,16 @@ const Trace = () => {
             </div>
           </div>
           <div className={`${Styles.row} ${Styles.layer}`}>
-            <div className={Styles.block}>
+            <div className={`${Styles.block} ${Styles.selector}`}>
               <LayerSelector />
             </div>
             <div className={Styles.block}>
-              <LayerEditor />
-            </div>
-            <div className={Styles.block}>
+              <div className={Styles.row}>
+                <LayerEditor />
+              </div>
               <div className={Styles.row}>
                 <Button click={saveToFile} text={"ファイルに保存"} />
-              </div>
-              <div className={Styles.row}>
                 <Button click={loadFromFile} text={"ファイルから読込"} />
-              </div>
-              <div className={Styles.row}>
                 <Button
                   click={loadFromAutoSave}
                   text={"バックアップから読込"}

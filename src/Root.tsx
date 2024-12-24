@@ -1,4 +1,4 @@
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import type { FC } from "react";
 import { useEffect } from "react";
 import { createRoot } from "react-dom/client";
@@ -9,21 +9,56 @@ import { Header } from "@/components/Header";
 import { Main } from "@/components/Main";
 import { MemoPortal } from "@/components/MemoPortal";
 import { injectFetch } from "@/fetch";
+import { useLocation } from "@/hooks/useLocation";
 import { inject } from "@/libraries/cssInjector";
-import { getElements } from "@/libraries/getElements";
-import { Storage } from "@/libraries/localStorage";
-import { sleep } from "@/libraries/sleep";
+import {
+  createBackgroundImageElement,
+  createFooterElement,
+  createHeaderElement,
+  createLayerElement,
+  createMainElement,
+  createMemoElement,
+  getBaseElements,
+  getElements,
+  getMainContainer,
+  getVideoContainer,
+  getVideoElement,
+} from "@/libraries/getElements";
+//import { Storage } from "@/libraries/localStorage";
+import { initVideoPlayer } from "@/libraries/videoPlayerApi";
 
 /**
  * Reactのルート要素
  * @constructor
  */
 const Root: FC = () => {
-  const setElements = useSetAtom(elementAtom);
+  const [elements, setElements] = useAtom(elementAtom);
+  const location = useLocation();
   useEffect(() => {
-    const init = async () => setElements(await getElements());
+    const init = async () => {
+      if (!elements) {
+        setElements(await getElements());
+        return;
+      }
+      await new Promise<void>((resolve) => {
+        const check = () => {
+          console.log(
+            document.body.contains(elements.LayerElement),
+            document.getElementById("dansk:LayerElement"),
+          );
+          if (!document.body.contains(elements.LayerElement)) {
+            resolve();
+            return;
+          }
+          setTimeout(check, 1000);
+        };
+        check();
+      });
+      setElements(await getElements());
+      initVideoPlayer(getMainContainer(), getVideoElement());
+    };
     void init();
-  }, []);
+  }, [location]);
   return (
     <>
       <Header />
@@ -39,69 +74,16 @@ const Root: FC = () => {
  * ニコ動の各要素が生えたら、だんすくの初期化をする
  */
 const init = async () => {
-  let mainContainer,
-    mainContainerPlayer,
-    CommentRenderer,
-    videoSymbolContainerCanvas: HTMLCanvasElement | undefined,
-    videoContainer,
-    mainContainerPlayerPanel,
-    videoPlayer,
-    count = 0;
-  while (count < 300) {
-    mainContainer = document.getElementsByClassName(
-      "MainContainer",
-    )[0] as HTMLDivElement;
-    mainContainerPlayer = mainContainer?.getElementsByClassName(
-      "MainContainer-player",
-    )[0] as HTMLDivElement;
-    mainContainerPlayerPanel = mainContainer?.getElementsByClassName(
-      "MainContainer-playerPanel",
-    )[0] as HTMLDivElement;
-    if (mainContainer?.getElementsByClassName("CommentRenderer").length > 0)
-      CommentRenderer = mainContainer?.getElementsByClassName(
-        "CommentRenderer",
-      )[0] as HTMLDivElement;
-    videoSymbolContainerCanvas = document.getElementsByClassName(
-      "VideoSymbolContainer-canvas",
-    )[0] as HTMLCanvasElement;
-    videoContainer = document.getElementsByClassName(
-      "InView VideoContainer",
-    )[0] as HTMLDivElement;
-    videoPlayer = document.getElementById("VideoPlayer") as HTMLDivElement;
-    count++;
-    if (
-      mainContainer === undefined ||
-      mainContainerPlayer === undefined ||
-      mainContainerPlayerPanel === undefined ||
-      CommentRenderer === undefined ||
-      videoSymbolContainerCanvas === undefined ||
-      videoContainer === undefined ||
-      videoPlayer === undefined
-    ) {
-      await sleep(100);
-    } else {
-      break;
-    }
-  }
-  if (
-    mainContainer === undefined ||
-    mainContainerPlayer === undefined ||
-    mainContainerPlayerPanel === undefined ||
-    CommentRenderer === undefined ||
-    videoSymbolContainerCanvas === undefined ||
-    videoContainer === undefined ||
-    videoPlayer === undefined
-  ) {
-    throw new Error("fail to get required element");
-  }
-  videoContainer.addEventListener(
-    "scroll",
-    (e) => {
-      (e.target as HTMLDivElement).scroll(0, 0);
-    },
-    { passive: false },
-  );
+  const {
+    mainContainer,
+    commentViewerContainer,
+    videoContentContainer,
+    videoCommentContainer,
+    videoElement,
+  } = await getBaseElements();
+  initVideoPlayer(mainContainer, videoElement);
   injectFetch();
+  /*
   const postBtnElement = document.querySelector(
     ".CommentPostButton",
   ) as HTMLButtonElement;
@@ -109,30 +91,33 @@ const init = async () => {
     postBtnElement.style.backgroundColor =
       Storage.get("options_disable184") === "true" ? "#ff8300" : "#007cff";
   }
-  const HeaderElement = document.createElement("div");
+  */
+  const videoContainer = getVideoContainer();
+  videoContainer.addEventListener(
+    "scroll",
+    (e) => {
+      (e.target as HTMLDivElement).scroll(0, 0);
+    },
+    { passive: false },
+  );
+  const HeaderElement = createHeaderElement();
   mainContainer.before(HeaderElement);
-  const MainElement = document.createElement("div");
-  mainContainerPlayer.appendChild(MainElement);
-  const FooterElement = document.createElement("div");
+
+  const FooterElement = createFooterElement();
   mainContainer.after(FooterElement);
-  const BackgroundImageElement = document.createElement("div");
-  /*CommentRenderer.insertBefore(
-    BackgroundImageElement,
-    CommentRenderer.firstChild
-  );*/
-  videoPlayer.appendChild(BackgroundImageElement);
-  const LayerElement = document.createElement("div");
-  videoSymbolContainerCanvas.after(LayerElement);
-  const MemoElement = document.createElement("div");
-  mainContainerPlayerPanel.prepend(MemoElement);
-  HeaderElement.id = "dansk:HeaderElement";
-  MainElement.id = "dansk:MainElement";
-  BackgroundImageElement.id = "dansk:BackgroundImageElement";
-  FooterElement.id = "dansk:FooterElement";
-  LayerElement.id = "dansk:LayerElement";
-  MemoElement.id = "dansk:MemoElement";
-  LayerElement.onclick = (e) => e.stopImmediatePropagation();
-  LayerElement.oncontextmenu = (e) => e.stopImmediatePropagation();
+
+  const BackgroundImageElement = createBackgroundImageElement();
+  videoContentContainer.appendChild(BackgroundImageElement);
+
+  const LayerElement = createLayerElement();
+  videoCommentContainer.appendChild(LayerElement);
+
+  const MemoElement = createMemoElement();
+  commentViewerContainer.before(MemoElement);
+
+  const MainElement = createMainElement();
+  commentViewerContainer.before(MainElement);
+
   const ReactRootElement = document.createElement("div");
   document.body.append(ReactRootElement);
   const ReactRoot = createRoot(ReactRootElement);

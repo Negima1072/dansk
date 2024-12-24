@@ -7,12 +7,12 @@ const injectFetch = () => {
   const originalFetch = window.fetch;
   window.fetch = (
     input: URL | RequestInfo,
-    init?: RequestInit | undefined,
+    init?: RequestInit,
   ): Promise<Response> => {
     try {
       const url = input instanceof Request ? input.url : input.toString();
       const urlPattern184 =
-        /^https:\/\/nv-comment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
+        /^https:\/\/public\.nvcomment\.nicovideo\.jp\/v1\/threads\/\d+\/comments$/;
       if (
         urlPattern184.test(url) &&
         init?.method === "POST" &&
@@ -31,7 +31,7 @@ const injectFetch = () => {
         return originalFetch(input, init);
       }
       const urlPatternComment =
-        /^https:\/\/nv-comment\.nicovideo.jp\/v1\/threads$/;
+        /^https:\/\/public\.nvcomment\.nicovideo.jp\/v1\/threads$/;
       if (
         urlPatternComment.test(url) &&
         init?.method === "POST" &&
@@ -53,16 +53,13 @@ const injectFetch = () => {
               }
               result.data.threads = result.data.threads.map((thread) => {
                 thread.comments = thread.comments.map((comment) => {
-                  return {
-                    ...comment,
-                    isPremium: true,
-                  };
+                  return { ...comment, isPremium: true };
                 });
                 return thread;
               });
               return resolve(new Response(JSON.stringify(result)));
             } catch (e) {
-              reject(e);
+              reject(e as Error);
             }
           })();
         });
