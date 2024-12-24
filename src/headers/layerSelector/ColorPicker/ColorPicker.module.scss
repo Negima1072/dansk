@@ -32,12 +32,14 @@
     display: none;
     position: fixed;
     z-index: 10000;
-    background: white;
     border: solid 1px var(--colors-action-text-on-base);
     border-radius: 5px;
     padding: 2px 2px;
     .input {
       width: 75px;
+      background-color: var(--colors-layer-content-overlay);
+      color: var(--colors-action-text-on-base);
+      padding: 2px;
       border: solid var(--colors-action-text-on-base) 1px;
       border-radius: 5px;
       padding: 5px 10px;
