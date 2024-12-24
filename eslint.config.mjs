@@ -7,7 +7,10 @@ import globals from "globals";
 
 export default tseslint.config(
     {
-        ignores: ["**/*.js"],
+        ignores: ["**/*.js", "**/*.mjs", "**/*.cjs", "**/*.ts"],
+    },
+    {
+        files: ["src/**/*.ts", "src/**/*.tsx"],
     },
     {
         languageOptions: {
