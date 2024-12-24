@@ -65,14 +65,9 @@ const BackgroundPicker = () => {
       input.type = "file";
       input.onchange = () => {
         if (!input.files || !input.files[0]) return;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (typeof e.target?.result === "string") {
-            background.images.push(createImage(e.target.result));
-            setBackground({ ...background });
-          }
-        };
-        reader.readAsDataURL(input.files[0]);
+        const blob = URL.createObjectURL(input.files[0]);
+        background.images.push(createImage(blob));
+        setBackground({ ...background });
       };
       input.click();
     },

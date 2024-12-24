@@ -1,3 +1,4 @@
+import NiconiComments from "@xpadev-net/niconicomments";
 import { useAtom } from "jotai";
 import type { ChangeEvent, FC } from "react";
 import { useRef } from "react";
@@ -10,6 +11,10 @@ import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharLi
 import { Storage } from "@/libraries/localStorage";
 
 import Styles from "./Layer.module.scss";
+
+NiconiComments.internal.definition.initConfig.initConfig();
+const niconicoFonts =
+  NiconiComments.internal.definition.config.defaultConfig.fonts.html5;
 
 type LayerProps = {
   data: TLayer;
@@ -36,10 +41,13 @@ type LayerInputProps = {
   _height: number | undefined;
   _lineHeight: number;
   _fontSize: number;
+  _fontFamily: "defont" | "mincho" | "gothic";
 };
 const LayerInput = styled.textarea<LayerInputProps>`
   height: ${(props) => (props._height ? `${props._height}px` : "unset")};
   line-height: ${(props) => props._lineHeight}px;
+  font-weight: ${(props) => niconicoFonts[props._fontFamily].weight};
+  font-family: ${(props) => niconicoFonts[props._fontFamily].font};
   font-size: ${(props) => props._fontSize}px;
 `;
 
@@ -109,7 +117,7 @@ const Layer: FC<LayerProps> = (props) => {
     <>
       <>{gridImage()}</>
       <LayerBox
-        className={`${Styles.layer} ${Styles[props.data.font]} ${
+        className={`${Styles.layer} ${
           props.data.selected ? Styles.active : ""
         } ${props.data.visible ? "" : Styles.invisible} ${
           optionData?.grid && grids[props.data.value] ? Styles.grid : ""
@@ -132,6 +140,7 @@ const Layer: FC<LayerProps> = (props) => {
               _height={value.height || value.line * value.lineCount}
               _lineHeight={value.line}
               _fontSize={value.font}
+              _fontFamily={props.data.font}
               key={`layer${props.data.layerId}-group${index}`}
               className={Styles.textarea}
               value={value.content.join("\n")}

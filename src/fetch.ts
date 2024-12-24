@@ -7,7 +7,7 @@ const injectFetch = () => {
   const originalFetch = window.fetch;
   window.fetch = (
     input: URL | RequestInfo,
-    init?: RequestInit | undefined,
+    init?: RequestInit,
   ): Promise<Response> => {
     try {
       const url = input instanceof Request ? input.url : input.toString();
@@ -53,16 +53,13 @@ const injectFetch = () => {
               }
               result.data.threads = result.data.threads.map((thread) => {
                 thread.comments = thread.comments.map((comment) => {
-                  return {
-                    ...comment,
-                    isPremium: true,
-                  };
+                  return { ...comment, isPremium: true };
                 });
                 return thread;
               });
               return resolve(new Response(JSON.stringify(result)));
             } catch (e) {
-              reject(e);
+              reject(e as Error);
             }
           })();
         });
