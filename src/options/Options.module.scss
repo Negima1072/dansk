@@ -5,6 +5,11 @@
   .number {
     padding: 5px 10px;
   }
+  input {
+    padding: 2px;
+    background-color: var(--colors-layer-content-overlay);
+    color: var(--colors-action-text-on-base);
+  }
   input[type="text"],
   input[type="number"] {
     width: 100%;
