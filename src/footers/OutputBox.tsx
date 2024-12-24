@@ -211,7 +211,11 @@ const OutputBox: FC = () => {
       const url_textarea = window.URL.createObjectURL(blob);
       const a_textarea = document.createElement("a");
       a_textarea.href = url_textarea;
-      a_textarea.download = "comments.txt";
+      a_textarea.download = `comments${
+        Storage.get("options_addDatetimeToFilename") === "true"
+          ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
+          : ""
+      }.dansk.txt`;
       a_textarea.click();
       a_textarea.remove();
       window.URL.revokeObjectURL(url_textarea);

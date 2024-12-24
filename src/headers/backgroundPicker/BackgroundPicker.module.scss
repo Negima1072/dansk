@@ -7,6 +7,9 @@
   }
 }
 .urlInput {
+  padding: 2px;
+  background-color: var(--colors-layer-content-overlay);
+  color: var(--colors-action-text-on-base);
   &:invalid {
     border: solid 1px red;
   }
@@ -20,6 +23,7 @@
 
 .colorInputs {
   display: flex;
+  gap: 5px;
   .colorInputLabel {
     flex: 1;
     position: relative;
@@ -32,6 +36,9 @@
   .textInput {
     flex: 1;
     width: 100px;
+    padding: 2px;
+    background-color: var(--colors-layer-content-overlay);
+    color: var(--colors-action-text-on-base);
     &:invalid {
       outline: solid 1px red;
     }

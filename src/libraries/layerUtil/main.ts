@@ -146,7 +146,7 @@ const isLastLine = (
 const addTrailingSpace = (input: string, width: number) => {
   if (width < 0) {
     alert(
-      "不明なエラーが発生しました\n改善のため、コメントデータを開発者に送ってください",
+      "不明なエラーが発生しました\n設定から空白の最適化を無効にし、自身で空白を調整して再度試してください\n改善のため、コメントデータを開発者に送ってください",
     );
     return input;
   }

@@ -85,6 +85,10 @@ const ImageCrop = ({ imageId, close }: props) => {
         close();
       });
     };
+    img.onerror = () => {
+      alert("この画像はクロスオリジン制約により編集できません。\n一度パソコンに保存してから再度読み込んでください。");
+      close();
+    };
   };
 
   const scaling = (mode: "shrink" | "expand") => {
