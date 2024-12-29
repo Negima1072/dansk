@@ -1,4 +1,4 @@
 export default {
-	"src/**/*.{ts,tsx,json,scss,css}": [()=>"npm run eslint:fix",()=>"npm run check-types",()=>"npm run format"],
-	"src/libraries/layerUtil/*": [()=>"npm run test"]
+	"src/**/*.{ts,tsx,json,scss,css}": [()=>"pnpm eslint:fix",()=>"pnpm check-types",()=>"pnpm format"],
+	"src/libraries/layerUtil/*": [()=>"pnpm test"]
 };
