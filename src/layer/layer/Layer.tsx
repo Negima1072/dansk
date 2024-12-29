@@ -9,8 +9,8 @@ import { layerAtom, optionAtom } from "@/atoms";
 import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharList";
 import { Storage } from "@/libraries/localStorage";
 
-import Styles from "./Layer.module.scss";
 import { getFont } from "@/libraries/font";
+import Styles from "./Layer.module.scss";
 
 type LayerProps = {
   data: TLayer;
@@ -55,10 +55,10 @@ const LayerInput = styled.textarea<LayerInputProps>`
  * @constructor
  */
 const Layer: FC<LayerProps> = (props) => {
-  const [layerData, setLayerData] = useAtom(layerAtom),
-    [optionData] = useAtom(optionAtom),
-    layerElement = useRef<HTMLDivElement>(null),
-    currentLayer = useRef<TLayer>();
+  const [layerData, setLayerData] = useAtom(layerAtom);
+  const [optionData] = useAtom(optionAtom);
+  const layerElement = useRef<HTMLDivElement>(null);
+  const currentLayer = useRef<TLayer>();
   const onchange = (layer: TLayer) => {
     if (!layerData || !setLayerData) return;
     for (let i = 0; i < layerData.length; i++) {
@@ -98,12 +98,11 @@ const Layer: FC<LayerProps> = (props) => {
         const grid = grids[props.data.id] as TGridPosBlob;
         if (grid.immutable) {
           return <img src={grid.any} alt="" />;
-        } else {
-          if (grid[props.data.pos] === undefined) {
-            return <></>;
-          }
-          return <img src={grid[props.data.pos]} alt="" />;
         }
+        if (grid[props.data.pos] === undefined) {
+          return <></>;
+        }
+        return <img src={grid[props.data.pos]} alt="" />;
       }
     }
     return <></>;
@@ -111,7 +110,7 @@ const Layer: FC<LayerProps> = (props) => {
 
   return (
     <>
-      <>{gridImage()}</>
+      {gridImage()}
       <LayerBox
         className={`${Styles.layer} ${
           props.data.selected ? Styles.active : ""

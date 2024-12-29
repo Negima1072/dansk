@@ -14,11 +14,11 @@ import Styles from "./Memo.module.scss";
 const Memo: FC = () => {
   const [value, setValue] = useState<string>(Storage.get("memo"));
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value);
-    },
-    onBlur = () => {
-      Storage.set("memo", value);
-    };
+    setValue(e.target.value);
+  };
+  const onBlur = () => {
+    Storage.set("memo", value);
+  };
   return (
     <Spoiler text={"Memo"}>
       <textarea
@@ -30,9 +30,9 @@ const Memo: FC = () => {
         className={Styles.textarea}
         spellCheck={false}
         style={{
-          fontFamily: getFont("gothic").font
+          fontFamily: getFont("gothic").font,
         }}
-      ></textarea>
+      />
     </Spoiler>
   );
 };

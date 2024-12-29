@@ -14,21 +14,21 @@ const buttons: number[] = [0.01, 0.03, 0.1, 0.3, 1, 3];
  * @constructor
  */
 const VideoController: FC = () => {
-  const [value, setValue] = useState<string>("0"),
-    [isValueChanged, setValueChanged] = useState<boolean>(false),
-    [isSeeking, setIsSeeking] = useState<boolean>(false),
-    timeInputElement = useRef<HTMLInputElement>(null);
-
+  const [value, setValue] = useState<string>("0");
+  const [isValueChanged, setValueChanged] = useState<boolean>(false);
+  const [isSeeking, setIsSeeking] = useState<boolean>(false);
+  const timeInputElement = useRef<HTMLInputElement>(null);
   const updateTime = (time: number, relative = true) => {
     setIsSeeking(true);
     //const commentOnOffButton = document.getElementsByClassName(
     //  "CommentOnOffButton",
     //)[0] as HTMLButtonElement;
-    if (relative) time += window.__videoplayer.currentTime();
-    if (time < 0) time = 0;
-    if (time > window.__videoplayer.duration())
-      time = window.__videoplayer.duration();
-    window.__videoplayer.currentTime((Math.floor(time * 100) + 0.1) / 100);
+    let _time = time;
+    if (relative) _time += window.__videoplayer.currentTime();
+    if (_time < 0) _time = 0;
+    if (_time > window.__videoplayer.duration())
+      _time = window.__videoplayer.duration();
+    window.__videoplayer.currentTime((Math.floor(_time * 100) + 0.1) / 100);
     //if (
     //  document.getElementsByClassName("CommentOnOffButton-iconHide").length > 0
     //) {
@@ -90,12 +90,14 @@ const VideoController: FC = () => {
           return (
             <div className={Styles.column} key={key}>
               <button
+                type="button"
                 className={Styles.row}
                 onClick={() => void updateTime(data)}
               >
                 +{data.toFixed(2)}
               </button>
               <button
+                type="button"
                 className={Styles.row}
                 onClick={() => void updateTime(data * -1)}
               >

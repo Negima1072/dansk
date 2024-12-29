@@ -20,14 +20,14 @@ import Styles from "./OutputBox.module.scss";
  * @constructor
  */
 const OutputBox: FC = () => {
-  const [elements] = useAtom(elementAtom),
-    [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
-    [textareaValue, setTextareaValue] = useState<string[]>([]),
-    [isReverse, setIsReverse] = useState<boolean>(false),
-    [isPosting, setIsPosting] = useState<boolean>(false),
-    [isShowDetails, setIsShowDetails] = useState<boolean>(false),
-    [spoilerMessage, setSpoilerMessage] = useState<string>(""),
-    postAllCancel = useRef<boolean>(false);
+  const [elements] = useAtom(elementAtom);
+  const [exportLayer, setExportLayer] = useAtom(exportLayerAtom);
+  const [textareaValue, setTextareaValue] = useState<string[]>([]);
+  const [isReverse, setIsReverse] = useState<boolean>(false);
+  const [isPosting, setIsPosting] = useState<boolean>(false);
+  const [isShowDetails, setIsShowDetails] = useState<boolean>(false);
+  const [spoilerMessage, setSpoilerMessage] = useState<string>("");
+  const postAllCancel = useRef<boolean>(false);
   useEffect(() => {
     if (!elements || exportLayer.length === 0) return;
     setTextareaValue([...textareaValue, ...exportLayer]);
@@ -60,7 +60,7 @@ const OutputBox: FC = () => {
     } else if (isReverse) {
       for (let i = stringArr.length - 1; i >= 0; i--) {
         const match = stringArr[i]?.match(/^\[([^\]]+)]/);
-        if (match && match[1]) {
+        if (match?.[1]) {
           command = match[1];
           break;
         }
@@ -79,8 +79,7 @@ const OutputBox: FC = () => {
         if (seekCommand[1]) currentTime += Number(seekCommand[1]) * 60;
         if (seekCommand[2]) currentTime += Number(seekCommand[2]);
         if (seekCommand[3])
-          currentTime +=
-            Number(seekCommand[3]) / Math.pow(10, seekCommand[3].length);
+          currentTime += Number(seekCommand[3]) / 10 ** seekCommand[3].length;
         window.__videoplayer.currentTime(currentTime);
       }
       stringArr[isReverse ? stringArr.length - 1 : 0] = comment;
@@ -91,7 +90,7 @@ const OutputBox: FC = () => {
   };
   const setLine = (command: string, comment: string): boolean => {
     if (!elements) return false;
-    comment = comment
+    const _comment = comment
       .replace(/\[A0]/gi, "\u00A0")
       .replace(/\[SP]/gi, "\u3000")
       .replace(/\[00]/gi, "\u2000")
@@ -110,116 +109,118 @@ const OutputBox: FC = () => {
      * Reactの管理するelement.valueは正常に動作しないので↓を参考にする
      * https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
      */
-    if (command != "") {
+    if (command !== "") {
       updateReactHTMLInput(elements.commentCommandInput, command);
     }
-    updateReactHTMLTextArea(elements.commentInputTextarea, comment);
+    updateReactHTMLTextArea(elements.commentInputTextarea, _comment);
     return true;
   };
   const onSetLineClick = useCallback(() => {
-      if (!elements || textareaValue.length === 0) return;
-      const content = getCommandAndComment(textareaValue, isReverse);
-      if (!content) return;
-      if (setLine(content.command, content.comment)) {
-        if (isReverse) {
-          textareaValue.pop();
-        } else {
-          textareaValue.shift();
-        }
-        setTextareaValue([...textareaValue]);
+    if (!elements || textareaValue.length === 0) return;
+    const content = getCommandAndComment(textareaValue, isReverse);
+    if (!content) return;
+    if (setLine(content.command, content.comment)) {
+      if (isReverse) {
+        textareaValue.pop();
+      } else {
+        textareaValue.shift();
       }
-    }, [textareaValue, isReverse]),
-    onPostAll = useCallback(() => {
-      const postAll = async () => {
-        if (!elements) return;
-        postAllCancel.current = false;
-        const isOwnerMode = !!location.href.match(
-            /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/,
-          ),
-          length = textareaValue.length;
-        const timeSpan = Number(
-          Storage.get(
-            isOwnerMode ? "options_timespan_owner" : "options_timespan_main",
-          ),
+      setTextareaValue([...textareaValue]);
+    }
+  }, [textareaValue, isReverse]);
+  const onPostAll = useCallback(() => {
+    const postAll = async () => {
+      if (!elements) return;
+      postAllCancel.current = false;
+      const isOwnerMode = !!location.href.match(
+        /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/,
+      );
+      const length = textareaValue.length;
+      const timeSpan = Number(
+        Storage.get(
+          isOwnerMode ? "options_timespan_owner" : "options_timespan_main",
+        ),
+      );
+      setIsPosting(true);
+      setSpoilerMessage("待機中");
+      for (let i = 0; i < length; i++) {
+        if (postAllCancel.current) {
+          setIsPosting(false);
+          postAllCancel.current = false;
+          setSpoilerMessage("キャンセルされました");
+          return;
+        }
+        const content = getCommandAndComment(textareaValue, isReverse);
+        if (!content) {
+          setIsPosting(false);
+          setSpoilerMessage("コメントデータのパースに失敗しました");
+          return;
+        }
+        await sleep(timeSpan);
+        setSpoilerMessage(
+          `セット中(進行度: ${i + 1}/${length} 文字数: ${
+            content.comment.length
+          })`,
         );
-        setIsPosting(true);
-        setSpoilerMessage("待機中");
-        for (let i = 0; i < length; i++) {
-          if (postAllCancel.current) {
-            setIsPosting(false);
-            postAllCancel.current = false;
-            setSpoilerMessage("キャンセルされました");
-            return;
+        if (setLine(content.command, content.comment)) {
+          if (isReverse) {
+            textareaValue.pop();
+          } else {
+            textareaValue.shift();
           }
-          const content = getCommandAndComment(textareaValue, isReverse);
-          if (!content) {
-            setIsPosting(false);
-            setSpoilerMessage("コメントデータのパースに失敗しました");
-            return;
-          }
-          await sleep(timeSpan);
+          await sleep(500);
+          elements.commentInputTextarea.dispatchEvent(
+            new KeyboardEvent("keydown", {
+              key: "Enter",
+              keyCode: 13,
+              which: 13,
+              bubbles: true,
+              cancelable: true,
+            }),
+          );
+          setTextareaValue([...textareaValue]);
           setSpoilerMessage(
-            `セット中(進行度: ${i + 1}/${length} 文字数: ${
+            `投下しました(進行度: ${i + 1}/${length} 文字数: ${
               content.comment.length
             })`,
           );
-          if (setLine(content.command, content.comment)) {
-            if (isReverse) {
-              textareaValue.pop();
-            } else {
-              textareaValue.shift();
-            }
-            await sleep(500);
-            elements.commentInputTextarea.dispatchEvent(
-              new KeyboardEvent("keydown", {
-                key: "Enter",
-                keyCode: 13,
-                which: 13,
-                bubbles: true,
-                cancelable: true,
-              }),
-            );
-            setTextareaValue([...textareaValue]);
-            setSpoilerMessage(
-              `投下しました(進行度: ${i + 1}/${length} 文字数: ${
-                content.comment.length
-              })`,
-            );
-          } else {
-            setSpoilerMessage(
-              `セットに失敗しました(進行度: ${i + 1}/${length} 文字数: ${
-                content.comment.length
-              })`,
-            );
-          }
+        } else {
+          setSpoilerMessage(
+            `セットに失敗しました(進行度: ${i + 1}/${length} 文字数: ${
+              content.comment.length
+            })`,
+          );
         }
-        setIsPosting(false);
-      };
-      void postAll();
-    }, [textareaValue, elements]),
-    onPostAllCancel = useCallback(() => (postAllCancel.current = true), []),
-    toggleIsReverse = useCallback(() => {
-      setIsReverse(!isReverse);
-    }, [isReverse]),
-    toggleCommentsDetail = useCallback(() => {
-      setIsShowDetails(!isShowDetails);
-    }, [isShowDetails]),
-    downloadTextArea = useCallback(() => {
-      const blob = new Blob([textareaValue.join("\n")], {
-        type: "text/plain",
-      });
-      const url_textarea = window.URL.createObjectURL(blob);
-      const a_textarea = document.createElement("a");
-      a_textarea.href = url_textarea;
-      a_textarea.download = `comments${
-        Storage.get("options_addDatetimeToFilename") === "true"
-          ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
-          : ""
-      }.dansk.txt`;
-      a_textarea.click();
-      a_textarea.remove();
-      window.URL.revokeObjectURL(url_textarea);
-    }, [textareaValue]);
+      }
+      setIsPosting(false);
+    };
+    void postAll();
+  }, [textareaValue, elements]);
+  const onPostAllCancel = useCallback(() => {
+    postAllCancel.current = true;
+  }, []);
+  const toggleIsReverse = useCallback(() => {
+    setIsReverse(!isReverse);
+  }, [isReverse]);
+  const toggleCommentsDetail = useCallback(() => {
+    setIsShowDetails(!isShowDetails);
+  }, [isShowDetails]);
+  const downloadTextArea = useCallback(() => {
+    const blob = new Blob([textareaValue.join("\n")], {
+      type: "text/plain",
+    });
+    const url_textarea = window.URL.createObjectURL(blob);
+    const a_textarea = document.createElement("a");
+    a_textarea.href = url_textarea;
+    a_textarea.download = `comments${
+      Storage.get("options_addDatetimeToFilename") === "true"
+        ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
+        : ""
+    }.dansk.txt`;
+    a_textarea.click();
+    a_textarea.remove();
+    window.URL.revokeObjectURL(url_textarea);
+  }, [textareaValue]);
   if (exportLayer === undefined) return <></>;
   return (
     <>
@@ -236,7 +237,7 @@ const OutputBox: FC = () => {
                 const data = e.target.value.split(/\r\n|\r|\n/);
                 setTextareaValue(e.target.value === "" ? [] : data);
               }}
-            ></textarea>
+            />
           </div>
           <div className={Styles.row}>
             <div className={Styles.block}>

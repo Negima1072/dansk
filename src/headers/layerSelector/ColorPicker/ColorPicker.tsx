@@ -33,10 +33,9 @@ const convert6digitHexColorCode = (color: string) => {
     if (!match) {
       return "#000000";
     }
-    return `#${match[1]?.repeat(2)}${match[2]?.repeat(2)}${match[3]?.repeat(
-      2,
-    )}`;
-  } else if (color.length === 7) {
+    return `#${match[1]?.repeat(2)}${match[2]?.repeat(2)}${match[3]?.repeat(2)}`;
+  }
+  if (color.length === 7) {
     return color;
   }
   return "#000000";

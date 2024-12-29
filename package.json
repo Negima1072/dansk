@@ -10,14 +10,10 @@
     "build:dev": "pnpm copy-assets&&rollup -c rollup.develop.config.mjs&&node ./utils/replaceVersion.mjs",
     "watch": "rollup -c rollup.develop.config.mjs -w",
     "copy-assets": "pnpm dlx rimraf dist&&copyfiles -u 1 \"assets/**/*\" dist/",
-    "check-types": "pnpm --package=typescript dlx tsc --noEmit",
-    "eslint": "eslint",
-    "eslint:fix": "eslint --fix",
-    "format": "prettier --write \"src/**/*.{tsx,ts,js,json,css,scss}\"",
-    "lint": "pnpm eslint&&pnpm check-types",
-    "lint:fix": "pnpm eslint:fix&&pnpm check-types&&pnpm format",
-    "prepare": "husky",
-    "dev": "vite"
+    "lint": "biome lint --write .",
+    "format": "biome format .",
+    "check": "biome check --write .",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -41,7 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
-    "@eslint/js": "^9.17.0",
+    "@biomejs/biome": "1.9.4",
     "@jest/globals": "^29.7.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^28.0.2",
@@ -61,17 +57,12 @@
     "@types/styled-components": "^5.1.34",
     "@vitejs/plugin-react": "^4.3.4",
     "copyfiles": "^2.4.1",
-    "eslint": "^9.17.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.37.3",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.2.11",
     "postcss-modules": "^6.0.1",
-    "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "rollup": "^4.29.1",
     "rollup-plugin-postcss": "^4.0.2",
@@ -80,7 +71,6 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.2",
     "web-ext-types": "^3.2.1"
   }
 }

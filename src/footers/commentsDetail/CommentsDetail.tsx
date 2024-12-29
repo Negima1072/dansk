@@ -49,7 +49,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
               if (seekCommand[2]) currentTime += Number(seekCommand[2]);
               if (seekCommand[3])
                 currentTime +=
-                  Number(seekCommand[3]) / Math.pow(10, seekCommand[3].length);
+                  Number(seekCommand[3]) / 10 ** seekCommand[3].length;
               timeMSec = currentTime;
             }
             if (timeMSec < 0) timeMSec = 0;
@@ -75,7 +75,7 @@ const CommentsDetail: React.FC<propType> = (props) => {
       close={props.close}
     >
       <div className={Styles.wrapper}>
-        {props.textareaValue.length == 0 ? (
+        {props.textareaValue.length === 0 ? (
           <p>コメントがありません。</p>
         ) : (
           <table className={Styles.table}>

@@ -27,11 +27,11 @@ const getPosition = (
   wrapper: RefObject<HTMLDivElement>,
 ) => {
   const x =
-      (e.clientX - (wrapper.current?.getBoundingClientRect().left || 0)) /
-      (wrapper.current?.clientWidth || 1),
-    y =
-      (e.clientY - (wrapper.current?.getBoundingClientRect().top || 0)) /
-      (wrapper.current?.clientHeight || 1);
+    (e.clientX - (wrapper.current?.getBoundingClientRect().left || 0)) /
+    (wrapper.current?.clientWidth || 1);
+  const y =
+    (e.clientY - (wrapper.current?.getBoundingClientRect().top || 0)) /
+    (wrapper.current?.clientHeight || 1);
   return { x, y };
 };
 
@@ -39,8 +39,8 @@ const getMovement = (
   e: MouseEvent<HTMLElement>,
   wrapper: RefObject<HTMLDivElement>,
 ) => {
-  const x = e.movementX / (wrapper.current?.clientWidth || 1),
-    y = e.movementY / (wrapper.current?.clientHeight || 1);
+  const x = e.movementX / (wrapper.current?.clientWidth || 1);
+  const y = e.movementY / (wrapper.current?.clientHeight || 1);
   return { x, y };
 };
 
@@ -125,11 +125,11 @@ const Crop = ({ update, range }: props) => {
       return;
     }
     const { x, y } = getPosition(e, wrapperRef);
-    (["_pos1X", "_pos1Y", "_pos2X", "_pos2Y"] as TCropKey[]).forEach((key) => {
+    for (const key of ["_pos1X", "_pos1Y", "_pos2X", "_pos2Y"] as TCropKey[]) {
       if (moveTarget.includes(key)) {
         cropRange[key] = key.includes("X") ? x : y;
       }
-    });
+    }
     setCropRange({ ...cropRange });
   };
 

@@ -12,11 +12,6 @@ import { Trace } from "@/headers/Trace";
 const Header: FC = () => {
   const [elements] = useAtom(elementAtom);
   if (!elements) return <></>;
-  return ReactDOM.createPortal(
-    <>
-      <Trace />
-    </>,
-    elements.HeaderElement,
-  );
+  return ReactDOM.createPortal(<Trace />, elements.HeaderElement);
 };
 export { Header };

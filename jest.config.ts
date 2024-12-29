@@ -3,7 +3,7 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -92,8 +92,8 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
 
-  "moduleNameMapper": {
-    "^@/(.+)": "<rootDir>/src/$1"
+  moduleNameMapper: {
+    "^@/(.+)": "<rootDir>/src/$1",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -199,8 +199,7 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-  testRegex: "/__tests__/.*\.(test|spec)\.[jt]sx?$"
-
+  testRegex: "/__tests__/.*.(test|spec).[jt]sx?$",
 };
 
 export default config;

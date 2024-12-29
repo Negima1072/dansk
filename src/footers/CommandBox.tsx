@@ -17,12 +17,11 @@ import Styles from "./CommandBox.module.scss";
  * @constructor
  */
 const CommandBox = () => {
-  const [elements] = useAtom(elementAtom),
-    [commands, setCommands] = useState<string[]>([]);
+  const [elements] = useAtom(elementAtom);
+  const [commands, setCommands] = useState<string[]>([]);
   const commandOnChange = () => {
     if (
-      elements &&
-      elements.commentCommandInput &&
+      elements?.commentCommandInput &&
       commands.join(" ") !== elements.commentCommandInput.value
     )
       setCommands(

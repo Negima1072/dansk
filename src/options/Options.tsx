@@ -11,45 +11,44 @@ import Styles from "./Options.module.scss";
 
 const Options = () => {
   const [value, setValue] = useState(
-      (Object.keys(defaultValue) as TLocalStorageKeys[]).reduce(
-        (pv, key) => {
-          if (!key.match(/^options_/)) return pv;
-          pv[key] = Storage.get(key);
-          return pv;
-        },
-        {} as { [key in TLocalStorageKeys]: string },
-      ),
+    (Object.keys(defaultValue) as TLocalStorageKeys[]).reduce(
+      (pv, key) => {
+        if (!key.match(/^options_/)) return pv;
+        pv[key] = Storage.get(key);
+        return pv;
+      },
+      {} as { [key in TLocalStorageKeys]: string },
     ),
-    updateValue = (key: TLocalStorageKeys, result: string) => {
-      //この処理は新機能追加による暫定的な処置です
-      if (
-        key === "options_exportLayerName" &&
-        !value["options_commandOrder"].includes("layerName") &&
-        result === "true"
-      ) {
-        value["options_commandOrder"] =
-          "layerName|" + value["options_commandOrder"];
-        Storage.set("options_commandOrder", value["options_commandOrder"]);
+  );
+  const updateValue = (key: TLocalStorageKeys, result: string) => {
+    //この処理は新機能追加による暫定的な処置です
+    if (
+      key === "options_exportLayerName" &&
+      !value.options_commandOrder.includes("layerName") &&
+      result === "true"
+    ) {
+      value.options_commandOrder = `layerName|${value.options_commandOrder}`;
+      Storage.set("options_commandOrder", value.options_commandOrder);
+    }
+    if (key === "options_disable184") {
+      const postBtn = document.querySelector(
+        ".CommentPostButton",
+      ) as HTMLButtonElement;
+      if (postBtn) {
+        postBtn.style.backgroundColor =
+          result === "true" ? "#ff8300" : "#007cff";
       }
-      if (key === "options_disable184") {
-        const postBtn = document.querySelector(
-          ".CommentPostButton",
-        ) as HTMLButtonElement;
-        if (postBtn) {
-          postBtn.style.backgroundColor =
-            result === "true" ? "#ff8300" : "#007cff";
-        }
-      }
-      value[key] = result;
-      setValue({ ...value });
-      Storage.set(key, result);
-    };
+    }
+    value[key] = result;
+    setValue({ ...value });
+    Storage.set(key, result);
+  };
   return (
     <div className={Styles.wrapper}>
       {(Object.keys(value) as TLocalStorageKeys[]).map((key) => {
         const defValue = defaultValue[key] as TLocalStorageOptionItem;
         if (defValue.required && Storage.get(defValue.required) !== "true")
-          return <div key={key}></div>;
+          return <div key={key} />;
         switch (defValue.type) {
           case "boolean":
             return (

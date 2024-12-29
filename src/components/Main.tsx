@@ -12,11 +12,6 @@ import { VideoController } from "@/main/VideoController";
 const Main: FC = () => {
   const [elements] = useAtom(elementAtom);
   if (!elements) return <></>;
-  return ReactDOM.createPortal(
-    <>
-      <VideoController />
-    </>,
-    elements.MainElement,
-  );
+  return ReactDOM.createPortal(<VideoController />, elements.MainElement);
 };
 export { Main };

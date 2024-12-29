@@ -9,17 +9,17 @@ import {
   layerAtom,
   optionAtom,
 } from "@/atoms";
+import { LayerPortal } from "@/components/LayerPortal";
 import { Button } from "@/components/button/Button";
 import { Dropdown } from "@/components/dropdown/Dropdown";
-import { LayerPortal } from "@/components/LayerPortal";
 import { Popup } from "@/components/popup/Popup";
 import { Slider } from "@/components/slider/Slider";
 import { Spoiler } from "@/components/spoiler/Spoiler";
+import { Templates } from "@/headers/Trace.templates";
 import { BackgroundPicker } from "@/headers/backgroundPicker/BackgroundPicker";
 import { Backup } from "@/headers/backup/Backup";
 import { LayerEditor } from "@/headers/layerEditor/LayerEditor";
 import { LayerSelector } from "@/headers/layerSelector/LayerSelector";
-import { Templates } from "@/headers/Trace.templates";
 import { domo2dansa } from "@/libraries/domoTool";
 import { layerUtil } from "@/libraries/layerUtil/layerUtil";
 import { Storage } from "@/libraries/localStorage";
@@ -34,19 +34,19 @@ import Styles from "./Trace.module.scss";
  * @constructor
  */
 const Trace = () => {
-  const [tabMode, setTabMode] = useState<boolean>(false),
-    [layerDropdownValue, setLayerDropdownValue] = useState<string>(
-      "big_ue_ender_full_gothic_W17_L9",
-    ),
-    [optionEditing, setOptionEditing] = useState<boolean>(false),
-    [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false),
-    [exportLayer, setExportLayer] = useAtom(exportLayerAtom),
-    [layerData, setLayerData] = useAtom(layerAtom),
-    [optionData, setOptionData] = useAtom(optionAtom),
-    [background, setBackground] = useAtom(backgroundAtom),
-    [elements] = useAtom(elementAtom);
-  const layerDataRef = useRef(layerData),
-    autoSaveInterval = useRef<number>(-1);
+  const [tabMode, setTabMode] = useState<boolean>(false);
+  const [layerDropdownValue, setLayerDropdownValue] = useState<string>(
+    "big_ue_ender_full_gothic_W17_L9",
+  );
+  const [optionEditing, setOptionEditing] = useState<boolean>(false);
+  const [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false);
+  const [exportLayer, setExportLayer] = useAtom(exportLayerAtom);
+  const [layerData, setLayerData] = useAtom(layerAtom);
+  const [optionData, setOptionData] = useAtom(optionAtom);
+  const [background, setBackground] = useAtom(backgroundAtom);
+  const [elements] = useAtom(elementAtom);
+  const layerDataRef = useRef(layerData);
+  const autoSaveInterval = useRef<number>(-1);
   useEffect(() => {
     layerDataRef.current = layerData;
   }, [layerData]);
@@ -78,205 +78,204 @@ const Trace = () => {
     };
   }, [setTabMode]);
   const exportHandler = useCallback(
-      (value: string) => {
-        const isMonospaced = !!value.match(/Monospaced/),
-          isOwner = !!value.match(/Owner/),
-          isSelectedOnly = !!value.match(/Selected/);
-        let targetData: TLayer[] = layerData;
-        if (isSelectedOnly) {
-          targetData = targetData.filter((layer) => layer.selected);
-        }
-        if (
-          !isSelectedOnly &&
-          Storage.get("options_exportHiddenLayer") === "false"
-        ) {
-          targetData = targetData.filter((layer) => layer.visible);
-        }
-        const data = layerUtil.toString(
-          targetData,
-          isMonospaced,
-          tabMode,
-          isOwner,
-        );
-        if (!data) return;
-        setExportLayer([...exportLayer, ...layerUtil.formatAsString(data)]);
-      },
-      [exportLayer, layerData, tabMode],
-    ),
-    toggleTabMode = useCallback(() => setTabMode(!tabMode), [tabMode]),
-    toggleReplaceMode = useCallback(
-      () => setOptionData({ ...optionData, replace: !optionData.replace }),
-      [optionData],
-    ),
-    toggleGridMode = useCallback(
-      () => setOptionData({ ...optionData, grid: !optionData.grid }),
-      [optionData],
-    ),
-    layerDropdownOnChange = useCallback(
-      (value: string) => setLayerDropdownValue(value),
-      [],
-    ),
-    openBackgroundMenu = useCallback(
-      () => setBackground({ ...background, open: true }),
-      [background],
-    ),
-    downloadScreenshot = useCallback((commentOnly: boolean) => {
-      if (!elements) return;
-      const canvas_screenshot = document.createElement("canvas");
-      canvas_screenshot.width = elements.commentCanvas.clientWidth;
-      canvas_screenshot.height = elements.commentCanvas.clientHeight;
-      const ctx = canvas_screenshot.getContext("2d");
-      if (!ctx) return;
-      if (!commentOnly) {
-        ctx.drawImage(
-          elements.videoElement,
-          0,
-          0,
-          canvas_screenshot.width,
-          canvas_screenshot.height,
-        );
+    (value: string) => {
+      const isMonospaced = !!value.match(/Monospaced/);
+      const isOwner = !!value.match(/Owner/);
+      const isSelectedOnly = !!value.match(/Selected/);
+      let targetData: TLayer[] = layerData;
+      if (isSelectedOnly) {
+        targetData = targetData.filter((layer) => layer.selected);
       }
+      if (
+        !isSelectedOnly &&
+        Storage.get("options_exportHiddenLayer") === "false"
+      ) {
+        targetData = targetData.filter((layer) => layer.visible);
+      }
+      const data = layerUtil.toString(
+        targetData,
+        isMonospaced,
+        tabMode,
+        isOwner,
+      );
+      if (!data) return;
+      setExportLayer([...exportLayer, ...layerUtil.formatAsString(data)]);
+    },
+    [exportLayer, layerData, tabMode],
+  );
+  const toggleTabMode = useCallback(() => setTabMode(!tabMode), [tabMode]);
+  const toggleReplaceMode = useCallback(
+    () => setOptionData({ ...optionData, replace: !optionData.replace }),
+    [optionData],
+  );
+  const toggleGridMode = useCallback(
+    () => setOptionData({ ...optionData, grid: !optionData.grid }),
+    [optionData],
+  );
+  const layerDropdownOnChange = useCallback(
+    (value: string) => setLayerDropdownValue(value),
+    [],
+  );
+  const openBackgroundMenu = useCallback(
+    () => setBackground({ ...background, open: true }),
+    [background],
+  );
+  const downloadScreenshot = useCallback((commentOnly: boolean) => {
+    if (!elements) return;
+    const canvas_screenshot = document.createElement("canvas");
+    canvas_screenshot.width = elements.commentCanvas.clientWidth;
+    canvas_screenshot.height = elements.commentCanvas.clientHeight;
+    const ctx = canvas_screenshot.getContext("2d");
+    if (!ctx) return;
+    if (!commentOnly) {
       ctx.drawImage(
-        elements.commentCanvas,
+        elements.videoElement,
         0,
         0,
         canvas_screenshot.width,
         canvas_screenshot.height,
       );
-      const url_screenshot = canvas_screenshot.toDataURL("image/png");
-      const a_screenshot = document.createElement("a");
-      a_screenshot.href = url_screenshot;
-      a_screenshot.download = `screenshot${
-        Storage.get("options_addDatetimeToFilename") === "true"
-          ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
-          : ""
-      }.png`;
-      a_screenshot.click();
-      a_screenshot.remove();
-      canvas_screenshot.remove();
-      window.URL.revokeObjectURL(url_screenshot);
-    }, []),
-    toggleBackgroundVisible = useCallback(
-      () => setBackground({ ...background, visible: !background.visible }),
-      [background],
-    ),
-    changeBackgroundTransparency = useCallback(
-      (t: number) => setBackground({ ...background, transparency: t }),
-      [background],
-    ),
-    toggleOptionEditing = useCallback(
-      () => setOptionEditing(!optionEditing),
-      [optionEditing],
-    ),
-    togglePreview = useCallback(
-      () =>
-        setOptionData({
-          ...optionData,
-          preview:
-            optionData.preview === "disable"
-              ? "enable"
-              : optionData.preview === "enable"
-                ? "previewOnly"
-                : "disable",
-        }),
-      [optionData],
-    ),
-    addLayer = useCallback(() => {
-      const id = layerUtil.getIdByValue(layerDropdownValue);
-      const template = Templates[id];
-      if (!typeGuard.trace.template(template)) return;
-      const color: string | false | undefined = layerData.reduce(
-        (pv, val) => {
-          if (val.selected) {
-            val.selected = false;
-            if (pv === undefined) {
-              return val.color;
-            } else {
-              return false;
-            }
+    }
+    ctx.drawImage(
+      elements.commentCanvas,
+      0,
+      0,
+      canvas_screenshot.width,
+      canvas_screenshot.height,
+    );
+    const url_screenshot = canvas_screenshot.toDataURL("image/png");
+    const a_screenshot = document.createElement("a");
+    a_screenshot.href = url_screenshot;
+    a_screenshot.download = `screenshot${
+      Storage.get("options_addDatetimeToFilename") === "true"
+        ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
+        : ""
+    }.png`;
+    a_screenshot.click();
+    a_screenshot.remove();
+    canvas_screenshot.remove();
+    window.URL.revokeObjectURL(url_screenshot);
+  }, []);
+  const toggleBackgroundVisible = useCallback(
+    () => setBackground({ ...background, visible: !background.visible }),
+    [background],
+  );
+  const changeBackgroundTransparency = useCallback(
+    (t: number) => setBackground({ ...background, transparency: t }),
+    [background],
+  );
+  const toggleOptionEditing = useCallback(
+    () => setOptionEditing(!optionEditing),
+    [optionEditing],
+  );
+  const togglePreview = useCallback(
+    () =>
+      setOptionData({
+        ...optionData,
+        preview:
+          optionData.preview === "disable"
+            ? "enable"
+            : optionData.preview === "enable"
+              ? "previewOnly"
+              : "disable",
+      }),
+    [optionData],
+  );
+  const addLayer = useCallback(() => {
+    const id = layerUtil.getIdByValue(layerDropdownValue);
+    const template = Templates[id];
+    if (!typeGuard.trace.template(template)) return;
+    const color: string | false | undefined = layerData.reduce(
+      (pv, val) => {
+        if (val.selected) {
+          val.selected = false;
+          if (pv === undefined) {
+            return val.color;
           }
-          return pv;
-        },
-        undefined as undefined | false | string,
-      );
-      setLayerData([
-        ...layerData,
-        {
-          ...template,
-          type: id,
-          font: "gothic",
-          visible: true,
-          content: layerUtil.generateLineFromTemplate(template),
-          selected: true,
-          color: color || "#000000",
-          layerId: uuid(),
-        },
-      ]);
-    }, [layerData, layerDropdownValue]),
-    toggleVisible = useCallback(
-      (value: string) => {
-        const tmpLayer = layerData.map((layer) => {
-          layer.visible = value === "visible";
-          return layer;
-        });
-        setLayerData([...tmpLayer]);
+          return false;
+        }
+        return pv;
       },
-      [layerData],
-    ),
-    saveToFile = useCallback(() => {
-      const json = JSON.stringify(layerData);
-      const blob = new Blob([json], { type: "application/json" });
-      const fileName = window.prompt("ファイル名を入力してください", "");
-      if (fileName === "" || fileName === null) {
-        alert("キャンセルされました");
-        return;
+      undefined as undefined | false | string,
+    );
+    setLayerData([
+      ...layerData,
+      {
+        ...template,
+        type: id,
+        font: "gothic",
+        visible: true,
+        content: layerUtil.generateLineFromTemplate(template),
+        selected: true,
+        color: color || "#000000",
+        layerId: uuid(),
+      },
+    ]);
+  }, [layerData, layerDropdownValue]);
+  const toggleVisible = useCallback(
+    (value: string) => {
+      const tmpLayer = layerData.map((layer) => {
+        layer.visible = value === "visible";
+        return layer;
+      });
+      setLayerData([...tmpLayer]);
+    },
+    [layerData],
+  );
+  const saveToFile = useCallback(() => {
+    const json = JSON.stringify(layerData);
+    const blob = new Blob([json], { type: "application/json" });
+    const fileName = window.prompt("ファイル名を入力してください", "");
+    if (fileName === "" || fileName === null) {
+      alert("キャンセルされました");
+      return;
+    }
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `${fileName}${
+      Storage.get("options_addDatetimeToFilename") === "true"
+        ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
+        : ""
+    }.dansk.json`;
+    link.click();
+  }, [layerData]);
+  const loadFromAutoSave = useCallback(() => {
+    setAutoSaveWindow(true);
+  }, []);
+  const loadFromFile = useCallback(() => {
+    if (!confirm("現在作業中のデータが消えてしまいますがよろしいですか？"))
+      return;
+    const reader = new FileReader();
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json,.xml,*";
+    input.onchange = (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target?.files?.[0]) {
+        reader.readAsText(target.files[0]);
       }
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = `${fileName}${
-        Storage.get("options_addDatetimeToFilename") === "true"
-          ? new Date().toISOString().slice(0, -5).replace(/[-T:]/g, "")
-          : ""
-      }.dansk.json`;
-      link.click();
-    }, [layerData]),
-    loadFromAutoSave = useCallback(() => {
-      setAutoSaveWindow(true);
-    }, []),
-    loadFromFile = useCallback(() => {
-      if (!confirm("現在作業中のデータが消えてしまいますがよろしいですか？"))
-        return;
-      const reader = new FileReader();
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = ".json,.xml,*";
-      input.onchange = (e) => {
-        const target = e.target as HTMLInputElement;
-        if (target?.files && target.files[0]) {
-          reader.readAsText(target.files[0]);
-        }
-      };
-      reader.onload = function (e) {
-        if (typeof e.target?.result !== "string") return;
-        let data: unknown;
-        if (e.target.result.startsWith("<?xml")) {
-          data = domo2dansa(e.target.result);
-        } else {
-          data = JSON.parse(e.target.result);
-        }
-        if (!typeGuard.layer.isLayers(data)) return;
-        setLayerData(
-          data.map((layer) => {
-            layer.overwrite = true;
-            if (!layer.layerId) {
-              layer.layerId = uuid();
-            }
-            return layer;
-          }),
-        );
-      };
-      input.click();
-    }, []);
+    };
+    reader.onload = (e) => {
+      if (typeof e.target?.result !== "string") return;
+      let data: unknown;
+      if (e.target.result.startsWith("<?xml")) {
+        data = domo2dansa(e.target.result);
+      } else {
+        data = JSON.parse(e.target.result);
+      }
+      if (!typeGuard.layer.isLayers(data)) return;
+      setLayerData(
+        data.map((layer) => {
+          layer.overwrite = true;
+          if (!layer.layerId) {
+            layer.layerId = uuid();
+          }
+          return layer;
+        }),
+      );
+    };
+    input.click();
+  }, []);
   return (
     <>
       <Spoiler text={"Trace"}>
@@ -383,7 +382,7 @@ const Trace = () => {
                   click={toggleBackgroundVisible}
                   text={background.visible ? "画像非表示" : "画像表示"}
                   value={""}
-                ></Button>
+                />
               )}
               {background.selected > -1 && (
                 <Slider
@@ -391,7 +390,7 @@ const Trace = () => {
                   value={100}
                   max={100}
                   min={0}
-                ></Slider>
+                />
               )}
             </div>
             <div className={Styles.block}>

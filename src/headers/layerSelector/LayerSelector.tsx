@@ -17,89 +17,87 @@ import Styles from "./LayerSelector.module.scss";
  * @constructor
  */
 const LayerSelector = () => {
-  const [layerData, setLayerData] = useAtom(layerAtom),
-    [editingLayer, setEditingLayer] = useState<number>(-1),
-    [editingLayerName, setEditingLayerName] = useState<string>(""),
-    [isSetting, setSetting] = useState<number>(-1);
+  const [layerData, setLayerData] = useAtom(layerAtom);
+  const [editingLayer, setEditingLayer] = useState<number>(-1);
+  const [editingLayerName, setEditingLayerName] = useState<string>("");
+  const [isSetting, setSetting] = useState<number>(-1);
   if (!layerData || !setLayerData) return <></>;
   const onColorChange = (event: ChangeEvent<HTMLInputElement>, key: number) => {
-      const layer = layerData[key];
-      if (!layer) return;
-      layer.color = event.target.value;
-      setLayerData([...layerData]);
-    },
-    onLayerNameChange = (key: number) => {
-      const layer = layerData[key];
-      if (!layer) return;
-      layer.text = editingLayerName;
-      setLayerData([...layerData]);
-      setEditingLayer(-1);
-    },
-    togglePos = (key: number) => {
-      const layer = layerData[key];
-      if (!layer) return;
-      layer.pos = layerUtil.togglePos(layer);
-      setLayerData([...layerData]);
-    },
-    toggleFont = (key: number) => {
-      const layer = layerData[key];
-      if (!layer) return;
-      layer.font = layerUtil.toggleFont(layer.font);
-      setLayerData([...layerData]);
-    },
-    toggleVisible = (key: number) => {
-      const layer = layerData[key];
-      if (!layer) return;
-      layer.visible = !layer.visible;
-      setLayerData([...layerData]);
-    },
-    toggleSelected = (e: React.MouseEvent<HTMLDivElement>, key: number) => {
-      const layer = layerData[key];
-      if (!layer) return;
-      if (e.ctrlKey || e.metaKey) {
-        layer.selected = !layer.selected;
-        if (
-          layerData.reduce(
-            (count, item) => count + Number(item.selected),
-            0,
-          ) === 0
-        )
-          layer.selected = true;
-      } else {
-        for (const item of layerData) {
-          item.selected = false;
-        }
-
-        layer.selected = true;
-      }
-      setLayerData([...layerData]);
-    },
-    closeCssEditor = useCallback(
-      (data: TLayer) => {
-        layerData[isSetting] = data;
-        setLayerData([...layerData]);
-        setSetting(-1);
-      },
-      [isSetting, layerData],
-    ),
-    remove = (key: number) => {
-      if (!confirm(`削除してよろしいですか？`)) return;
-      const layer = layerData,
-        deletedLayer = layer.splice(key, 1),
-        beforeLayer = layer[key - 1];
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.color = event.target.value;
+    setLayerData([...layerData]);
+  };
+  const onLayerNameChange = (key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.text = editingLayerName;
+    setLayerData([...layerData]);
+    setEditingLayer(-1);
+  };
+  const togglePos = (key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.pos = layerUtil.togglePos(layer);
+    setLayerData([...layerData]);
+  };
+  const toggleFont = (key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.font = layerUtil.toggleFont(layer.font);
+    setLayerData([...layerData]);
+  };
+  const toggleVisible = (key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.visible = !layer.visible;
+    setLayerData([...layerData]);
+  };
+  const toggleSelected = (e: React.MouseEvent<HTMLDivElement>, key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    if (e.ctrlKey || e.metaKey) {
+      layer.selected = !layer.selected;
       if (
-        layer.length > 0 &&
-        deletedLayer[0]?.selected === true &&
-        layer.reduce((count, item) => count + Number(item.selected), 0) === 0
-      ) {
-        if (beforeLayer) {
-          beforeLayer.selected = true;
-        } else {
-          if (layer[0]) layer[0].selected = true;
-        }
+        layerData.reduce((count, item) => count + Number(item.selected), 0) ===
+        0
+      )
+        layer.selected = true;
+    } else {
+      for (const item of layerData) {
+        item.selected = false;
       }
-      setLayerData([...layer]);
-    };
+
+      layer.selected = true;
+    }
+    setLayerData([...layerData]);
+  };
+  const closeCssEditor = useCallback(
+    (data: TLayer) => {
+      layerData[isSetting] = data;
+      setLayerData([...layerData]);
+      setSetting(-1);
+    },
+    [isSetting, layerData],
+  );
+  const remove = (key: number) => {
+    if (!confirm("削除してよろしいですか？")) return;
+    const layer = layerData;
+    const deletedLayer = layer.splice(key, 1);
+    const beforeLayer = layer[key - 1];
+    if (
+      layer.length > 0 &&
+      deletedLayer[0]?.selected === true &&
+      layer.reduce((count, item) => count + Number(item.selected), 0) === 0
+    ) {
+      if (beforeLayer) {
+        beforeLayer.selected = true;
+      } else {
+        if (layer[0]) layer[0].selected = true;
+      }
+    }
+    setLayerData([...layer]);
+  };
   return (
     <div className={Styles.wrapper}>
       <table className={Styles.table}>
@@ -140,7 +138,6 @@ const LayerSelector = () => {
               >
                 {editingLayer === key ? (
                   <input
-                    autoFocus
                     className={Styles.input}
                     value={editingLayerName}
                     onChange={(e) => setEditingLayerName(e.target.value)}

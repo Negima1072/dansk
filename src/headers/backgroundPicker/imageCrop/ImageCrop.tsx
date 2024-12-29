@@ -52,13 +52,13 @@ const ImageCrop = ({ imageId, close }: props) => {
       const baseCanvas = document.createElement("canvas");
       baseCanvas.width = 2560;
       baseCanvas.height = 1440;
-      const baseContext = baseCanvas.getContext("2d")!;
+      const baseContext = baseCanvas.getContext("2d");
       if (!baseContext) return;
       const scale = Math.min(1920 / img.naturalWidth, 1080 / img.naturalHeight);
-      const imgWidth = img.naturalWidth * scale,
-        imgHeight = img.naturalHeight * scale,
-        offsetX = (1920 - imgWidth) / 2,
-        offsetY = (1080 - imgHeight) / 2;
+      const imgWidth = img.naturalWidth * scale;
+      const imgHeight = img.naturalHeight * scale;
+      const offsetX = (1920 - imgWidth) / 2;
+      const offsetY = (1080 - imgHeight) / 2;
       baseCanvas.style.background = "red";
       baseContext.drawImage(
         img,
@@ -94,18 +94,18 @@ const ImageCrop = ({ imageId, close }: props) => {
   };
 
   const scaling = (mode: "shrink" | "expand") => {
-    const currentWidth = range._pos2X - range._pos1X,
-      currentHeight = range._pos2Y - range._pos1Y;
+    const currentWidth = range._pos2X - range._pos1X;
+    const currentHeight = range._pos2Y - range._pos1Y;
     const targetScale = Math[mode === "shrink" ? "min" : "max"](
       currentWidth,
       currentHeight,
     );
-    const targetWidth = targetScale,
-      targetHeight = targetScale;
-    const _pos1X = (currentWidth - targetWidth) / 2 + range._pos1X,
-      _pos1Y = (currentHeight - targetHeight) / 2 + range._pos1Y;
-    const _pos2X = _pos1X + targetWidth,
-      _pos2Y = _pos1Y + targetHeight;
+    const targetWidth = targetScale;
+    const targetHeight = targetScale;
+    const _pos1X = (currentWidth - targetWidth) / 2 + range._pos1X;
+    const _pos1Y = (currentHeight - targetHeight) / 2 + range._pos1Y;
+    const _pos2X = _pos1X + targetWidth;
+    const _pos2Y = _pos1Y + targetHeight;
     setRange({ _pos1X, _pos1Y, _pos2X, _pos2Y });
   };
 

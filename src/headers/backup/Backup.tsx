@@ -29,39 +29,39 @@ const Backup = (props: propType) => {
   });
   const setLayerData = useSetAtom(layerAtom);
   const load = (key: string) => {
-      const value = saveData[Number(key)];
-      if (
-        !value ||
-        !confirm("現在作業中のデータが消えてしまいますがよろしいですか？")
-      )
-        return;
-      setLayerData(
-        value.data.map((layer) => {
-          layer.overwrite = true;
-          if (!layer.layerId) {
-            layer.layerId = uuid();
-          }
-          return layer;
-        }),
-      );
-      props.close();
-    },
-    remove = (key: string) => {
-      saveData.splice(Number(key), 1);
-      setSaveData([...saveData]);
-      Storage.set("autoSave", saveData);
-    };
+    const value = saveData[Number(key)];
+    if (
+      !value ||
+      !confirm("現在作業中のデータが消えてしまいますがよろしいですか？")
+    )
+      return;
+    setLayerData(
+      value.data.map((layer) => {
+        layer.overwrite = true;
+        if (!layer.layerId) {
+          layer.layerId = uuid();
+        }
+        return layer;
+      }),
+    );
+    props.close();
+  };
+  const remove = (key: string) => {
+    saveData.splice(Number(key), 1);
+    setSaveData([...saveData]);
+    Storage.set("autoSave", saveData);
+  };
   return (
     <Popup title={"自動保存"} close={props.close}>
       <div className={Styles.wrapper}>
-        {saveData.length == 0 ? (
+        {saveData.length === 0 ? (
           <p>バックアップがありません。</p>
         ) : (
           Object.keys(saveData)
             .reverse()
             .map((key) => {
               const value = saveData[Number(key)];
-              if (!value) return <span key={key}></span>;
+              if (!value) return <span key={key} />;
               return (
                 <div className={Styles.block} key={key}>
                   <h3>

@@ -19,10 +19,10 @@ type propType = {
  * @constructor
  */
 const Spoiler: React.FC<propType> = (props) => {
-  const localStorageKey = "display_" + props.text.toLowerCase();
+  const localStorageKey = `display_${props.text.toLowerCase()}`;
   if (!typeGuard.localStorage.isKey(localStorageKey)) return <></>;
   const [spoilerOpen, setSpoilerOpen] = useState<boolean>(
-    Storage.get(localStorageKey) == "true",
+    Storage.get(localStorageKey) === "true",
   );
   const changeSpoilerVisibility = (visibility: boolean) => {
     setSpoilerOpen(visibility);

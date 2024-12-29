@@ -41,7 +41,7 @@ const BackgroundImageDisplay = ({ setImageCrop }: props) => {
     const image = background.images[index];
     if (!image) return;
     const link = document.createElement("a");
-    if (!image.url.startsWith("http")){
+    if (!image.url.startsWith("http")) {
       link.href = image.url;
       link.download = `${image.id}.png`;
       link.click();

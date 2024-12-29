@@ -6,8 +6,8 @@ import type {
   TMeasuredLayerComment,
   TMeasuredLayerLine,
 } from "@/@types/layer";
-import { command2str } from "@/libraries/layerUtil/command";
 import { OverflowError } from "@/libraries/layerUtil/OverflowError";
+import { command2str } from "@/libraries/layerUtil/command";
 import { rebuildSpace } from "@/libraries/layerUtil/utils";
 
 import { preProcess } from "./preProcess";

@@ -26,67 +26,67 @@ const LayerEditor = () => {
     return pv;
   }, "");
   const changePos = useCallback(
-      (target: string) => {
-        if (!typeGuard.trace.commentPos(target)) return;
-        setLayerData(
-          layerData.map((value) => {
-            if (value.selected && value.posList.includes(target)) {
-              value.pos = target;
-            }
-            return value;
-          }),
-        );
-      },
-      [layerData],
-    ),
-    changeFont = useCallback(
-      (target: string) => {
-        if (!typeGuard.trace.commentFont(target)) return;
-        setLayerData(
-          layerData.map((value) => {
-            if (value.selected) {
-              value.font = target;
-            }
-            return value;
-          }),
-        );
-      },
-      [layerData],
-    ),
-    changeColor = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        setLayerData(
-          layerData.map((value) => {
-            if (value.selected) {
-              value.color = e.target.value;
-            }
-            return value;
-          }),
-        );
-      },
-      [layerData],
-    ),
-    move = useCallback(
-      (target: string) => {
-        if (!target.match(/up|down/)) return;
-        if (target === "up") {
-          layerData.forEach((value, i) => {
-            const lastValue = layerData[i - 1];
-            if (value?.selected === true && lastValue)
-              layerData.splice(i - 1, 2, value, lastValue);
-          });
-        } else {
-          layerData.reverse().forEach((value, i) => {
-            const lastValue = layerData[i - 1];
-            if (value?.selected === true && lastValue)
-              layerData.splice(i - 1, 2, value, lastValue);
-          });
-          layerData.reverse();
-        }
-        setLayerData([...layerData]);
-      },
-      [layerData],
-    );
+    (target: string) => {
+      if (!typeGuard.trace.commentPos(target)) return;
+      setLayerData(
+        layerData.map((value) => {
+          if (value.selected && value.posList.includes(target)) {
+            value.pos = target;
+          }
+          return value;
+        }),
+      );
+    },
+    [layerData],
+  );
+  const changeFont = useCallback(
+    (target: string) => {
+      if (!typeGuard.trace.commentFont(target)) return;
+      setLayerData(
+        layerData.map((value) => {
+          if (value.selected) {
+            value.font = target;
+          }
+          return value;
+        }),
+      );
+    },
+    [layerData],
+  );
+  const changeColor = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setLayerData(
+        layerData.map((value) => {
+          if (value.selected) {
+            value.color = e.target.value;
+          }
+          return value;
+        }),
+      );
+    },
+    [layerData],
+  );
+  const move = useCallback(
+    (target: string) => {
+      if (!target.match(/up|down/)) return;
+      if (target === "up") {
+        layerData.forEach((value, i) => {
+          const lastValue = layerData[i - 1];
+          if (value?.selected === true && lastValue)
+            layerData.splice(i - 1, 2, value, lastValue);
+        });
+      } else {
+        layerData.reverse().forEach((value, i) => {
+          const lastValue = layerData[i - 1];
+          if (value?.selected === true && lastValue)
+            layerData.splice(i - 1, 2, value, lastValue);
+        });
+        layerData.reverse();
+      }
+      setLayerData([...layerData]);
+    },
+    [layerData],
+  );
   return (
     <div className={Styles.table}>
       <div className={Styles.row}>

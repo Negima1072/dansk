@@ -6,8 +6,8 @@ import styled from "styled-components";
 
 import type { TObjectFitArgs } from "@/@types/background";
 import { backgroundAtom, elementAtom, layerAtom, optionAtom } from "@/atoms";
-import { Layer } from "@/layer/layer/Layer";
 import { Preview } from "@/layer/Preview/Preview";
+import { Layer } from "@/layer/layer/Layer";
 
 import Styles from "./LayerContainer.module.scss";
 
@@ -38,8 +38,8 @@ const LayerContainer: FC = () => {
   const [optionData] = useAtom(optionAtom);
   const [elements] = useAtom(elementAtom);
   useEffect(() => {
-    const classList = elements?.commentCanvas.parentElement?.classList,
-      cssClass = Styles.VideoSymbolContainer || "_";
+    const classList = elements?.commentCanvas.parentElement?.classList;
+    const cssClass = Styles.VideoSymbolContainer || "_";
     if (!classList || process.env.NODE_ENV === "development") return;
     if (layerData && layerData.length > 0) {
       window.onbeforeunload = beforeUnload;
@@ -60,10 +60,10 @@ const LayerContainer: FC = () => {
     setScale({ x: target.clientWidth / 640, y: target.clientHeight / 360 });
   };
   const [observer] = useState<MutationObserver>(
-      new MutationObserver(observerCallback),
-    ),
-    [scale, setScale] = useState<{ x: number; y: number }>({ x: 1, y: 1 }),
-    targetNode = useRef<HTMLDivElement>(null);
+    new MutationObserver(observerCallback),
+  );
+  const [scale, setScale] = useState<{ x: number; y: number }>({ x: 1, y: 1 });
+  const targetNode = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (
       !targetNode.current ||

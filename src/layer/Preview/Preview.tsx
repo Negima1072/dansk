@@ -9,8 +9,8 @@ import { layerUtil } from "@/libraries/layerUtil/layerUtil";
 import Styles from "./Preview.module.scss";
 
 const Preview = () => {
-  const canvas = useRef<HTMLCanvasElement>(null),
-    niconicomments = useRef<NiconiComments>();
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const niconicomments = useRef<NiconiComments>();
   const [layerData] = useAtom(layerAtom);
   useEffect(() => {
     if (!layerData || !canvas.current) return;

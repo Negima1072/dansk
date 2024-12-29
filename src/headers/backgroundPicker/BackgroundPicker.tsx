@@ -38,17 +38,18 @@ const ColorDisplay = styled.label.attrs<ColorDisplayProps>((p) => ({
  */
 const BackgroundPicker = () => {
   const [background, setBackground] = useAtom(backgroundAtom);
-  const [urlInputActive, setUrlInputActive] = useState<boolean>(false),
-    [urlInputValue, setUrlInputValue] = useState<string>(""),
-    [colorInputActive, setColorInputActive] = useState<boolean>(false),
-    [colorInputValue, setColorInputValue] = useState<string>("#000000"),
-    [colorInputTextValue, setColorInputTextValue] = useState<string>("#000000"),
-    [imageCrop, setImageCrop] = useState<number>(-1);
+  const [urlInputActive, setUrlInputActive] = useState<boolean>(false);
+  const [urlInputValue, setUrlInputValue] = useState<string>("");
+  const [colorInputActive, setColorInputActive] = useState<boolean>(false);
+  const [colorInputValue, setColorInputValue] = useState<string>("#000000");
+  const [colorInputTextValue, setColorInputTextValue] =
+    useState<string>("#000000");
+  const [imageCrop, setImageCrop] = useState<number>(-1);
   const addColorBg = () => {
     setColorInputActive(false);
-    const color = colorInputValue,
-      canvas = document.createElement("canvas"),
-      context = canvas.getContext("2d");
+    const color = colorInputValue;
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
     if (!context) return;
     canvas.width = 1920;
     canvas.height = 1080;
@@ -61,26 +62,24 @@ const BackgroundPicker = () => {
     });
   };
   const loadFromFile = () => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.onchange = () => {
-        if (!input.files || !input.files[0]) return;
-        const blob = URL.createObjectURL(input.files[0]);
-        background.images.push(createImage(blob));
-        setBackground({ ...background });
-      };
-      input.click();
-    },
-    loadFromURL = () => {
-      if (
-        urlInputValue.match(/^https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$/)
-      ) {
-        background.images.push(createImage(urlInputValue));
-        setBackground({ ...background });
-        setUrlInputValue("");
-        setUrlInputActive(false);
-      }
+    const input = document.createElement("input");
+    input.type = "file";
+    input.onchange = () => {
+      if (!input.files || !input.files[0]) return;
+      const blob = URL.createObjectURL(input.files[0]);
+      background.images.push(createImage(blob));
+      setBackground({ ...background });
     };
+    input.click();
+  };
+  const loadFromURL = () => {
+    if (urlInputValue.match(/^https?:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$/)) {
+      background.images.push(createImage(urlInputValue));
+      setBackground({ ...background });
+      setUrlInputValue("");
+      setUrlInputActive(false);
+    }
+  };
 
   const drawModeOnChange = useCallback(
     (value: string) => {

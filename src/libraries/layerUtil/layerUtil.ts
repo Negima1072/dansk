@@ -1,8 +1,8 @@
 import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
 import type { TCommentFont, TCommentPos } from "@/@types/types";
 import { Templates } from "@/headers/Trace.templates";
-import { layers2string } from "@/libraries/layerUtil/main";
 import { OverflowError } from "@/libraries/layerUtil/OverflowError";
+import { layers2string } from "@/libraries/layerUtil/main";
 import { Storage } from "@/libraries/localStorage";
 
 /**
