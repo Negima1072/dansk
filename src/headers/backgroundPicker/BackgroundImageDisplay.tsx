@@ -37,13 +37,28 @@ const BackgroundImageDisplay = ({ setImageCrop }: props) => {
     setImageCrop(index);
   };
 
-  const download = (index: number) => {
+  const download = async (index: number) => {
     const image = background.images[index];
     if (!image) return;
     const link = document.createElement("a");
-    link.href = image.url;
-    link.download = `${image.id}.png`;
-    link.click();
+    if (!image.url.startsWith("http")){
+      link.href = image.url;
+      link.download = `${image.id}.png`;
+      link.click();
+    } else {
+      try {
+        const response = await fetch(image.url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch image: ${response.statusText}`);
+        }
+        const blob = await response.blob();
+        link.href = URL.createObjectURL(blob);
+        link.download = `${image.id}.png`;
+        link.click();
+      } catch {
+        alert("この画像はダウンロードできません。手動でPCに保存してください。");
+      }
+    }
   };
 
   return (
