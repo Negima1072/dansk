@@ -1,4 +1,3 @@
-import NiconiComments from "@xpadev-net/niconicomments";
 import { useAtom } from "jotai";
 import type { ChangeEvent, FC } from "react";
 import { useRef } from "react";
@@ -11,10 +10,7 @@ import { replaceCharList } from "@/layer/layerManager/layerManager.replaceCharLi
 import { Storage } from "@/libraries/localStorage";
 
 import Styles from "./Layer.module.scss";
-
-NiconiComments.internal.definition.initConfig.initConfig();
-const niconicoFonts =
-  NiconiComments.internal.definition.config.defaultConfig.fonts.html5;
+import { getFont } from "@/libraries/font";
 
 type LayerProps = {
   data: TLayer;
@@ -46,8 +42,8 @@ type LayerInputProps = {
 const LayerInput = styled.textarea<LayerInputProps>`
   height: ${(props) => (props._height ? `${props._height}px` : "unset")};
   line-height: ${(props) => props._lineHeight}px;
-  font-weight: ${(props) => niconicoFonts[props._fontFamily].weight};
-  font-family: ${(props) => niconicoFonts[props._fontFamily].font};
+  font-weight: ${(props) => getFont(props._fontFamily).weight};
+  font-family: ${(props) => getFont(props._fontFamily).font};
   font-size: ${(props) => props._fontSize}px;
 `;
 

@@ -2,6 +2,7 @@ import type { ChangeEvent, FC } from "react";
 import { useState } from "react";
 
 import { Spoiler } from "@/components/spoiler/Spoiler";
+import { getFont } from "@/libraries/font";
 import { Storage } from "@/libraries/localStorage";
 
 import Styles from "./Memo.module.scss";
@@ -27,6 +28,10 @@ const Memo: FC = () => {
         value={value}
         onBlur={onBlur}
         className={Styles.textarea}
+        spellCheck={false}
+        style={{
+          fontFamily: getFont("gothic").font
+        }}
       ></textarea>
     </Spoiler>
   );
