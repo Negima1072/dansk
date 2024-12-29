@@ -12,7 +12,7 @@ type TipsProps = {
  * @param props
  * @constructor
  */
-const Tips = (props: TipsProps) => {
+export const Tips = (props: TipsProps) => {
   return (
     <div className={Styles.container}>
       <span className={Styles.icon}>?</span>
@@ -20,4 +20,3 @@ const Tips = (props: TipsProps) => {
     </div>
   );
 };
-export { Tips };

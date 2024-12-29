@@ -1,6 +1,6 @@
 import { typeGuard } from "@/libraries/typeGuard";
 
-const caretUtil = {
+export const caretUtil = {
   /**
    * フォーカスされているNodeを返す
    */
@@ -66,4 +66,3 @@ const caretUtil = {
     selection.addRange(range);
   },
 };
-export { caretUtil };

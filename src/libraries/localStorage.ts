@@ -1,11 +1,12 @@
-import type { TLocalStorageKeys } from "@/@types/types";
+import { defaultValue } from "@/libraries/localStorage.defaultValue";
+import type { TLocalStorageKeys } from "@/types/types";
 
 const STORAGE_PREFIX = "DanSc";
-import { defaultValue } from "@/libraries/localStorage.defaultValue";
+
 /**
  * LocalStorage読み書き用ラッパー
  */
-const Storage = {
+export const Storage = {
   get: (key: TLocalStorageKeys): string => {
     const value = localStorage.getItem(`${STORAGE_PREFIX}_${key}`);
     if (value === null) return defaultValue[key].defaultValue;
@@ -21,4 +22,3 @@ const Storage = {
     localStorage.removeItem(`${STORAGE_PREFIX}_${key}`);
   },
 };
-export { Storage };

@@ -54,9 +54,8 @@ section:has(> div.grid-area_\\[player\\]) {
 }
 `;
 
-const inject = () => {
+export const inject = () => {
   const styleElement = document.createElement("style");
   styleElement.innerHTML = style;
   document.body.append(styleElement);
 };
-export { inject };

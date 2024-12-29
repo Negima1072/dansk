@@ -2,7 +2,7 @@
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["dist", "assets", ".husky", "node_modules"]
+    "ignore": ["assets", ".husky", "node_modules", ".wxt", ".output"]
   },
   "formatter": {
     "enabled": true,
@@ -11,14 +11,15 @@
     "lineEnding": "lf",
     "lineWidth": 80,
     "attributePosition": "auto",
-    "bracketSpacing": true
+    "bracketSpacing": true,
+    "ignore": ["**/package.json", "**/pnpm-lock.yaml"]
   },
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
-      "a11y": { "useKeyWithClickEvents": "off" },
+      "a11y": { "useKeyWithClickEvents": "off", "noSvgWithoutTitle": "off" },
       "correctness": {
         "useExhaustiveDependencies": "off"
       },

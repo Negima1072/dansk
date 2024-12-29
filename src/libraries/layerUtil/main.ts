@@ -1,3 +1,6 @@
+import { OverflowError } from "@/libraries/layerUtil/OverflowError";
+import { command2str } from "@/libraries/layerUtil/command";
+import { rebuildSpace } from "@/libraries/layerUtil/utils";
 import type {
   TLayer,
   TLayerExportOptions,
@@ -5,10 +8,7 @@ import type {
   TMeasuredLayer,
   TMeasuredLayerComment,
   TMeasuredLayerLine,
-} from "@/@types/layer";
-import { OverflowError } from "@/libraries/layerUtil/OverflowError";
-import { command2str } from "@/libraries/layerUtil/command";
-import { rebuildSpace } from "@/libraries/layerUtil/utils";
+} from "@/types/layer";
 
 import { preProcess } from "./preProcess";
 
@@ -154,9 +154,7 @@ const addTrailingSpace = (input: string, width: number) => {
   input = rebuildSpace(input);
   return input;
 };
-/**
- *
- */
+
 const addDRSpace = (input: string, width: number) => {
   if (width < 0) {
     alert(

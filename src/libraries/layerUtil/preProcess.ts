@@ -1,3 +1,9 @@
+import { CharList } from "@/libraries/layerUtil/layerUtil.charList";
+import {
+  rebuildSpace,
+  rebuildSpaceWithCompat,
+} from "@/libraries/layerUtil/utils";
+import { typeGuard } from "@/libraries/typeGuard";
 import type {
   TLayer,
   TLayerComment,
@@ -5,14 +11,8 @@ import type {
   TMeasuredLayer,
   TMeasuredLayerComment,
   TMeasuredLayerLine,
-} from "@/@types/layer";
-import type { TCommentFont, TMonoChar } from "@/@types/types";
-import { CharList } from "@/libraries/layerUtil/layerUtil.charList";
-import {
-  rebuildSpace,
-  rebuildSpaceWithCompat,
-} from "@/libraries/layerUtil/utils";
-import { typeGuard } from "@/libraries/typeGuard";
+} from "@/types/layer";
+import type { TCommentFont, TMonoChar } from "@/types/types";
 
 export const preProcess = (
   layers: TLayer[],
@@ -79,6 +79,7 @@ const adjustEachSpace = (layers: TMeasuredLayer[]) => {
   }));
   return measureLayers(spacedLayers);
 };
+
 const adjustSpace = (layers: TMeasuredLayer[]) => {
   const targetWidth = Math.max(
     ...layers.map((layer) => {
@@ -128,6 +129,7 @@ const adjustSpace = (layers: TMeasuredLayer[]) => {
   }));
   return measureLayers(spacedLayers);
 };
+
 /**
  * 先頭の空白の長さ調節
  * @param input
@@ -169,6 +171,7 @@ const removeLeadingSpace = (input: string, width: number) => {
   }
   return rebuildSpace(input);
 };
+
 const preProcessSpace = (layers: TLayer[]): TLayer[] => {
   return layers.map((layer) => ({
     ...layer,
@@ -180,6 +183,7 @@ const preProcessSpace = (layers: TLayer[]): TLayer[] => {
     })),
   }));
 };
+
 const measureLayers = (
   layers: (TLayer | TMeasuredLayer)[],
 ): TMeasuredLayer[] => {
@@ -239,6 +243,7 @@ const measureLayers = (
     };
   });
 };
+
 /**
  * コメントの横幅取得
  * 全角前提なので半角文字が入ると崩れる
@@ -269,6 +274,7 @@ const measureTextWidth = (
   }
   return { leftSpaceWidth, width };
 };
+
 const getCharWidth = (char: string, font: TCommentFont): TMonoChar => {
   const charItem = CharList[char];
   if (charItem) {
@@ -285,6 +291,7 @@ const getCharWidth = (char: string, font: TCommentFont): TMonoChar => {
   if (typeGuard.layer.isMonoChar(CharList.default)) return CharList.default;
   return { ...CharList.default, width: CharList.default.width[font] };
 };
+
 const getLayerTemplateWidth = (layer: TLayer | TMeasuredLayer) => {
   let layerTemplateWidth = layer.width * 12;
   if (layer.critical) {

@@ -1,5 +1,5 @@
-import type { TConvertFormat } from "@/@types/types";
 import { typeGuard } from "@/libraries/typeGuard";
+import type { TConvertFormat } from "@/types/types";
 
 /**
  * inputFormat型のinputをoutputFormat型に変換して返す
@@ -7,7 +7,7 @@ import { typeGuard } from "@/libraries/typeGuard";
  * @param outputFormat
  * @param input
  */
-const convertText = (
+export const convertText = (
   inputFormat: TConvertFormat,
   outputFormat: TConvertFormat,
   input: string,
@@ -172,5 +172,3 @@ const convertDanskToTokome = (input: string): string => {
   }
   return JSON.stringify(result, null, 2);
 };
-
-export { convertText };

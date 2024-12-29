@@ -1,14 +1,14 @@
-import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
-import type { TCommentFont, TCommentPos } from "@/@types/types";
-import { Templates } from "@/headers/Trace.templates";
+import { Templates } from "@/components/headers/Trace.templates";
 import { OverflowError } from "@/libraries/layerUtil/OverflowError";
 import { layers2string } from "@/libraries/layerUtil/main";
 import { Storage } from "@/libraries/localStorage";
+import type { TLayer, TLayerComment, TLayerTemplate } from "@/types/layer";
+import type { TCommentFont, TCommentPos } from "@/types/types";
 
 /**
  * layer関係の処理をする関数集
  */
-const layerUtil = {
+export const layerUtil = {
   /**
    * layerTemplateからlayerComment[]を生成する
    * @param layer
@@ -135,5 +135,3 @@ const layerUtil = {
     return result;
   },
 };
-
-export { layerUtil };

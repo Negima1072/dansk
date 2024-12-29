@@ -1,6 +1,6 @@
-import type { TLocalStorageDefaultValues } from "@/@types/types";
+import type { TLocalStorageDefaultValues } from "@/types/types";
 
-const defaultValue: TLocalStorageDefaultValues = {
+export const defaultValue: TLocalStorageDefaultValues = {
   options_autoSave_span: {
     defaultValue: "5",
     description: "自動保存の間隔(分) / 0で無効 / 反映には再読み込みが必要",
@@ -145,4 +145,3 @@ const defaultValue: TLocalStorageDefaultValues = {
     defaultValue: "",
   },
 };
-export { defaultValue };

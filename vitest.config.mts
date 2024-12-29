@@ -7,5 +7,5 @@ export default defineConfig({
   test: {
     root: "src",
     environment: "happy-dom",
-  }
+  },
 });

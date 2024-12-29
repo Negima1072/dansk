@@ -1,4 +1,4 @@
-import type { TLayer, TLayerTemplate } from "@/@types/layer";
+import type { TLayer, TLayerTemplate } from "@/types/layer";
 import type {
   TAutoSave,
   TCommentFont,
@@ -8,14 +8,14 @@ import type {
   TMonoChar,
   TOwnerComment,
   TProChar,
-} from "@/@types/types";
+} from "@/types/types";
 
 /**
  * typeGuard
  * TSで型を安全に確定させるための関数
  * これはbool関数としてビルド後も残る
  */
-const typeGuard = {
+export const typeGuard = {
   owner: {
     comment: (i: unknown): i is TOwnerComment =>
       typeVerify(i, ["time", "command", "comment"]),
@@ -128,6 +128,7 @@ const typeGuard = {
     },
   },
 };
+
 const typeVerify = (item: unknown, keys: string[]): boolean => {
   if (typeof item !== "object" || item === null) return false;
   for (const key of keys) {
@@ -135,4 +136,3 @@ const typeVerify = (item: unknown, keys: string[]): boolean => {
   }
   return true;
 };
-export { typeGuard };

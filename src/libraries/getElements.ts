@@ -1,11 +1,11 @@
-import type { TElement } from "@/@types/element";
 import { sleep } from "@/libraries/sleep";
+import type { TElement } from "@/types/element";
 
 /**
  * reactマウント用の親要素を取得する
  * @param count {number} リトライ回数
  */
-const getElements = async (count = 0): Promise<TElement> => {
+export const getElements = async (count = 0): Promise<TElement> => {
   const videoElement = getVideoElement(),
     commentCommandInput = getCommentCommandInput(),
     commentInputTextarea = getCommentInputTextarea(),
@@ -57,7 +57,6 @@ const getElements = async (count = 0): Promise<TElement> => {
     MemoElement,
   };
 };
-export { getElements };
 
 export const getBaseElements = async () => {
   let count = 0;

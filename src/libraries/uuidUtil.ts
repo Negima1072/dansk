@@ -1,4 +1,4 @@
-const uuid = () => {
+export const uuid = () => {
   // https://github.com/GoogleChrome/chrome-platform-analytics/blob/master/src/internal/identifier.js
   // const FORMAT: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
   const chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
@@ -14,4 +14,3 @@ const uuid = () => {
   }
   return chars.join("");
 };
-export { uuid };

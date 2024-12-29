@@ -2,20 +2,23 @@ const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
   window.HTMLInputElement.prototype,
   "value",
 )?.set;
+
 const nativeInputValueGetter = Object.getOwnPropertyDescriptor(
   window.HTMLInputElement.prototype,
   "value",
 )?.get;
+
 const nativeTextAreaValueSetter = Object.getOwnPropertyDescriptor(
   window.HTMLTextAreaElement.prototype,
   "value",
 )?.set;
+
 const nativeTextAreaValueGetter = Object.getOwnPropertyDescriptor(
   window.HTMLTextAreaElement.prototype,
   "value",
 )?.get;
 
-const updateReactHTMLInput = (
+export const updateReactHTMLInput = (
   targetElement: HTMLInputElement,
   content: string,
 ) => {
@@ -26,7 +29,8 @@ const updateReactHTMLInput = (
   targetElement.dispatchEvent(new Event("change", { bubbles: true }));
   targetElement.dispatchEvent(new Event("input", { bubbles: true }));
 };
-const updateReactHTMLTextArea = (
+
+export const updateReactHTMLTextArea = (
   targetElement: HTMLTextAreaElement,
   content: string,
 ) => {
@@ -37,5 +41,3 @@ const updateReactHTMLTextArea = (
   targetElement.dispatchEvent(new Event("change", { bubbles: true }));
   targetElement.dispatchEvent(new Event("input", { bubbles: true }));
 };
-
-export { updateReactHTMLInput, updateReactHTMLTextArea };

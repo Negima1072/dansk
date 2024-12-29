@@ -4,7 +4,7 @@
  * 変更したければmatch関数内のregex
  * @param date {string}
  */
-const str2time = (date: string): number | undefined => {
+export const str2time = (date: string): number | undefined => {
   const match = date.match(/^([+-])?(?:(\d+):)?(\d+)(?:\.(\d+))?$/);
   if (match) {
     let time = 0;
@@ -18,14 +18,14 @@ const str2time = (date: string): number | undefined => {
     return undefined;
   }
 };
+
 /**
  * 秒数を文字列に
  * フォーマット：分：秒.小数点以下2桁
  * @param time
  */
-const time2str = (time: number): string => {
+export const time2str = (time: number): string => {
   return `${String(Math.floor(time / 60)).padStart(2, "0")}:${String(
     (time % 60).toFixed(2).padStart(5, "0"),
   )}`;
 };
-export { str2time, time2str };

@@ -1,6 +1,7 @@
 export const rebuildSpaceWithCompat = (input: string) => {
   return rebuildSpace(input.replace(/[\u2001\u3000]/g, "\u2003"));
 };
+
 export const rebuildSpace = (input: string) => {
   return (
     input

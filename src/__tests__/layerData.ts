@@ -1,4 +1,4 @@
-import type { TLayer } from "@/@types/layer";
+import type { TLayer } from "@/types/layer";
 
 export const SampleLayerData = {
   big9: [
