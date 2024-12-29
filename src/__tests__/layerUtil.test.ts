@@ -1,10 +1,9 @@
-import { describe } from "@jest/globals";
-
+import { describe, expect, beforeEach, test, vi } from "vitest"
 import { SampleLayerData, SampleOutputData } from "@/__tests__/layerData";
 import { layerUtil } from "@/libraries/layerUtil/layerUtil";
 
 beforeEach(() => {
-  globalThis.alert = jest.fn((...args) => console.log(...args));
+  globalThis.alert = vi.fn((...args) => console.log(...args));
 });
 
 describe("big9", () => {
