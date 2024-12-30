@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
-import type { ChangeEvent } from "react";
-import { useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
 
 import { ColorPicker } from "@/components/headers/layerSelector/ColorPicker/ColorPicker";

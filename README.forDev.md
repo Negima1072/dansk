@@ -33,6 +33,10 @@ TypeGuard(src/libraries/typeGuard.ts)を使うか、if で確認をする
 
 `<type>hoge`とすると JSX と混同するため型をキャストするときは`hoge as type`でキャスト
 
+#### import
+
+ライブラリのimportは`外部ライブラリ`、`Path Alias`、`相対パス`でグループ分け
+
 #### 拡張子
 
 React(JSX)を含むものは tsx に、それ以外は ts にする

@@ -1,3 +1,5 @@
+import { createRoot } from "react-dom/client";
+
 import { Root } from "@/components/Root";
 import { inject } from "@/libraries/cssInjector";
 import { injectFetch } from "@/libraries/fetch";
@@ -12,7 +14,6 @@ import {
   getVideoContainer,
 } from "@/libraries/getElements";
 import { initVideoPlayer } from "@/libraries/videoPlayerApi";
-import { createRoot } from "react-dom/client";
 
 export default defineContentScript({
   matches: ["https://www.nicovideo.jp/watch/*"],

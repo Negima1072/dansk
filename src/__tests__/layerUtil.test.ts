@@ -1,6 +1,7 @@
+import { beforeEach, describe, expect, test, vi } from "vitest";
+
 import { SampleLayerData, SampleOutputData } from "@/__tests__/layerData";
 import { layerUtil } from "@/libraries/layerUtil/layerUtil";
-import { beforeEach, describe, expect, test, vi } from "vitest";
 
 beforeEach(() => {
   globalThis.alert = vi.fn((...args) => console.log(...args));

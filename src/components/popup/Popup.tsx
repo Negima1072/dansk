@@ -1,5 +1,6 @@
-import { icons } from "@/libraries/icons";
 import type { ReactNode } from "react";
+
+import { icons } from "@/libraries/icons";
 
 import Styles from "./Popup.module.scss";
 

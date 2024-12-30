@@ -1,5 +1,10 @@
-import type { ChangeEvent } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { str2time, time2str } from "@/libraries/timeUtil";

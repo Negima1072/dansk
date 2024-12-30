@@ -1,5 +1,10 @@
-import type { MouseEvent, RefObject } from "react";
-import { useEffect, useRef, useState } from "react";
+import {
+  type MouseEvent,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 import type { TCropKey, TCropRange } from "@/types/background";

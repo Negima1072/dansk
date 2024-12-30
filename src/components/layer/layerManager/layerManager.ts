@@ -2,9 +2,8 @@ import { caretUtil } from "@/libraries/caretUtil";
 import { typeGuard } from "@/libraries/typeGuard";
 import type { TLayer } from "@/types/layer";
 
-import { replaceCharList } from "./layerManager.replaceCharList";
-
 import Styles from "./layerManager.module.scss";
+import { replaceCharList } from "./layerManager.replaceCharList";
 
 const ua = window.navigator.userAgent;
 const isChromium = !!ua.match(/Chrome/);

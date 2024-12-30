@@ -10,10 +10,10 @@ import {
   optionAtom,
 } from "@/libraries/atoms";
 import type { TObjectFitArgs } from "@/types/background";
-import { Preview } from "./Preview/Preview";
-import { Layer } from "./layer/Layer";
 
 import Styles from "./LayerContainer.module.scss";
+import { Preview } from "./Preview/Preview";
+import { Layer } from "./layer/Layer";
 
 const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
   transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});

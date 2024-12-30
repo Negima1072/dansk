@@ -1,5 +1,4 @@
-import type { ChangeEvent } from "react";
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import { Spoiler } from "@/components/spoiler/Spoiler";
 import { getFont } from "@/libraries/font";

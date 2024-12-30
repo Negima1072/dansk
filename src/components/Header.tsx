@@ -1,6 +1,8 @@
-import { elementAtom } from "@/libraries/atoms";
 import { useAtom } from "jotai";
 import { createPortal } from "react-dom";
+
+import { elementAtom } from "@/libraries/atoms";
+
 import { Trace } from "./headers/Trace";
 
 /**

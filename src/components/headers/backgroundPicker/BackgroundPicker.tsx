@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
-import type { ChangeEvent } from "react";
-import { useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useState } from "react";
 import styled from "styled-components";
 
 import { Button } from "@/components/button/Button";

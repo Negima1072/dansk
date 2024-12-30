@@ -1,5 +1,6 @@
-import type { FormattedComment } from "@xpadev-net/niconicomments";
-import NiconiComments from "@xpadev-net/niconicomments";
+import NiconiComments, {
+  type FormattedComment,
+} from "@xpadev-net/niconicomments";
 import { useAtom } from "jotai";
 import { useEffect, useRef } from "react";
 

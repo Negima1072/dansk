@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
-import type { ChangeEvent } from "react";
-import { useRef } from "react";
+import { type ChangeEvent, useRef } from "react";
 import styled from "styled-components";
 
 import { layerAtom, optionAtom } from "@/libraries/atoms";
@@ -8,8 +7,8 @@ import { getFont } from "@/libraries/font";
 import { grids } from "@/libraries/grids";
 import { Storage } from "@/libraries/localStorage";
 import type { TGridPosBlob, TLayer } from "@/types/layer";
-import { replaceCharList } from "../layerManager/layerManager.replaceCharList";
 
+import { replaceCharList } from "../layerManager/layerManager.replaceCharList";
 import Styles from "./Layer.module.scss";
 
 type LayerProps = {

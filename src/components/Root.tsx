@@ -1,3 +1,5 @@
+import { useAtom } from "jotai";
+
 import { useLocation } from "@/hooks/useLocation";
 import { elementAtom } from "@/libraries/atoms";
 import {
@@ -6,7 +8,7 @@ import {
   getVideoElement,
 } from "@/libraries/getElements";
 import { initVideoPlayer } from "@/libraries/videoPlayerApi";
-import { useAtom } from "jotai";
+
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Main } from "./Main";

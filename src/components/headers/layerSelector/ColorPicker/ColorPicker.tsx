@@ -1,5 +1,4 @@
-import type { ChangeEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import Styles from "./ColorPicker.module.scss";

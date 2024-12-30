@@ -1,10 +1,9 @@
-import type { ChangeEvent } from "react";
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
+import { Layer } from "@/components/layer/layer/Layer";
 import { Popup } from "@/components/popup/Popup";
 import type { TLayer } from "@/types/layer";
 
-import { Layer } from "@/components/layer/layer/Layer";
 import Styles from "./CssEditor.module.scss";
 
 type EditorProps = {
