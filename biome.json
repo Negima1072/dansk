@@ -21,7 +21,8 @@
       "recommended": true,
       "a11y": { "useKeyWithClickEvents": "off", "noSvgWithoutTitle": "off" },
       "correctness": {
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noUnusedImports": "error"
       },
       "suspicious": {
         "noArrayIndexKey": "off"

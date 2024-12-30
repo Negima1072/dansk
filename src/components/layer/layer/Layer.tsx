@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import type { ChangeEvent, FC } from "react";
+import type { ChangeEvent } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 
