@@ -1,33 +1,55 @@
-﻿# NicoNicoDansaScriptCustom
+﻿# 段スク水: dansuku-mizu
 
-This is a script that works with Nico Nico Douga.  It helps to utilize the comment function.
-Created By @Negima1072, @eneko0513 and @xpadev-net
+![niconico](<https://img.shields.io/badge/niconico-(%E5%B8%B0%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F)-auto?logo=niconico&logoColor=%23e6e6e6&color=%23252525>)
+[![Release](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/release.yml/badge.svg)](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/release.yml)
+
+[Chrome Web Store](https://chromewebstore.google.com/detail/cjmnakgpnakmaemloaoaidbohgcldpcc) | [Firefox Addons](https://addons.mozilla.org/ja/firefox/addon/dansukumizu/)
+
+ニコニコ動画のコメントアート制作を補助するブラウザ拡張機能
 
 ## 推奨環境
 
 - Chrome
-- Brave
 - Firefox
+- Brave
 
-その他Chromium系であれば動作すると思われます
+その他 Chromium 系であれば動作すると思われます
 
 ## 拡張機能の読み込み
 
 ### Chrome
 
-[拡張機能](chrome://extensions/)を開き、右上のデベロッパーモードを有効にします
-ダウンロードしてきたzipファイルを解凍し、「パッケージ化されていない拡張機能を読み込む」から、中のdistフォルダーを選択します
+- Chrome Web Store から Chrome に追加を押します。
+- もしくは、[拡張機能](chrome://extensions/)を開き、右上のデベロッパーモードを有効にします
+  ダウンロードしてきた zip ファイルを解凍し、「パッケージ化されていない拡張機能を読み込む」から解凍したフォルダを選択します。
 
 ### Firefox
 
-ダウンロードしてきたzipファイルを解凍し、distフォルダー内のmanifest.jsonを削除し、manifest.firefox.jsonをmanifest.jsonにリネームします
-[デバッガー](about:debugging#/runtime/this-firefox)を開き、「一時的なアドオンを読み込む」から、先程リネームしたmanifest.jsonを選択します
+- Firefox Addons から拡張機能を入手するを押します。
+- もしくは、アドオンマネージャーを開き、拡張機能パネルの右上にある歯車アイコンを使用して、アドオンをインストールできます。メニューからファイルからアドオンをインストールを選択し、ダウンロードした xpi ファイルを選択します。
+
+## 作者
+
+- Negima1072 ([GitHub](https://github.com/Negima1072) | [X](https://x.com/Negima1072))
+- xpadev-net ([GitHub](https://github.com/xpadev-net) | [X](https://x.com/xpadev))
+- eneko0513 ([GitHub](https://github.com/eneko0513))
+- amasnaD _オリジナル作者_
 
 ## 変更点
+
+### v2.1.0
+
+#### 修正
+
+- 一部の環境で設定が画面外に出る問題の修正
+- Memo の配置位置を修正
+- Memo のフォントをプレイヤーと同じものに修正
+- url で指定された画像のダウンロード処理を修正
 
 ### v2.0.5
 
 #### 修正
+
 - スクショやコメショが使えない問題の修正
 - 一部のエラーメッセージをわかりやすいよう修正
 - ダウンロードされるファイルに日時設定を反映するよう修正
@@ -36,6 +58,7 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 ### v2.0.4
 
 #### 修正
+
 - サイズが大きい画像を背景にした時フリーズする問題の修正
 - フォントがプレイヤーと異なる問題の修正
 - スタイルの一部修正
@@ -43,56 +66,66 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 ### v2.0.3
 
 #### 修正
-- Timeの内部処理の最適化
+
+- Time の内部処理の最適化
 - ページ遷移で使えなくなる問題の修正
 - スタイルの一部修正
 
 ### v2.0.2
 
 #### 修正
+
 - ダークモード対応のためのスタイル修正
-- Timeで大きく前に戻る場合に起きる描画バグの修正
+- Time で大きく前に戻る場合に起きる描画バグの修正
 
 ### v2.0.1
 
 #### 修正
-- 表示/UIの修正
-- Timeでマイナス方向へ移動するときのコメ表示バグを修正
+
+- 表示/UI の修正
+- Time でマイナス方向へ移動するときのコメ表示バグを修正
 
 ### v2.0.0
 
 #### 追加
+
 - 帰ってきたニコニコに仮対応
 
 ### v1.0.19
 
 #### 修正
+
 - バグ修正
 
 ### v1.0.18
 
 #### 修正
+
 - レイアウトが崩れるバグを修正
 
 ### v1.0.17
 
 #### 修正
+
 - 改行時に文字数上限になるバグを修正
 - 仮のエラー修正
 
 ### v1.0.16
 
 #### 追加
+
 - (Re: 仮)への仮対応
 
 ### v1.0.15
 
 #### 修正
+
 - 等幅出力時のバグを修正
 
 ### v1.0.14
 
 #### 追加
+
 - 非プレ垢のカラーコードを有効化する設定を追加
 - 空白の最適化を無効化する設定を追加
   - この場合、リード行の挿入や行頭の空白の削除、空白の置換などは行われなくなります
@@ -102,18 +135,18 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 #### 追加
 
 - グリッド画像の追加
-- どーもさんツールのXMLファイルの読み込みに対応(試験的)
+- どーもさんツールの XML ファイルの読み込みに対応(試験的)
 
 #### 修正
 
-- shitaやnakaが選択できなかったテンプレを修正
+- shita や naka が選択できなかったテンプレを修正
 
 ### v1.0.12
 
 #### 追加
 
-- 184を無効化する機能を追加(not184時投稿ボタン橙色)
-- Output欄のテキストをダウンロードするボタンを追加
+- 184 を無効化する機能を追加(not184 時投稿ボタン橙色)
+- Output 欄のテキストをダウンロードするボタンを追加
 - 動画とコメントのスクリーンショットをダウンロードするボタンを追加
 
 ### v1.0.11
@@ -126,13 +159,13 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 
 #### 修正
 
-- Chromium系でinputの値が正しくない旨のエラーが発生するバグを修正
+- Chromium 系で input の値が正しくない旨のエラーが発生するバグを修正
 - 異なる色のレイヤーを一括で色変更できないバグを修正
-- Tab置換時の処理順を修正
+- Tab 置換時の処理順を修正
 
 #### 追加
 
-- 画像切り抜きに16:9化ボタンを追加
+- 画像切り抜きに 16:9 化ボタンを追加
 - 画像ダウンロード機能を追加
 - 単色背景追加画面にカラコ入力欄を追加
 
@@ -141,7 +174,7 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 #### 修正
 
 - カラーピッカーが反映されないバグを修正
-- Mainのボタンが機能しないバグ修正
+- Main のボタンが機能しないバグ修正
 - スタイルの微調整
 - コメントが投下できないバグ修正
 - 選択中のレイヤーが常に上に表示されるバグを修正
@@ -164,16 +197,16 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 
 #### 修正
 
-- Tabモードで１コメントあたり１行しか置換が実行されないバグを修正
-- Macにおける互換性を改善
-- small ue W37 L2のshita位置を修正
+- Tab モードで１コメントあたり１行しか置換が実行されないバグを修正
+- Mac における互換性を改善
+- small ue W37 L2 の shita 位置を修正
 
 ### v1.0.6-fix
 
 #### 修正
 
-- package/manifest.jsonの更新を忘れていたため修正
-  リリース時にpackage.jsonを参照してmanifest.jsonを更新するように変更
+- package/manifest.json の更新を忘れていたため修正
+  リリース時に package.json を参照して manifest.json を更新するように変更
 
 ### v1.0.6
 
@@ -183,14 +216,14 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 - 積みがずれるバグを修正
 - 積みの一部コメントが出力されないバグを修正
 - 単色背景に黒を追加できないバグを修正
-- U+a001が出力されないバグを修正
+- U+a001 が出力されないバグを修正
 
 #### 改善
 
 - カラコ入力に対応
 - 一部テンプレの互換性改善
 - 新規レイヤー作成時に既存のレイヤーの色を引き継ぐように
-- 置換モードにa -> U+200Aを追加
+- 置換モードに a -> U+200A を追加
 - 出力ボタンを押してもテキストエリアに改行が生えないように変更
 
 #### 追加
@@ -219,13 +252,13 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 
 - 既知の不具合の修正
 - 一部テンプレ値の修正
-- OutputBoxのボタンの並び順の変更
+- OutputBox のボタンの並び順の変更
 
 #### 追加
 
 - 背景画像の透明度設定機能
-- CSS編集画面のプレビュー追加・変更できる値追加
-- Redo/Undo機能の追加
+- CSS 編集画面のプレビュー追加・変更できる値追加
+- Redo/Undo 機能の追加
 
 ### v1.0.3
 
@@ -233,12 +266,12 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 
 - レイヤー編集関連のバグ修正
 - 背景画像のレイヤー順をニコ動コメント描写レイヤーよりも下へ
-- いくつかのテンプレのCSS値を適正化
-- OutputBoxをwrapしないように変更
+- いくつかのテンプレの CSS 値を適正化
+- OutputBox を wrap しないように変更
 
 #### 追加
 
-- OutputBoxにクリアボタンを追加
+- OutputBox にクリアボタンを追加
 
 ### v1.0.2
 
@@ -252,11 +285,11 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 - メモ機能
 - 設定画面
   - コマンドの並び変え変更機能
-  - CA、Patissierコマンドの追加機能
+  - CA、Patissier コマンドの追加機能
   - 独自コマンド追加機能
   - 投稿時間間隔変更機能
   - その他もろもろ設定機能
-- CSS調整機能
+- CSS 調整機能
 - 保存・読み込み機能
 - 自動保存機能
 
@@ -266,7 +299,7 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 
 - 線画モード
   今後設定で同等の機能を追加する予定です
-- sageコマンド
+- sage コマンド
   ニコニコ側で廃止されたため
 
 #### 変更
@@ -280,6 +313,6 @@ Created By @Negima1072, @eneko0513 and @xpadev-net
 #### 追加
 
 - レイヤー名を変更できるようにしましたレイヤー名をダブルクリックすると入力できるようになります
-- 複数レイヤーをまとめて選択/編集/出力できるようにしましたctrl/cmd + クリックで複数レイヤーを選択できます
+- 複数レイヤーをまとめて選択/編集/出力できるようにしました ctrl/cmd + クリックで複数レイヤーを選択できます
 - 複数の背景を保持できるようにしました
-  ついでに画像をURLから指定できるようになってます
+  ついでに画像を URL から指定できるようになってます
