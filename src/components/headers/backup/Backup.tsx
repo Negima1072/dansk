@@ -1,8 +1,8 @@
 import { useSetAtom } from "jotai";
 import { useState } from "react";
 
-import { Button } from "@/components/button/Button";
-import { Popup } from "@/components/popup/Popup";
+import { Button } from "@/components/common/button/Button";
+import { Popup } from "@/components/common/popup/Popup";
 import { layerAtom } from "@/libraries/atoms";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";

@@ -63,7 +63,7 @@ export const Layer = (props: LayerProps) => {
   const [layerData, setLayerData] = useAtom(layerAtom);
   const [optionData] = useAtom(optionAtom);
   const layerElement = useRef<HTMLDivElement>(null);
-  const currentLayer = useRef<TLayer>();
+  const currentLayer = useRef<TLayer>(undefined);
   const onchange = (layer: TLayer) => {
     if (!layerData || !setLayerData) return;
     for (let i = 0; i < layerData.length; i++) {

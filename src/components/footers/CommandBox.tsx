@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 import { useCallback, useEffect, useState } from "react";
 
-import { Button } from "@/components/button/Button";
-import { Spoiler } from "@/components/spoiler/Spoiler";
+import { Button } from "@/components/common/button/Button";
+import { Spoiler } from "@/components/common/spoiler/Spoiler";
 import { elementAtom } from "@/libraries/atoms";
 import {
   updateReactHTMLInput,

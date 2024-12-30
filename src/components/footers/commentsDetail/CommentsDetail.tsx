@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { Popup } from "@/components/popup/Popup";
+import { Popup } from "@/components/common/popup/Popup";
 import { Storage } from "@/libraries/localStorage";
 import { time2str } from "@/libraries/timeUtil";
 

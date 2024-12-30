@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { useState } from "react";
 
-import { Button } from "@/components/button/Button";
+import { Button } from "@/components/common/button/Button";
 import { Crop } from "@/components/headers/backgroundPicker/imageCrop/Crop";
 import { backgroundAtom } from "@/libraries/atoms";
 import type { TCropRange } from "@/types/background";

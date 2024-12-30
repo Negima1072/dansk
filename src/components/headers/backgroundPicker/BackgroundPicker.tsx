@@ -2,10 +2,10 @@ import { useAtom } from "jotai";
 import { type ChangeEvent, useCallback, useState } from "react";
 import styled from "styled-components";
 
-import { Button } from "@/components/button/Button";
-import { Dropdown } from "@/components/dropdown/Dropdown";
-import { Popup } from "@/components/popup/Popup";
-import { Tips } from "@/components/tips/Tips";
+import { Button } from "@/components/common/button/Button";
+import { Dropdown } from "@/components/common/dropdown/Dropdown";
+import { Popup } from "@/components/common/popup/Popup";
+import { Tips } from "@/components/common/tips/Tips";
 import { backgroundAtom } from "@/libraries/atoms";
 import { uuid } from "@/libraries/uuidUtil";
 import type { TObjectFitArgs } from "@/types/background";

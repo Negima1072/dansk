@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { SpoilerButton } from "@/components/spoiler/SpoilerButton";
+import { SpoilerButton } from "@/components/common/spoiler/SpoilerButton";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
 

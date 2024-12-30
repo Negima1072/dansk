@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import { Spoiler } from "@/components/spoiler/Spoiler";
+import { Spoiler } from "@/components/common/spoiler/Spoiler";
 import { str2time, time2str } from "@/libraries/timeUtil";
 
 import Styles from "./VideoController.module.scss";
