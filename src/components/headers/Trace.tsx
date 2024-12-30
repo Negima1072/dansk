@@ -2,17 +2,17 @@ import { useAtom } from "jotai";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { LayerPortal } from "@/components/LayerPortal";
-import { Button } from "@/components/button/Button";
-import { Dropdown } from "@/components/dropdown/Dropdown";
+import { Button } from "@/components/common/button/Button";
+import { Dropdown } from "@/components/common/dropdown/Dropdown";
+import { Popup } from "@/components/common/popup/Popup";
+import { Slider } from "@/components/common/slider/Slider";
+import { Spoiler } from "@/components/common/spoiler/Spoiler";
 import { Templates } from "@/components/headers/Trace.templates";
 import { BackgroundPicker } from "@/components/headers/backgroundPicker/BackgroundPicker";
 import { Backup } from "@/components/headers/backup/Backup";
 import { LayerEditor } from "@/components/headers/layerEditor/LayerEditor";
 import { LayerSelector } from "@/components/headers/layerSelector/LayerSelector";
 import { Options } from "@/components/options/Options";
-import { Popup } from "@/components/popup/Popup";
-import { Slider } from "@/components/slider/Slider";
-import { Spoiler } from "@/components/spoiler/Spoiler";
 import {
   backgroundAtom,
   elementAtom,

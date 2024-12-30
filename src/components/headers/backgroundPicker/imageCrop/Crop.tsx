@@ -29,7 +29,7 @@ const CropDisplay = styled.div.attrs<TCropRange>((p) => ({
 
 const getPosition = (
   e: MouseEvent<HTMLElement>,
-  wrapper: RefObject<HTMLDivElement>,
+  wrapper: RefObject<HTMLDivElement | null>,
 ) => {
   const x =
     (e.clientX - (wrapper.current?.getBoundingClientRect().left || 0)) /
@@ -42,7 +42,7 @@ const getPosition = (
 
 const getMovement = (
   e: MouseEvent<HTMLElement>,
-  wrapper: RefObject<HTMLDivElement>,
+  wrapper: RefObject<HTMLDivElement | null>,
 ) => {
   const x = e.movementX / (wrapper.current?.clientWidth || 1);
   const y = e.movementY / (wrapper.current?.clientHeight || 1);

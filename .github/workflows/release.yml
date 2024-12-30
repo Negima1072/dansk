@@ -44,12 +44,12 @@ jobs:
         WEB_EXT_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
     - name: Create Change Log
       run: |
-        CHANGELOG=$(sed -n "/### ${GITHUB_REF##*/}/,/### v/p" README.md | sed '${/^###/d}' | sed '1,2d;$d')
-        echo "$CHANGELOG" >| CHANGELOG.md
+        CHANGELOG=$(sed -n "/### ${GITHUB_REF##*/}/,/### v/p" CHANGELOG.md | sed '${/^###/d}' | sed '1,2d;$d')
+        echo "$CHANGELOG" >| RECENT_CHANGELOG.md
     - name: Upload Release
       uses: softprops/action-gh-release@v2
       with:
-        body_path: CHANGELOG.md
+        body_path: RECENT_CHANGELOG.md
         files: |
           *.zip
           *.xpi
@@ -60,7 +60,7 @@ jobs:
         BODY="🎉 **だんスク 新バージョンリリース** 🎉\n\nバージョン：\`$RELEASE_TAG\`\n\n📥 **Chrome 版**\n<https://chrome.google.com/webstore/detail/dansukumizu/cjmnakgpnakmaemloaoaidbohgcldpcc>\n*(ストア反映に時間がかかる場合があります)*\n\n📥 **Firefox 版**\n下のリンクからダウンロードして有効化してください\n\n💬 ご意見・ご要望は <#441986140179005440> にお願いします。"
         curl -X POST $WEBHOOK_URL \
           -H "Content-Type: multipart/form-data" \
-          -F "file1=@CHANGELOG.md" \
+          -F "file1=@RECENT_CHANGELOG.md" \
           -F "file2=@dansk-chrome-${GITHUB_REF##*/}.zip" \
           -F "file3=@dansk-firefox-${GITHUB_REF##*/}.xpi" \
           -F "payload_json={\"content\":\"$BODY\"}"

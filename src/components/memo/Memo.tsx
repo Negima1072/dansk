@@ -1,6 +1,6 @@
 import { type ChangeEvent, useState } from "react";
 
-import { Spoiler } from "@/components/spoiler/Spoiler";
+import { Spoiler } from "@/components/common/spoiler/Spoiler";
 import { getFont } from "@/libraries/font";
 import { Storage } from "@/libraries/localStorage";
 

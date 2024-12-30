@@ -1,7 +1,7 @@
 import { type ChangeEvent, useState } from "react";
 
+import { Popup } from "@/components/common/popup/Popup";
 import { Layer } from "@/components/layer/layer/Layer";
-import { Popup } from "@/components/popup/Popup";
 import type { TLayer } from "@/types/layer";
 
 import Styles from "./CssEditor.module.scss";

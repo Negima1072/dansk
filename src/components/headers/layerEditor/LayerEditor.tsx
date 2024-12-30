@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { type ChangeEvent, useCallback } from "react";
 
-import { Button } from "@/components/button/Button";
+import { Button } from "@/components/common/button/Button";
 import { layerAtom } from "@/libraries/atoms";
 import { typeGuard } from "@/libraries/typeGuard";
 
