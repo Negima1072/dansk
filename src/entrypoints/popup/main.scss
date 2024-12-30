@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 500px;
+  height: 400px;
+}
+
+div#root {
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 10px;
+}
+
+main {
+  margin: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+}
+
+header button {
+  margin-left: auto;
+  font-size: 18px;
+  margin-block: auto;
+  margin-right: 20px;
+}
+
+main.conv {
+  textarea {
+    resize: none;
+    width: 480px;
+    height: 130px;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    label {
+      font-size: 120%;
+    }
+    select {
+      padding: 2px;
+    }
+  }
+}
+
+main.help {
+  textarea {
+    resize: none;
+    width: 480px;
+    height: 60px;
+  }
+
+  h4 {
+    margin: 0;
+  }
+}
+
+input.button {
+  margin-left: auto;
+  margin-right: 20px;
+}
