@@ -4,6 +4,8 @@
 [![Release](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/release.yml/badge.svg)](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/release.yml)
 
 [Chrome Web Store](https://chromewebstore.google.com/detail/cjmnakgpnakmaemloaoaidbohgcldpcc) | [Firefox Addons](https://addons.mozilla.org/ja/firefox/addon/dansukumizu/)
+<br />
+[CHANGELOG](CHANGELOG.md) | [CONTRIBUTING](CONTRIBUTING.md)
 
 ニコニコ動画のコメントアート制作を補助するブラウザ拡張機能
 
