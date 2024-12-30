@@ -1,7 +1,6 @@
 import { createRoot } from "react-dom/client";
 
 import { Root } from "@/components/Root";
-import { inject } from "@/libraries/cssInjector";
 import { injectFetch } from "@/libraries/fetch";
 import {
   createBackgroundImageElement,
@@ -69,7 +68,6 @@ export default defineContentScript({
       document.body.append(ReactRootElement);
       const ReactRoot = createRoot(ReactRootElement);
       ReactRoot.render(<Root />);
-      inject();
     };
     void init();
   },

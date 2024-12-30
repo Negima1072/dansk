@@ -13,6 +13,7 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Main } from "./Main";
 import { MemoPortal } from "./MemoPortal";
+import "./global.scss";
 
 export const Root = () => {
   const [elements, setElements] = useAtom(elementAtom);

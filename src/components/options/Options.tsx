@@ -27,15 +27,15 @@ export const Options = () => {
       value.options_commandOrder = `layerName|${value.options_commandOrder}`;
       Storage.set("options_commandOrder", value.options_commandOrder);
     }
-    if (key === "options_disable184") {
-      const postBtn = document.querySelector(
-        ".CommentPostButton",
-      ) as HTMLButtonElement;
-      if (postBtn) {
-        postBtn.style.backgroundColor =
-          result === "true" ? "#ff8300" : "#007cff";
-      }
-    }
+    //if (key === "options_disable184") {
+    //  const postBtn = document.querySelector(
+    //    ".CommentPostButton",
+    //  ) as HTMLButtonElement;
+    //  if (postBtn) {
+    //    postBtn.style.backgroundColor =
+    //      result === "true" ? "#ff8300" : "#007cff";
+    //  }
+    //}
     value[key] = result;
     setValue({ ...value });
     Storage.set(key, result);
