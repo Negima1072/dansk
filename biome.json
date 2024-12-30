@@ -28,7 +28,7 @@
         "noArrayIndexKey": "off"
       }
     },
-    "ignore": ["**/*.js", "**/*.mjs", "**/*.cjs", "**/*.ts"],
+    "ignore": ["**/*.js", "**/*.mjs", "**/*.cjs"],
     "include": ["src/**/*.ts", "src/**/*.tsx"]
   },
   "javascript": {

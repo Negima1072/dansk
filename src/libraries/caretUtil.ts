@@ -38,7 +38,7 @@ export const caretUtil = {
     selection.modify("move", "forward", "character");
     const pos2 = caretUtil.get(targetElement);
     selection.modify("move", "backward", "character");
-    return pos1 == pos2;
+    return pos1 === pos2;
   },
   /**
    * カーソル位置を設定する
@@ -46,9 +46,9 @@ export const caretUtil = {
    * @param offset
    */
   set: (targetElement: HTMLElement, offset: number) => {
-    let length = 0,
-      index = 0,
-      targetNode = targetElement.childNodes[index];
+    let length = 0;
+    let index = 0;
+    let targetNode = targetElement.childNodes[index];
     while ((targetNode?.textContent?.length || 0) + length < offset) {
       length += targetNode?.textContent?.length || 0;
       index++;

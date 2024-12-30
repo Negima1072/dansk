@@ -13,10 +13,11 @@ export const Storage = {
     return value;
   },
   set: (key: TLocalStorageKeys, data: string | object): void => {
-    if (typeof data == "object") {
-      data = JSON.stringify(data);
+    if (typeof data === "object") {
+      localStorage.setItem(`${STORAGE_PREFIX}_${key}`, JSON.stringify(data));
+    } else {
+      localStorage.setItem(`${STORAGE_PREFIX}_${key}`, data);
     }
-    localStorage.setItem(`${STORAGE_PREFIX}_${key}`, data);
   },
   remove: (key: TLocalStorageKeys): void => {
     localStorage.removeItem(`${STORAGE_PREFIX}_${key}`);

@@ -6,9 +6,9 @@ import { replaceCharList } from "./layerManager.replaceCharList";
 
 import Styles from "./layerManager.module.scss";
 
-const ua = window.navigator.userAgent,
-  isChromium = !!ua.match(/Chrome/),
-  isFirefox = !!ua.match(/Firefox/);
+const ua = window.navigator.userAgent;
+const isChromium = !!ua.match(/Chrome/);
+const isFirefox = !!ua.match(/Firefox/);
 
 /**
  * レイヤーとイベントハンドラの管理
@@ -43,19 +43,19 @@ export const layerManager = (
         }
       }
     }
-    const caretPos = caretUtil.get(targetElement),
-      focusedNode = caretUtil.getFocusedNode(),
-      focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1,
-      focusedLines = focusedNode?.textContent?.split(/\r?\n/g);
+    const caretPos = caretUtil.get(targetElement);
+    const focusedNode = caretUtil.getFocusedNode();
+    const focusedPos = focusedNode ? caretUtil.get(focusedNode) : -1;
+    const focusedLines = focusedNode?.textContent?.split(/\r?\n/g);
     const strings = getInnerText(targetElement, data.height);
     adjustChildren(targetElement, data.height);
     const groupElements = Array.from(
       targetElement.children,
     ) as HTMLDivElement[];
-    let isChanged = false,
-      index = 0;
-    data.content.forEach((group) => {
-      group.content.forEach((item, itemIndex) => {
+    let isChanged = false;
+    let index = 0;
+    for (const group of data.content) {
+      for (const [itemIndex, item] of group.content.entries()) {
         const itemElement = groupElements[index];
         if (!itemElement) return;
         itemElement.id = `dansk:layer${data.layerId}Line${index}`;
@@ -68,7 +68,6 @@ export const layerManager = (
         itemElement.style.height = `${group.line}px`;
         itemElement.style.fontSize = `${group.font}px`;
         itemElement.style.whiteSpace = "pre";
-
         if (group.lineCount - 1 === itemIndex && group.height) {
           itemElement.style.marginBottom = `${
             group.height - group.line * group.lineCount
@@ -99,10 +98,9 @@ export const layerManager = (
           }
           itemElement.style.background = "none";
         }
-
         index++;
-      });
-    });
+      }
+    }
     if (data.overwrite) {
       onChange(data);
     } else if (isChanged) {

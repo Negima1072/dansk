@@ -11,12 +11,11 @@ export const str2time = (date: string): number | undefined => {
     if (match[2] !== undefined) time += Number(match[2]) * 60;
     if (match[3] !== undefined) time += Number(match[3]);
     if (match[4] !== undefined)
-      time += Number(match[4]) / Math.pow(10, match[4].length);
+      time += Number(match[4]) / 10 ** match[4].length;
     if (match[1] === "-") time *= -1;
     return time;
-  } else {
-    return undefined;
   }
+  return undefined;
 };
 
 /**

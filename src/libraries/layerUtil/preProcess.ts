@@ -26,9 +26,8 @@ export const preProcess = (
   const measuredLayers = measureLayers(layersWithSpace);
   if (options.monospaced) {
     return adjustSpace(measuredLayers);
-  } else {
-    return adjustEachSpace(measuredLayers);
   }
+  return adjustEachSpace(measuredLayers);
 };
 
 const formatLayerData = (layers: TLayer[]) => {
@@ -63,7 +62,7 @@ const adjustEachSpace = (layers: TMeasuredLayer[]) => {
         );
       }
       const removeSpace = Math.min(...removableWidths);
-      if (layer.critical || !isFinite(removeSpace)) {
+      if (layer.critical || !Number.isFinite(removeSpace)) {
         return {
           ...comment,
           content: comment.content.map((line) => line.content),
@@ -85,23 +84,21 @@ const adjustSpace = (layers: TMeasuredLayer[]) => {
     ...layers.map((layer) => {
       if (layer.critical) return 0;
       return Math.max(
-        ...layer.content
-          .map((comment) =>
-            comment.content.map((line) => {
-              if (line.leftSpaceWidth == line.width) return 0;
-              return (
-                ((line.width -
-                  line.leftSpaceWidth +
-                  Math.abs(
-                    line.leftSpaceWidth - (layer.width * 12 - line.width),
-                  )) /
-                  12) *
-                comment.font *
-                layer.scale.x
-              );
-            }),
-          )
-          .flat(),
+        ...layer.content.flatMap((comment) =>
+          comment.content.map((line) => {
+            if (line.leftSpaceWidth === line.width) return 0;
+            return (
+              ((line.width -
+                line.leftSpaceWidth +
+                Math.abs(
+                  line.leftSpaceWidth - (layer.width * 12 - line.width),
+                )) /
+                12) *
+              comment.font *
+              layer.scale.x
+            );
+          }),
+        ),
       );
     }),
   );
@@ -112,7 +109,7 @@ const adjustSpace = (layers: TMeasuredLayer[]) => {
         (layer.templateWidth -
           (targetWidth * 12) / (layerComment.font * layer.scale.x)) /
         2;
-      if (layer.critical || !isFinite(removeSpace)) {
+      if (layer.critical || !Number.isFinite(removeSpace)) {
         return {
           ...layerComment,
           content: layerComment.content.map((line) => line.content),
@@ -136,40 +133,41 @@ const adjustSpace = (layers: TMeasuredLayer[]) => {
  * @param width
  */
 const removeLeadingSpace = (input: string, width: number) => {
+  let _input = input;
   for (let i = 0; i < width; i++) {
-    switch (input.slice(0, 1)) {
+    switch (_input.slice(0, 1)) {
       case "\u2003":
         //12-11
         //input = Array(12).join('\uA003') + input.slice(1);
-        input = "\u2002\u2005\u2006" + input.slice(1);
+        _input = `\u2002\u2005\u2006${_input.slice(1)}`;
         break;
       case "\u2002":
         //6-5
         //input = Array(6).join('\uA003') + input.slice(1);
-        input = "\u2005\u2006" + input.slice(1);
+        _input = `\u2005\u2006${_input.slice(1)}`;
         break;
       case "\u2004":
         //4-3
         //input = Array(4).join('\uA003') + input.slice(1);
-        input = "\u2005" + input.slice(1);
+        _input = `\u2005${_input.slice(1)}`;
         break;
       case "\u2005":
         //3-2
         //input = Array(3).join('\uA003') + input.slice(1);
-        input = "\u2006" + input.slice(1);
+        _input = `\u2006${_input.slice(1)}`;
         break;
       case "\u2006":
         //2-1
-        input = "\u200A" + input.slice(1);
+        _input = `\u200A${_input.slice(1)}`;
         break;
       case "\u200A":
-        input = input.slice(1);
+        _input = _input.slice(1);
         break;
       default:
         break;
     }
   }
-  return rebuildSpace(input);
+  return rebuildSpace(_input);
 };
 
 const preProcessSpace = (layers: TLayer[]): TLayer[] => {
@@ -255,11 +253,11 @@ const measureTextWidth = (
   font: TCommentFont,
 ): { width: number; leftSpaceWidth: number } => {
   /** 左の空白幅 */
-  let leftSpaceWidth = 0,
-    /** コメント幅 */
-    width = 0,
-    /** 空白ではない文字を見つけたらfalse */
-    isLeftSpace = true;
+  let leftSpaceWidth = 0;
+  /** コメント幅 */
+  let width = 0;
+  /** 空白ではない文字を見つけたらfalse */
+  let isLeftSpace = true;
   /** 文字幅リスト */
   for (const char of Array.from(input)) {
     const value = getCharWidth(char, font);

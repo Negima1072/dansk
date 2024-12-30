@@ -48,8 +48,8 @@ export const layerUtil = {
    * @param b
    */
   isEqual: (a: TLayer, b: TLayer): boolean => {
-    const aStr: string[] = [],
-      bStr: string[] = [];
+    const aStr: string[] = [];
+    const bStr: string[] = [];
     for (const group of a.content) {
       for (const item of group.content) {
         aStr.push(item);
@@ -83,9 +83,8 @@ export const layerUtil = {
     const index = layer.posList.indexOf(layer.pos);
     if (layer.posList.length > index + 1) {
       return layer.posList[index + 1] || "ue";
-    } else {
-      return layer.posList[0] || "ue";
     }
+    return layer.posList[0] || "ue";
   },
   /**
    * layerをだんすく形式の文字列に変換
@@ -96,9 +95,9 @@ export const layerUtil = {
    */
   toString: (
     layerData: TLayer[],
-    monospaced: boolean = false,
-    replaceTab: boolean = false,
-    ownerMode: boolean = false,
+    monospaced = false,
+    replaceTab = false,
+    ownerMode = false,
   ): { content: string[]; command: string }[] | undefined => {
     try {
       return layers2string(layerData, {

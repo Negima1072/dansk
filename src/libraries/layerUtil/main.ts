@@ -75,10 +75,13 @@ const result2string = (
     if (options.useTab) {
       item.content = item.content.map((line) => space2tab(rebuildSpace(line)));
     }
-    return item.content
-      .join("<br>")
-      .replace(/\uA001/g, "[03]")
-      .replace(/\u0009/g, "[tb]");
+    return (
+      item.content
+        .join("<br>")
+        .replace(/\uA001/g, "[03]")
+        // biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
+        .replace(/\u0009/g, "[tb]")
+    );
   });
 };
 
@@ -150,9 +153,9 @@ const addTrailingSpace = (input: string, width: number) => {
     );
     return input;
   }
-  input += "\u200A".repeat(width);
-  input = rebuildSpace(input);
-  return input;
+  let _input = input + "\u200A".repeat(width);
+  _input = rebuildSpace(_input);
+  return _input;
 };
 
 const addDRSpace = (input: string, width: number) => {
@@ -162,7 +165,7 @@ const addDRSpace = (input: string, width: number) => {
     );
     return input;
   }
-  input = `${"\u200A".repeat(width)}${input}${"\u200A".repeat(width)}`;
-  input = rebuildSpace(input);
-  return input;
+  let _input = `${"\u200A".repeat(width)}${input}${"\u200A".repeat(width)}`;
+  _input = rebuildSpace(input);
+  return _input;
 };

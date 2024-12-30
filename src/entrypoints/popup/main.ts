@@ -3,16 +3,18 @@ import { Storage } from "@/libraries/localStorage";
 import type { TConvertFormat } from "@/types/types";
 
 window.addEventListener("load", () => {
-  const beforeTextArea = document.getElementById("before") as HTMLInputElement,
-    beforeOptions = document.getElementById(
-      "before_select",
-    ) as HTMLSelectElement,
-    afterTextArea = document.getElementById("after") as HTMLInputElement,
-    afterOptions = document.getElementById("after_select") as HTMLSelectElement,
-    copyButton = document.getElementById("copyButton") as HTMLInputElement,
-    clearButton = document.getElementById("clear") as HTMLInputElement,
-    replaceButton = document.getElementById("replace") as HTMLInputElement,
-    repairButton = document.getElementById("repair") as HTMLInputElement;
+  const beforeTextArea = document.getElementById("before") as HTMLInputElement;
+  const beforeOptions = document.getElementById(
+    "before_select",
+  ) as HTMLSelectElement;
+  const afterTextArea = document.getElementById("after") as HTMLInputElement;
+  const afterOptions = document.getElementById(
+    "after_select",
+  ) as HTMLSelectElement;
+  const copyButton = document.getElementById("copyButton") as HTMLInputElement;
+  const clearButton = document.getElementById("clear") as HTMLInputElement;
+  const replaceButton = document.getElementById("replace") as HTMLInputElement;
+  const repairButton = document.getElementById("repair") as HTMLInputElement;
 
   /**
    * localstorageにデータを保管する
@@ -82,10 +84,11 @@ window.addEventListener("load", () => {
  */
 const getCookie = (name: string): null | string => {
   let value = null;
-  Array.from(document.cookie.split("; ")).forEach((v) => {
-    if (name == v.split("=")[0])
+  for (const v of Array.from(document.cookie.split("; "))) {
+    if (name === v.split("=")[0]) {
       value = v.split("=")[1]?.replace(/\{break}/g, "\n");
-  });
+    }
+  }
   document.cookie = `${name}=; max-age=0`;
   return value;
 };

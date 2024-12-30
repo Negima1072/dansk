@@ -6,14 +6,14 @@ import type { TElement } from "@/types/element";
  * @param count {number} リトライ回数
  */
 export const getElements = async (count = 0): Promise<TElement> => {
-  const videoElement = getVideoElement(),
-    commentCommandInput = getCommentCommandInput(),
-    commentInputTextarea = getCommentInputTextarea(),
-    commentCanvas = getCommentCanvas(),
-    HeaderElement = getHeaderElement(),
-    MainElement = getMainElement(),
-    FooterElement = getFooterElement(),
-    MemoElement = getMemoElement();
+  const videoElement = getVideoElement();
+  const commentCommandInput = getCommentCommandInput();
+  const commentInputTextarea = getCommentInputTextarea();
+  const commentCanvas = getCommentCanvas();
+  const HeaderElement = getHeaderElement();
+  const MainElement = getMainElement();
+  const FooterElement = getFooterElement();
+  const MemoElement = getMemoElement();
   let BackgroundImageElement = getBackgroundImageElement();
   let LayerElement = getLayerElement();
   if (

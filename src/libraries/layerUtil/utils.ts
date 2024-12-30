@@ -5,6 +5,7 @@ export const rebuildSpaceWithCompat = (input: string) => {
 export const rebuildSpace = (input: string) => {
   return (
     input
+      // biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
       .replace(/\u0009/g, "\u200A".repeat(24))
       .replace(/\u2003/g, "\u200A".repeat(12))
       .replace(/\u2002/g, "\u200A".repeat(6))
