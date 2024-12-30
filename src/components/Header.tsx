@@ -1,22 +1,16 @@
 import { useAtom } from "jotai";
-import type { FC } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 
-import { elementAtom } from "@/atoms";
-import { Trace } from "@/headers/Trace";
+import { elementAtom } from "@/libraries/atoms";
+
+import { Trace } from "./headers/Trace";
 
 /**
  * ヘッダーブロック(プレイヤー上)
  * @constructor
  */
-const Header: FC = () => {
+export const Header = () => {
   const [elements] = useAtom(elementAtom);
   if (!elements) return <></>;
-  return ReactDOM.createPortal(
-    <>
-      <Trace />
-    </>,
-    elements.HeaderElement,
-  );
+  return createPortal(<Trace />, elements.HeaderElement);
 };
-export { Header };

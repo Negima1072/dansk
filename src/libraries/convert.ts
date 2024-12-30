@@ -1,5 +1,5 @@
-import type { TConvertFormat } from "@/@types/types";
 import { typeGuard } from "@/libraries/typeGuard";
+import type { TConvertFormat } from "@/types/types";
 
 /**
  * inputFormat型のinputをoutputFormat型に変換して返す
@@ -7,12 +7,12 @@ import { typeGuard } from "@/libraries/typeGuard";
  * @param outputFormat
  * @param input
  */
-const convertText = (
+export const convertText = (
   inputFormat: TConvertFormat,
   outputFormat: TConvertFormat,
   input: string,
 ) => {
-  if (inputFormat == outputFormat) return input;
+  if (inputFormat === outputFormat) return input;
   let dansk = "";
   switch (inputFormat) {
     case "domo":
@@ -35,16 +35,16 @@ const convertText = (
   return "";
 };
 const convertDomoToDansk = (input: string): string => {
-  input = input
+  const _input = input
     .replace(/\r\n|\r/g, "\n")
     .replace(/\n/g, "\n<br>")
     .replace(/\t/g, "[tb]");
-  const lines: string[] = input.split("\n"),
-    result: string[] = [];
+  const lines: string[] = _input.split("\n");
+  const result: string[] = [];
   let commandCount = 0;
   for (let line of lines) {
     if (line === undefined) continue;
-    if (commandCount == -1) {
+    if (commandCount === -1) {
       line = line.replace("<br>", "");
     }
     commandCount = (
@@ -66,16 +66,16 @@ const convertDomoToDansk = (input: string): string => {
  * @return {string} domo
  */
 const convertDanskToDomo = (input: string): string => {
-  input = input
+  const _input = input
     .replace(/\[tb]/g, "\t")
     .replace(/\[03]/g, "　")
     .replace(/\[0A]/g, "");
-  const lines: string[] = input.split("\n"),
-    result: string[] = [];
+  const lines: string[] = _input.split("\n");
+  const result: string[] = [];
   let lastCommand = "";
   for (const line of lines) {
-    let content = "",
-      command = "";
+    let content = "";
+    let command = "";
     if (line === undefined || line === "") continue;
     const match = line.match(/(?:\[(.*)])?(.*)/);
     if (match === null || match[1] === undefined) {
@@ -120,10 +120,10 @@ const convertTokomeToDansk = (input: string): string => {
  * @return {string} date
  */
 const covertTimeIntToString = (time: number): string => {
-  const a = ("0" + Math.floor(time / 6000).toString()).slice(-2);
-  const b = ("0" + Math.floor((time % 6000) / 100).toString()).slice(-2);
-  const d = ("0" + Math.floor((time % 6000) % 100).toString()).slice(-2);
-  return a + ":" + b + "." + d;
+  const a = `0${Math.floor(time / 6000).toString()}`.slice(-2);
+  const b = `0${Math.floor((time % 6000) / 100).toString()}`.slice(-2);
+  const d = `0${Math.floor((time % 6000) % 100).toString()}`.slice(-2);
+  return `${a}:${b}.${d}`;
 };
 
 /**
@@ -132,12 +132,12 @@ const covertTimeIntToString = (time: number): string => {
  * @return {string} tokome
  */
 const convertDanskToTokome = (input: string): string => {
-  input = input
+  const _input = input
     .replace(/\[tb]/g, "\t")
     .replace(/\[03]/g, "　")
     .replace(/\[0A]/, "");
-  const lines = input.split("\n"),
-    result = [];
+  const lines = _input.split("\n");
+  const result = [];
   let lastCommand = "";
   let baseTimeMs = 0;
   for (let line of lines) {
@@ -145,7 +145,7 @@ const convertDanskToTokome = (input: string): string => {
     if (match !== null && match[0] !== undefined && match[1] !== undefined) {
       const tmMatch = match[1].match(/tm(\d+)/);
       if (tmMatch !== null && tmMatch[1] !== undefined) {
-        baseTimeMs += parseInt(tmMatch[1]);
+        baseTimeMs += Number.parseInt(tmMatch[1]);
         line = line.replace(match[0], "");
       }
     }
@@ -154,7 +154,7 @@ const convertDanskToTokome = (input: string): string => {
       command: "",
       comment: "",
     };
-    if (line == "") continue;
+    if (line === "") continue;
     line = line.replace(/<br>/g, "\n");
     if (match === null || match[0] === undefined || match[1] === undefined) {
       comment.command = lastCommand;
@@ -172,5 +172,3 @@ const convertDanskToTokome = (input: string): string => {
   }
   return JSON.stringify(result, null, 2);
 };
-
-export { convertText };

@@ -1,19 +1,19 @@
-import type { TElement } from "@/@types/element";
 import { sleep } from "@/libraries/sleep";
+import type { TElement } from "@/types/element";
 
 /**
  * reactマウント用の親要素を取得する
  * @param count {number} リトライ回数
  */
-const getElements = async (count = 0): Promise<TElement> => {
-  const videoElement = getVideoElement(),
-    commentCommandInput = getCommentCommandInput(),
-    commentInputTextarea = getCommentInputTextarea(),
-    commentCanvas = getCommentCanvas(),
-    HeaderElement = getHeaderElement(),
-    MainElement = getMainElement(),
-    FooterElement = getFooterElement(),
-    MemoElement = getMemoElement();
+export const getElements = async (count = 0): Promise<TElement> => {
+  const videoElement = getVideoElement();
+  const commentCommandInput = getCommentCommandInput();
+  const commentInputTextarea = getCommentInputTextarea();
+  const commentCanvas = getCommentCanvas();
+  const HeaderElement = getHeaderElement();
+  const MainElement = getMainElement();
+  const FooterElement = getFooterElement();
+  const MemoElement = getMemoElement();
   let BackgroundImageElement = getBackgroundImageElement();
   let LayerElement = getLayerElement();
   if (
@@ -57,7 +57,6 @@ const getElements = async (count = 0): Promise<TElement> => {
     MemoElement,
   };
 };
-export { getElements };
 
 export const getBaseElements = async () => {
   let count = 0;

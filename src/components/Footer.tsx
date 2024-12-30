@@ -1,19 +1,19 @@
 import { useAtom } from "jotai";
-import type { FC } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 
-import { elementAtom } from "@/atoms";
-import { CommandBox } from "@/footers/CommandBox";
-import { OutputBox } from "@/footers/OutputBox";
+import { elementAtom } from "@/libraries/atoms";
+
+import { CommandBox } from "./footers/CommandBox";
+import { OutputBox } from "./footers/OutputBox";
 
 /**
  * フッターブロック(プレイヤー下)
  * @constructor
  */
-const Footer: FC = () => {
+export const Footer = () => {
   const [elements] = useAtom(elementAtom);
   if (!elements) return <></>;
-  return ReactDOM.createPortal(
+  return createPortal(
     <>
       <CommandBox />
       <OutputBox />
@@ -21,4 +21,3 @@ const Footer: FC = () => {
     elements.FooterElement,
   );
 };
-export { Footer };

@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   build:
@@ -14,41 +14,28 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Build
-      run: |
-        npm install
-        ls
-        npm run build
-    - name: Prepare
-      run: |
-        cp -f README.md dist
-    - name: Package for Chrome
-      run: |
-        cp -rf dist/ dist_chrome/
-        rm -rf dist_chrome/manifest.firefox.json
-        zip -r dansk-chrome-${GITHUB_REF##*/}.zip dist_chrome
+        cache: "pnpm"
+    - name: Install dependencies
+      run: pnpm install
     - name: Submit to Chrome Web Store
       run: |
-        npx -y chrome-webstore-upload-cli@3 upload --source dansk-chrome-${GITHUB_REF##*/}.zip --auto-publish
+        pnpm zip
+        mv .output/*.zip dansk-chrome-${GITHUB_REF##*/}.zip
+        pnpm dlx chrome-webstore-upload-cli@3 upload --source dansk-chrome-${GITHUB_REF##*/}.zip --auto-publish
       env:
         EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
         CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
         REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-    - name: Package for Firefox
-      run: |
-        cp -rf dist/ dist_firefox/
-        rm -rf dist_firefox/manifest.json
-        mv dist_firefox/manifest.firefox.json dist_firefox/manifest.json
     - name: Sign for Firefox
       run: |
-        npx -y web-ext@7 sign --source-dir dist_firefox --use-submission-api --channel unlisted
+        pnpm build:firefox
+        pnpm dlx web-ext@8 sign --source-dir .output/firefox-mv3 --use-submission-api --channel unlisted
         mv web-ext-artifacts/*.xpi dansk-firefox-${GITHUB_REF##*/}.xpi
       env:
         WEB_EXT_API_KEY: ${{ secrets.FIREFOX_API_KEY }}

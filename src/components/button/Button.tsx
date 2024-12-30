@@ -32,7 +32,7 @@ const ColorButton = styled.input.attrs<colorButtonProps>((props) => ({
  * @param props
  * @constructor
  */
-const Button = (props: buttonProps) => {
+export const Button = (props: buttonProps) => {
   if (props.type === "color") {
     return (
       <ColorButton
@@ -55,4 +55,3 @@ const Button = (props: buttonProps) => {
     />
   );
 };
-export { Button };

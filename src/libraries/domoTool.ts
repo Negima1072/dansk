@@ -1,7 +1,7 @@
 import NiconiComments from "@xpadev-net/niconicomments";
 
-import type { TLayer, TLayerComment, TLayerTemplate } from "@/@types/layer";
-import { Templates } from "@/headers/Trace.templates";
+import { Templates } from "@/components/headers/Trace.templates";
+import type { TLayer, TLayerComment, TLayerTemplate } from "@/types/layer";
 
 import { uuid } from "./uuidUtil";
 
@@ -86,7 +86,7 @@ const domoLines2content = (
  * どーもさんツールのXMLからダンスクJSONに変換する
  * @pram xml どーもさんツールのXML(string)
  */
-const domo2dansa = (xml: string): TLayer[] => {
+export const domo2dansa = (xml: string): TLayer[] => {
   const parser = new DOMParser();
   const xmlData = parser.parseFromString(xml, "application/xml");
   const comments = Array.from(xmlData.getElementsByTagName("DataCommentItem"));
@@ -136,5 +136,3 @@ const domo2dansa = (xml: string): TLayer[] => {
   }
   return layers;
 };
-
-export { domo2dansa };

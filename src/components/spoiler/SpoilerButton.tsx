@@ -6,6 +6,7 @@ type propType = {
   message?: string;
   click: () => void;
 };
+
 /**
  * スポイラーの開閉バー
  * open: 開いているか
@@ -15,7 +16,7 @@ type propType = {
  * @param props
  * @constructor
  */
-const SpoilerButton: React.FC<propType> = (props) => {
+export const SpoilerButton = (props: propType) => {
   return (
     <div
       className={`${Styles.wrapper || ""} ${
@@ -28,4 +29,3 @@ const SpoilerButton: React.FC<propType> = (props) => {
     </div>
   );
 };
-export { SpoilerButton };

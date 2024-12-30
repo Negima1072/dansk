@@ -1,0 +1,29 @@
+div.grid-area_\[player\] > div.pos_relative > div > div > div > div.d_flex {
+  z-index: 12;
+}
+
+#dansk\:HeaderElement {
+  grid-area: d_header;
+}
+
+#dansk\:FooterElement {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  grid-area: d_footer;
+}
+
+div.grid-area_\[player\] > div[tabindex="0"] > div > div.p_base {
+  position: relative;
+  z-index: 11;
+}
+
+section:has(div.grid-area_\[player\]) {
+  grid-template-areas:
+    "d_header ."
+    "player sidebar"
+    "d_footer sidebar"
+    "meta sidebar"
+    "bottom sidebar"
+    ". sidebar";
+}

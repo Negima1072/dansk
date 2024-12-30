@@ -1,14 +1,14 @@
-import type { TMeasuredLayer } from "@/@types/layer";
 import { Storage } from "@/libraries/localStorage";
+import type { TMeasuredLayer } from "@/types/layer";
 
 /**
  * コマンドの作成
  * @param layer
  */
 export const command2str = (layer: TMeasuredLayer) => {
-  const commands = [...layer.commands],
-    pos = layer.pos,
-    font = layer.font;
+  const commands = [...layer.commands];
+  const pos = layer.pos;
+  const font = layer.font;
   let color = layer.color;
   if (Storage.get("options_exportLayerName") === "true")
     commands.push("layerName");
@@ -26,13 +26,13 @@ export const command2str = (layer: TMeasuredLayer) => {
     return index;
   };
   commands.sort((a, b) => {
-    const a_ = getIndex(a),
-      b_ = getIndex(b);
+    const a_ = getIndex(a);
+    const b_ = getIndex(b);
     if (a_ < b_) return -1;
     if (a_ > b_) return 1;
     return 0;
   });
-  if (color == "#000000" && Storage.get("options_lineMode") === "true") {
+  if (color === "#000000" && Storage.get("options_lineMode") === "true") {
     color = "#010101";
   }
   let layerName = layer.text.replace(/\s/g, "-");

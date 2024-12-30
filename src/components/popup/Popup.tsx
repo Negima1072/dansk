@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { icons } from "@/assets/icons";
+import { icons } from "@/libraries/icons";
 
 import Styles from "./Popup.module.scss";
 
@@ -17,7 +17,7 @@ type PopupProps = {
  * @param props
  * @constructor
  */
-const Popup = (props: PopupProps) => {
+export const Popup = (props: PopupProps) => {
   return (
     <div className={Styles.background} onClick={props.close}>
       <div className={Styles.wrapper} onClick={(e) => e.stopPropagation()}>
@@ -32,4 +32,3 @@ const Popup = (props: PopupProps) => {
     </div>
   );
 };
-export { Popup };

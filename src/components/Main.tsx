@@ -1,22 +1,16 @@
 import { useAtom } from "jotai";
-import type { FC } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 
-import { elementAtom } from "@/atoms";
-import { VideoController } from "@/main/VideoController";
+import { elementAtom } from "@/libraries/atoms";
+
+import { VideoController } from "./main/VideoController";
 
 /**
  * メインブロック(プレイヤー内)
  * @constructor
  */
-const Main: FC = () => {
+export const Main = () => {
   const [elements] = useAtom(elementAtom);
   if (!elements) return <></>;
-  return ReactDOM.createPortal(
-    <>
-      <VideoController />
-    </>,
-    elements.MainElement,
-  );
+  return createPortal(<VideoController />, elements.MainElement);
 };
-export { Main };

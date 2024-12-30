@@ -1,9 +1,11 @@
 export const rebuildSpaceWithCompat = (input: string) => {
   return rebuildSpace(input.replace(/[\u2001\u3000]/g, "\u2003"));
 };
+
 export const rebuildSpace = (input: string) => {
   return (
     input
+      // biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
       .replace(/\u0009/g, "\u200A".repeat(24))
       .replace(/\u2003/g, "\u200A".repeat(12))
       .replace(/\u2002/g, "\u200A".repeat(6))
