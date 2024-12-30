@@ -36,7 +36,7 @@ const ColorDisplay = styled.label.attrs<ColorDisplayProps>((p) => ({
  * 背景の追加、選択、描画モード選択
  * @constructor
  */
-const BackgroundPicker = () => {
+export const BackgroundPicker = () => {
   const [background, setBackground] = useAtom(backgroundAtom);
   const [urlInputActive, setUrlInputActive] = useState<boolean>(false);
   const [urlInputValue, setUrlInputValue] = useState<string>("");
@@ -230,4 +230,3 @@ const BackgroundPicker = () => {
     </>
   );
 };
-export { BackgroundPicker };

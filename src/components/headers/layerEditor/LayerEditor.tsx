@@ -13,7 +13,7 @@ import Styles from "./LayerEditor.module.scss";
  * layerの一括編集
  * @constructor
  */
-const LayerEditor = () => {
+export const LayerEditor = () => {
   const [layerData, setLayerData] = useAtom(layerAtom);
 
   const color = layerData.reduce((pv, layer) => {
@@ -118,4 +118,3 @@ const LayerEditor = () => {
     </div>
   );
 };
-export { LayerEditor };

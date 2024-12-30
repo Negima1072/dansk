@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useLocation = () => {
+export const useLocation = () => {
   const [currentHref, setCurrentHref] = useState(window.location.href);
 
   useEffect(() => {
@@ -9,20 +9,20 @@ const useLocation = () => {
     };
 
     const originalPushState = window.history.pushState;
-    window.history.pushState = function (
+    window.history.pushState = (
       data: unknown,
       ununsed: string,
       url?: string | URL | null,
-    ) {
+    ) => {
       originalPushState.apply(this, [data, ununsed, url]);
       handleLocationChange();
     };
     const originalReplaceState = window.history.replaceState;
-    window.history.replaceState = function (
+    window.history.replaceState = (
       data: unknown,
       ununsed: string,
       url?: string | URL | null,
-    ) {
+    ) => {
       originalReplaceState.apply(this, [data, ununsed, url]);
       handleLocationChange();
     };
@@ -38,5 +38,3 @@ const useLocation = () => {
 
   return currentHref;
 };
-
-export { useLocation };

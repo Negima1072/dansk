@@ -16,7 +16,7 @@ import Styles from "./LayerSelector.module.scss";
  * レイヤー選択・並べ替え・色変更他
  * @constructor
  */
-const LayerSelector = () => {
+export const LayerSelector = () => {
   const [layerData, setLayerData] = useAtom(layerAtom);
   const [editingLayer, setEditingLayer] = useState<number>(-1);
   const [editingLayerName, setEditingLayerName] = useState<string>("");
@@ -181,4 +181,3 @@ const LayerSelector = () => {
     </div>
   );
 };
-export { LayerSelector };

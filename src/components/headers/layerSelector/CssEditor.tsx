@@ -16,7 +16,7 @@ type EditorProps = {
  * 背景の追加、選択、描画モード選択
  * @constructor
  */
-const CssEditor = (props: EditorProps) => {
+export const CssEditor = (props: EditorProps) => {
   if (!props.data) return <></>;
   const [data, setData] = useState(props.data);
   const update = (key: string, event: ChangeEvent<HTMLInputElement>) => {
@@ -205,4 +205,3 @@ const CssEditor = (props: EditorProps) => {
     </Popup>
   );
 };
-export { CssEditor };

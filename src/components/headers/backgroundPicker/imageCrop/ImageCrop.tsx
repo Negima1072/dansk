@@ -22,7 +22,7 @@ const getActualRange = (range: TCropRange) => {
   };
 };
 
-const ImageCrop = ({ imageId, close }: props) => {
+export const ImageCrop = ({ imageId, close }: props) => {
   const [background, setBackground] = useAtom(backgroundAtom);
   const image = background.images[imageId];
   const [range, setRange] = useState<TCropRange>(
@@ -140,5 +140,3 @@ const ImageCrop = ({ imageId, close }: props) => {
     </div>
   );
 };
-
-export { ImageCrop };

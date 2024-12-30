@@ -1,6 +1,6 @@
 import type { TLayerTemplates } from "@/types/types";
 
-const Templates: TLayerTemplates = {
+export const Templates: TLayerTemplates = {
   be9: {
     id: "be9",
     commands: ["big", "ender", "full"],
@@ -472,4 +472,3 @@ const Templates: TLayerTemplates = {
     ],
   },
 };
-export { Templates };

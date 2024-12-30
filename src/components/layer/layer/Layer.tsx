@@ -15,6 +15,7 @@ import Styles from "./Layer.module.scss";
 type LayerProps = {
   data: TLayer;
 };
+
 type LayerBoxProps = {
   top: number;
   left: number;
@@ -22,6 +23,7 @@ type LayerBoxProps = {
   _width: number;
   _scale: { x: number; y: number };
 };
+
 const LayerBox = styled.div<LayerBoxProps>`
   top: ${(props) => props.top}px;
   left: ${(props) => props.left}px;
@@ -29,16 +31,20 @@ const LayerBox = styled.div<LayerBoxProps>`
   width: ${(props) => props._width}px;
   transform: scale(${(p) => p._scale.x}, ${(p) => p._scale.y});
 `;
+
 type LayerItemProps = { _height: number | undefined };
+
 const LayerItem = styled.div<LayerItemProps>`
   height: ${(props) => (props._height ? `${props._height}px` : "unset")};
 `;
+
 type LayerInputProps = {
   _height: number | undefined;
   _lineHeight: number;
   _fontSize: number;
   _fontFamily: "defont" | "mincho" | "gothic";
 };
+
 const LayerInput = styled.textarea<LayerInputProps>`
   height: ${(props) => (props._height ? `${props._height}px` : "unset")};
   line-height: ${(props) => props._lineHeight}px;
@@ -54,7 +60,7 @@ const LayerInput = styled.textarea<LayerInputProps>`
  * @param props
  * @constructor
  */
-const Layer = (props: LayerProps) => {
+export const Layer = (props: LayerProps) => {
   const [layerData, setLayerData] = useAtom(layerAtom);
   const [optionData] = useAtom(optionAtom);
   const layerElement = useRef<HTMLDivElement>(null);
@@ -180,4 +186,3 @@ const Layer = (props: LayerProps) => {
     </>
   );
 };
-export { Layer };

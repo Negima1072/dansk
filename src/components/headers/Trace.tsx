@@ -33,7 +33,7 @@ import Styles from "./Trace.module.scss";
  * Traceブロック
  * @constructor
  */
-const Trace = () => {
+export const Trace = () => {
   const [tabMode, setTabMode] = useState<boolean>(false);
   const [layerDropdownValue, setLayerDropdownValue] = useState<string>(
     "big_ue_ender_full_gothic_W17_L9",
@@ -437,4 +437,3 @@ const Trace = () => {
     </>
   );
 };
-export { Trace };

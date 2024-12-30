@@ -41,7 +41,7 @@ const convert6digitHexColorCode = (color: string) => {
   return "#000000";
 };
 
-const ColorPicker = ({ color, disabled, onChange }: props) => {
+export const ColorPicker = ({ color, disabled, onChange }: props) => {
   const colorDisplayRef = useRef<HTMLLabelElement>(null);
   const [pos, setPos] = useState<{ x: number; y: number; height: number }>({
     x: 0,
@@ -107,4 +107,3 @@ const ColorPicker = ({ color, disabled, onChange }: props) => {
     </div>
   );
 };
-export { ColorPicker };

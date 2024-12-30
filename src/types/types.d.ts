@@ -110,5 +110,3 @@ export type TCommentPublishData = {
   videoId: string;
   vposMs: number;
 };
-
-export {};

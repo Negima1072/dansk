@@ -21,7 +21,7 @@ type propType = {
  * @param props
  * @constructor
  */
-const Backup = (props: propType) => {
+export const Backup = (props: propType) => {
   const [saveData, setSaveData] = useState<TAutoSave[]>(() => {
     const data: unknown = JSON.parse(Storage.get("autoSave"));
     if (!typeGuard.localStorage.isAutoSave(data)) return [];
@@ -80,4 +80,3 @@ const Backup = (props: propType) => {
     </Popup>
   );
 };
-export { Backup };

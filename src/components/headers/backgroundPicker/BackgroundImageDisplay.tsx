@@ -14,7 +14,7 @@ type props = {
  * 有効無効の切り替えとか画像の削除とかも
  * @constructor
  */
-const BackgroundImageDisplay = ({ setImageCrop }: props) => {
+export const BackgroundImageDisplay = ({ setImageCrop }: props) => {
   const [background, setBackground] = useAtom(backgroundAtom);
   const deleteImage = (key: number) => {
     background.images.splice(key, 1);
@@ -92,4 +92,3 @@ const BackgroundImageDisplay = ({ setImageCrop }: props) => {
     </div>
   );
 };
-export { BackgroundImageDisplay };

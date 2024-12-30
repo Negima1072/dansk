@@ -87,7 +87,7 @@ const handles = [
   "borderLeft",
 ];
 
-const Crop = ({ update, range }: props) => {
+export const Crop = ({ update, range }: props) => {
   const [cropRange, setCropRange] = useState<TCropRange>(range);
   const [moveTarget, setMoveTarget] = useState<(moveTarget | "init")[]>([]);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -175,4 +175,3 @@ const Crop = ({ update, range }: props) => {
     </div>
   );
 };
-export { Crop };

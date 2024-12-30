@@ -20,7 +20,7 @@ type dropdownProps = {
  * @param props
  * @constructor
  */
-const Dropdown = (props: dropdownProps) => {
+export const Dropdown = (props: dropdownProps) => {
   const [value, setValue] = useState<string>(props.selected);
   const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
@@ -38,4 +38,3 @@ const Dropdown = (props: dropdownProps) => {
     </select>
   );
 };
-export { Dropdown };

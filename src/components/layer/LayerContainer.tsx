@@ -27,11 +27,6 @@ const BackgroundImage = styled.img<{ mode: TObjectFitArgs; opacity: number }>`
   opacity: ${(props) => props.opacity};
 `;
 
-function beforeUnload(e: BeforeUnloadEvent) {
-  e.preventDefault();
-  e.returnValue = true;
-}
-
 /**
  * レイヤー全体を管理
  * @constructor
@@ -46,7 +41,9 @@ export const LayerContainer = () => {
     const cssClass = Styles.VideoSymbolContainer || "_";
     if (!classList || process.env.NODE_ENV === "development") return;
     if (layerData && layerData.length > 0) {
-      window.onbeforeunload = beforeUnload;
+      window.onbeforeunload = (e) => {
+        e.preventDefault();
+      };
       classList.toggle(cssClass, true);
     } else {
       window.onbeforeunload = null;
