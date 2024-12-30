@@ -16,7 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: pnpm/action-setup@v4
-      uses: actions/setup-node@v4
+      with:
+        version: 9
+    - uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: "pnpm"
@@ -35,7 +37,7 @@ jobs:
     - name: Sign for Firefox
       run: |
         pnpm build:firefox
-        pnpm dlx web-ext@8 sign --source-dir .output/firefox-mv3 --use-submission-api --channel unlisted
+        pnpm dlx web-ext@8 sign --source-dir .output/firefox-mv3 --channel unlisted
         mv web-ext-artifacts/*.xpi dansk-firefox-${GITHUB_REF##*/}.xpi
       env:
         WEB_EXT_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
