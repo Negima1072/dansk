@@ -2,6 +2,7 @@ import { defineConfig } from "wxt";
 
 export default defineConfig({
   srcDir: "src",
+  publicDir: "../public",
   extensionApi: "chrome",
   modules: ["@wxt-dev/module-react"],
   manifest: {
