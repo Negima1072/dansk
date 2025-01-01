@@ -1,5 +1,4 @@
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 
 import Styles from "./ColorPicker.module.scss";
 
@@ -8,23 +7,6 @@ type props = {
   disabled?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
-
-type colorProps = {
-  bgColor: string;
-};
-
-const ColorDisplay = styled.label<colorProps>`
-  background-color: ${(props) => props.bgColor};
-`;
-
-type pos = {
-  x: number;
-  y: number;
-};
-const HoverItem = styled.div<pos>`
-  left: ${(props) => props.x}px;
-  top: ${(props) => props.y}px;
-`;
 
 const convert6digitHexColorCode = (color: string) => {
   if (color.length === 4) {
@@ -76,9 +58,12 @@ export const ColorPicker = ({ color, disabled, onChange }: props) => {
 
   return (
     <div className={`${Styles.wrapper} ${disabled && Styles.disabled}`}>
-      <ColorDisplay
+      {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+      <label
         className={`handle ${Styles.colorLabel}`}
-        bgColor={color}
+        style={{
+          backgroundColor: color,
+        }}
         ref={colorDisplayRef}
         onMouseEnter={onClick}
       >
@@ -91,8 +76,14 @@ export const ColorPicker = ({ color, disabled, onChange }: props) => {
             value={convert6digitHexColorCode(colorInput)}
           />
         )}
-      </ColorDisplay>
-      <HoverItem x={pos.x} y={pos.y + pos.height} className={Styles.hoverItem}>
+      </label>
+      <div
+        className={Styles.hoverItem}
+        style={{
+          left: `${pos.x}px`,
+          top: `${pos.height + pos.y}px`,
+        }}
+      >
         <input
           type="text"
           value={colorInputText}
@@ -102,7 +93,7 @@ export const ColorPicker = ({ color, disabled, onChange }: props) => {
           required
           placeholder={"#FFFFFF"}
         />
-      </HoverItem>
+      </div>
     </div>
   );
 };

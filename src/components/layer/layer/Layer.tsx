@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
 import { type ChangeEvent, useRef } from "react";
-import styled from "styled-components";
 
 import { layerAtom, optionAtom } from "@/libraries/atoms";
 import { getFont } from "@/libraries/font";
@@ -14,43 +13,6 @@ import Styles from "./Layer.module.scss";
 type LayerProps = {
   data: TLayer;
 };
-
-type LayerBoxProps = {
-  top: number;
-  left: number;
-  textColor: string;
-  _width: number;
-  _scale: { x: number; y: number };
-};
-
-const LayerBox = styled.div<LayerBoxProps>`
-  top: ${(props) => props.top}px;
-  left: ${(props) => props.left}px;
-  color: ${(props) => props.textColor};
-  width: ${(props) => props._width}px;
-  transform: scale(${(p) => p._scale.x}, ${(p) => p._scale.y});
-`;
-
-type LayerItemProps = { _height: number | undefined };
-
-const LayerItem = styled.div<LayerItemProps>`
-  height: ${(props) => (props._height ? `${props._height}px` : "unset")};
-`;
-
-type LayerInputProps = {
-  _height: number | undefined;
-  _lineHeight: number;
-  _fontSize: number;
-  _fontFamily: "defont" | "mincho" | "gothic";
-};
-
-const LayerInput = styled.textarea<LayerInputProps>`
-  height: ${(props) => (props._height ? `${props._height}px` : "unset")};
-  line-height: ${(props) => props._lineHeight}px;
-  font-weight: ${(props) => getFont(props._fontFamily).weight};
-  font-family: ${(props) => getFont(props._fontFamily).font};
-  font-size: ${(props) => props._fontSize}px;
-`;
 
 /**
  * レイヤー
@@ -116,7 +78,7 @@ export const Layer = (props: LayerProps) => {
   return (
     <>
       {gridImage()}
-      <LayerBox
+      <div
         className={`${Styles.layer} ${
           props.data.selected ? Styles.active : ""
         } ${props.data.visible ? "" : Styles.invisible} ${
@@ -126,21 +88,26 @@ export const Layer = (props: LayerProps) => {
           Storage.get("options_showSelectedLayerOnTop") === "true" &&
           Styles.showOnTop
         }`}
-        top={props.data.top[props.data.pos]}
-        left={props.data.left}
-        textColor={props.data.color}
-        _width={props.data.areaWidth}
-        _scale={props.data.scale}
+        style={{
+          top: `${props.data.top[props.data.pos]}px`,
+          left: `${props.data.left}px`,
+          color: props.data.color,
+          width: `${props.data.areaWidth}px`,
+          transform: `scale(${props.data.scale.x}, ${props.data.scale.y})`,
+        }}
         ref={layerElement}
         spellCheck={"false"}
       >
         {props.data.content.map((value, index) => {
           return (
-            <LayerInput
-              _height={value.height || value.line * value.lineCount}
-              _lineHeight={value.line}
-              _fontSize={value.font}
-              _fontFamily={props.data.font}
+            <textarea
+              style={{
+                height: `${value.height || value.line * value.lineCount}px`,
+                lineHeight: `${value.line}px`,
+                fontWeight: getFont(props.data.font).weight,
+                fontFamily: getFont(props.data.font).font,
+                fontSize: `${value.font}px`,
+              }}
               key={`layer${props.data.layerId}-group${index}`}
               className={Styles.textarea}
               value={value.content.join("\n")}
@@ -151,36 +118,42 @@ export const Layer = (props: LayerProps) => {
             />
           );
         })}
-      </LayerBox>
+      </div>
       {props.data.selected && props.data.visible && (
-        <LayerBox
+        <div
           className={Styles.outline}
-          top={props.data.top[props.data.pos]}
-          left={props.data.left}
-          textColor={props.data.color}
-          _width={props.data.areaWidth}
-          _scale={props.data.scale}
+          style={{
+            top: `${props.data.top[props.data.pos]}px`,
+            left: `${props.data.left}px`,
+            color: props.data.color,
+            width: `${props.data.areaWidth}px`,
+            transform: `scale(${props.data.scale.x}, ${props.data.scale.y})`,
+          }}
         >
           {props.data.content.map((value, index) => {
             return (
-              <LayerItem
-                _height={value.height || value.line * value.lineCount}
+              <div
+                style={{
+                  height: `${value.height || value.line * value.lineCount}px`,
+                }}
                 key={`layerOutline${props.data.layerId}-group${index}`}
               >
                 {[...(Array(value.lineCount) as undefined[])].map(
                   (_, index_) => {
                     return (
-                      <LayerItem
-                        _height={value.line}
+                      <div
+                        style={{
+                          height: `${value.line}px`,
+                        }}
                         key={`layerOutline${props.data.layerId}-group${index}-line${index_}`}
                       />
                     );
                   },
                 )}
-              </LayerItem>
+              </div>
             );
           })}
-        </LayerBox>
+        </div>
       )}
     </>
   );

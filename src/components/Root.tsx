@@ -8,12 +8,12 @@ import {
   getVideoElement,
 } from "@/libraries/getElements";
 import { initVideoPlayer } from "@/libraries/videoPlayerApi";
+import "@/assets/global.scss";
 
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Main } from "./Main";
 import { MemoPortal } from "./MemoPortal";
-import "./global.scss";
 
 export const Root = () => {
   const [elements, setElements] = useAtom(elementAtom);

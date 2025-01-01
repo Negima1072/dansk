@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
 import { type ChangeEvent, useCallback, useState } from "react";
-import styled from "styled-components";
 
 import { Button } from "@/components/common/button/Button";
 import { Dropdown } from "@/components/common/dropdown/Dropdown";
@@ -20,16 +19,6 @@ const createImage = (url: string) => {
     url,
   };
 };
-
-type ColorDisplayProps = {
-  color: string;
-};
-
-const ColorDisplay = styled.label.attrs<ColorDisplayProps>((p) => ({
-  style: {
-    background: p.color,
-  },
-}))<ColorDisplayProps>``;
 
 /**
  * 背景の追加、選択、描画モード選択
@@ -199,8 +188,10 @@ export const BackgroundPicker = () => {
           }}
         >
           <div className={Styles.colorInputs}>
-            <ColorDisplay
-              color={colorInputValue}
+            <label
+              style={{
+                background: colorInputValue,
+              }}
               className={Styles.colorInputLabel}
             >
               <input
@@ -209,7 +200,7 @@ export const BackgroundPicker = () => {
                 onChange={onColorInputChange}
                 type={"color"}
               />
-            </ColorDisplay>
+            </label>
             <input
               className={Styles.textInput}
               value={colorInputTextValue}
