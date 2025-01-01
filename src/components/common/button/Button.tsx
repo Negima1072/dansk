@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import Styles from "./Button.module.scss";
 
 type buttonProps = {
@@ -10,16 +8,6 @@ type buttonProps = {
   active?: boolean;
   disabled?: boolean;
 };
-
-type colorButtonProps = {
-  color: string;
-};
-
-const ColorButton = styled.input.attrs<colorButtonProps>((props) => ({
-  style: {
-    backgroundColor: props.color,
-  },
-}))``;
 
 /**
  * 色とかコマンド用のボタン
@@ -35,13 +23,15 @@ const ColorButton = styled.input.attrs<colorButtonProps>((props) => ({
 export const Button = (props: buttonProps) => {
   if (props.type === "color") {
     return (
-      <ColorButton
+      <input
         type={"button"}
         className={`${Styles.colorButton} ${props.active ? Styles.active : ""}`}
-        color={props.text}
         onClick={() => props.click(props.value || "")}
         disabled={props.disabled || false}
         value={" "}
+        style={{
+          backgroundColor: props.text,
+        }}
       />
     );
   }

@@ -1,7 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
 
 import {
   backgroundAtom,
@@ -9,23 +8,10 @@ import {
   layerAtom,
   optionAtom,
 } from "@/libraries/atoms";
-import type { TObjectFitArgs } from "@/types/background";
 
 import Styles from "./LayerContainer.module.scss";
 import { Preview } from "./Preview/Preview";
 import { Layer } from "./layer/Layer";
-
-const LayerScale = styled.div<{ scaleX: number; scaleY: number }>`
-  transform: scale(${(props) => props.scaleX}, ${(props) => props.scaleY});
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
-const BackgroundImage = styled.img<{ mode: TObjectFitArgs; opacity: number }>`
-  object-fit: ${(props) => props.mode};
-  opacity: ${(props) => props.opacity};
-`;
 
 /**
  * レイヤー全体を管理
@@ -83,21 +69,27 @@ export const LayerContainer = () => {
     <>
       {background.selected > -1 && background.visible && elements
         ? ReactDOM.createPortal(
-            <BackgroundImage
+            <img
               className={`${Styles.backgroundImage}`}
               src={background.images[background.selected]?.url}
               alt={"backgroundImage"}
-              mode={background.mode}
-              opacity={background.transparency / 100}
+              style={{
+                objectFit: background.mode,
+                opacity: background.transparency / 100,
+              }}
             />,
             elements?.BackgroundImageElement,
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}
-      <LayerScale
+      <div
         ref={targetNode}
-        scaleX={scale.x}
-        scaleY={scale.y}
+        style={{
+          transform: `scale(${scale.x}, ${scale.y})`,
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
         className={`${Styles.scaleWrapper} ${
           optionData.preview === "previewOnly" && Styles.hide
         }`}
@@ -105,7 +97,7 @@ export const LayerContainer = () => {
         {layerData?.map((data) => {
           return <Layer key={data.layerId} data={data} />;
         })}
-      </LayerScale>
+      </div>
     </>
   );
 };

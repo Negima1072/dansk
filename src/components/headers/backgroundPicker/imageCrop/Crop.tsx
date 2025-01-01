@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
 } from "react";
-import styled from "styled-components";
 
 import type { TCropKey, TCropRange } from "@/types/background";
 
@@ -17,15 +16,6 @@ type props = {
 };
 
 type moveTarget = TCropKey | "move";
-
-const CropDisplay = styled.div.attrs<TCropRange>((p) => ({
-  style: {
-    left: `${Math.min(p._pos1X, p._pos2X) * 100}%`,
-    top: `${Math.min(p._pos1Y, p._pos2Y) * 100}%`,
-    width: `${Math.abs(p._pos1X - p._pos2X) * 100}%`,
-    height: `${Math.abs(p._pos1Y - p._pos2Y) * 100}%`,
-  },
-}))``;
 
 const getPosition = (
   e: MouseEvent<HTMLElement>,
@@ -160,8 +150,13 @@ export const Crop = ({ update, range }: props) => {
       id={Styles.wrapper}
     >
       {cropRange && (
-        <CropDisplay
-          {...cropRange}
+        <div
+          style={{
+            left: `${Math.min(cropRange._pos1X, cropRange._pos2X) * 100}%`,
+            top: `${Math.min(cropRange._pos1Y, cropRange._pos2Y) * 100}%`,
+            width: `${Math.abs(cropRange._pos1X - cropRange._pos2X) * 100}%`,
+            height: `${Math.abs(cropRange._pos1Y - cropRange._pos2Y) * 100}%`,
+          }}
           id={Styles.display}
           className={`${Styles.display} ${
             !moveTarget.includes("init") && Styles.cursor
@@ -175,7 +170,7 @@ export const Crop = ({ update, range }: props) => {
               onMouseDown={onMouseDown}
             />
           ))}
-        </CropDisplay>
+        </div>
       )}
     </div>
   );
