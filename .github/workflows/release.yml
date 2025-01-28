@@ -38,7 +38,7 @@ jobs:
         CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
         CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
         CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-        FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
+        FIREFOX_EXTENSION_ID: 781bb7bf-090f-df5d-4976-67b3b958c4fe
         FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
         FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
     - name: Rename zip files
