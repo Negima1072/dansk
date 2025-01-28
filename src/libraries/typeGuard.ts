@@ -1,6 +1,6 @@
+import type { TBackgroundImage, TObjectFitArgs } from "@/types/background";
 import type { TLayer, TLayerTemplate } from "@/types/layer";
 import type {
-  TAutoSave,
   TCommentFont,
   TCommentPos,
   TContextType,
@@ -8,6 +8,7 @@ import type {
   TMonoChar,
   TOwnerComment,
   TProChar,
+  TSaveData,
 } from "@/types/types";
 
 /**
@@ -109,20 +110,54 @@ export const typeGuard = {
     isDivElement: (i: unknown): i is HTMLDivElement =>
       i instanceof Element && i.nodeName === "DIV",
   },
+  baclground: {
+    isObjectFitArg: (i: unknown): i is TObjectFitArgs =>
+      typeof i === "string" &&
+      !!i.match(/^contain|cover|fill|none|scale-down$/),
+    isBackgroundImage: (i: unknown): i is TBackgroundImage => {
+      if (!typeVerify(i, ["id", "url"])) return false;
+      if ((i as TBackgroundImage).crop) {
+        return (
+          typeVerify((i as TBackgroundImage).crop, ["original", "range"]) &&
+          typeVerify((i as TBackgroundImage).crop?.range, [
+            "_pos1X",
+            "_pos2X",
+            "_pos1Y",
+            "_pos2Y",
+          ])
+        );
+      }
+      return true;
+    },
+  },
   localStorage: {
     isKey: (i: unknown): i is TLocalStorageKeys =>
       typeof i === "string" &&
       !!i.match(
         /options_(?:commandOrder|useCA|usePat|useOriginal|useOriginal_text|timespan_main|timespan_owner|useMs|lineMode)|memo|ppConvert(?:Before|BeforeType|After|AfterType)|display_(?:trace|memo|time|main|box)/,
       ),
-    isAutoSave: (i: unknown): i is TAutoSave[] => {
+    isSaveData: (i: unknown): i is TSaveData => {
+      if (
+        !typeVerify(i, ["data", "timestamp"]) ||
+        !typeGuard.layer.isLayers((i as TSaveData)?.data)
+      )
+        return false;
+      if ((i as TSaveData).background) {
+        if (!typeVerify((i as TSaveData).background, ["image", "mode"]))
+          return false;
+        return (
+          typeGuard.baclground.isBackgroundImage(
+            (i as TSaveData).background?.image,
+          ) &&
+          typeGuard.baclground.isObjectFitArg((i as TSaveData).background?.mode)
+        );
+      }
+      return true;
+    },
+    isSaveDataArray: (i: unknown): i is TSaveData[] => {
       if (!Array.isArray(i)) return false;
       for (const item of i) {
-        if (
-          !typeVerify(item, ["data", "timestamp"]) ||
-          !typeGuard.layer.isLayers((item as TAutoSave)?.data)
-        )
-          return false;
+        if (!typeGuard.localStorage.isSaveData(item)) return false;
       }
       return true;
     },

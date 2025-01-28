@@ -129,6 +129,13 @@ export const defaultValue: TLocalStorageDefaultValues = {
     type: "boolean",
     cat: "Output",
   },
+  options_saveBackgroundImage: {
+    defaultValue: "false",
+    description: "セーブデータに背景画像を含める",
+    dangerous: false,
+    type: "boolean",
+    cat: "Editor",
+  },
   display_trace: {
     defaultValue: "true",
   },

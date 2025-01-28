@@ -21,11 +21,13 @@ import {
   optionAtom,
 } from "@/libraries/atoms";
 import { domo2dansa } from "@/libraries/domoTool";
+import { base64ToBlobUrl, blobUrlToBase64 } from "@/libraries/imageUtil";
 import { layerUtil } from "@/libraries/layerUtil/layerUtil";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
 import { uuid } from "@/libraries/uuidUtil";
 import type { TLayer } from "@/types/layer";
+import type { TSaveData } from "@/types/types";
 
 import Styles from "./Trace.module.scss";
 
@@ -54,21 +56,30 @@ export const Trace = () => {
     const span = Number(Storage.get("options_autoSave_span"));
     if (span <= 0) return;
     autoSaveInterval.current = window.setInterval(
-      () => {
-        const data: unknown = JSON.parse(Storage.get("autoSave"));
+      async () => {
+        const autoSaveData: unknown = JSON.parse(Storage.get("autoSave"));
         if (
-          !typeGuard.localStorage.isAutoSave(data) ||
+          !typeGuard.localStorage.isSaveDataArray(autoSaveData) ||
           !layerDataRef.current ||
-          layerDataRef.current.length < 1 ||
-          JSON.stringify(layerDataRef.current) ===
-            JSON.stringify(data.at(-1)?.data)
+          layerDataRef.current.length < 1
         )
           return;
-        data.push({ data: layerDataRef.current, timestamp: Date.now() });
-        if (data.length > Number(Storage.get("options_autoSave_max"))) {
-          data.shift();
+        const saveData: TSaveData = {
+          data: layerDataRef.current,
+          timestamp: Date.now(),
+        };
+        const lastSave = autoSaveData.at(-1);
+        if (
+          lastSave &&
+          JSON.stringify(saveData.data) === JSON.stringify(lastSave.data)
+        ) {
+          return;
         }
-        Storage.set("autoSave", data);
+        autoSaveData.push(saveData);
+        if (autoSaveData.length > Number(Storage.get("options_autoSave_max"))) {
+          autoSaveData.shift();
+        }
+        Storage.set("autoSave", autoSaveData);
       },
       span * 60 * 1000,
     );
@@ -222,8 +233,33 @@ export const Trace = () => {
     },
     [layerData],
   );
-  const saveToFile = useCallback(() => {
-    const json = JSON.stringify(layerData);
+  const saveToFile = useCallback(async () => {
+    const saveData: TSaveData = {
+      timestamp: Date.now(),
+      data: layerData,
+    };
+    if (
+      Storage.get("options_saveBackgroundImage") === "true" &&
+      background.selected > -1
+    ) {
+      saveData.background = {
+        image: background.images[background.selected],
+        mode: background.mode,
+      };
+      if (saveData.background.image.url.startsWith("blob:")) {
+        saveData.background.image.url = await blobUrlToBase64(
+          saveData.background.image.url,
+        );
+      }
+      if (saveData.background.image.crop) {
+        if (saveData.background.image.crop.original.startsWith("blob:")) {
+          saveData.background.image.crop.original = await blobUrlToBase64(
+            saveData.background.image.crop.original,
+          );
+        }
+      }
+    }
+    const json = JSON.stringify(saveData);
     const blob = new Blob([json], { type: "application/json" });
     const fileName = window.prompt("ファイル名を入力してください", "");
     if (fileName === "" || fileName === null) {
@@ -238,7 +274,7 @@ export const Trace = () => {
         : ""
     }.dansk.json`;
     link.click();
-  }, [layerData]);
+  }, [layerData, background]);
   const loadFromAutoSave = useCallback(() => {
     setAutoSaveWindow(true);
   }, []);
@@ -263,16 +299,49 @@ export const Trace = () => {
       } else {
         data = JSON.parse(e.target.result);
       }
-      if (!typeGuard.layer.isLayers(data)) return;
-      setLayerData(
-        data.map((layer) => {
-          layer.overwrite = true;
-          if (!layer.layerId) {
-            layer.layerId = uuid();
+      if (typeGuard.layer.isLayers(data)) {
+        setLayerData(
+          data.map((layer) => {
+            layer.overwrite = true;
+            if (!layer.layerId) {
+              layer.layerId = uuid();
+            }
+            return layer;
+          }),
+        );
+      } else if (typeGuard.localStorage.isSaveData(data)) {
+        setLayerData(
+          data.data.map((layer) => {
+            layer.overwrite = true;
+            if (!layer.layerId) {
+              layer.layerId = uuid();
+            }
+            return layer;
+          }),
+        );
+        if (data.background) {
+          if (data.background.image.url.startsWith("data:")) {
+            data.background.image.url = base64ToBlobUrl(
+              data.background.image.url,
+            );
           }
-          return layer;
-        }),
-      );
+          if (data.background.image.crop) {
+            if (data.background.image.crop.original.startsWith("data:")) {
+              data.background.image.crop.original = base64ToBlobUrl(
+                data.background.image.crop.original,
+              );
+            }
+          }
+          setBackground({
+            selected: 0,
+            images: [data.background.image],
+            mode: data.background.mode,
+            visible: true,
+            open: false,
+            transparency: 100,
+          });
+        }
+      }
     };
     input.click();
   }, []);

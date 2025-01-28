@@ -102,7 +102,7 @@ export const Options = () => {
   return (
     <div className={Styles.wrapper}>
       <div className={Styles.tabs}>
-        {(["Post", "Editor", "Output", "Other"] as TOptionsCategory[]).map(
+        {(["Editor", "Post", "Output", "Other"] as TOptionsCategory[]).map(
           (category) => (
             <button
               type="button"
