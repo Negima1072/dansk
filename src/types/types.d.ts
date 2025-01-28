@@ -90,15 +90,21 @@ export type TLocalStorageKeys =
   | "ppConvertBeforeType"
   | "ppConvertAfter"
   | "ppConvertAfterType";
+
 type TLocalStorageItem = {
   defaultValue: string;
 };
+
+export type TOptionsCategory = "Editor" | "Post" | "Output" | "Other";
+
 export type TLocalStorageOptionItem = TLocalStorageItem & {
   description: string;
   dangerous: boolean;
   type: "string" | "boolean" | "number";
   required?: TLocalStorageKeys;
+  cat: TOptionsCategory;
 };
+
 export type TLocalStorageDefaultValues = {
   [key in TLocalStorageKeys]: TLocalStorageItem | TLocalStorageOptionItem;
 };
