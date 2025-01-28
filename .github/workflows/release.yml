@@ -26,9 +26,7 @@ jobs:
     - name: Zip extensions
       run: |
         pnpm zip
-        mv .output/*.zip dansk-chrome-${GITHUB_REF##*/}.zip
         pnpm zip:firefox
-        mv .output/*.zip dansk-firefox-${GITHUB_REF##*/}.zip
     - name: Submit to stores
       run: |
         pnpm wxt submit \
