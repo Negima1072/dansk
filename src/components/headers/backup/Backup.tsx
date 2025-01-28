@@ -3,11 +3,11 @@ import { useState } from "react";
 
 import { Button } from "@/components/common/button/Button";
 import { Popup } from "@/components/common/popup/Popup";
-import { layerAtom } from "@/libraries/atoms";
+import { backgroundAtom, layerAtom } from "@/libraries/atoms";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
 import { uuid } from "@/libraries/uuidUtil";
-import type { TAutoSave } from "@/types/types";
+import type { TSaveData } from "@/types/types";
 
 import Styles from "./Backup.module.scss";
 
@@ -22,12 +22,13 @@ type propType = {
  * @constructor
  */
 export const Backup = (props: propType) => {
-  const [saveData, setSaveData] = useState<TAutoSave[]>(() => {
+  const [saveData, setSaveData] = useState<TSaveData[]>(() => {
     const data: unknown = JSON.parse(Storage.get("autoSave"));
-    if (!typeGuard.localStorage.isAutoSave(data)) return [];
+    if (!typeGuard.localStorage.isSaveDataArray(data)) return [];
     return data;
   });
   const setLayerData = useSetAtom(layerAtom);
+  const setBackground = useSetAtom(backgroundAtom);
   const load = (key: string) => {
     const value = saveData[Number(key)];
     if (
@@ -44,6 +45,16 @@ export const Backup = (props: propType) => {
         return layer;
       }),
     );
+    //if (value.background) {
+    //  setBackground({
+    //    selected: 0,
+    //    images: [value.background.image],
+    //    mode: value.background.mode,
+    //    visible: true,
+    //    open: false,
+    //    transparency: 100,
+    //  });
+    //}
     props.close();
   };
   const remove = (key: string) => {

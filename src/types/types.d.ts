@@ -1,3 +1,4 @@
+import type { TBackgroundImage, TObjectFitArgs } from "@/types/background";
 import type { TLayer, TLayerTemplate } from "@/types/layer";
 
 /** 投稿者コメント */
@@ -55,9 +56,13 @@ export type TLayerTemplates = {
   [key: string]: TLayerTemplate;
 };
 
-export type TAutoSave = {
+export type TSaveData = {
   timestamp: number;
   data: TLayer[];
+  background?: {
+    image: TBackgroundImage;
+    mode: TObjectFitArgs;
+  };
 };
 
 export type TLocalStorageKeys =
@@ -79,6 +84,7 @@ export type TLocalStorageKeys =
   | "options_disable184"
   | "options_enableColorCode"
   | "options_disableSpaceOptimization"
+  | "options_saveBackgroundImage"
   | "display_trace"
   | "display_memo"
   | "display_time"
@@ -90,15 +96,21 @@ export type TLocalStorageKeys =
   | "ppConvertBeforeType"
   | "ppConvertAfter"
   | "ppConvertAfterType";
+
 type TLocalStorageItem = {
   defaultValue: string;
 };
+
+export type TOptionsCategory = "Editor" | "Post" | "Output" | "Other";
+
 export type TLocalStorageOptionItem = TLocalStorageItem & {
   description: string;
   dangerous: boolean;
   type: "string" | "boolean" | "number";
   required?: TLocalStorageKeys;
+  cat: TOptionsCategory;
 };
+
 export type TLocalStorageDefaultValues = {
   [key in TLocalStorageKeys]: TLocalStorageItem | TLocalStorageOptionItem;
 };
