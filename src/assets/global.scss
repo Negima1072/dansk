@@ -19,6 +19,7 @@ div.grid-area_\[player\] > div[tabindex="0"] > div > div.p_base {
 }
 
 section:has(div.grid-area_\[player\]) {
+  grid-template-rows: min-content min-content min-content min-content min-content 1fr;
   grid-template-areas:
     "d_header ."
     "player sidebar"
