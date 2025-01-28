@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 
 import {
   backgroundAtom,
@@ -35,7 +35,7 @@ export const LayerContainer = () => {
       window.onbeforeunload = null;
       classList.toggle(cssClass, false);
     }
-  }, [layerData]);
+  }, [elements, layerData]);
   const observerCallback = () => {
     if (
       !targetNode.current ||
@@ -63,12 +63,13 @@ export const LayerContainer = () => {
       childList: false,
       subtree: false,
     });
-  }, [targetNode]);
+    return () => observer.disconnect();
+  }, [observer]);
   useEffect(() => observerCallback(), [document.body.classList]);
   return (
     <>
       {background.selected > -1 && background.visible && elements
-        ? ReactDOM.createPortal(
+        ? createPortal(
             <img
               className={`${Styles.backgroundImage}`}
               src={background.images[background.selected]?.url}
@@ -78,7 +79,7 @@ export const LayerContainer = () => {
                 opacity: background.transparency / 100,
               }}
             />,
-            elements?.BackgroundImageElement,
+            elements.BackgroundImageElement,
           )
         : ""}
       {optionData.preview !== "disable" && <Preview />}
