@@ -56,7 +56,6 @@ jobs:
           *.zip
     - name: Post to Discord
       run: |
-        WEBHOOK_URL="https://discord.com/api/webhooks/1000620069820309595/6SJxaZVl_lH456RuCF7ZUoGJ8Wn0Qo4e_2AuGVJoa_CWTPOpFaLH1kjNSPpHjYp9cF1o"
         RELEASE_TAG=${GITHUB_REF##*/}
         BODY="🎉 **だんスク 新バージョンリリース** 🎉\n\nバージョン：[\`$RELEASE_TAG\`](https://github.com/eneko0513/NicoNicoDansaScriptCustom/releases/latest)\n\n📥 **Chrome 版**\n<https://chromewebstore.google.com/detail/cjmnakgpnakmaemloaoaidbohgcldpcc>\n(ストア反映に時間がかかる場合があります)\n\n📥 **Firefox 版**\n<https://addons.mozilla.org/ja/firefox/addon/dansukumizu/>\n\n💬 ご意見・ご要望は <#441986140179005440> にお願いします。"
         curl -X POST $WEBHOOK_URL \
@@ -65,3 +64,5 @@ jobs:
           -F "file2=@dansk-chrome-${GITHUB_REF##*/}.zip" \
           -F "file3=@dansk-firefox-${GITHUB_REF##*/}.zip" \
           -F "payload_json={\"content\":\"$BODY\"}"
+      env:
+        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
