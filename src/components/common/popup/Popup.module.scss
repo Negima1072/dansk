@@ -22,8 +22,8 @@
       height: 25px;
       line-height: 25px;
       background-color: var(--colors-monotone--l15);
-      color: var(--colors-action-text-on-base);
-      fill: var(--colors-action-text-on-base);
+      color: var(--colors-monotone--l95);
+      fill: var(--colors-monotone--l95);
       font-weight: var(--font-weights-bold);
       padding: 0 5px;
       display: flex;
@@ -38,9 +38,6 @@
         width: 25px;
         cursor: pointer;
         display: inline-block;
-        svg {
-          fill: var(--colors-monotone--l95);
-        }
       }
     }
     .container {
