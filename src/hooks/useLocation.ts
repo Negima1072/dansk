@@ -1,40 +1,16 @@
 import { useEffect, useState } from "react";
 
 export const useLocation = () => {
-  const [currentHref, setCurrentHref] = useState(window.location.href);
-
+  const [location, setLocation] = useState<RouterState["location"]>(
+    window.__remixRouter.state.location,
+  );
   useEffect(() => {
-    const handleLocationChange = () => {
-      setCurrentHref(window.location.href);
-    };
-
-    const originalPushState = window.history.pushState;
-    window.history.pushState = (
-      data: unknown,
-      ununsed: string,
-      url?: string | URL | null,
-    ) => {
-      originalPushState.apply(this, [data, ununsed, url]);
-      handleLocationChange();
-    };
-    const originalReplaceState = window.history.replaceState;
-    window.history.replaceState = (
-      data: unknown,
-      ununsed: string,
-      url?: string | URL | null,
-    ) => {
-      originalReplaceState.apply(this, [data, ununsed, url]);
-      handleLocationChange();
-    };
-
-    window.addEventListener("popstate", handleLocationChange);
-    window.addEventListener("hashchange", handleLocationChange);
-
+    const unsubscribe = window.__remixRouter.subscribe((state) => {
+      setLocation(state.location);
+    });
     return () => {
-      window.removeEventListener("popstate", handleLocationChange);
-      window.removeEventListener("hashchange", handleLocationChange);
+      unsubscribe();
     };
   }, []);
-
-  return currentHref;
+  return location;
 };

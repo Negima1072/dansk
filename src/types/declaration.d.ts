@@ -5,6 +5,7 @@ declare module "*.scss" {
 }
 interface Window {
   __videoplayer: NvPlayerApi;
+  __remixRouter: RemixRouter;
 }
 
 interface Event {
@@ -84,6 +85,22 @@ type PlayerOperation = {
     up: () => void;
   };
 };
+
+interface RemixRouter {
+  subscribe: (callback: (state: RouterState) => void) => () => void;
+  state: RouterState;
+}
+
+interface RouterState {
+  historyAction: "PUSH" | "POP" | "REPLACE";
+  location: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+}
 
 type ReactFiber = {
   child?: ReactFiber;

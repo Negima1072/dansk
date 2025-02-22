@@ -26,10 +26,6 @@ export const Root = () => {
       }
       await new Promise<void>((resolve) => {
         const check = () => {
-          console.log(
-            document.body.contains(elements.LayerElement),
-            document.getElementById("dansk:LayerElement"),
-          );
           if (!document.body.contains(elements.LayerElement)) {
             resolve();
             return;
