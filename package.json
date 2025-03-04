@@ -54,7 +54,7 @@
     "wxt": "^0.19.26"
   },
   "engines": {
-    "node": "20.18.0",
+    "node": ">=20",
     "pnpm": ">=9"
   },
   "packageManager": "pnpm@9.15.4"
