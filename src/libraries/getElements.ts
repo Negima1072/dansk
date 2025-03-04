@@ -97,8 +97,8 @@ export const getBaseElements = async () => {
 
 export const getMainContainer = (): HTMLDivElement | null => {
   return (
-    document.querySelector("div.grid-area_\\[player\\]") ||
-    document.querySelector("div.grid-area_player")
+    document.querySelector("div.grid-area_\\[player\\]") || //通常画面
+    document.querySelector("div.grid-area_player") //投コメ編集画面
   );
 };
 
@@ -109,9 +109,10 @@ export const getVideoElement = (): HTMLVideoElement | null => {
 export const getCommentViewerContainer = (): HTMLElement | null => {
   return (
     document.querySelector(
+      // 通常画面
       "div.grid-area_\\[sidebar\\] > div > div > section", // コメント増量と衝突するのでsectionまで指定
     )?.parentElement ||
-    document.querySelector("div.grid-area_sidebar > section")
+    document.querySelector("div.grid-area_sidebar > section") // 投コメ編集画面
   );
 };
 
@@ -123,7 +124,7 @@ export const getVideoContentContainer = (): HTMLDivElement | null => {
   return document.querySelector("div[data-name=content]");
 };
 
-export const getVideoCommentContainer = () => {
+export const getVideoCommentContainer = (): HTMLDivElement | null => {
   return document.querySelector("div[data-name=comment]");
 };
 
@@ -135,8 +136,8 @@ export const getCommentCommandInput = (): HTMLInputElement | null => {
 
 export const getCommentInputTextarea = (): HTMLTextAreaElement | null => {
   return (
-    document.querySelector("textarea[placeholder='コメントを入力']") ||
-    document.querySelector("textarea[placeholder='投稿者コメントを入力']")
+    document.querySelector("textarea[placeholder='コメントを入力']") || // 通常画面
+    document.querySelector("textarea[placeholder='投稿者コメントを入力']") // 投コメ編集画面
   );
 };
 
