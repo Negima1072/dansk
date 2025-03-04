@@ -41,9 +41,9 @@ export const getElements = async (count = 0): Promise<TElement> => {
     return await getElements(count + 1);
   }
   if (!LayerElement || !document.body.contains(LayerElement)) {
-    const videoCommentContiner = getVideoCommentContainer();
+    const videoCommentContainer = getVideoCommentContainer();
     LayerElement ??= createLayerElement();
-    videoCommentContiner?.appendChild(LayerElement);
+    videoCommentContainer?.appendChild(LayerElement);
   }
   return {
     videoElement,
