@@ -18,6 +18,7 @@ div.grid-area_\[player\] > div[tabindex="0"] > div > div.p_base {
   z-index: 11;
 }
 
+// for watch
 section:has(div.grid-area_\[player\]) {
   grid-template-rows: min-content min-content min-content min-content min-content 1fr;
   grid-template-areas:
@@ -29,16 +30,24 @@ section:has(div.grid-area_\[player\]) {
     ". sidebar";
 }
 
+// for owner_comment_edit
 div:has(div.grid-area_player) {
   grid-template-rows: min-content min-content min-content min-content min-content 1fr;
   grid-template-areas:
     "header header"
     "d_header d_header"
     "player sidebar"
-    "d_footer sidebar"
-    "meta sidebar"
-    "bottom sidebar"
-    ". sidebar";
+    "d_footer .";
+  
+  div.grid-area_sidebar > div[aria-label="エディター"] {
+    textarea {
+      white-space: pre;
+    }
+  }
+  
+  div#dansk\:MemoElement, div#dansk\:MainElement {
+    margin-bottom: 16px;
+  }
 }
 
 div:has(iframe[src^="https://www.nicovideo.jp/owner_comment_edit/"]){
