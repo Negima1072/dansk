@@ -10,14 +10,17 @@ import {
   createMainElement,
   createMemoElement,
   getBaseElements,
-  getVideoContainer,
 } from "@/libraries/getElements";
 import { initVideoPlayer } from "@/libraries/videoPlayerApi";
 
 export default defineContentScript({
-  matches: ["https://www.nicovideo.jp/watch/*"],
+  matches: [
+    "https://www.nicovideo.jp/watch/*",
+    "https://www.nicovideo.jp/owner_comment_edit/*",
+  ],
   runAt: "document_start",
   world: "MAIN",
+  allFrames: true,
   main() {
     const init = async () => {
       const {
@@ -26,6 +29,7 @@ export default defineContentScript({
         videoContentContainer,
         videoCommentContainer,
         videoElement,
+        videoContainer,
       } = await getBaseElements();
       initVideoPlayer(mainContainer, videoElement);
       injectFetch();
@@ -38,7 +42,6 @@ export default defineContentScript({
           Storage.get("options_disable184") === "true" ? "#ff8300" : "#007cff";
       }
       */
-      const videoContainer = getVideoContainer();
       videoContainer.addEventListener(
         "scroll",
         (e) => {

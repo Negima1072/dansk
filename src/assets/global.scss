@@ -21,10 +21,28 @@ div.grid-area_\[player\] > div[tabindex="0"] > div > div.p_base {
 section:has(div.grid-area_\[player\]) {
   grid-template-rows: min-content min-content min-content min-content min-content 1fr;
   grid-template-areas:
-    "d_header ."
+    "d_header d_header"
     "player sidebar"
     "d_footer sidebar"
     "meta sidebar"
     "bottom sidebar"
     ". sidebar";
+}
+
+div:has(div.grid-area_player) {
+  grid-template-rows: min-content min-content min-content min-content min-content 1fr;
+  grid-template-areas:
+    "header header"
+    "d_header d_header"
+    "player sidebar"
+    "d_footer sidebar"
+    "meta sidebar"
+    "bottom sidebar"
+    ". sidebar";
+}
+
+div:has(iframe[src^="https://www.nicovideo.jp/owner_comment_edit/"]){
+  width: 100vw;
+  height: 100vh;
+  max-height: unset;
 }

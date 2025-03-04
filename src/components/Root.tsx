@@ -2,11 +2,7 @@ import { useAtom } from "jotai";
 
 import { useLocation } from "@/hooks/useLocation";
 import { elementAtom } from "@/libraries/atoms";
-import {
-  getElements,
-  getMainContainer,
-  getVideoElement,
-} from "@/libraries/getElements";
+import { getBaseElements, getElements } from "@/libraries/getElements";
 import { initVideoPlayer } from "@/libraries/videoPlayerApi";
 import "@/assets/global.scss";
 
@@ -35,7 +31,8 @@ export const Root = () => {
         check();
       });
       setElements(await getElements());
-      initVideoPlayer(getMainContainer(), getVideoElement());
+      const { mainContainer, videoElement } = await getBaseElements();
+      initVideoPlayer(mainContainer, videoElement);
     };
     void init();
   }, [location]);
