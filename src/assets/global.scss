@@ -55,3 +55,7 @@ div:has(iframe[src^="https://www.nicovideo.jp/owner_comment_edit/"]){
   height: 100vh;
   max-height: unset;
 }
+
+div.pos_absolute.inset_0:has(div.pos_absolute.inset_0.d_flex.jc_center.ai_center.pointer-events_none.us_none){
+  pointer-events: none;
+}
