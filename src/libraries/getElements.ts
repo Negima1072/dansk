@@ -22,14 +22,15 @@ export const getElements = async (count = 0): Promise<TElement> => {
   ) {
     const videoContentContainer = getVideoContentContainer();
     BackgroundImageElement ??= createBackgroundImageElement();
-    videoContentContainer.appendChild(BackgroundImageElement);
+    videoContentContainer?.appendChild(BackgroundImageElement);
   }
   if (
     !(
       videoElement &&
       commentCommandInput &&
       commentCanvas &&
-      BackgroundImageElement
+      BackgroundImageElement &&
+      commentInputTextarea
     )
   ) {
     //1分超えたらfail
@@ -42,7 +43,7 @@ export const getElements = async (count = 0): Promise<TElement> => {
   if (!LayerElement || !document.body.contains(LayerElement)) {
     const videoCommentContiner = getVideoCommentContainer();
     LayerElement ??= createLayerElement();
-    videoCommentContiner.appendChild(LayerElement);
+    videoCommentContiner?.appendChild(LayerElement);
   }
   return {
     videoElement,
@@ -66,13 +67,17 @@ export const getBaseElements = async () => {
     const videoContentContainer = getVideoContentContainer();
     const videoCommentContainer = getVideoCommentContainer();
     const videoElement = getVideoElement();
+    const videoContainer = getVideoContainer();
     count++;
     if (
-      mainContainer === undefined ||
-      commentViewerContainer === undefined ||
-      videoContentContainer === undefined ||
-      videoCommentContainer === undefined ||
-      videoElement === undefined
+      !(
+        mainContainer &&
+        commentViewerContainer &&
+        videoContentContainer &&
+        videoCommentContainer &&
+        videoElement &&
+        videoContainer
+      )
     ) {
       await sleep(100);
       continue;
@@ -84,61 +89,59 @@ export const getBaseElements = async () => {
       videoContentContainer,
       videoCommentContainer,
       videoElement,
+      videoContainer,
     };
   }
   throw new Error("fail to get required element");
 };
 
-export const getMainContainer = () => {
-  return document.querySelectorAll(
-    "div.grid-area_\\[player\\]",
-  )[0] as HTMLDivElement;
+export const getMainContainer = (): HTMLDivElement | null => {
+  return (
+    document.querySelector("div.grid-area_\\[player\\]") ||
+    document.querySelector("div.grid-area_player")
+  );
 };
 
-export const getVideoElement = () => {
-  return document.querySelectorAll(
-    "div[data-name=content] > video",
-  )[0] as HTMLVideoElement;
+export const getVideoElement = (): HTMLVideoElement | null => {
+  return document.querySelector("div[data-name=content] > video");
 };
 
-export const getCommentViewerContainer = () => {
-  return document.querySelectorAll(
-    "div.grid-area_\\[sidebar\\] > div > div",
-  )[0] as HTMLDivElement;
+export const getCommentViewerContainer = (): HTMLElement | null => {
+  return (
+    document.querySelector(
+      "div.grid-area_\\[sidebar\\] > div > div > section", // コメント増量と衝突するのでsectionまで指定
+    )?.parentElement ||
+    document.querySelector("div.grid-area_sidebar > section")
+  );
 };
 
-export const getVideoContainer = () => {
-  return document.querySelectorAll("div[data-name=stage]")[0] as HTMLDivElement;
+export const getVideoContainer = (): HTMLDivElement | null => {
+  return document.querySelector("div[data-name=stage]");
 };
 
-export const getVideoContentContainer = () => {
-  return document.querySelectorAll(
-    "div[data-name=content]",
-  )[0] as HTMLDivElement;
+export const getVideoContentContainer = (): HTMLDivElement | null => {
+  return document.querySelector("div[data-name=content]");
 };
 
 export const getVideoCommentContainer = () => {
-  return document.querySelectorAll(
-    "div[data-name=comment]",
-  )[0] as HTMLDivElement;
+  return document.querySelector("div[data-name=comment]");
 };
 
-export const getCommentCommandInput = () => {
-  return document.querySelectorAll(
-    "input[placeholder='コマンド']",
-  )[0] as HTMLInputElement;
+export const getCommentCommandInput = (): HTMLInputElement | null => {
+  return document.querySelector(
+    "input[placeholder='コマンド'][tabindex='-1']", // 投コメ対応のためtabindexを指定
+  );
 };
 
-export const getCommentInputTextarea = () => {
-  return document.querySelectorAll(
-    "textarea[placeholder='コメントを入力']",
-  )[0] as HTMLTextAreaElement;
+export const getCommentInputTextarea = (): HTMLTextAreaElement | null => {
+  return (
+    document.querySelector("textarea[placeholder='コメントを入力']") ||
+    document.querySelector("textarea[placeholder='投稿者コメントを入力']")
+  );
 };
 
-export const getCommentCanvas = () => {
-  return document.querySelectorAll(
-    "div[data-name=comment] > canvas",
-  )[0] as HTMLCanvasElement;
+export const getCommentCanvas = (): HTMLCanvasElement | null => {
+  return document.querySelector("div[data-name=comment] > canvas");
 };
 
 export const getHeaderElement = () => {
