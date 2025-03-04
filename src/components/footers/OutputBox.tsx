@@ -131,9 +131,13 @@ export const OutputBox = () => {
     const postAll = async () => {
       if (!elements) return;
       postAllCancel.current = false;
-      const isOwnerMode = !!location.href.match(
-        /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/,
-      );
+      const isOwnerMode =
+        !!location.href.match(
+          /^https:\/\/www\.nicovideo\.jp\/watch\/[^/]+\/edit\/owner_comment/,
+        ) ||
+        location.href.startsWith(
+          "https://www.nicovideo.jp/owner_comment_edit/",
+        );
       const length = textareaValue.length;
       const timeSpan = Number(
         Storage.get(
