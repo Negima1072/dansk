@@ -3,7 +3,7 @@ import type { TElement } from "@/types/element";
 
 /**
  * reactマウント用の親要素を取得する
- * @param count {number} リトライ回数
+ * @param count リトライ回数
  */
 export const getElements = async (count = 0): Promise<TElement> => {
   const videoElement = getVideoElement();
