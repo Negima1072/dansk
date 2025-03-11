@@ -30,7 +30,7 @@
   "homepage": "https://github.com/eneko0513/NicoNicoDansaScriptCustom#readme",
   "dependencies": {
     "@xpadev-net/niconicomments": "^0.2.73",
-    "jotai": "^2.12.1",
+    "jotai": "^2.12.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-sortablejs": "^6.1.4",
@@ -51,7 +51,7 @@
     "typescript": "^5.8.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.1.9",
-    "wxt": "^0.19.28"
+    "wxt": "^0.19.29"
   },
   "engines": {
     "node": ">=20",
