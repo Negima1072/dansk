@@ -15,54 +15,56 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: "pnpm"
-    - name: Install dependencies
-      run: pnpm install
-    - name: Zip extensions
-      run: |
-        pnpm zip
-        pnpm zip:firefox
-    - name: Submit to stores
-      run: |
-        pnpm wxt submit \
-          --chrome-zip .output/*-chrome.zip \
-          --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
-      env:
-        CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
-        CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
-        CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
-        CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-        FIREFOX_EXTENSION_ID: 781bb7bf-090f-df5d-4976-67b3b958c4fe
-        FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
-        FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
-    - name: Rename zip files
-      run: |
-        mv .output/*-chrome.zip dansk-chrome-${GITHUB_REF##*/}.zip
-        mv .output/*-firefox.zip dansk-firefox-${GITHUB_REF##*/}.zip
-    - name: Create Change Log
-      run: |
-        CHANGELOG=$(sed -n "/### ${GITHUB_REF##*/}/,/### v/p" CHANGELOG.md | sed '${/^###/d}' | sed '1,2d;$d')
-        echo "$CHANGELOG" >| RECENT_CHANGELOG.md
-    - name: Upload Release
-      uses: softprops/action-gh-release@v2
-      with:
-        body_path: RECENT_CHANGELOG.md
-        files: |
-          *.zip
-    - name: Post to Discord
-      run: |
-        RELEASE_TAG=${GITHUB_REF##*/}
-        BODY="🎉 **だんスク 新バージョンリリース** 🎉\n\nバージョン：[\`$RELEASE_TAG\`](https://github.com/eneko0513/NicoNicoDansaScriptCustom/releases/latest)\n\n📥 **Chrome 版**\n<https://chromewebstore.google.com/detail/cjmnakgpnakmaemloaoaidbohgcldpcc>\n(ストア反映に時間がかかる場合があります)\n\n📥 **Firefox 版**\n<https://addons.mozilla.org/ja/firefox/addon/dansukumizu/>\n\n💬 ご意見・ご要望は <#441986140179005440> にお願いします。"
-        curl -X POST $WEBHOOK_URL \
-          -H "Content-Type: multipart/form-data" \
-          -F "file1=@RECENT_CHANGELOG.md" \
-          -F "file2=@dansk-chrome-${GITHUB_REF##*/}.zip" \
-          -F "file3=@dansk-firefox-${GITHUB_REF##*/}.zip" \
-          -F "payload_json={\"content\":\"$BODY\"}"
-      env:
-        WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Zip extensions
+        run: |
+          pnpm zip
+          pnpm zip:firefox
+      - name: Submit to stores
+        run: |
+          pnpm wxt submit \
+            --chrome-zip .output/*-chrome.zip \
+            --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          FIREFOX_EXTENSION_ID: 781bb7bf-090f-df5d-4976-67b3b958c4fe
+          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
+          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
+      - name: Rename zip files
+        run: |
+          mv .output/*-chrome.zip dansk-chrome-${GITHUB_REF##*/}.zip
+          mv .output/*-firefox.zip dansk-firefox-${GITHUB_REF##*/}.zip
+      - name: Create Change Log
+        run: |
+          CHANGELOG=$(sed -n "/### ${GITHUB_REF##*/}/,/### v/p" CHANGELOG.md | sed '${/^###/d}' | sed '1,2d;$d')
+          echo "$CHANGELOG" >| RECENT_CHANGELOG.md
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: RECENT_CHANGELOG.md
+          files: |
+            *.zip
+      - name: Post to Discord
+        run: |
+          RELEASE_TAG=${GITHUB_REF##*/}
+          BODY="🎉 **だんスク 新バージョンリリース** 🎉\n\nバージョン：[\`$RELEASE_TAG\`](https://github.com/eneko0513/NicoNicoDansaScriptCustom/releases/latest)\n\n📥 **Chrome 版**\n<https://chromewebstore.google.com/detail/cjmnakgpnakmaemloaoaidbohgcldpcc>\n(ストア反映に時間がかかる場合があります)\n\n📥 **Firefox 版**\n<https://addons.mozilla.org/ja/firefox/addon/dansukumizu/>\n\n💬 ご意見・ご要望は <#441986140179005440> にお願いします。"
+          curl -X POST $WEBHOOK_URL \
+            -H "Content-Type: multipart/form-data" \
+            -F "file1=@RECENT_CHANGELOG.md" \
+            -F "file2=@dansk-chrome-${GITHUB_REF##*/}.zip" \
+            -F "file3=@dansk-firefox-${GITHUB_REF##*/}.zip" \
+            -F "payload_json={\"content\":\"$BODY\"}"
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
