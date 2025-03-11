@@ -67,9 +67,18 @@ const convertDomoToDansk = (input: string): string => {
  */
 const convertDanskToDomo = (input: string): string => {
   const _input = input
-    .replace(/\[tb]/g, "\t")
-    .replace(/\[03]/g, "　")
-    .replace(/\[0A]/g, "");
+    .replace(/\[A0]/gi, "\u00A0")
+    .replace(/\[SP]/gi, "\u3000")
+    .replace(/\[00]/gi, "\u2000")
+    .replace(/\[01]/gi, "\u2001")
+    .replace(/\[02]/gi, "\u2002")
+    .replace(/\[03]/gi, "\u2003")
+    .replace(/\[04]/gi, "\u2004")
+    .replace(/\[05]/gi, "\u2005")
+    .replace(/\[06]/gi, "\u2006")
+    .replace(/\[0A]/gi, "\u200A")
+    .replace(/\[0B]/gi, "\u200B")
+    .replace(/\[TA?B]/gi, "\u0009");
   const lines: string[] = _input.split("\n");
   const result: string[] = [];
   let lastCommand = "";
@@ -133,9 +142,18 @@ const covertTimeIntToString = (time: number): string => {
  */
 const convertDanskToTokome = (input: string): string => {
   const _input = input
-    .replace(/\[tb]/g, "\t")
-    .replace(/\[03]/g, "　")
-    .replace(/\[0A]/, "");
+    .replace(/\[A0]/gi, "\u00A0")
+    .replace(/\[SP]/gi, "\u3000")
+    .replace(/\[00]/gi, "\u2000")
+    .replace(/\[01]/gi, "\u2001")
+    .replace(/\[02]/gi, "\u2002")
+    .replace(/\[03]/gi, "\u2003")
+    .replace(/\[04]/gi, "\u2004")
+    .replace(/\[05]/gi, "\u2005")
+    .replace(/\[06]/gi, "\u2006")
+    .replace(/\[0A]/gi, "\u200A")
+    .replace(/\[0B]/gi, "\u200B")
+    .replace(/\[TA?B]/gi, "\u0009");
   const lines = _input.split("\n");
   const result = [];
   let lastCommand = "";
