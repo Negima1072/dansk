@@ -114,7 +114,7 @@ export const Trace = () => {
     },
     [exportLayer, layerData, tabMode],
   );
-  const toggleTabMode = useCallback(() => setTabMode(!tabMode), [tabMode]);
+  const toggleTabMode = useCallback(() => setTabMode((pv) => !pv), []);
   const toggleReplaceMode = useCallback(
     () => setOptionData({ ...optionData, replace: !optionData.replace }),
     [optionData],
@@ -176,8 +176,8 @@ export const Trace = () => {
     [background],
   );
   const toggleOptionEditing = useCallback(
-    () => setOptionEditing(!optionEditing),
-    [optionEditing],
+    () => setOptionEditing((pv) => !pv),
+    [],
   );
   const togglePreview = useCallback(
     () =>

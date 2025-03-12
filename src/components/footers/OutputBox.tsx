@@ -205,14 +205,14 @@ export const OutputBox = () => {
     postAllCancel.current = true;
   }, []);
   const toggleIsReverse = useCallback(() => {
-    setIsReverse(!isReverse);
-  }, [isReverse]);
+    setIsReverse((pv) => !pv);
+  }, []);
   const toggleCommentsDetail = useCallback(() => {
-    setIsShowDetails(!isShowDetails);
-  }, [isShowDetails]);
+    setIsShowDetails((pv) => !pv);
+  }, []);
   const toggleLoadJSON = useCallback(() => {
-    setIsShowLoadJSON(!isShowLoadJSON);
-  }, [isShowLoadJSON]);
+    setIsShowLoadJSON((pv) => !pv);
+  }, []);
   const downloadTextArea = useCallback(() => {
     const blob = new Blob([textareaValue.join("\n")], {
       type: "text/plain",
