@@ -13,6 +13,7 @@ import { sleep } from "@/libraries/sleep";
 
 import Styles from "./OutputBox.module.scss";
 import { CommentsDetail } from "./commentsDetail/CommentsDetail";
+import { LoadJSON } from "./loadJSON/LoadJSON";
 
 /**
  * 入出力用のテキストエリア
@@ -25,6 +26,7 @@ export const OutputBox = () => {
   const [isReverse, setIsReverse] = useState<boolean>(false);
   const [isPosting, setIsPosting] = useState<boolean>(false);
   const [isShowDetails, setIsShowDetails] = useState<boolean>(false);
+  const [isShowLoadJSON, setIsShowLoadJSON] = useState<boolean>(false);
   const [spoilerMessage, setSpoilerMessage] = useState<string>("");
   const postAllCancel = useRef<boolean>(false);
   useEffect(() => {
@@ -203,11 +205,14 @@ export const OutputBox = () => {
     postAllCancel.current = true;
   }, []);
   const toggleIsReverse = useCallback(() => {
-    setIsReverse(!isReverse);
-  }, [isReverse]);
+    setIsReverse((pv) => !pv);
+  }, []);
   const toggleCommentsDetail = useCallback(() => {
-    setIsShowDetails(!isShowDetails);
-  }, [isShowDetails]);
+    setIsShowDetails((pv) => !pv);
+  }, []);
+  const toggleLoadJSON = useCallback(() => {
+    setIsShowLoadJSON((pv) => !pv);
+  }, []);
   const downloadTextArea = useCallback(() => {
     const blob = new Blob([textareaValue.join("\n")], {
       type: "text/plain",
@@ -286,6 +291,13 @@ export const OutputBox = () => {
             <div className={Styles.block}>
               <Button
                 disabled={isPosting}
+                text="JSON読込"
+                click={toggleLoadJSON}
+              />
+            </div>
+            <div className={Styles.block}>
+              <Button
+                disabled={isPosting}
                 text="ダウンロード"
                 click={downloadTextArea}
               />
@@ -301,6 +313,13 @@ export const OutputBox = () => {
           close={toggleCommentsDetail}
           textareaValue={textareaValue}
           isReverse={isReverse}
+        />
+      )}
+      {isShowLoadJSON && (
+        <LoadJSON
+          close={toggleLoadJSON}
+          textareaValue={textareaValue}
+          setTextareaValue={setTextareaValue}
         />
       )}
     </>

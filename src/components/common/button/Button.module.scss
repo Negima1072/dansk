@@ -19,6 +19,7 @@
   }
   &:disabled {
     background-color: var(--colors-action-text-on-base_disabled);
+    cursor: not-allowed;
   }
   &.active {
     background-color: var(--colors-action-primary-azure);
@@ -37,6 +38,9 @@
   margin: 2px 0;
   &:hover {
     border: 2px solid #006699;
+  }
+  &:disabled {
+    cursor: not-allowed;
   }
   &.active {
     border: 2px solid #007cff;
