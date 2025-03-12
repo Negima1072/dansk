@@ -1,6 +1,6 @@
 ﻿# 段スク水: dansuku-mizu
 
-![niconico](<https://img.shields.io/badge/niconico-(%E5%B8%B0%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F)-auto?logo=niconico&logoColor=%23e6e6e6&color=%23252525>)
+![niconico](<https://img.shields.io/badge/niconico-(Re:turn)-auto?logo=niconico&logoColor=%23e6e6e6&color=%23252525>)
 [![Release](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/release.yml/badge.svg)](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/release.yml)
 [![Test](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/test.yml/badge.svg)](https://github.com/eneko0513/NicoNicoDansaScriptCustom/actions/workflows/test.yml)
 
