@@ -8,7 +8,7 @@
 
 ## Trace
 
-<img src="img/screenshot_trace.png" alt="Traceのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_trace.png" alt="Traceのスクリーンショット" />
 
 - `全出力`,`等幅全出力`,`投コメ全出力`,`投コメ等幅全出力`,`選択出力`,`等幅選択出力`,`投コメ選択出力`  
   現在のレイヤーデータを Box のテキストエリアに出力する。適応可能な設定は[`Output`](#output)のもの。ボタンの説明は次の通り。
@@ -71,7 +71,7 @@
 
 #### レイヤーリスト
 
-<img src="img/screenshot_trace_layers.png" alt="レイヤーリストのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_trace_layers.png" alt="レイヤーリストのスクリーンショット" />
 
 レイヤーの一覧が表示される。ドラッグで順番の入れ替えが可能。下記がカラムの一覧。
 
@@ -87,7 +87,7 @@
 
 ### 背景設定
 
-<img src="img/screenshot_trace_background.png" alt="背景設定のスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_trace_background.png" alt="背景設定のスクリーンショット" />
 
 レイヤーの後ろに表示させる背景画像を設定できる。
 
@@ -114,7 +114,7 @@
 
 ### バックアップ
 
-<img src="img/screenshot_trace_backup.png" alt="バックアップのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_trace_backup.png" alt="バックアップのスクリーンショット" />
 
 レイヤーデータの自動バックアップを管理する。間隔と最大数は[設定(`Editor`)](#editor)から設定可能。
 
@@ -123,19 +123,19 @@
 
 ## Memo
 
-<img src="img/screenshot_memo.png" alt="Memoのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_memo.png" alt="Memoのスクリーンショット" />
 
 コメントアートに使用する記号などメモを保存しておく事のできるテキストエリアを提供する。ブラウザを終了しても内容は保持される。
 
 ## Time
 
-<img src="img/screenshot_time.png" alt="Timeのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_time.png" alt="Timeのスクリーンショット" />
 
 ボタンを押すことで再生時間を微調整することができる。また上部の再生時間が表示されている箇所を編集することで特定の時間に簡単に移動できる。
 
 ## Main
 
-<img src="img/screenshot_main.png" alt="Mainのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_main.png" alt="Mainのスクリーンショット" />
 
 いわゆるコマンドパレット。コマンドをボタンを使用し入力でき、視覚的に確認できる。
 
@@ -152,7 +152,7 @@
 
 ## Box
 
-<img src="img/screenshot_box.png" alt="Boxのスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_box.png" alt="Boxのスクリーンショット" />
 
 Trace の出力ウィンドウかつ自動投稿機能がある。
 
@@ -186,13 +186,13 @@ comment
 
 #### コメント詳細
 
-<img src="img/screenshot_box_details.png" alt="コメント詳細のスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_box_details.png" alt="コメント詳細のスクリーンショット" />
 
 コメント詳細ダイアログが開く。テキストエリアに入力されているコメントの投下順番,投下時間,行数,文字数,コマンドを視覚化できる。
 
 #### JSON 読込
 
-<img src="img/screenshot_box_load.png" alt="JSON 読込のスクリーンショット" style="max-height: 250px;">
+<img src="img/screenshot_box_load.png" alt="JSON 読込のスクリーンショット" />
 
 JSON 読込ダイアログが開く。ニコ動投コメ JSON を読み込み、投下時間を調整した後テキストエリアに反映することができる。またテキストエリアから JSON に変換することもできる。
 
@@ -255,7 +255,7 @@ JSON 読込ダイアログが開く。ニコ動投コメ JSON を読み込み、
 
 ## 変換ウィンドウ
 
-<img src="img/screenshot_conv.png" alt="変換ウィンドウのスクリーンショット" style="max-height: 300px;">
+<img src="img/screenshot_conv.png" alt="変換ウィンドウのスクリーンショット" />
 
 ブラウザの右上から拡張機能のアイコンを選択することで、変換ウィンドウを開くことができる。下記の３種類の形式を相互変換できる。
 
