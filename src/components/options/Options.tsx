@@ -120,6 +120,30 @@ export const Options = () => {
           <div key={key}>{renderOptionItem(key)}</div>
         ))}
       </div>
+      <div className={Styles.footer}>
+        <span>段スク水</span>
+        <div className={Styles.links}>
+          <span>
+            <a
+              href="https://github.com/eneko0513/NicoNicoDansaScriptCustom"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          </span>
+          <span>|</span>
+          <span>
+            <a
+              href="https://github.com/eneko0513/NicoNicoDansaScriptCustom/blob/main/MANUAL.md"
+              target="_blank"
+              rel="noreferrer"
+            >
+              説明書
+            </a>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

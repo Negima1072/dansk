@@ -6,7 +6,7 @@
 
 [Chrome Web Store](https://chromewebstore.google.com/detail/cjmnakgpnakmaemloaoaidbohgcldpcc) | [Firefox Addons](https://addons.mozilla.org/ja/firefox/addon/dansukumizu/)
 <br />
-[CHANGELOG](CHANGELOG.md) | [CONTRIBUTING](CONTRIBUTING.md)
+[CHANGELOG](CHANGELOG.md) | [CONTRIBUTING](CONTRIBUTING.md) | [MANUAL](MANUAL.md)
 
 ニコニコ動画のコメントアート制作を補助するブラウザ拡張機能
 
