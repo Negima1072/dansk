@@ -18,6 +18,7 @@ export const command2str = (layer: TMeasuredLayer) => {
   commands.push("position");
   commands.push("font");
   commands.push("color");
+  if (layer.live) commands.push("_live");
   const commandsOrder = Storage.get("options_commandOrder").split("|");
   const getIndex = (input: string): number => {
     if (input.match(/big|small|medium/)) return commandsOrder.indexOf("size");
@@ -38,7 +39,7 @@ export const command2str = (layer: TMeasuredLayer) => {
   let layerName = layer.text.replace(/\s/g, "-");
   if (
     layerName.match(
-      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|_live|invisible/,
+      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|\_live|invisible/,
     )
   ) {
     layerName += "_";

@@ -53,6 +53,7 @@ export type TLayer = TLayerTemplate & {
   font: TCommentFont;
   visible: boolean;
   selected: boolean;
+  live?: boolean;
   color: string;
   transparency?: number;
   content: TLayerComment[];

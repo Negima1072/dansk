@@ -52,6 +52,12 @@ export const LayerSelector = () => {
     layer.visible = !layer.visible;
     setLayerData([...layerData]);
   };
+  const toggleLive = (key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.live = !layer.live;
+    setLayerData([...layerData]);
+  };
   const toggleSelected = (e: React.MouseEvent<HTMLDivElement>, key: number) => {
     const layer = layerData[key];
     if (!layer) return;
@@ -120,6 +126,13 @@ export const LayerSelector = () => {
                 onClick={() => toggleVisible(key)}
               >
                 {item.visible ? icons.eye : icons.eyeClosed}
+              </td>
+              <td
+                className={`handle ${Styles.icon}`}
+                onClick={() => toggleLive(key)}
+                title={item.live ? "_live" : undefined}
+              >
+                {item.live ? icons.layersIntersect : icons.layersSubtract}
               </td>
               <td className={Styles.color}>
                 <ColorPicker

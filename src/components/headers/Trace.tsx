@@ -218,6 +218,7 @@ export const Trace = () => {
         visible: true,
         content: layerUtil.generateLineFromTemplate(template),
         selected: true,
+        live: false,
         color: color || "#000000",
         transparency: 100,
         layerId: uuid(),
