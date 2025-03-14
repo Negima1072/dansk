@@ -121,6 +121,13 @@ export const Commands: TCommandList = [
         group: "color",
       },
     ],
+    [
+      {
+        text: "live",
+        value: "_live",
+        group: "live",
+      },
+    ],
   ],
   [
     [

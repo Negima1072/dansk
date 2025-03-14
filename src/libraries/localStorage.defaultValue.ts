@@ -17,7 +17,7 @@ export const defaultValue: TLocalStorageDefaultValues = {
   },
   options_commandOrder: {
     defaultValue:
-      "layerName|ca|patissier|size|position|color|font|ender|full|original",
+      "layerName|ca|patissier|size|position|color|font|ender|full|_live|original",
     description: "コマンドの並び替え",
     dangerous: false,
     type: "string",
