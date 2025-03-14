@@ -129,6 +129,13 @@ export const defaultValue: TLocalStorageDefaultValues = {
     type: "boolean",
     cat: "Output",
   },
+  options_showLiveColumn: {
+    defaultValue: "false",
+    description: "_live切り替えボタンを表示",
+    dangerous: false,
+    type: "boolean",
+    cat: "Editor",
+  },
   options_saveBackgroundImage: {
     defaultValue: "false",
     description: "セーブデータに背景画像を含める",
