@@ -52,7 +52,7 @@ export const Backup = (props: propType) => {
     //    mode: value.background.mode,
     //    visible: true,
     //    open: false,
-    //    transparency: 100,
+    //    opacity: 100,
     //  });
     //}
     props.close();

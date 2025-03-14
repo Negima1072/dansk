@@ -171,8 +171,8 @@ export const Trace = () => {
     () => setBackground({ ...background, visible: !background.visible }),
     [background],
   );
-  const changeBackgroundTransparency = useCallback(
-    (t: number) => setBackground({ ...background, transparency: t }),
+  const changeBackgroundOpacity = useCallback(
+    (t: number) => setBackground({ ...background, opacity: t }),
     [background],
   );
   const toggleOptionEditing = useCallback(
@@ -340,7 +340,7 @@ export const Trace = () => {
             mode: data.background.mode,
             visible: true,
             open: false,
-            transparency: 100,
+            opacity: 100,
           });
         }
       }
@@ -457,8 +457,8 @@ export const Trace = () => {
               )}
               {background.selected > -1 && (
                 <Slider
-                  change={changeBackgroundTransparency}
-                  value={100}
+                  change={changeBackgroundOpacity}
+                  value={background.opacity ?? 100}
                   max={100}
                   min={0}
                 />

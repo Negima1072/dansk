@@ -76,7 +76,7 @@ export const LayerContainer = () => {
               alt={"backgroundImage"}
               style={{
                 objectFit: background.mode,
-                opacity: background.transparency / 100,
+                opacity: (background.opacity ?? 100) / 100,
               }}
             />,
             elements.BackgroundImageElement,

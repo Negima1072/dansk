@@ -11,7 +11,7 @@ export type TBackground = {
   open: boolean;
   mode: TObjectFitArgs;
   visible: boolean;
-  transparency: number;
+  opacity?: number;
 };
 
 export type TBackgroundImage = {

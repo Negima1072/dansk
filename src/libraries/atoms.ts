@@ -12,7 +12,7 @@ export const backgroundAtom = atom<TBackground>({
   open: false,
   mode: "fill",
   visible: true,
-  transparency: 100,
+  opacity: 100,
 });
 export const optionAtom = atom<TOption>({
   grid: false,
