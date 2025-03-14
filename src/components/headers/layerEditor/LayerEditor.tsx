@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { type ChangeEvent, useCallback } from "react";
 
 import { Button } from "@/components/common/button/Button";
+import { Slider } from "@/components/common/slider/Slider";
 import { layerAtom } from "@/libraries/atoms";
 import { typeGuard } from "@/libraries/typeGuard";
 
@@ -24,6 +25,10 @@ export const LayerEditor = () => {
     }
     return pv;
   }, "");
+  const transparency =
+    layerData.find(
+      (layer) => layer.selected && layer.transparency !== undefined,
+    )?.transparency ?? 100;
   const changePos = useCallback(
     (target: string) => {
       if (!typeGuard.trace.commentPos(target)) return;
@@ -86,6 +91,19 @@ export const LayerEditor = () => {
     },
     [layerData],
   );
+  const changeTransparency = useCallback(
+    (t: number) => {
+      setLayerData(
+        layerData.map((value) => {
+          if (value.selected) {
+            value.transparency = t;
+          }
+          return value;
+        }),
+      );
+    },
+    [layerData],
+  );
   return (
     <div className={Styles.table}>
       <div className={Styles.row}>
@@ -112,6 +130,14 @@ export const LayerEditor = () => {
         <div className={Styles.block}>
           <Button click={move} text={"上へ"} value={"up"} />
           <Button click={move} text={"下へ"} value={"down"} />
+        </div>
+        <div className={Styles.block}>
+          <Slider
+            change={changeTransparency}
+            value={transparency}
+            max={100}
+            min={0}
+          />
         </div>
       </div>
     </div>

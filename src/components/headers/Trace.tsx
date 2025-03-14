@@ -219,6 +219,7 @@ export const Trace = () => {
         content: layerUtil.generateLineFromTemplate(template),
         selected: true,
         color: color || "#000000",
+        transparency: 100,
         layerId: uuid(),
       },
     ]);

@@ -54,6 +54,7 @@ export type TLayer = TLayerTemplate & {
   visible: boolean;
   selected: boolean;
   color: string;
+  transparency?: number;
   content: TLayerComment[];
   overwrite?: boolean;
   layerId: string;

@@ -94,6 +94,9 @@ export const Layer = (props: LayerProps) => {
           color: props.data.color,
           width: `${props.data.areaWidth}px`,
           transform: `scale(${props.data.scale.x}, ${props.data.scale.y})`,
+          opacity: props.data.visible
+            ? (props.data.transparency ?? 100) / 100
+            : 0,
         }}
         ref={layerElement}
         spellCheck={"false"}
