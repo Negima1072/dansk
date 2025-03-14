@@ -25,10 +25,9 @@ export const LayerEditor = () => {
     }
     return pv;
   }, "");
-  const transparency =
-    layerData.find(
-      (layer) => layer.selected && layer.transparency !== undefined,
-    )?.transparency ?? 100;
+  const opacity =
+    layerData.find((layer) => layer.selected && layer.opacity !== undefined)
+      ?.opacity ?? 100;
   const changePos = useCallback(
     (target: string) => {
       if (!typeGuard.trace.commentPos(target)) return;
@@ -91,12 +90,12 @@ export const LayerEditor = () => {
     },
     [layerData],
   );
-  const changeTransparency = useCallback(
+  const changeOpacity = useCallback(
     (t: number) => {
       setLayerData(
         layerData.map((value) => {
           if (value.selected) {
-            value.transparency = t;
+            value.opacity = t;
           }
           return value;
         }),
@@ -132,12 +131,7 @@ export const LayerEditor = () => {
           <Button click={move} text={"下へ"} value={"down"} />
         </div>
         <div className={Styles.block}>
-          <Slider
-            change={changeTransparency}
-            value={transparency}
-            max={100}
-            min={0}
-          />
+          <Slider change={changeOpacity} value={opacity} max={100} min={0} />
         </div>
       </div>
     </div>

@@ -95,8 +95,7 @@ export const Layer = (props: LayerProps) => {
           width: `${props.data.areaWidth}px`,
           transform: `scale(${props.data.scale.x}, ${props.data.scale.y})`,
           opacity: props.data.visible
-            ? ((props.data.live ? 0.5 : 1) * (props.data.transparency ?? 100)) /
-              100
+            ? ((props.data.live ? 0.5 : 1) * (props.data.opacity ?? 100)) / 100
             : 0,
         }}
         ref={layerElement}

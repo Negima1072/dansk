@@ -220,7 +220,7 @@ export const Trace = () => {
         selected: true,
         live: false,
         color: color || "#000000",
-        transparency: 100,
+        opacity: 100,
         layerId: uuid(),
       },
     ]);
