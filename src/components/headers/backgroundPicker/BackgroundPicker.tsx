@@ -97,7 +97,7 @@ export const BackgroundPicker = () => {
     <>
       <Popup
         title={"背景"}
-        close={() => setBackground({ ...background, open: false })}
+        close={() => setBackground((pv) => ({ ...pv, open: false }))}
       >
         <BackgroundImageDisplay setImageCrop={setImageCrop} />
         <div>
