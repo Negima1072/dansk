@@ -39,7 +39,7 @@ export const command2str = (layer: TMeasuredLayer) => {
   let layerName = layer.text.replace(/\s/g, "-");
   if (
     layerName.match(
-      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|\_live|invisible/,
+      /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|_live|invisible/,
     )
   ) {
     layerName += "_";
