@@ -112,7 +112,7 @@ export const Layer = (props: LayerProps) => {
                 fontWeight: getFont(props.data.font).weight,
                 fontFamily: getFont(props.data.font).font,
                 fontSize: `${value.font}px`,
-                WebkitTextStroke: `${getShadowColor(props.data.color)} 2px`, // actually 2.8px
+                WebkitTextStroke: `2px ${getShadowColor(props.data.color)}`, // actually 2.8px
               }}
               key={`layer${props.data.layerId}-group${index}`}
               className={Styles.textarea}
