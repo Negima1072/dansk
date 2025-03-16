@@ -74,6 +74,11 @@ export const Layer = (props: LayerProps) => {
     }
     return <></>;
   };
+  const getShadowColor = (color: string) => {
+    const isPureBlack =
+      color === "#000000" || color.replace(/ /g, "") === "rgb(0,0,0)";
+    return `rgba(${isPureBlack ? "255,255,255" : "0,0,0"},.4)`;
+  };
 
   return (
     <>
@@ -107,6 +112,7 @@ export const Layer = (props: LayerProps) => {
                 fontWeight: getFont(props.data.font).weight,
                 fontFamily: getFont(props.data.font).font,
                 fontSize: `${value.font}px`,
+                WebkitTextStroke: `${getShadowColor(props.data.color)} 2px`, // actually 2.8px
               }}
               key={`layer${props.data.layerId}-group${index}`}
               className={Styles.textarea}
