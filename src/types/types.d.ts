@@ -84,6 +84,7 @@ export type TLocalStorageKeys =
   | "options_disable184"
   | "options_enableColorCode"
   | "options_disableSpaceOptimization"
+  | "options_showLiveColumn"
   | "options_saveBackgroundImage"
   | "display_trace"
   | "display_memo"

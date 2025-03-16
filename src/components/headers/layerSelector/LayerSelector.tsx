@@ -7,6 +7,7 @@ import { CssEditor } from "@/components/headers/layerSelector/CssEditor";
 import { layerAtom } from "@/libraries/atoms";
 import { icons } from "@/libraries/icons";
 import { layerUtil } from "@/libraries/layerUtil/layerUtil";
+import { Storage } from "@/libraries/localStorage";
 import type { TLayer } from "@/types/layer";
 
 import Styles from "./LayerSelector.module.scss";
@@ -21,6 +22,7 @@ export const LayerSelector = () => {
   const [editingLayerName, setEditingLayerName] = useState<string>("");
   const [isSetting, setSetting] = useState<number>(-1);
   if (!layerData || !setLayerData) return <></>;
+  const showLiveColumn = Storage.get("options_showLiveColumn") === "true";
   const onColorChange = (event: ChangeEvent<HTMLInputElement>, key: number) => {
     const layer = layerData[key];
     if (!layer) return;
@@ -50,6 +52,12 @@ export const LayerSelector = () => {
     const layer = layerData[key];
     if (!layer) return;
     layer.visible = !layer.visible;
+    setLayerData([...layerData]);
+  };
+  const toggleLive = (key: number) => {
+    const layer = layerData[key];
+    if (!layer) return;
+    layer.live = !layer.live;
     setLayerData([...layerData]);
   };
   const toggleSelected = (e: React.MouseEvent<HTMLDivElement>, key: number) => {
@@ -121,6 +129,15 @@ export const LayerSelector = () => {
               >
                 {item.visible ? icons.eye : icons.eyeClosed}
               </td>
+              {showLiveColumn && (
+                <td
+                  className={`handle ${Styles.icon}`}
+                  onClick={() => toggleLive(key)}
+                  title={item.live ? "_live" : undefined}
+                >
+                  {item.live ? icons.layersIntersect : icons.layersSubtract}
+                </td>
+              )}
               <td className={Styles.color}>
                 <ColorPicker
                   color={item.color}

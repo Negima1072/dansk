@@ -1,4 +1,4 @@
 {
   "src/**/*.{ts,tsx,json,scss,css}": "pnpm check",
-  "src/libraries/layerUtil/*": "pnpm test"
+  "src/libraries/layerUtil/layerUtil.ts": "pnpm test"
 }

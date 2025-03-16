@@ -52,7 +52,7 @@ const convertDomoToDansk = (input: string): string => {
     }
     commandCount = (
       line.match(
-        /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier/,
+        /ue|shita|gothic|mincho|big|small|defont|medium|ender|full|ca|pattisier|_live/,
       ) || []
     ).length;
     if (commandCount >= 2) {

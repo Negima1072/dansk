@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { LayerPortal } from "@/components/LayerPortal";
@@ -42,7 +42,7 @@ export const Trace = () => {
   );
   const [optionEditing, setOptionEditing] = useState<boolean>(false);
   const [autoSaveWindow, setAutoSaveWindow] = useState<boolean>(false);
-  const [exportLayer, setExportLayer] = useAtom(exportLayerAtom);
+  const setExportLayer = useSetAtom(exportLayerAtom);
   const [layerData, setLayerData] = useAtom(layerAtom);
   const [optionData, setOptionData] = useAtom(optionAtom);
   const [background, setBackground] = useAtom(backgroundAtom);
@@ -110,26 +110,26 @@ export const Trace = () => {
         isOwner,
       );
       if (!data) return;
-      setExportLayer([...exportLayer, ...layerUtil.formatAsString(data)]);
+      setExportLayer((pv) => [...pv, ...layerUtil.formatAsString(data)]);
     },
-    [exportLayer, layerData, tabMode],
+    [layerData, tabMode],
   );
   const toggleTabMode = useCallback(() => setTabMode((pv) => !pv), []);
   const toggleReplaceMode = useCallback(
-    () => setOptionData({ ...optionData, replace: !optionData.replace }),
-    [optionData],
+    () => setOptionData((pv) => ({ ...pv, replace: !pv.replace })),
+    [],
   );
   const toggleGridMode = useCallback(
-    () => setOptionData({ ...optionData, grid: !optionData.grid }),
-    [optionData],
+    () => setOptionData((pv) => ({ ...pv, grid: !pv.grid })),
+    [],
   );
   const layerDropdownOnChange = useCallback(
     (value: string) => setLayerDropdownValue(value),
     [],
   );
   const openBackgroundMenu = useCallback(
-    () => setBackground({ ...background, open: true }),
-    [background],
+    () => setBackground((pv) => ({ ...pv, open: true })),
+    [],
   );
   const downloadScreenshot = useCallback((commentOnly: boolean) => {
     if (!elements) return;
@@ -168,12 +168,12 @@ export const Trace = () => {
     window.URL.revokeObjectURL(url_screenshot);
   }, []);
   const toggleBackgroundVisible = useCallback(
-    () => setBackground({ ...background, visible: !background.visible }),
-    [background],
+    () => setBackground((pv) => ({ ...pv, visible: !pv.visible })),
+    [],
   );
-  const changeBackgroundTransparency = useCallback(
-    (t: number) => setBackground({ ...background, transparency: t }),
-    [background],
+  const changeBackgroundOpacity = useCallback(
+    (t: number) => setBackground((pv) => ({ ...pv, opacity: t })),
+    [],
   );
   const toggleOptionEditing = useCallback(
     () => setOptionEditing((pv) => !pv),
@@ -181,16 +181,16 @@ export const Trace = () => {
   );
   const togglePreview = useCallback(
     () =>
-      setOptionData({
-        ...optionData,
+      setOptionData((pv) => ({
+        ...pv,
         preview:
-          optionData.preview === "disable"
+          pv.preview === "disable"
             ? "enable"
-            : optionData.preview === "enable"
+            : pv.preview === "enable"
               ? "previewOnly"
               : "disable",
-      }),
-    [optionData],
+      })),
+    [],
   );
   const addLayer = useCallback(() => {
     const id = layerUtil.getIdByValue(layerDropdownValue);
@@ -209,8 +209,8 @@ export const Trace = () => {
       },
       undefined as undefined | false | string,
     );
-    setLayerData([
-      ...layerData,
+    setLayerData((pv) => [
+      ...pv,
       {
         ...template,
         type: id,
@@ -218,7 +218,9 @@ export const Trace = () => {
         visible: true,
         content: layerUtil.generateLineFromTemplate(template),
         selected: true,
+        live: false,
         color: color || "#000000",
+        opacity: 100,
         layerId: uuid(),
       },
     ]);
@@ -338,7 +340,7 @@ export const Trace = () => {
             mode: data.background.mode,
             visible: true,
             open: false,
-            transparency: 100,
+            opacity: 100,
           });
         }
       }
@@ -455,8 +457,8 @@ export const Trace = () => {
               )}
               {background.selected > -1 && (
                 <Slider
-                  change={changeBackgroundTransparency}
-                  value={100}
+                  change={changeBackgroundOpacity}
+                  value={background.opacity ?? 100}
                   max={100}
                   min={0}
                 />

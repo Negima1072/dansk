@@ -18,6 +18,7 @@ export const command2str = (layer: TMeasuredLayer) => {
   commands.push("position");
   commands.push("font");
   commands.push("color");
+  if (layer.live) commands.push("_live");
   const commandsOrder = Storage.get("options_commandOrder").split("|");
   const getIndex = (input: string): number => {
     if (input.match(/big|small|medium/)) return commandsOrder.indexOf("size");

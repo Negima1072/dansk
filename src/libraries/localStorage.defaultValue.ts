@@ -17,7 +17,7 @@ export const defaultValue: TLocalStorageDefaultValues = {
   },
   options_commandOrder: {
     defaultValue:
-      "layerName|ca|patissier|size|position|color|font|ender|full|original",
+      "layerName|ca|patissier|size|position|color|font|ender|full|_live|original",
     description: "コマンドの並び替え",
     dangerous: false,
     type: "string",
@@ -128,6 +128,13 @@ export const defaultValue: TLocalStorageDefaultValues = {
     dangerous: false,
     type: "boolean",
     cat: "Output",
+  },
+  options_showLiveColumn: {
+    defaultValue: "false",
+    description: "_live切り替えボタンを表示",
+    dangerous: false,
+    type: "boolean",
+    cat: "Editor",
   },
   options_saveBackgroundImage: {
     defaultValue: "false",

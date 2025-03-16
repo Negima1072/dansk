@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { type ChangeEvent, useCallback } from "react";
 
 import { Button } from "@/components/common/button/Button";
+import { Slider } from "@/components/common/slider/Slider";
 import { layerAtom } from "@/libraries/atoms";
 import { typeGuard } from "@/libraries/typeGuard";
 
@@ -24,47 +25,41 @@ export const LayerEditor = () => {
     }
     return pv;
   }, "");
-  const changePos = useCallback(
-    (target: string) => {
-      if (!typeGuard.trace.commentPos(target)) return;
-      setLayerData(
-        layerData.map((value) => {
-          if (value.selected && value.posList.includes(target)) {
-            value.pos = target;
-          }
-          return value;
-        }),
-      );
-    },
-    [layerData],
-  );
-  const changeFont = useCallback(
-    (target: string) => {
-      if (!typeGuard.trace.commentFont(target)) return;
-      setLayerData(
-        layerData.map((value) => {
-          if (value.selected) {
-            value.font = target;
-          }
-          return value;
-        }),
-      );
-    },
-    [layerData],
-  );
-  const changeColor = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setLayerData(
-        layerData.map((value) => {
-          if (value.selected) {
-            value.color = e.target.value;
-          }
-          return value;
-        }),
-      );
-    },
-    [layerData],
-  );
+  const opacity =
+    layerData.find((layer) => layer.selected && layer.opacity !== undefined)
+      ?.opacity ?? 100;
+  const changePos = useCallback((target: string) => {
+    if (!typeGuard.trace.commentPos(target)) return;
+    setLayerData((pv) =>
+      pv.map((value) => {
+        if (value.selected && value.posList.includes(target)) {
+          value.pos = target;
+        }
+        return value;
+      }),
+    );
+  }, []);
+  const changeFont = useCallback((target: string) => {
+    if (!typeGuard.trace.commentFont(target)) return;
+    setLayerData((pv) =>
+      pv.map((value) => {
+        if (value.selected) {
+          value.font = target;
+        }
+        return value;
+      }),
+    );
+  }, []);
+  const changeColor = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setLayerData((pv) =>
+      pv.map((value) => {
+        if (value.selected) {
+          value.color = e.target.value;
+        }
+        return value;
+      }),
+    );
+  }, []);
   const move = useCallback(
     (target: string) => {
       if (!target.match(/up|down/)) return;
@@ -86,6 +81,16 @@ export const LayerEditor = () => {
     },
     [layerData],
   );
+  const changeOpacity = useCallback((t: number) => {
+    setLayerData((pv) =>
+      pv.map((value) => {
+        if (value.selected) {
+          value.opacity = t;
+        }
+        return value;
+      }),
+    );
+  }, []);
   return (
     <div className={Styles.table}>
       <div className={Styles.row}>
@@ -112,6 +117,9 @@ export const LayerEditor = () => {
         <div className={Styles.block}>
           <Button click={move} text={"上へ"} value={"up"} />
           <Button click={move} text={"下へ"} value={"down"} />
+        </div>
+        <div className={Styles.block}>
+          <Slider change={changeOpacity} value={opacity} max={100} min={0} />
         </div>
       </div>
     </div>

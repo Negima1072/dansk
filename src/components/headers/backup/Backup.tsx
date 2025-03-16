@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/common/button/Button";
 import { Popup } from "@/components/common/popup/Popup";
-import { backgroundAtom, layerAtom } from "@/libraries/atoms";
+import { layerAtom } from "@/libraries/atoms";
 import { Storage } from "@/libraries/localStorage";
 import { typeGuard } from "@/libraries/typeGuard";
 import { uuid } from "@/libraries/uuidUtil";
@@ -28,7 +28,7 @@ export const Backup = (props: propType) => {
     return data;
   });
   const setLayerData = useSetAtom(layerAtom);
-  const setBackground = useSetAtom(backgroundAtom);
+  // const setBackground = useSetAtom(backgroundAtom);
   const load = (key: string) => {
     const value = saveData[Number(key)];
     if (
@@ -52,7 +52,7 @@ export const Backup = (props: propType) => {
     //    mode: value.background.mode,
     //    visible: true,
     //    open: false,
-    //    transparency: 100,
+    //    opacity: 100,
     //  });
     //}
     props.close();
