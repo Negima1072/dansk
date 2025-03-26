@@ -86,6 +86,7 @@ export type TLocalStorageKeys =
   | "options_disableSpaceOptimization"
   | "options_showLiveColumn"
   | "options_saveBackgroundImage"
+  | "options_memoFontSize"
   | "display_trace"
   | "display_memo"
   | "display_time"
