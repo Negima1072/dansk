@@ -143,6 +143,13 @@ export const defaultValue: TLocalStorageDefaultValues = {
     type: "boolean",
     cat: "Editor",
   },
+  options_memoFontSize: {
+    defaultValue: "13",
+    description: "メモのフォントサイズ",
+    dangerous: false,
+    type: "number",
+    cat: "Editor",
+  },
   display_trace: {
     defaultValue: "true",
   },
